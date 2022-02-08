@@ -1,23 +1,20 @@
 <div align="center">
 
-  <h1>Weedle</h1>
+  <h1>Weedle 2 - Electric Boogaloo</h1>
 
   <strong>A Web IDL parser</strong>
 
   <p>
-    <a href="https://travis-ci.org/rustwasm/weedle"><img src="https://img.shields.io/travis/rustwasm/weedle.svg?style=flat-square" alt="Build Status" /></a>
-    <a href="https://crates.io/crates/weedle"><img src="https://img.shields.io/crates/v/weedle.svg?style=flat-square" alt="Crates.io version" /></a>
-    <a href="https://crates.io/crates/weedle"><img src="https://img.shields.io/crates/d/weedle.svg?style=flat-square" alt="Download" /></a>
-    <a href="https://docs.rs/weedle"><img src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square" alt="docs.rs docs" /></a>
+    <a href="https://crates.io/crates/weedle2"><img src="https://img.shields.io/crates/v/weedle2.svg?style=flat-square" alt="Crates.io version" /></a>
+    <a href="https://docs.rs/weedle2"><img src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square" alt="Documentation" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/badboy/signify-rs?style=flat-square" alt="MIT License" /></a>
   </p>
 
-  <h3>
-    <a href="https://docs.rs/weedle">API Docs</a>
-    <span> | </span>
-    <a href="https://discordapp.com/channels/442252698964721669/443151097398296587">Chat</a>
-  </h3>
-
-  <sub>Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a></sub>
+  <sub>
+  Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a>.
+  <br>
+  Forked to extend the functionality beyond WebIDL needs.
+  </sub>
 </div>
 
 ## About
@@ -31,7 +28,7 @@ Parses valid WebIDL definitions & produces a data structure starting from
 
 ```toml
 [dependencies]
-weedle = "0.9.0"
+weedle2 = "2.0.0-alpha0"
 ```
 
 ### `src/main.rs`
