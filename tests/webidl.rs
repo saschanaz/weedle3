@@ -1,20 +1,16 @@
-extern crate weedle;
+use test_generator::test_resources;
 
-use std::{io::Read, path::Path};
+#[test_resources("tests/defs/*.webidl")]
+fn should_parse(resource: &str) {
+    let content = std::fs::read_to_string(resource).unwrap();
+    let parsed = weedle::parse(&content);
 
-use fs_err::File;
-use weedle::*;
-
-fn read_file(path: &str) -> String {
-    let mut file = File::open(Path::new(env!("CARGO_MANIFEST_DIR")).join(path)).unwrap();
-    let mut file_content = String::new();
-    file.read_to_string(&mut file_content).unwrap();
-    file_content
+    assert!(parsed.is_ok());
 }
 
 #[test]
 pub fn should_parse_dom_webidl() {
-    let content = read_file("./tests/defs/dom.webidl");
+    let content = std::fs::read_to_string("./tests/defs/dom.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
     assert_eq!(parsed.len(), 62);
@@ -22,7 +18,7 @@ pub fn should_parse_dom_webidl() {
 
 #[test]
 fn should_parse_html_webidl() {
-    let content = read_file("./tests/defs/html.webidl");
+    let content = std::fs::read_to_string("./tests/defs/html.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
     assert_eq!(parsed.len(), 325);
@@ -30,7 +26,7 @@ fn should_parse_html_webidl() {
 
 #[test]
 fn should_parse_mediacapture_streams_webidl() {
-    let content = read_file("./tests/defs/mediacapture-streams.webidl");
+    let content = std::fs::read_to_string("./tests/defs/mediacapture-streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
     assert_eq!(parsed.len(), 37);
@@ -38,7 +34,7 @@ fn should_parse_mediacapture_streams_webidl() {
 
 #[test]
 fn should_parse_streams_webidl() {
-    let content = read_file("./tests/defs/streams.webidl");
+    let content = std::fs::read_to_string("./tests/defs/streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
     assert_eq!(parsed.len(), 37);
@@ -46,7 +42,9 @@ fn should_parse_streams_webidl() {
 
 #[test]
 fn interface_constructor() {
-    let content = read_file("./tests/defs/interface-constructor.webidl");
+    use weedle::*;
+
+    let content = std::fs::read_to_string("./tests/defs/interface-constructor.webidl").unwrap();
     let mut parsed = weedle::parse(&content).unwrap();
 
     assert_eq!(parsed.len(), 1);
