@@ -86,6 +86,86 @@
                                     ),
                                 },
                             ),
+                            Float(
+                                ExtendedAttributeFloat {
+                                    lhs_identifier: Identifier(
+                                        "FloatAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Value(
+                                        FloatValueLit(
+                                            "3.14",
+                                        ),
+                                    ),
+                                },
+                            ),
+                            String(
+                                ExtendedAttributeString {
+                                    lhs_identifier: Identifier(
+                                        "StringAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: StringLit(
+                                        "abc",
+                                    ),
+                                },
+                            ),
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "IdentifierAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        "_null",
+                                    ),
+                                },
+                            ),
+                            IdentList(
+                                ExtendedAttributeIdentList {
+                                    identifier: Identifier(
+                                        "IdentifiersAttr",
+                                    ),
+                                    assign: Assign,
+                                    list: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Identifier(
+                                                    "_null",
+                                                ),
+                                                Identifier(
+                                                    "_const",
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                            FloatList(
+                                ExtendedAttributeFloatList {
+                                    identifier: Identifier(
+                                        "FloatList",
+                                    ),
+                                    assign: Assign,
+                                    list: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Value(
+                                                    FloatValueLit(
+                                                        "3.14",
+                                                    ),
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
                         ],
                         separator: Comma,
                     },
