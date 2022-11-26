@@ -1,0 +1,87 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Suffixes",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "test",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Sequence(
+                                                                MayBeNull {
+                                                                    type_: SequenceType {
+                                                                        sequence: Sequence,
+                                                                        generics: Generics {
+                                                                            open_angle: LessThan,
+                                                                            body: Single(
+                                                                                NonAny(
+                                                                                    DOMString(
+                                                                                        MayBeNull {
+                                                                                            type_: DOMString,
+                                                                                            q_mark: Some(
+                                                                                                QMark,
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                ),
+                                                                            ),
+                                                                            close_angle: GreaterThan,
+                                                                        },
+                                                                    },
+                                                                    q_mark: Some(
+                                                                        QMark,
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "foo",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

@@ -1,0 +1,395 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Point",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "x",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "y",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Typedef(
+        TypedefDefinition {
+            attributes: None,
+            typedef: Typedef,
+            type_: AttributedType {
+                attributes: None,
+                type_: Single(
+                    NonAny(
+                        Sequence(
+                            MayBeNull {
+                                type_: SequenceType {
+                                    sequence: Sequence,
+                                    generics: Generics {
+                                        open_angle: LessThan,
+                                        body: Single(
+                                            NonAny(
+                                                Identifier(
+                                                    MayBeNull {
+                                                        type_: Identifier(
+                                                            "Point",
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                        close_angle: GreaterThan,
+                                    },
+                                },
+                                q_mark: None,
+                            },
+                        ),
+                    ),
+                ),
+            },
+            identifier: Identifier(
+                "PointSequence",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Rect",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Point",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "topleft",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Point",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "bottomright",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Widget",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Rect",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "bounds",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        Boolean(
+                                            MayBeNull {
+                                                type_: Boolean,
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "pointWithinBounds",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "Point",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "p",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        Boolean(
+                                            MayBeNull {
+                                                type_: Boolean,
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "allPointsWithinBounds",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "PointSequence",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "ps",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Typedef(
+        TypedefDefinition {
+            attributes: None,
+            typedef: Typedef,
+            type_: AttributedType {
+                attributes: Some(
+                    Bracketed {
+                        open_bracket: OpenBracket,
+                        body: Punctuated {
+                            list: [
+                                NoArgs(
+                                    ExtendedAttributeNoArgs(
+                                        Identifier(
+                                            "Clamp",
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            separator: Comma,
+                        },
+                        close_bracket: CloseBracket,
+                    },
+                ),
+                type_: Single(
+                    NonAny(
+                        Octet(
+                            MayBeNull {
+                                type_: Octet,
+                                q_mark: None,
+                            },
+                        ),
+                    ),
+                ),
+            },
+            identifier: Identifier(
+                "value",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+]

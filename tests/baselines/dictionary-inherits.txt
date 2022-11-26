@@ -1,0 +1,146 @@
+[
+    Dictionary(
+        DictionaryDefinition {
+            attributes: None,
+            dictionary: Dictionary,
+            identifier: Identifier(
+                "PaintOptions",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    DictionaryMember {
+                        attributes: None,
+                        required: None,
+                        type_: Single(
+                            NonAny(
+                                DOMString(
+                                    MayBeNull {
+                                        type_: DOMString,
+                                        q_mark: Some(
+                                            QMark,
+                                        ),
+                                    },
+                                ),
+                            ),
+                        ),
+                        identifier: Identifier(
+                            "fillPattern",
+                        ),
+                        default: Some(
+                            Default {
+                                assign: Assign,
+                                value: String(
+                                    StringLit(
+                                        "black",
+                                    ),
+                                ),
+                            },
+                        ),
+                        semi_colon: SemiColon,
+                    },
+                    DictionaryMember {
+                        attributes: None,
+                        required: None,
+                        type_: Single(
+                            NonAny(
+                                DOMString(
+                                    MayBeNull {
+                                        type_: DOMString,
+                                        q_mark: Some(
+                                            QMark,
+                                        ),
+                                    },
+                                ),
+                            ),
+                        ),
+                        identifier: Identifier(
+                            "strokePattern",
+                        ),
+                        default: Some(
+                            Default {
+                                assign: Assign,
+                                value: Null(
+                                    Null,
+                                ),
+                            },
+                        ),
+                        semi_colon: SemiColon,
+                    },
+                    DictionaryMember {
+                        attributes: None,
+                        required: None,
+                        type_: Single(
+                            NonAny(
+                                Identifier(
+                                    MayBeNull {
+                                        type_: Identifier(
+                                            "Point",
+                                        ),
+                                        q_mark: None,
+                                    },
+                                ),
+                            ),
+                        ),
+                        identifier: Identifier(
+                            "position",
+                        ),
+                        default: None,
+                        semi_colon: SemiColon,
+                    },
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Dictionary(
+        DictionaryDefinition {
+            attributes: None,
+            dictionary: Dictionary,
+            identifier: Identifier(
+                "WetPaintOptions",
+            ),
+            inheritance: Some(
+                Inheritance {
+                    colon: Colon,
+                    identifier: Identifier(
+                        "PaintOptions",
+                    ),
+                },
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    DictionaryMember {
+                        attributes: None,
+                        required: None,
+                        type_: Single(
+                            NonAny(
+                                FloatingPoint(
+                                    MayBeNull {
+                                        type_: Float(
+                                            FloatType {
+                                                unrestricted: None,
+                                                float: Float,
+                                            },
+                                        ),
+                                        q_mark: None,
+                                    },
+                                ),
+                            ),
+                        ),
+                        identifier: Identifier(
+                            "hydrometry",
+                        ),
+                        default: None,
+                        semi_colon: SemiColon,
+                    },
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

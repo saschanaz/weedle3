@@ -1,0 +1,91 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "NamedConstructor",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        Identifier(
+                                            "Audio",
+                                        ),
+                                    ),
+                                },
+                            ),
+                            NamedArgList(
+                                ExtendedAttributeNamedArgList {
+                                    lhs_identifier: Identifier(
+                                        "NamedConstructor",
+                                    ),
+                                    assign: Assign,
+                                    rhs_identifier: Identifier(
+                                        "Audio",
+                                    ),
+                                    args: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Single(
+                                                    SingleArgument {
+                                                        attributes: None,
+                                                        optional: None,
+                                                        type_: AttributedType {
+                                                            attributes: None,
+                                                            type_: Single(
+                                                                NonAny(
+                                                                    DOMString(
+                                                                        MayBeNull {
+                                                                            type_: DOMString,
+                                                                            q_mark: None,
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                            ),
+                                                        },
+                                                        identifier: Identifier(
+                                                            "src",
+                                                        ),
+                                                        default: None,
+                                                    },
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "HTMLAudioElement",
+            ),
+            inheritance: Some(
+                Inheritance {
+                    colon: Colon,
+                    identifier: Identifier(
+                        "HTMLMediaElement",
+                    ),
+                },
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

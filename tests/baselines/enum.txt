@@ -1,0 +1,210 @@
+[
+    Enum(
+        EnumDefinition {
+            attributes: None,
+            enum_: Enum,
+            identifier: Identifier(
+                "MealType",
+            ),
+            values: Braced {
+                open_brace: OpenBrace,
+                body: PunctuatedNonEmpty {
+                    list: [
+                        StringLit(
+                            "rice",
+                        ),
+                        StringLit(
+                            "noodles",
+                        ),
+                        StringLit(
+                            "other",
+                        ),
+                    ],
+                    separator: Comma,
+                },
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Meal",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "MealType",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "type",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "size",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "initialize",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "MealType",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "type",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: Float,
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "size",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Enum(
+        EnumDefinition {
+            attributes: None,
+            enum_: Enum,
+            identifier: Identifier(
+                "AltMealType",
+            ),
+            values: Braced {
+                open_brace: OpenBrace,
+                body: PunctuatedNonEmpty {
+                    list: [
+                        StringLit(
+                            "rice",
+                        ),
+                        StringLit(
+                            "noodles",
+                        ),
+                        StringLit(
+                            "other",
+                        ),
+                    ],
+                    separator: Comma,
+                },
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

@@ -1,0 +1,108 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Foo",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "foo",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: Some(
+                                                    Bracketed {
+                                                        open_bracket: OpenBracket,
+                                                        body: Punctuated {
+                                                            list: [
+                                                                NoArgs(
+                                                                    ExtendedAttributeNoArgs(
+                                                                        Identifier(
+                                                                            "ExtAttr",
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            ],
+                                                            separator: Comma,
+                                                        },
+                                                        close_bracket: CloseBracket,
+                                                    },
+                                                ),
+                                                optional: Some(
+                                                    Optional,
+                                                ),
+                                                type_: AttributedType {
+                                                    attributes: Some(
+                                                        Bracketed {
+                                                            open_bracket: OpenBracket,
+                                                            body: Punctuated {
+                                                                list: [
+                                                                    NoArgs(
+                                                                        ExtendedAttributeNoArgs(
+                                                                            Identifier(
+                                                                                "Clamp",
+                                                                            ),
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                                separator: Comma,
+                                                            },
+                                                            close_bracket: CloseBracket,
+                                                        },
+                                                    ),
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Integer(
+                                                                MayBeNull {
+                                                                    type_: Short(
+                                                                        ShortType {
+                                                                            unsigned: None,
+                                                                            short: Short,
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "argname",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

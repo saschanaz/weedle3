@@ -1,0 +1,162 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "SetLike",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Setlike(
+                        SetlikeInterfaceMember {
+                            attributes: None,
+                            readonly: None,
+                            setlike: Setlike,
+                            generics: Generics {
+                                open_angle: LessThan,
+                                body: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        NonAny(
+                                            Integer(
+                                                MayBeNull {
+                                                    type_: Long(
+                                                        LongType {
+                                                            unsigned: None,
+                                                            long: Long,
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                close_angle: GreaterThan,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "ReadOnlySetLike",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Setlike(
+                        SetlikeInterfaceMember {
+                            attributes: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            setlike: Setlike,
+                            generics: Generics {
+                                open_angle: LessThan,
+                                body: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        NonAny(
+                                            Integer(
+                                                MayBeNull {
+                                                    type_: Long(
+                                                        LongType {
+                                                            unsigned: None,
+                                                            long: Long,
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                close_angle: GreaterThan,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "SetLikeExt",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Setlike(
+                        SetlikeInterfaceMember {
+                            attributes: None,
+                            readonly: None,
+                            setlike: Setlike,
+                            generics: Generics {
+                                open_angle: LessThan,
+                                body: AttributedType {
+                                    attributes: Some(
+                                        Bracketed {
+                                            open_bracket: OpenBracket,
+                                            body: Punctuated {
+                                                list: [
+                                                    NoArgs(
+                                                        ExtendedAttributeNoArgs(
+                                                            Identifier(
+                                                                "XAttr",
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ],
+                                                separator: Comma,
+                                            },
+                                            close_bracket: CloseBracket,
+                                        },
+                                    ),
+                                    type_: Single(
+                                        NonAny(
+                                            Integer(
+                                                MayBeNull {
+                                                    type_: Long(
+                                                        LongType {
+                                                            unsigned: None,
+                                                            long: Long,
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                close_angle: GreaterThan,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

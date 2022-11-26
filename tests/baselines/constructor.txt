@@ -1,0 +1,378 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Circle",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Constructor(
+                        ConstructorInterfaceMember {
+                            attributes: None,
+                            constructor: Constructor,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Constructor(
+                        ConstructorInterfaceMember {
+                            attributes: None,
+                            constructor: Constructor,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: Float,
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "radius",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Constructor(
+                        ConstructorInterfaceMember {
+                            attributes: None,
+                            constructor: Constructor,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: Some(
+                                                    Optional,
+                                                ),
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "string",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "str",
+                                                ),
+                                                default: Some(
+                                                    Default {
+                                                        assign: Assign,
+                                                        value: String(
+                                                            StringLit(
+                                                                "",
+                                                            ),
+                                                        ),
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Constructor(
+                        ConstructorInterfaceMember {
+                            attributes: None,
+                            constructor: Constructor,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Sequence(
+                                                                MayBeNull {
+                                                                    type_: SequenceType {
+                                                                        sequence: Sequence,
+                                                                        generics: Generics {
+                                                                            open_angle: LessThan,
+                                                                            body: Single(
+                                                                                NonAny(
+                                                                                    Identifier(
+                                                                                        MayBeNull {
+                                                                                            type_: Identifier(
+                                                                                                "string",
+                                                                                            ),
+                                                                                            q_mark: None,
+                                                                                        },
+                                                                                    ),
+                                                                                ),
+                                                                            ),
+                                                                            close_angle: GreaterThan,
+                                                                        },
+                                                                    },
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "seq",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Constructor(
+                        ConstructorInterfaceMember {
+                            attributes: None,
+                            constructor: Constructor,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Union(
+                                                        MayBeNull {
+                                                            type_: Parenthesized {
+                                                                open_paren: OpenParen,
+                                                                body: Punctuated {
+                                                                    list: [
+                                                                        Single(
+                                                                            AttributedNonAnyType {
+                                                                                attributes: None,
+                                                                                type_: Identifier(
+                                                                                    MayBeNull {
+                                                                                        type_: Identifier(
+                                                                                            "Type1",
+                                                                                        ),
+                                                                                        q_mark: None,
+                                                                                    },
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                        Single(
+                                                                            AttributedNonAnyType {
+                                                                                attributes: None,
+                                                                                type_: Identifier(
+                                                                                    MayBeNull {
+                                                                                        type_: Identifier(
+                                                                                            "Type2",
+                                                                                        ),
+                                                                                        q_mark: None,
+                                                                                    },
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    ],
+                                                                    separator: Or,
+                                                                },
+                                                                close_paren: CloseParen,
+                                                            },
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "union",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "r",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cx",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cy",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "circumference",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

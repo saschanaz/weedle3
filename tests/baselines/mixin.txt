@@ -1,0 +1,137 @@
+[
+    InterfaceMixin(
+        InterfaceMixinDefinition {
+            attributes: None,
+            interface: Interface,
+            mixin: Mixin,
+            identifier: Identifier(
+                "GlobalCrypto",
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeMixinMember {
+                            attributes: None,
+                            stringifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Crypto",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "crypto",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    IncludesStatement(
+        IncludesStatementDefinition {
+            attributes: None,
+            lhs_identifier: Identifier(
+                "Window",
+            ),
+            includes: Includes,
+            rhs_identifier: Identifier(
+                "GlobalCrypto",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+    IncludesStatement(
+        IncludesStatementDefinition {
+            attributes: None,
+            lhs_identifier: Identifier(
+                "WorkerGlobalScope",
+            ),
+            includes: Includes,
+            rhs_identifier: Identifier(
+                "GlobalCrypto",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+    PartialInterfaceMixin(
+        PartialInterfaceMixinDefinition {
+            attributes: None,
+            partial: Partial,
+            interface: Interface,
+            mixin: Mixin,
+            identifier: Identifier(
+                "WindowOrWorkerGlobalScope",
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeMixinMember {
+                            attributes: None,
+                            stringifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Crypto",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "crypto",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    InterfaceMixin(
+        InterfaceMixinDefinition {
+            attributes: None,
+            interface: Interface,
+            mixin: Mixin,
+            identifier: Identifier(
+                "LocalCrypto",
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]
