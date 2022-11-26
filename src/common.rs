@@ -83,18 +83,19 @@ ast_types! {
 
     /// Represents an identifier
     ///
-    /// Follows `/_?[A-Za-z][0-9A-Z_a-z-]*/`
+    /// Follows `/[_-]?[A-Za-z][0-9A-Z_a-z-]*/`
     #[derive(Copy)]
     struct Identifier<'a>(
-        // See https://heycam.github.io/webidl/#idl-names for why the leading
-        // underscore is trimmed
-        &'a str = crate::whitespace::ws(nom::sequence::preceded(
-            nom::combinator::opt(nom::character::complete::char('_')),
+        &'a str = crate::whitespace::ws(
             nom::combinator::recognize(nom::sequence::tuple((
+                nom::combinator::opt(nom::branch::alt((
+                    nom::character::complete::char('_'),
+                    nom::character::complete::char('-')
+                ))),
                 nom::bytes::complete::take_while1(nom::AsChar::is_alphanum),
                 nom::bytes::complete::take_while(is_alphanum_underscore_dash),
             )))
-        )),
+        ),
     )
 
     /// Parses rhs of an assignment expression. Ex: `= 45`
