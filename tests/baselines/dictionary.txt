@@ -100,21 +100,24 @@
                                             sequence: Sequence,
                                             generics: Generics {
                                                 open_angle: LessThan,
-                                                body: Single(
-                                                    NonAny(
-                                                        Integer(
-                                                            MayBeNull {
-                                                                type_: Long(
-                                                                    LongType {
-                                                                        unsigned: None,
-                                                                        long: Long,
-                                                                    },
-                                                                ),
-                                                                q_mark: None,
-                                                            },
+                                                body: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Integer(
+                                                                MayBeNull {
+                                                                    type_: Long(
+                                                                        LongType {
+                                                                            unsigned: None,
+                                                                            long: Long,
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
                                                         ),
                                                     ),
-                                                ),
+                                                },
                                                 close_angle: GreaterThan,
                                             },
                                         },

@@ -41,18 +41,21 @@
                                                                         sequence: Sequence,
                                                                         generics: Generics {
                                                                             open_angle: LessThan,
-                                                                            body: Single(
-                                                                                NonAny(
-                                                                                    DOMString(
-                                                                                        MayBeNull {
-                                                                                            type_: DOMString,
-                                                                                            q_mark: Some(
-                                                                                                QMark,
-                                                                                            ),
-                                                                                        },
+                                                                            body: AttributedType {
+                                                                                attributes: None,
+                                                                                type_: Single(
+                                                                                    NonAny(
+                                                                                        DOMString(
+                                                                                            MayBeNull {
+                                                                                                type_: DOMString,
+                                                                                                q_mark: Some(
+                                                                                                    QMark,
+                                                                                                ),
+                                                                                            },
+                                                                                        ),
                                                                                     ),
                                                                                 ),
-                                                                            ),
+                                                                            },
                                                                             close_angle: GreaterThan,
                                                                         },
                                                                     },

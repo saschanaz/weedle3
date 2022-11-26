@@ -498,18 +498,21 @@
                                                     sequence: Sequence,
                                                     generics: Generics {
                                                         open_angle: LessThan,
-                                                        body: Single(
-                                                            NonAny(
-                                                                Identifier(
-                                                                    MayBeNull {
-                                                                        type_: Identifier(
-                                                                            "ReadableStream",
-                                                                        ),
-                                                                        q_mark: None,
-                                                                    },
+                                                        body: AttributedType {
+                                                            attributes: None,
+                                                            type_: Single(
+                                                                NonAny(
+                                                                    Identifier(
+                                                                        MayBeNull {
+                                                                            type_: Identifier(
+                                                                                "ReadableStream",
+                                                                            ),
+                                                                            q_mark: None,
+                                                                        },
+                                                                    ),
                                                                 ),
                                                             ),
-                                                        ),
+                                                        },
                                                         close_angle: GreaterThan,
                                                     },
                                                 },
