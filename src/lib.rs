@@ -65,11 +65,14 @@ pub mod types;
 /// ```
 pub fn parse(raw: &str) -> Result<Definitions<'_>, Err<Error<&str>>> {
     let (remaining, parsed) = Definitions::parse(raw)?;
-    assert!(
-        remaining.is_empty(),
-        "There is redundant raw data after parsing"
-    );
-    Ok(parsed)
+    if remaining.is_empty() || crate::whitespace::sp(remaining).is_ok() {
+        Ok(parsed)
+    } else {
+        Err(nom::Err::Failure(Error {
+            input: remaining,
+            code: nom::error::ErrorKind::Fail,
+        }))
+    }
 }
 
 pub trait Parse<'a>: Sized {
