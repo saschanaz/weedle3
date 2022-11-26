@@ -1,0 +1,182 @@
+[
+    Callback(
+        CallbackDefinition {
+            attributes: None,
+            callback: Callback,
+            identifier: Identifier(
+                "AsyncOperationCallback",
+            ),
+            assign: Assign,
+            return_type: Undefined(
+                Undefined,
+            ),
+            arguments: Parenthesized {
+                open_paren: OpenParen,
+                body: Punctuated {
+                    list: [
+                        Single(
+                            SingleArgument {
+                                attributes: None,
+                                optional: None,
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        NonAny(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: DOMString,
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Identifier(
+                                    "status",
+                                ),
+                                default: None,
+                            },
+                        ),
+                    ],
+                    separator: Comma,
+                },
+                close_paren: CloseParen,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    CallbackInterface(
+        CallbackInterfaceDefinition {
+            attributes: None,
+            callback: Callback,
+            interface: Interface,
+            identifier: Identifier(
+                "EventHandler",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "eventOccurred",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            DOMString(
+                                                                MayBeNull {
+                                                                    type_: DOMString,
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "details",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Callback(
+        CallbackDefinition {
+            attributes: None,
+            callback: Callback,
+            identifier: Identifier(
+                "SortCallback",
+            ),
+            assign: Assign,
+            return_type: Type(
+                Single(
+                    NonAny(
+                        Boolean(
+                            MayBeNull {
+                                type_: Boolean,
+                                q_mark: None,
+                            },
+                        ),
+                    ),
+                ),
+            ),
+            arguments: Parenthesized {
+                open_paren: OpenParen,
+                body: Punctuated {
+                    list: [
+                        Single(
+                            SingleArgument {
+                                attributes: None,
+                                optional: None,
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Any(
+                                            Any,
+                                        ),
+                                    ),
+                                },
+                                identifier: Identifier(
+                                    "a",
+                                ),
+                                default: None,
+                            },
+                        ),
+                        Single(
+                            SingleArgument {
+                                attributes: None,
+                                optional: None,
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Any(
+                                            Any,
+                                        ),
+                                    ),
+                                },
+                                identifier: Identifier(
+                                    "b",
+                                ),
+                                default: None,
+                            },
+                        ),
+                    ],
+                    separator: Comma,
+                },
+                close_paren: CloseParen,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

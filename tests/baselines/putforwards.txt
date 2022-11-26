@@ -1,0 +1,103 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Person",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: Some(
+                                Bracketed {
+                                    open_bracket: OpenBracket,
+                                    body: Punctuated {
+                                        list: [
+                                            Ident(
+                                                ExtendedAttributeIdent {
+                                                    lhs_identifier: Identifier(
+                                                        "PutForwards",
+                                                    ),
+                                                    assign: Assign,
+                                                    rhs: Identifier(
+                                                        Identifier(
+                                                            "full",
+                                                        ),
+                                                    ),
+                                                },
+                                            ),
+                                        ],
+                                        separator: Comma,
+                                    },
+                                    close_bracket: CloseBracket,
+                                },
+                            ),
+                            modifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Name",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "name",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Integer(
+                                            MayBeNull {
+                                                type_: Short(
+                                                    ShortType {
+                                                        unsigned: Some(
+                                                            Unsigned,
+                                                        ),
+                                                        short: Short,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "age",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

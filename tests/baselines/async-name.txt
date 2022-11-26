@@ -1,0 +1,115 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "Exposed",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        Identifier(
+                                            "Window",
+                                        ),
+                                    ),
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "Async",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Boolean(
+                                            MayBeNull {
+                                                type_: Boolean,
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "async",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "asyncOp",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Boolean(
+                                                                MayBeNull {
+                                                                    type_: Boolean,
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "async",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

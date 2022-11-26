@@ -1,0 +1,237 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "MapLike",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Maplike(
+                        MaplikeInterfaceMember {
+                            attributes: None,
+                            readonly: None,
+                            maplike: Maplike,
+                            generics: Generics {
+                                open_angle: LessThan,
+                                body: (
+                                    AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            NonAny(
+                                                Integer(
+                                                    MayBeNull {
+                                                        type_: Long(
+                                                            LongType {
+                                                                unsigned: None,
+                                                                long: Long,
+                                                            },
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                    Comma,
+                                    AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            NonAny(
+                                                FloatingPoint(
+                                                    MayBeNull {
+                                                        type_: Float(
+                                                            FloatType {
+                                                                unrestricted: None,
+                                                                float: Float,
+                                                            },
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                ),
+                                close_angle: GreaterThan,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "ReadOnlyMapLike",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Maplike(
+                        MaplikeInterfaceMember {
+                            attributes: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            maplike: Maplike,
+                            generics: Generics {
+                                open_angle: LessThan,
+                                body: (
+                                    AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            NonAny(
+                                                Integer(
+                                                    MayBeNull {
+                                                        type_: Long(
+                                                            LongType {
+                                                                unsigned: None,
+                                                                long: Long,
+                                                            },
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                    Comma,
+                                    AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            NonAny(
+                                                FloatingPoint(
+                                                    MayBeNull {
+                                                        type_: Float(
+                                                            FloatType {
+                                                                unrestricted: None,
+                                                                float: Float,
+                                                            },
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                ),
+                                close_angle: GreaterThan,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "I",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Maplike(
+                        MaplikeInterfaceMember {
+                            attributes: None,
+                            readonly: None,
+                            maplike: Maplike,
+                            generics: Generics {
+                                open_angle: LessThan,
+                                body: (
+                                    AttributedType {
+                                        attributes: Some(
+                                            Bracketed {
+                                                open_bracket: OpenBracket,
+                                                body: Punctuated {
+                                                    list: [
+                                                        NoArgs(
+                                                            ExtendedAttributeNoArgs(
+                                                                Identifier(
+                                                                    "XAttr2",
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                    separator: Comma,
+                                                },
+                                                close_bracket: CloseBracket,
+                                            },
+                                        ),
+                                        type_: Single(
+                                            NonAny(
+                                                DOMString(
+                                                    MayBeNull {
+                                                        type_: DOMString,
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                    Comma,
+                                    AttributedType {
+                                        attributes: Some(
+                                            Bracketed {
+                                                open_bracket: OpenBracket,
+                                                body: Punctuated {
+                                                    list: [
+                                                        NoArgs(
+                                                            ExtendedAttributeNoArgs(
+                                                                Identifier(
+                                                                    "XAttr3",
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                    separator: Comma,
+                                                },
+                                                close_bracket: CloseBracket,
+                                            },
+                                        ),
+                                        type_: Single(
+                                            NonAny(
+                                                Integer(
+                                                    MayBeNull {
+                                                        type_: Long(
+                                                            LongType {
+                                                                unsigned: None,
+                                                                long: Long,
+                                                            },
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                ),
+                                close_angle: GreaterThan,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

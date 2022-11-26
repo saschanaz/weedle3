@@ -1,0 +1,68 @@
+[
+    Typedef(
+        TypedefDefinition {
+            attributes: None,
+            typedef: Typedef,
+            type_: AttributedType {
+                attributes: None,
+                type_: Single(
+                    NonAny(
+                        Identifier(
+                            MayBeNull {
+                                type_: Identifier(
+                                    "Type",
+                                ),
+                                q_mark: None,
+                            },
+                        ),
+                    ),
+                ),
+            },
+            identifier: Identifier(
+                "EscapedType",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+    Typedef(
+        TypedefDefinition {
+            attributes: None,
+            typedef: Typedef,
+            type_: AttributedType {
+                attributes: None,
+                type_: Single(
+                    NonAny(
+                        Sequence(
+                            MayBeNull {
+                                type_: SequenceType {
+                                    sequence: Sequence,
+                                    generics: Generics {
+                                        open_angle: LessThan,
+                                        body: Single(
+                                            NonAny(
+                                                Identifier(
+                                                    MayBeNull {
+                                                        type_: Identifier(
+                                                            "Type",
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                        close_angle: GreaterThan,
+                                    },
+                                },
+                                q_mark: None,
+                            },
+                        ),
+                    ),
+                ),
+            },
+            identifier: Identifier(
+                "EscapedSequence",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+]

@@ -1,0 +1,191 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Dictionary",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Integer(
+                                            MayBeNull {
+                                                type_: Long(
+                                                    LongType {
+                                                        unsigned: Some(
+                                                            Unsigned,
+                                                        ),
+                                                        long: Long,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "propertyCount",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: Some(
+                                Getter(
+                                    Getter,
+                                ),
+                            ),
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: None,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            DOMString(
+                                                                MayBeNull {
+                                                                    type_: DOMString,
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "propertyName",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: Some(
+                                Setter(
+                                    Setter,
+                                ),
+                            ),
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: None,
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            DOMString(
+                                                                MayBeNull {
+                                                                    type_: DOMString,
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "propertyName",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: Float,
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "propertyValue",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

@@ -1,0 +1,282 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "Exposed",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        Identifier(
+                                            "Window",
+                                        ),
+                                    ),
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "Interface",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "bigint",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "bigint",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "bigint",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "getBig",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "void",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "setBig",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "bigint",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "big",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Dictionary(
+        DictionaryDefinition {
+            attributes: None,
+            dictionary: Dictionary,
+            identifier: Identifier(
+                "Dictionary",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    DictionaryMember {
+                        attributes: None,
+                        required: None,
+                        type_: Single(
+                            NonAny(
+                                Identifier(
+                                    MayBeNull {
+                                        type_: Identifier(
+                                            "bigint",
+                                        ),
+                                        q_mark: None,
+                                    },
+                                ),
+                            ),
+                        ),
+                        identifier: Identifier(
+                            "big",
+                        ),
+                        default: None,
+                        semi_colon: SemiColon,
+                    },
+                    DictionaryMember {
+                        attributes: None,
+                        required: Some(
+                            Required,
+                        ),
+                        type_: Single(
+                            NonAny(
+                                Identifier(
+                                    MayBeNull {
+                                        type_: Identifier(
+                                            "bigint",
+                                        ),
+                                        q_mark: None,
+                                    },
+                                ),
+                            ),
+                        ),
+                        identifier: Identifier(
+                            "another",
+                        ),
+                        default: None,
+                        semi_colon: SemiColon,
+                    },
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Typedef(
+        TypedefDefinition {
+            attributes: None,
+            typedef: Typedef,
+            type_: AttributedType {
+                attributes: None,
+                type_: Union(
+                    MayBeNull {
+                        type_: Parenthesized {
+                            open_paren: OpenParen,
+                            body: Punctuated {
+                                list: [
+                                    Single(
+                                        AttributedNonAnyType {
+                                            attributes: None,
+                                            type_: Identifier(
+                                                MayBeNull {
+                                                    type_: Identifier(
+                                                        "bigint",
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        },
+                                    ),
+                                    Single(
+                                        AttributedNonAnyType {
+                                            attributes: None,
+                                            type_: Integer(
+                                                MayBeNull {
+                                                    type_: Short(
+                                                        ShortType {
+                                                            unsigned: None,
+                                                            short: Short,
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        },
+                                    ),
+                                ],
+                                separator: Or,
+                            },
+                            close_paren: CloseParen,
+                        },
+                        q_mark: None,
+                    },
+                ),
+            },
+            identifier: Identifier(
+                "allowed",
+            ),
+            semi_colon: SemiColon,
+        },
+    ),
+]

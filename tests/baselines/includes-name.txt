@@ -1,0 +1,66 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "Exposed",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        Identifier(
+                                            "Window",
+                                        ),
+                                    ),
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "Includes",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "includes",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

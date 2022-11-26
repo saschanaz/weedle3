@@ -1,0 +1,276 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Point",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Circle",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cx",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cy",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: Float,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "radius",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: Some(
+                                Static(
+                                    Static,
+                                ),
+                            ),
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Integer(
+                                            MayBeNull {
+                                                type_: Long(
+                                                    LongType {
+                                                        unsigned: None,
+                                                        long: Long,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "triangulationCount",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: Some(
+                                Static(
+                                    Static,
+                                ),
+                            ),
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "Point",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "triangulate",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "Circle",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "c1",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "Circle",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "c2",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "Circle",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "c3",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

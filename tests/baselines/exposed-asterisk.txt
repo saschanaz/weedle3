@@ -1,0 +1,37 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Wildcard(
+                                ExtendedAttributeWildcard {
+                                    identifier: Identifier(
+                                        "Exposed",
+                                    ),
+                                    assign: Assign,
+                                    wildcard: Wildcard,
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "X",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

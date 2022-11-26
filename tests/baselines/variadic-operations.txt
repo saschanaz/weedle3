@@ -1,0 +1,151 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "IntegerSet",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Integer(
+                                            MayBeNull {
+                                                type_: Long(
+                                                    LongType {
+                                                        unsigned: Some(
+                                                            Unsigned,
+                                                        ),
+                                                        long: Long,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cardinality",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "union",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Variadic(
+                                            VariadicArgument {
+                                                attributes: None,
+                                                type_: Single(
+                                                    NonAny(
+                                                        Integer(
+                                                            MayBeNull {
+                                                                type_: Long(
+                                                                    LongType {
+                                                                        unsigned: None,
+                                                                        long: Long,
+                                                                    },
+                                                                ),
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                                ellipsis: Ellipsis,
+                                                identifier: Identifier(
+                                                    "ints",
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "intersection",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Variadic(
+                                            VariadicArgument {
+                                                attributes: None,
+                                                type_: Single(
+                                                    NonAny(
+                                                        Integer(
+                                                            MayBeNull {
+                                                                type_: Long(
+                                                                    LongType {
+                                                                        unsigned: None,
+                                                                        long: Long,
+                                                                    },
+                                                                ),
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                                ellipsis: Ellipsis,
+                                                identifier: Identifier(
+                                                    "ints",
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

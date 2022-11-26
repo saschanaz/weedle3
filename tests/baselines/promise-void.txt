@@ -1,0 +1,61 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Cat",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Promise(
+                                            PromiseType {
+                                                promise: Promise,
+                                                generics: Generics {
+                                                    open_angle: LessThan,
+                                                    body: Type(
+                                                        Single(
+                                                            NonAny(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Identifier(
+                                                                            "void",
+                                                                        ),
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    close_angle: GreaterThan,
+                                                },
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "meow",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

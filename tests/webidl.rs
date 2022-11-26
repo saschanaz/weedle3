@@ -3,9 +3,17 @@ use test_generator::test_resources;
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
     let content = std::fs::read_to_string(resource).unwrap();
-    let parsed = weedle::parse(&content);
+    let result = weedle::parse(&content);
 
-    assert!(parsed.is_ok());
+    assert!(result.is_ok());
+
+    let resource_path = std::path::Path::new(resource);
+    let stem = resource_path.file_stem().unwrap().to_str().unwrap();
+    let baseline_path = std::path::Path::new("./tests/baselines/").join(format!("{stem}.txt"));
+    let baseline = std::fs::read_to_string(baseline_path).unwrap();
+
+    let ast = result.unwrap();
+    assert_eq!(format!("{ast:#?}\n"), baseline);
 }
 
 #[test]

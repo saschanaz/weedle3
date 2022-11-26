@@ -1,0 +1,97 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            NoArgs(
+                                ExtendedAttributeNoArgs(
+                                    Identifier(
+                                        "Constructor",
+                                    ),
+                                ),
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "Student",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        Integer(
+                                            MayBeNull {
+                                                type_: Long(
+                                                    LongType {
+                                                        unsigned: Some(
+                                                            Unsigned,
+                                                        ),
+                                                        long: Long,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "id",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: Some(
+                                Stringifier(
+                                    Stringifier,
+                                ),
+                            ),
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        DOMString(
+                                            MayBeNull {
+                                                type_: DOMString,
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "name",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]
