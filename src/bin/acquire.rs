@@ -2,8 +2,6 @@ extern crate weedle;
 
 use std::path::Path;
 
-use weedle::Parse;
-
 fn main() -> std::io::Result<()> {
     let read_dir =
         std::fs::read_dir(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/defs/")).unwrap();
@@ -20,8 +18,8 @@ fn main() -> std::io::Result<()> {
         let content = std::fs::read_to_string(entry.path()).unwrap();
 
         // XXX: Can't be used without unwrap()?
-        let (remaining, parsed) = weedle::Definitions::parse(&content).unwrap();
-        assert!(remaining.is_empty(), "failed to parse {file_name:?}");
+        let parsed =
+            weedle::parse(&content).unwrap_or_else(|_| panic!("failed to parse {file_name:?}"));
         std::fs::write(&out_file_path, format!("{parsed:#?}\n"))
             .unwrap_or_else(|_| panic!("Couldn't write to {out_file_path:?}"))
     }
