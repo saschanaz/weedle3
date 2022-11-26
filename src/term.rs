@@ -201,6 +201,8 @@ generate_terms_for_names! {
     /// Represents the terminal symbol `NaN`
     NaN => "NaN",
 
+    ObservableArray => "ObservableArray",
+
     /// Represents the terminal symbol `USVString`
     USVString => "USVString",
 
@@ -459,6 +461,9 @@ macro_rules! term {
     (NaN) => {
         $crate::term::NaN
     };
+    (ObservableArray) => {
+        $crate::term::ObservableArray
+    };
     (USVString) => {
         $crate::term::USVString
     };
@@ -668,6 +673,7 @@ mod test {
         frozenarray, FrozenArray, "FrozenArray";
         infinity, Infinity, "Infinity";
         nan, NaN, "NaN";
+        observablearray, ObservableArray, "ObservableArray";
         usvstring, USVString, "USVString";
         any, Any, "any";
         boolean, Boolean, "boolean";
