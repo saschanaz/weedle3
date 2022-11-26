@@ -1,12 +1,15 @@
 use crate::argument::ArgumentList;
 use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated};
-use crate::literal::StringLit;
+use crate::literal::{FloatLit, IntegerLit, StringLit};
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
 pub type ExtendedAttributeList<'a> = Bracketed<Punctuated<ExtendedAttribute<'a>, term!(,)>>;
 
 /// Matches comma separated identifier list
 pub type IdentifierList<'a> = Punctuated<Identifier<'a>, term!(,)>;
+pub type StringList<'a> = Punctuated<StringLit<'a>, term!(,)>;
+pub type FloatList<'a> = Punctuated<FloatLit<'a>, term!(,)>;
+pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
 
 ast_types! {
     /// Parses on of the forms of attribute
@@ -41,34 +44,68 @@ ast_types! {
         Ident(struct ExtendedAttributeIdent<'a> {
             lhs_identifier: Identifier<'a>,
             assign: term!(=),
-            rhs: IdentifierOrString<'a>,
+            rhs: Identifier<'a>,
         }),
-        /// Parses a plain attribute. Ex: `Replaceable`
+        /// Parses an attribute with a wildcard. Ex: `Exposed=*`
         #[derive(Copy)]
         Wildcard(struct ExtendedAttributeWildcard<'a> {
-            identifier: Identifier<'a>,
+            lhs_identifier: Identifier<'a>,
             assign: term!(=),
             wildcard: term!(*),
         }),
+
+        /// Things that are not used by the standard Web IDL, but still allowed
+        /// and used by others e.g. Blink and JSDOM
+        /// https://github.com/w3c/webidl2.js/issues/256
+        /// https://github.com/w3c/webidl2.js/issues/455
+
+        /// Parses an attribute with a string. E: `ReflectOnly="on"`
+        #[derive(Copy)]
+        String(struct ExtendedAttributeString<'a> {
+            lhs_identifier: Identifier<'a>,
+            assign: term!(=),
+            rhs: StringLit<'a>,
+        }),
+        StringList(struct ExtendedAttributeStringList<'a> {
+            identifier: Identifier<'a>,
+            assign: term!(=),
+            list: Parenthesized<StringList<'a>>,
+        }),
+        #[derive(Copy)]
+        Float(struct ExtendedAttributeFloat<'a> {
+            lhs_identifier: Identifier<'a>,
+            assign: term!(=),
+            rhs: FloatLit<'a>,
+        }),
+        FloatList(struct ExtendedAttributeFloatList<'a> {
+            identifier: Identifier<'a>,
+            assign: term!(=),
+            list: Parenthesized<FloatList<'a>>,
+        }),
+        #[derive(Copy)]
+        Integer(struct ExtendedAttributeInteger<'a> {
+            lhs_identifier: Identifier<'a>,
+            assign: term!(=),
+            rhs: IntegerLit<'a>,
+        }),
+        IntegerList(struct ExtendedAttributeIntegerList<'a> {
+            identifier: Identifier<'a>,
+            assign: term!(=),
+            list: Parenthesized<IntegerList<'a>>,
+        }),
+
         /// Parses a plain attribute. Ex: `Replaceable`
         #[derive(Copy)]
         NoArgs(struct ExtendedAttributeNoArgs<'a>(
             Identifier<'a>,
         )),
     }
-
-    /// Parses `stringifier|static`
-    #[derive(Copy)]
-    enum IdentifierOrString<'a> {
-        Identifier(Identifier<'a>),
-        String(StringLit<'a>),
-    }
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::Parse;
+    use crate::{literal::FloatValueLit, Parse};
 
     test!(should_parse_attribute_no_args { "Replaceable" =>
         "";
@@ -86,7 +123,7 @@ mod test {
         "";
         ExtendedAttributeIdent;
         lhs_identifier.0 == "PutForwards";
-        rhs == IdentifierOrString::Identifier(Identifier("name"));
+        rhs == Identifier("name");
     });
 
     test!(should_parse_ident_list { "Exposed=(Window,Worker)" =>
@@ -102,5 +139,25 @@ mod test {
         lhs_identifier.0 == "NamedConstructor";
         rhs_identifier.0 == "Image";
         args.body.list.len() == 1;
+    });
+
+    test!(should_parse_string { "ReflectOnly=\"on\"" =>
+        "";
+        ExtendedAttributeString;
+        lhs_identifier.0 == "ReflectOnly";
+        rhs.0 == "on";
+    });
+
+    test!(should_parse_float { "FloatAttr=3.14" =>
+        "";
+        ExtendedAttributeFloat;
+        lhs_identifier.0 == "FloatAttr";
+        rhs == FloatLit::Value(FloatValueLit("3.14"));
+    });
+
+    test!(should_parse_extattr_list { "[IntAttr=0, FloatAttr=3.14]" =>
+        "";
+        ExtendedAttributeList;
+        body.list.len() == 2;
     });
 }

@@ -1,0 +1,501 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            IdentList(
+                                ExtendedAttributeIdentList {
+                                    identifier: Identifier(
+                                        "Global",
+                                    ),
+                                    assign: Assign,
+                                    list: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Identifier(
+                                                    "Worker",
+                                                ),
+                                                Identifier(
+                                                    "ServiceWorker",
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "Exposed",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        "ServiceWorker",
+                                    ),
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "ServiceWorkerGlobalScope",
+            ),
+            inheritance: Some(
+                Inheritance {
+                    colon: Colon,
+                    identifier: Identifier(
+                        "WorkerGlobalScope",
+                    ),
+                },
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Integer(
+                                ExtendedAttributeInteger {
+                                    lhs_identifier: Identifier(
+                                        "IntAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Oct(
+                                        OctLit(
+                                            "0",
+                                        ),
+                                    ),
+                                },
+                            ),
+                            Float(
+                                ExtendedAttributeFloat {
+                                    lhs_identifier: Identifier(
+                                        "FloatAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Value(
+                                        FloatValueLit(
+                                            "3.14",
+                                        ),
+                                    ),
+                                },
+                            ),
+                            String(
+                                ExtendedAttributeString {
+                                    lhs_identifier: Identifier(
+                                        "StringAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: StringLit(
+                                        "abc",
+                                    ),
+                                },
+                            ),
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "IdentifierAttr",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        "_null",
+                                    ),
+                                },
+                            ),
+                            IdentList(
+                                ExtendedAttributeIdentList {
+                                    identifier: Identifier(
+                                        "IdentifiersAttr",
+                                    ),
+                                    assign: Assign,
+                                    list: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Identifier(
+                                                    "_null",
+                                                ),
+                                                Identifier(
+                                                    "_const",
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                            FloatList(
+                                ExtendedAttributeFloatList {
+                                    identifier: Identifier(
+                                        "FloatList",
+                                    ),
+                                    assign: Assign,
+                                    list: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Value(
+                                                    FloatValueLit(
+                                                        "3.14",
+                                                    ),
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "IdInterface",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            NoArgs(
+                                ExtendedAttributeNoArgs(
+                                    Identifier(
+                                        "Constructor",
+                                    ),
+                                ),
+                            ),
+                            ArgList(
+                                ExtendedAttributeArgList {
+                                    identifier: Identifier(
+                                        "Constructor",
+                                    ),
+                                    args: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Single(
+                                                    SingleArgument {
+                                                        attributes: None,
+                                                        optional: None,
+                                                        type_: AttributedType {
+                                                            attributes: None,
+                                                            type_: Single(
+                                                                NonAny(
+                                                                    FloatingPoint(
+                                                                        MayBeNull {
+                                                                            type_: Double(
+                                                                                DoubleType {
+                                                                                    unrestricted: None,
+                                                                                    double: Double,
+                                                                                },
+                                                                            ),
+                                                                            q_mark: None,
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                            ),
+                                                        },
+                                                        identifier: Identifier(
+                                                            "radius",
+                                                        ),
+                                                        default: None,
+                                                    },
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "Circle",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Double(
+                                                    DoubleType {
+                                                        unrestricted: None,
+                                                        double: Double,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "r",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Double(
+                                                    DoubleType {
+                                                        unrestricted: None,
+                                                        double: Double,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cx",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Double(
+                                                    DoubleType {
+                                                        unrestricted: None,
+                                                        double: Double,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "cy",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: Some(
+                                ReadOnly,
+                            ),
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    NonAny(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Double(
+                                                    DoubleType {
+                                                        unrestricted: None,
+                                                        double: Double,
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "circumference",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            Ident(
+                                ExtendedAttributeIdent {
+                                    lhs_identifier: Identifier(
+                                        "Exposed",
+                                    ),
+                                    assign: Assign,
+                                    rhs: Identifier(
+                                        "Window",
+                                    ),
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "I",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: Some(
+                                    Bracketed {
+                                        open_bracket: OpenBracket,
+                                        body: Punctuated {
+                                            list: [
+                                                NoArgs(
+                                                    ExtendedAttributeNoArgs(
+                                                        Identifier(
+                                                            "XAttr",
+                                                        ),
+                                                    ),
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_bracket: CloseBracket,
+                                    },
+                                ),
+                                type_: Union(
+                                    MayBeNull {
+                                        type_: Parenthesized {
+                                            open_paren: OpenParen,
+                                            body: Punctuated {
+                                                list: [
+                                                    Single(
+                                                        AttributedNonAnyType {
+                                                            attributes: None,
+                                                            type_: Integer(
+                                                                MayBeNull {
+                                                                    type_: Long(
+                                                                        LongType {
+                                                                            unsigned: None,
+                                                                            long: Long,
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        },
+                                                    ),
+                                                    Single(
+                                                        AttributedNonAnyType {
+                                                            attributes: None,
+                                                            type_: Identifier(
+                                                                MayBeNull {
+                                                                    type_: Identifier(
+                                                                        "Node",
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        },
+                                                    ),
+                                                ],
+                                                separator: Or,
+                                            },
+                                            close_paren: CloseParen,
+                                        },
+                                        q_mark: None,
+                                    },
+                                ),
+                            },
+                            identifier: Identifier(
+                                "attrib",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]

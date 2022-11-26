@@ -92,7 +92,7 @@ ast_types! {
                     nom::character::complete::char('_'),
                     nom::character::complete::char('-')
                 ))),
-                nom::bytes::complete::take_while1(nom::AsChar::is_alphanum),
+                nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
                 nom::bytes::complete::take_while(is_alphanum_underscore_dash),
             )))
         ),
