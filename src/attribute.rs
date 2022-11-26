@@ -41,7 +41,7 @@ ast_types! {
         Ident(struct ExtendedAttributeIdent<'a> {
             lhs_identifier: Identifier<'a>,
             assign: term!(=),
-            rhs: IdentifierOrString<'a>,
+            rhs: Identifier<'a>,
         }),
         /// Parses a plain attribute. Ex: `Replaceable`
         #[derive(Copy)]
@@ -50,18 +50,25 @@ ast_types! {
             assign: term!(=),
             wildcard: term!(*),
         }),
+
+        /// Things that are not used by the standard Web IDL, but still allowed
+        /// and used by others e.g. Blink and JSDOM
+        /// https://github.com/w3c/webidl2.js/issues/256
+        /// https://github.com/w3c/webidl2.js/issues/455
+
+        /// Parses an attribute with a string. E: `ReflectOnly="on"`
+        #[derive(Copy)]
+        String(struct ExtendedAttributeString<'a> {
+            lhs_identifier: Identifier<'a>,
+            assign: term!(=),
+            rhs: StringLit<'a>,
+        }),
+
         /// Parses a plain attribute. Ex: `Replaceable`
         #[derive(Copy)]
         NoArgs(struct ExtendedAttributeNoArgs<'a>(
             Identifier<'a>,
         )),
-    }
-
-    /// Parses `stringifier|static`
-    #[derive(Copy)]
-    enum IdentifierOrString<'a> {
-        Identifier(Identifier<'a>),
-        String(StringLit<'a>),
     }
 }
 
@@ -86,7 +93,7 @@ mod test {
         "";
         ExtendedAttributeIdent;
         lhs_identifier.0 == "PutForwards";
-        rhs == IdentifierOrString::Identifier(Identifier("name"));
+        rhs == Identifier("name");
     });
 
     test!(should_parse_ident_list { "Exposed=(Window,Worker)" =>
@@ -102,5 +109,12 @@ mod test {
         lhs_identifier.0 == "NamedConstructor";
         rhs_identifier.0 == "Image";
         args.body.list.len() == 1;
+    });
+
+    test!(should_parse_string { "ReflectOnly=\"on\"" =>
+        "";
+        ExtendedAttributeString;
+        lhs_identifier.0 == "ReflectOnly";
+        rhs.0 == "on";
     });
 }
