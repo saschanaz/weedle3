@@ -5,6 +5,11 @@ interface Foo {
   readonly attribute ObservableArray<DOMString> observable;
 };
 
+interface ExtendedFoo {
+  readonly attribute FrozenArray<[Foo] DOMString> frozen;
+  readonly attribute ObservableArray<[Foo] DOMString> observable;
+};
+
 // Extracted from https://slightlyoff.github.io/ServiceWorker/spec/service_worker/ on 2014-05-08
 
 interface ServiceWorkerClients {

@@ -46,6 +46,7 @@ ast_types! {
         ArrayBufferView(MayBeNull<term!(ArrayBufferView)>),
         BufferSource(MayBeNull<term!(BufferSource)>),
         FrozenArrayType(MayBeNull<FrozenArrayType<'a>>),
+        ObservableArrayType(MayBeNull<ObservableArrayType<'a>>),
         RecordType(MayBeNull<RecordType<'a>>),
         Identifier(MayBeNull<Identifier<'a>>),
     }
@@ -59,6 +60,12 @@ ast_types! {
     /// Parses `FrozenArray<Type>`
     struct FrozenArrayType<'a> {
         frozen_array: term!(FrozenArray),
+        generics: Generics<Box<AttributedType<'a>>>,
+    }
+
+    /// Parses `ObservableArray<Type>`
+    struct ObservableArrayType<'a> {
+        observable_array: term!(ObservableArray),
         generics: Generics<Box<AttributedType<'a>>>,
     }
 
