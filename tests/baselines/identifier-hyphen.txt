@@ -1,0 +1,86 @@
+[
+    PartialInterface(
+        PartialInterfaceDefinition {
+            attributes: None,
+            partial: Partial,
+            interface: Interface,
+            identifier: Identifier(
+                "CSSStyleDeclaration",
+            ),
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: Some(
+                                Bracketed {
+                                    open_bracket: OpenBracket,
+                                    body: Punctuated {
+                                        list: [
+                                            NoArgs(
+                                                ExtendedAttributeNoArgs(
+                                                    Identifier(
+                                                        "CEReactions",
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                        separator: Comma,
+                                    },
+                                    close_bracket: CloseBracket,
+                                },
+                            ),
+                            modifier: None,
+                            readonly: None,
+                            attribute: Attribute,
+                            type_: AttributedType {
+                                attributes: Some(
+                                    Bracketed {
+                                        open_bracket: OpenBracket,
+                                        body: Punctuated {
+                                            list: [
+                                                Ident(
+                                                    ExtendedAttributeIdent {
+                                                        lhs_identifier: Identifier(
+                                                            "TreatNullAs",
+                                                        ),
+                                                        assign: Assign,
+                                                        rhs: Identifier(
+                                                            Identifier(
+                                                                "EmptyString",
+                                                            ),
+                                                        ),
+                                                    },
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_bracket: CloseBracket,
+                                    },
+                                ),
+                                type_: Single(
+                                    NonAny(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Identifier(
+                                                    "CSSOMString",
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: Identifier(
+                                "-will-change",
+                            ),
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]
