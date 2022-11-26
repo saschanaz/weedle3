@@ -10,7 +10,7 @@ fn main() -> std::io::Result<()> {
 
     let out_dir_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/baselines/");
 
-    for entry_result in read_dir.into_iter() {
+    for entry_result in read_dir {
         let entry = entry_result?;
         let file_name = entry.file_name();
         let path = entry.path();
@@ -23,7 +23,7 @@ fn main() -> std::io::Result<()> {
         let (remaining, parsed) = weedle::Definitions::parse(&content).unwrap();
         assert!(remaining.is_empty(), "failed to parse {file_name:?}");
         std::fs::write(&out_file_path, format!("{parsed:#?}\n"))
-            .expect(&format!("Couldn't write to {out_file_path:?}"))
+            .unwrap_or_else(|_| panic!("Couldn't write to {out_file_path:?}"))
     }
 
     Ok(())
