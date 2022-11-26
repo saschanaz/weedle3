@@ -1,7 +1,8 @@
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
-use crate::types::{AttributedType, ReturnType};
+use crate::literal::ConstValue;
+use crate::types::{AttributedType, ConstType, ReturnType};
 
 /// Parses namespace members declaration
 pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
@@ -26,6 +27,16 @@ ast_types! {
             attribute: term!(attribute),
             type_: AttributedType<'a>,
             identifier: Identifier<'a>,
+            semi_colon: term!(;),
+        }),
+        /// Parses `[attributes]? const type identifier = value;`
+        Const(struct ConstMember<'a> {
+            attributes: Option<ExtendedAttributeList<'a>>,
+            const_: term!(const),
+            const_type: ConstType<'a>,
+            identifier: Identifier<'a>,
+            assign: term!(=),
+            const_value: ConstValue<'a>,
             semi_colon: term!(;),
         }),
     }
