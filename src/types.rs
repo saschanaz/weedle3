@@ -53,13 +53,13 @@ ast_types! {
     /// Parses `sequence<Type>`
     struct SequenceType<'a> {
         sequence: term!(sequence),
-        generics: Generics<Box<Type<'a>>>,
+        generics: Generics<Box<AttributedType<'a>>>,
     }
 
     /// Parses `FrozenArray<Type>`
     struct FrozenArrayType<'a> {
         frozen_array: term!(FrozenArray),
-        generics: Generics<Box<Type<'a>>>,
+        generics: Generics<Box<AttributedType<'a>>>,
     }
 
     /// Parses a nullable type. Ex: `object | object??`
@@ -120,7 +120,7 @@ ast_types! {
     /// Parses `record<StringType, Type>`
     struct RecordType<'a> {
         record: term!(record),
-        generics: Generics<(Box<RecordKeyType<'a>>, term!(,), Box<Type<'a>>)>,
+        generics: Generics<(Box<RecordKeyType<'a>>, term!(,), Box<AttributedType<'a>>)>,
     }
 
     /// Parses one of the string types `ByteString|DOMString|USVString` or any other type.

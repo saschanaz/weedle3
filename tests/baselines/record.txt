@@ -1,0 +1,368 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: Some(
+                Bracketed {
+                    open_bracket: OpenBracket,
+                    body: Punctuated {
+                        list: [
+                            ArgList(
+                                ExtendedAttributeArgList {
+                                    identifier: Identifier(
+                                        "Constructor",
+                                    ),
+                                    args: Parenthesized {
+                                        open_paren: OpenParen,
+                                        body: Punctuated {
+                                            list: [
+                                                Single(
+                                                    SingleArgument {
+                                                        attributes: None,
+                                                        optional: None,
+                                                        type_: AttributedType {
+                                                            attributes: None,
+                                                            type_: Single(
+                                                                NonAny(
+                                                                    RecordType(
+                                                                        MayBeNull {
+                                                                            type_: RecordType {
+                                                                                record: Record,
+                                                                                generics: Generics {
+                                                                                    open_angle: LessThan,
+                                                                                    body: (
+                                                                                        USV(
+                                                                                            USVString,
+                                                                                        ),
+                                                                                        Comma,
+                                                                                        AttributedType {
+                                                                                            attributes: None,
+                                                                                            type_: Single(
+                                                                                                NonAny(
+                                                                                                    USVString(
+                                                                                                        MayBeNull {
+                                                                                                            type_: USVString,
+                                                                                                            q_mark: None,
+                                                                                                        },
+                                                                                                    ),
+                                                                                                ),
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                    close_angle: GreaterThan,
+                                                                                },
+                                                                            },
+                                                                            q_mark: None,
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                            ),
+                                                        },
+                                                        identifier: Identifier(
+                                                            "init",
+                                                        ),
+                                                        default: None,
+                                                    },
+                                                ),
+                                            ],
+                                            separator: Comma,
+                                        },
+                                        close_paren: CloseParen,
+                                    },
+                                },
+                            ),
+                        ],
+                        separator: Comma,
+                    },
+                    close_bracket: CloseBracket,
+                },
+            ),
+            interface: Interface,
+            identifier: Identifier(
+                "Foo",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Undefined(
+                                Undefined,
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "foo",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        NonAny(
+                                                            Sequence(
+                                                                MayBeNull {
+                                                                    type_: SequenceType {
+                                                                        sequence: Sequence,
+                                                                        generics: Generics {
+                                                                            open_angle: LessThan,
+                                                                            body: AttributedType {
+                                                                                attributes: None,
+                                                                                type_: Single(
+                                                                                    NonAny(
+                                                                                        RecordType(
+                                                                                            MayBeNull {
+                                                                                                type_: RecordType {
+                                                                                                    record: Record,
+                                                                                                    generics: Generics {
+                                                                                                        open_angle: LessThan,
+                                                                                                        body: (
+                                                                                                            Byte(
+                                                                                                                ByteString,
+                                                                                                            ),
+                                                                                                            Comma,
+                                                                                                            AttributedType {
+                                                                                                                attributes: None,
+                                                                                                                type_: Single(
+                                                                                                                    Any(
+                                                                                                                        Any,
+                                                                                                                    ),
+                                                                                                                ),
+                                                                                                            },
+                                                                                                        ),
+                                                                                                        close_angle: GreaterThan,
+                                                                                                    },
+                                                                                                },
+                                                                                                q_mark: None,
+                                                                                            },
+                                                                                        ),
+                                                                                    ),
+                                                                                ),
+                                                                            },
+                                                                            close_angle: GreaterThan,
+                                                                        },
+                                                                    },
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: Identifier(
+                                                    "param",
+                                                ),
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        RecordType(
+                                            MayBeNull {
+                                                type_: RecordType {
+                                                    record: Record,
+                                                    generics: Generics {
+                                                        open_angle: LessThan,
+                                                        body: (
+                                                            DOM(
+                                                                DOMString,
+                                                            ),
+                                                            Comma,
+                                                            AttributedType {
+                                                                attributes: None,
+                                                                type_: Union(
+                                                                    MayBeNull {
+                                                                        type_: Parenthesized {
+                                                                            open_paren: OpenParen,
+                                                                            body: Punctuated {
+                                                                                list: [
+                                                                                    Single(
+                                                                                        AttributedNonAnyType {
+                                                                                            attributes: None,
+                                                                                            type_: FloatingPoint(
+                                                                                                MayBeNull {
+                                                                                                    type_: Float(
+                                                                                                        FloatType {
+                                                                                                            unrestricted: None,
+                                                                                                            float: Float,
+                                                                                                        },
+                                                                                                    ),
+                                                                                                    q_mark: None,
+                                                                                                },
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                    Single(
+                                                                                        AttributedNonAnyType {
+                                                                                            attributes: None,
+                                                                                            type_: DOMString(
+                                                                                                MayBeNull {
+                                                                                                    type_: DOMString,
+                                                                                                    q_mark: None,
+                                                                                                },
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                ],
+                                                                                separator: Or,
+                                                                            },
+                                                                            close_paren: CloseParen,
+                                                                        },
+                                                                        q_mark: Some(
+                                                                            QMark,
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            },
+                                                        ),
+                                                        close_angle: GreaterThan,
+                                                    },
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "bar",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: Interface,
+            identifier: Identifier(
+                "Bar",
+            ),
+            inheritance: None,
+            members: Braced {
+                open_brace: OpenBrace,
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            special: None,
+                            return_type: Type(
+                                Single(
+                                    NonAny(
+                                        RecordType(
+                                            MayBeNull {
+                                                type_: RecordType {
+                                                    record: Record,
+                                                    generics: Generics {
+                                                        open_angle: LessThan,
+                                                        body: (
+                                                            DOM(
+                                                                DOMString,
+                                                            ),
+                                                            Comma,
+                                                            AttributedType {
+                                                                attributes: Some(
+                                                                    Bracketed {
+                                                                        open_bracket: OpenBracket,
+                                                                        body: Punctuated {
+                                                                            list: [
+                                                                                NoArgs(
+                                                                                    ExtendedAttributeNoArgs(
+                                                                                        Identifier(
+                                                                                            "XAttr",
+                                                                                        ),
+                                                                                    ),
+                                                                                ),
+                                                                            ],
+                                                                            separator: Comma,
+                                                                        },
+                                                                        close_bracket: CloseBracket,
+                                                                    },
+                                                                ),
+                                                                type_: Single(
+                                                                    NonAny(
+                                                                        FloatingPoint(
+                                                                            MayBeNull {
+                                                                                type_: Float(
+                                                                                    FloatType {
+                                                                                        unrestricted: None,
+                                                                                        float: Float,
+                                                                                    },
+                                                                                ),
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                        ),
+                                                        close_angle: GreaterThan,
+                                                    },
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                Identifier(
+                                    "bar",
+                                ),
+                            ),
+                            args: Parenthesized {
+                                open_paren: OpenParen,
+                                body: Punctuated {
+                                    list: [],
+                                    separator: Comma,
+                                },
+                                close_paren: CloseParen,
+                            },
+                            semi_colon: SemiColon,
+                        },
+                    ),
+                ],
+                close_brace: CloseBrace,
+            },
+            semi_colon: SemiColon,
+        },
+    ),
+]
