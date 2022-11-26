@@ -45,6 +45,13 @@ ast_types! {
         }),
         /// Parses a plain attribute. Ex: `Replaceable`
         #[derive(Copy)]
+        Wildcard(struct ExtendedAttributeWildcard<'a> {
+            identifier: Identifier<'a>,
+            assign: term!(=),
+            wildcard: term!(*),
+        }),
+        /// Parses a plain attribute. Ex: `Replaceable`
+        #[derive(Copy)]
         NoArgs(struct ExtendedAttributeNoArgs<'a>(
             Identifier<'a>,
         )),

@@ -101,7 +101,10 @@ generate_terms! {
     GreaterThan => ">",
 
     /// Represents the terminal symbol `?`
-    QMark => "?"
+    QMark => "?",
+
+    /// Represents the terminal symbol `*`
+    Wildcard => "*"
 }
 
 generate_terms_for_names! {
@@ -359,6 +362,9 @@ macro_rules! term {
     };
     (?) => {
         $crate::term::QMark
+    };
+    (*) => {
+        $crate::term::Wildcard
     };
     (or) => {
         $crate::term::Or
