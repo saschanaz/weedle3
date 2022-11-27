@@ -48,6 +48,8 @@ pub mod mixin;
 pub mod namespace;
 pub mod types;
 
+pub mod lexer;
+
 /// A convenient parse function
 ///
 /// ### Example
