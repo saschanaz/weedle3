@@ -67,12 +67,7 @@ pub fn tokens(input: &str) -> NomResult<Vec<(&str, Token)>> {
     ))(input)?;
 
     // TODO: use _eof value for source text reconstruction
-    tokens.push((
-        eof,
-        Token {
-            tag: TokenTag::Eof,
-        },
-    ));
+    tokens.push((eof, Token { tag: TokenTag::Eof }));
 
     Ok((unread, tokens))
 }
