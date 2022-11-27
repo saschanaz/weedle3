@@ -13,15 +13,14 @@ pub enum TokenTag<'a> {
     Decimal(FloatLit<'a>),
     Identifier(Identifier<'a>),
     String(StringLit<'a>),
-    Other,
+    Other(char),
     Eof,
 }
 
 pub struct Token<'a> {
     tag: TokenTag<'a>,
-    //  value: &'a str,
-    //  trivia: &'a str,
-
+    // value: &'a str,
+    trivia: &'a str,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
     // line: u32,
 
@@ -34,47 +33,40 @@ pub struct Token<'a> {
     // index: u32,
 }
 
+// fn keyword(input: &str) -> NomResult<ch
+
 fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-pub fn token(input: &str) -> NomResult<Token> {
+pub fn token(input: &str) -> NomResult<TokenTag> {
     nom::branch::alt((
-        nom::combinator::map(IntegerLit::parse, |result| Token {
-            tag: TokenTag::Integer(result),
-        }),
-        nom::combinator::map(FloatLit::parse, |result| Token {
-            tag: TokenTag::Decimal(result),
-        }),
-        nom::combinator::map(Identifier::parse, |result| Token {
-            tag: TokenTag::Identifier(result),
-        }),
-        nom::combinator::map(StringLit::parse, |result| Token {
-            tag: TokenTag::String(result),
-        }),
-        nom::combinator::map(other, |_| Token {
-            tag: TokenTag::Other,
-        }),
+        nom::combinator::map(IntegerLit::parse, TokenTag::Integer),
+        nom::combinator::map(FloatLit::parse, TokenTag::Decimal),
+        nom::combinator::map(Identifier::parse, TokenTag::Identifier),
+        nom::combinator::map(StringLit::parse, TokenTag::String),
+        nom::combinator::map(other, TokenTag::Other),
     ))(input)
 }
 
-pub fn tokens(input: &str) -> NomResult<Vec<(&str, Token)>> {
+pub fn tokens(input: &str) -> NomResult<Vec<Token>> {
     // A little bit of hack with tuple since many0 is not compatible with eof
     // (It requires consuming at least one character)
-    let (unread, (mut tokens, eof)) = nom::sequence::tuple((
-        many0(nom::sequence::tuple((sp, token))),
-        nom::combinator::eof,
+    let (unread, (mut tokens, (eof_trivia, _))) = nom::sequence::tuple((
+        many0(nom::combinator::map(
+            nom::sequence::tuple((sp, token)),
+            |(trivia, tag)| Token { tag, trivia },
+        )),
+        nom::sequence::tuple((sp, nom::combinator::eof)),
     ))(input)?;
 
-    // TODO: use _eof value for source text reconstruction
-    tokens.push((eof, Token { tag: TokenTag::Eof }));
+    tokens.push(Token {
+        tag: TokenTag::Eof,
+        trivia: eof_trivia,
+    });
 
     Ok((unread, tokens))
 }
-
-// pub fn tokens(input: &str) -> NomResult<(&str, Token)> {
-//     nom::sequence::tuple((sp, token))(input)
-// }
 
 #[cfg(test)]
 mod tests {
@@ -87,42 +79,42 @@ mod tests {
         assert_eq!(tokens.len(), 7);
 
         // TODO: This should be a keyword instead
-        match tokens[0].1.tag {
+        match tokens[0].tag {
             TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
         // TODO: This should be a keyword instead
-        match tokens[1].1.tag {
+        match tokens[1].tag {
             TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
         // TODO: This should be a keyword instead
-        match tokens[2].1.tag {
+        match tokens[2].tag {
             TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
         // TODO: This should be a recognized punctuation instead
-        match tokens[3].1.tag {
-            TokenTag::Other => assert!(true, "Should be TokenTag::Other"),
+        match tokens[3].tag {
+            TokenTag::Other(_) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
         // TODO: This should be a recognized punctuation instead
-        match tokens[4].1.tag {
-            TokenTag::Other => assert!(true, "Should be TokenTag::Other"),
+        match tokens[4].tag {
+            TokenTag::Other(_) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
         // TODO: This should be a recognized punctuation instead
-        match tokens[5].1.tag {
-            TokenTag::Other => assert!(true, "Should be TokenTag::Other"),
+        match tokens[5].tag {
+            TokenTag::Other(_) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
-        match tokens[6].1.tag {
+        match tokens[6].tag {
             TokenTag::Eof => assert!(true, "Should be TokenTag::Eof"),
             _ => assert!(false, "Should be TokenTag::Eof"),
         }
