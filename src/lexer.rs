@@ -5,10 +5,14 @@ use crate::literal::{FloatLit, IntegerLit, StringLit};
 use crate::whitespace::sp;
 use crate::Parse;
 
+mod keywords;
+use keywords::Keyword;
+
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum TokenTag<'a> {
+    Keyword(Keyword<'a>),
     Integer(IntegerLit<'a>),
     Decimal(FloatLit<'a>),
     Identifier(Identifier<'a>),
@@ -41,6 +45,7 @@ fn other(input: &str) -> NomResult<char> {
 
 pub fn token(input: &str) -> NomResult<TokenTag> {
     nom::branch::alt((
+        nom::combinator::map(Keyword::parse, TokenTag::Keyword),
         nom::combinator::map(IntegerLit::parse, TokenTag::Integer),
         nom::combinator::map(FloatLit::parse, TokenTag::Decimal),
         nom::combinator::map(Identifier::parse, TokenTag::Identifier),
@@ -98,19 +103,19 @@ mod tests {
 
         // TODO: This should be a recognized punctuation instead
         match tokens[3].tag {
-            TokenTag::Other(_) => assert!(true, "Should be TokenTag::Other"),
+            TokenTag::Keyword(Keyword::OpenBrace(_)) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
         // TODO: This should be a recognized punctuation instead
         match tokens[4].tag {
-            TokenTag::Other(_) => assert!(true, "Should be TokenTag::Other"),
+            TokenTag::Keyword(Keyword::CloseBrace(_)) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
         // TODO: This should be a recognized punctuation instead
         match tokens[5].tag {
-            TokenTag::Other(_) => assert!(true, "Should be TokenTag::Other"),
+            TokenTag::Keyword(Keyword::SemiColon(_)) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
