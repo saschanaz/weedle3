@@ -22,9 +22,9 @@ pub enum TokenTag<'a> {
 }
 
 pub struct Token<'a> {
-    tag: TokenTag<'a>,
+    pub tag: TokenTag<'a>,
     // value: &'a str,
-    trivia: &'a str,
+    pub trivia: &'a str,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
     // line: u32,
 
@@ -83,37 +83,31 @@ mod tests {
         assert!(unread.is_empty());
         assert_eq!(tokens.len(), 7);
 
-        // TODO: This should be a keyword instead
         match tokens[0].tag {
-            TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
+            TokenTag::Keyword(Keyword::Interface(_)) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
-        // TODO: This should be a keyword instead
         match tokens[1].tag {
-            TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
+            TokenTag::Keyword(Keyword::Mixin(_)) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
-        // TODO: This should be a keyword instead
         match tokens[2].tag {
             TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
-        // TODO: This should be a recognized punctuation instead
         match tokens[3].tag {
             TokenTag::Keyword(Keyword::OpenBrace(_)) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
-        // TODO: This should be a recognized punctuation instead
         match tokens[4].tag {
             TokenTag::Keyword(Keyword::CloseBrace(_)) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
         }
 
-        // TODO: This should be a recognized punctuation instead
         match tokens[5].tag {
             TokenTag::Keyword(Keyword::SemiColon(_)) => assert!(true, "Should be TokenTag::Other"),
             _ => assert!(false, "Should be TokenTag::Other"),
