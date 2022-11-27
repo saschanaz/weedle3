@@ -84,12 +84,12 @@ mod tests {
         assert_eq!(tokens.len(), 7);
 
         match tokens[0].tag {
-            TokenTag::Keyword(Keyword::Interface(_)) => assert!(true, "Should be an identifier"),
+            TokenTag::Keyword(Keyword::Interface(_)) => assert!(true, "Should be Keyword::Interface"),
             _ => assert!(false, "Should be an identifier"),
         }
 
         match tokens[1].tag {
-            TokenTag::Keyword(Keyword::Mixin(_)) => assert!(true, "Should be an identifier"),
+            TokenTag::Keyword(Keyword::Mixin(_)) => assert!(true, "Should be an Keyword::Mixin"),
             _ => assert!(false, "Should be an identifier"),
         }
 
@@ -99,18 +99,18 @@ mod tests {
         }
 
         match tokens[3].tag {
-            TokenTag::Keyword(Keyword::OpenBrace(_)) => assert!(true, "Should be TokenTag::Other"),
-            _ => assert!(false, "Should be TokenTag::Other"),
+            TokenTag::Keyword(Keyword::OpenBrace(_)) => assert!(true, "Should be Keyword::OpenBrace"),
+            _ => assert!(false, "Should be Keyword::OpenBrace"),
         }
 
         match tokens[4].tag {
-            TokenTag::Keyword(Keyword::CloseBrace(_)) => assert!(true, "Should be TokenTag::Other"),
-            _ => assert!(false, "Should be TokenTag::Other"),
+            TokenTag::Keyword(Keyword::CloseBrace(_)) => assert!(true, "Should be Keyword::CloseBrace"),
+            _ => assert!(false, "Should be Keyword::CloseBrace"),
         }
 
         match tokens[5].tag {
-            TokenTag::Keyword(Keyword::SemiColon(_)) => assert!(true, "Should be TokenTag::Other"),
-            _ => assert!(false, "Should be TokenTag::Other"),
+            TokenTag::Keyword(Keyword::SemiColon(_)) => assert!(true, "Should be Keyword::SemiColon"),
+            _ => assert!(false, "Should be Keyword::SemiColon"),
         }
 
         match tokens[6].tag {
