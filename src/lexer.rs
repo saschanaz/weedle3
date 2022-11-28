@@ -21,6 +21,7 @@ pub enum TokenTag<'a> {
     Eof,
 }
 
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Token<'a> {
     pub tag: TokenTag<'a>,
     // value: &'a str,
@@ -43,7 +44,7 @@ fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-pub fn token(input: &str) -> NomResult<TokenTag> {
+fn token(input: &str) -> NomResult<TokenTag> {
     nom::branch::alt((
         nom::combinator::map(Keyword::parse, TokenTag::Keyword),
         nom::combinator::map(IntegerLit::parse, TokenTag::Integer),
@@ -54,7 +55,7 @@ pub fn token(input: &str) -> NomResult<TokenTag> {
     ))(input)
 }
 
-pub fn tokens(input: &str) -> NomResult<Vec<Token>> {
+pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
     // A little bit of hack with tuple since many0 is not compatible with eof
     // (It requires consuming at least one character)
     let (unread, (mut tokens, (eof_trivia, _))) = nom::sequence::tuple((
@@ -65,12 +66,15 @@ pub fn tokens(input: &str) -> NomResult<Vec<Token>> {
         nom::sequence::tuple((sp, nom::combinator::eof)),
     ))(input)?;
 
+    // Cannot be empty here since eof would fail then
+    assert!(unread.is_empty());
+
     tokens.push(Token {
         tag: TokenTag::Eof,
         trivia: eof_trivia,
     });
 
-    Ok((unread, tokens))
+    Ok(tokens)
 }
 
 #[cfg(test)]
@@ -79,8 +83,7 @@ mod tests {
 
     #[test]
     fn test() {
-        let (unread, tokens) = tokens("interface mixin Foo {};").unwrap();
-        assert!(unread.is_empty());
+        let tokens = lex("interface mixin Foo {};").unwrap();
         assert_eq!(tokens.len(), 7);
 
         match tokens[0].tag {

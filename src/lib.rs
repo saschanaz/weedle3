@@ -49,6 +49,7 @@ pub mod namespace;
 pub mod types;
 
 pub mod lexer;
+pub mod parser;
 
 /// A convenient parse function
 ///
