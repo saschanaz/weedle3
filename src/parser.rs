@@ -1,43 +1,51 @@
 mod impl_nom_traits;
-
-use std::ops::RangeFrom;
+use impl_nom_traits::Tokens;
 
 use nom::IResult;
 
-use crate::lexer::{lex, Token, TokenTag};
+use crate::lexer::{keywords::Keyword, lex, Tag, Token};
 
 pub enum ErrorKind<'a> {
     Lexer(nom::Err<nom::error::Error<&'a str>>),
     Parser(nom::Err<nom::error::Error<&'a [Token<'a>]>>),
 }
 
-pub fn identifier<'a, I>(input: I) -> IResult<I, Token<'a>>
+// XXX: Working around the lambda function limitation about lifetimes
+// https://github.com/rust-lang/rust/issues/58052
+fn annotate<'a, F>(f: F) -> F
 where
-    I: nom::Slice<RangeFrom<usize>> + nom::InputIter<Item = Token<'a>>,
+    F: Fn(Tokens<'a>) -> IResult<Tokens<'a>, Token<'a>>,
 {
-    match input
-        .iter_elements()
-        .next()
-        .map(|t| (t, matches!(t.tag, TokenTag::Identifier(_))))
-    {
-        Some((t, true)) => Ok((input.slice(1..), t)),
-        _ => Err(nom::Err::Error(nom::error::Error {
-            input,
-            code: nom::error::ErrorKind::Char,
-        })),
-    }
+    f
 }
 
-// macro_rules! keyword {
+macro_rules! eat {
+    ($matcher:pat_param) => {
+        annotate(|input: Tokens| -> IResult<Tokens, Token> {
+            use nom::{InputIter, Slice};
+            match input
+                .iter_elements()
+                .next()
+                .map(|t| (t, matches!(t.tag, $matcher)))
+            {
+                Some((t, true)) => Ok((input.slice(1..), t)),
+                _ => Err(nom::Err::Error(nom::error::Error {
+                    input,
+                    code: nom::error::ErrorKind::Char,
+                })),
+            }
+        })
+    };
+}
 
-// }
-
-// pub fn includes_statement(tokens: &[Token]) {
-// lhs_identifier: Identifier<'a>,
-// includes: term!(implements),
-// rhs_identifier: Identifier<'a>,
-// semi_colon: term!(;),
-// }
+pub fn includes_statement(tokens: Tokens) -> IResult<Tokens, (Token, Token, Token, Token)> {
+    nom::sequence::tuple((
+        eat!(Tag::Id(_)),
+        eat!(Tag::Kw(Keyword::Includes(_))),
+        eat!(Tag::Id(_)),
+        eat!(Tag::Kw(Keyword::SemiColon(_))),
+    ))(tokens)
+}
 
 pub fn parse(input: &str) -> IResult<Vec<Token>, (), ErrorKind> {
     let tokens = lex(input).map_err(|err| nom::Err::Failure(ErrorKind::Lexer(err)))?;
@@ -47,34 +55,49 @@ pub fn parse(input: &str) -> IResult<Vec<Token>, (), ErrorKind> {
 
 #[cfg(test)]
 mod tests {
+    use crate::lexer;
+
     use super::{impl_nom_traits::Tokens, *};
 
     #[test]
     fn test() {
-        let (remaining, (id1, id2)) = nom::sequence::tuple((identifier, identifier))(Tokens(&[
-            Token {
-                tag: TokenTag::Identifier(crate::common::Identifier("foo")),
-                trivia: "",
-            },
-            Token {
-                tag: TokenTag::Identifier(crate::common::Identifier("bar")),
-                trivia: "",
-            },
-        ]))
-        .unwrap();
+        let (remaining, (id1, id2)) =
+            nom::sequence::tuple((eat!(Tag::Id(_)), eat!(Tag::Id(_))))(Tokens(&[
+                Token {
+                    tag: Tag::Id(crate::common::Identifier("foo")),
+                    trivia: "",
+                },
+                Token {
+                    tag: Tag::Id(crate::common::Identifier("bar")),
+                    trivia: "",
+                },
+            ]))
+            .unwrap();
 
         assert!(remaining.0.is_empty());
 
-        if let TokenTag::Identifier(crate::common::Identifier(id)) = id1.tag {
+        if let Tag::Id(crate::common::Identifier(id)) = id1.tag {
             assert_eq!(id, "foo", "id1 should be foo");
         } else {
             assert!(false, "id1 should be foo")
         }
 
-        if let TokenTag::Identifier(crate::common::Identifier(id)) = id2.tag {
+        if let Tag::Id(crate::common::Identifier(id)) = id2.tag {
             assert_eq!(id, "bar", "id2 should be bar");
         } else {
             assert!(false, "id2 should be bar")
         }
+    }
+
+    #[test]
+    fn interface_mixin() {
+        let tokens = lexer::lex("Foo includes Bar;").unwrap();
+        let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
+
+        assert!(matches!(unread.0[0].tag, Tag::Eof));
+        assert!(matches!(result.0.tag, Tag::Id(_)));
+        assert!(matches!(result.1.tag, Tag::Kw(Keyword::Includes(_))));
+        assert!(matches!(result.2.tag, Tag::Id(_)));
+        assert!(matches!(result.3.tag, Tag::Kw(Keyword::SemiColon(_))));
     }
 }

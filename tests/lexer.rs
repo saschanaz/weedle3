@@ -10,7 +10,7 @@ fn should_lex(resource: &str) {
     let tokens = result.unwrap();
 
     match tokens.last().unwrap().tag {
-        weedle::lexer::TokenTag::Eof => assert!(true, "Last token should be EOF"),
+        weedle::lexer::Tag::Eof => assert!(true, "Last token should be EOF"),
         _ => assert!(false, "Last token should be EOF"),
     }
 

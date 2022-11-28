@@ -5,25 +5,25 @@ use crate::literal::{FloatLit, IntegerLit, StringLit};
 use crate::whitespace::sp;
 use crate::Parse;
 
-mod keywords;
+pub mod keywords;
 use keywords::Keyword;
 
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum TokenTag<'a> {
-    Keyword(Keyword<'a>),
-    Integer(IntegerLit<'a>),
-    Decimal(FloatLit<'a>),
-    Identifier(Identifier<'a>),
-    String(StringLit<'a>),
+pub enum Tag<'a> {
+    Kw(Keyword<'a>),
+    Int(IntegerLit<'a>),
+    Dec(FloatLit<'a>),
+    Id(Identifier<'a>),
+    Str(StringLit<'a>),
     Other(char),
     Eof,
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Token<'a> {
-    pub tag: TokenTag<'a>,
+    pub tag: Tag<'a>,
     // value: &'a str,
     pub trivia: &'a str,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
@@ -44,14 +44,14 @@ fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-fn token(input: &str) -> NomResult<TokenTag> {
+fn token(input: &str) -> NomResult<Tag> {
     nom::branch::alt((
-        nom::combinator::map(Keyword::parse, TokenTag::Keyword),
-        nom::combinator::map(IntegerLit::parse, TokenTag::Integer),
-        nom::combinator::map(FloatLit::parse, TokenTag::Decimal),
-        nom::combinator::map(Identifier::parse, TokenTag::Identifier),
-        nom::combinator::map(StringLit::parse, TokenTag::String),
-        nom::combinator::map(other, TokenTag::Other),
+        nom::combinator::map(Keyword::parse, Tag::Kw),
+        nom::combinator::map(IntegerLit::parse, Tag::Int),
+        nom::combinator::map(FloatLit::parse, Tag::Dec),
+        nom::combinator::map(Identifier::parse, Tag::Id),
+        nom::combinator::map(StringLit::parse, Tag::Str),
+        nom::combinator::map(other, Tag::Other),
     ))(input)
 }
 
@@ -70,7 +70,7 @@ pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>>
     assert!(unread.is_empty());
 
     tokens.push(Token {
-        tag: TokenTag::Eof,
+        tag: Tag::Eof,
         trivia: eof_trivia,
     });
 
@@ -87,45 +87,45 @@ mod tests {
         assert_eq!(tokens.len(), 7);
 
         match tokens[0].tag {
-            TokenTag::Keyword(Keyword::Interface(_)) => {
+            Tag::Kw(Keyword::Interface(_)) => {
                 assert!(true, "Should be Keyword::Interface")
             }
             _ => assert!(false, "Should be an identifier"),
         }
 
         match tokens[1].tag {
-            TokenTag::Keyword(Keyword::Mixin(_)) => assert!(true, "Should be an Keyword::Mixin"),
+            Tag::Kw(Keyword::Mixin(_)) => assert!(true, "Should be an Keyword::Mixin"),
             _ => assert!(false, "Should be an identifier"),
         }
 
         match tokens[2].tag {
-            TokenTag::Identifier(_) => assert!(true, "Should be an identifier"),
+            Tag::Id(_) => assert!(true, "Should be an identifier"),
             _ => assert!(false, "Should be an identifier"),
         }
 
         match tokens[3].tag {
-            TokenTag::Keyword(Keyword::OpenBrace(_)) => {
+            Tag::Kw(Keyword::OpenBrace(_)) => {
                 assert!(true, "Should be Keyword::OpenBrace")
             }
             _ => assert!(false, "Should be Keyword::OpenBrace"),
         }
 
         match tokens[4].tag {
-            TokenTag::Keyword(Keyword::CloseBrace(_)) => {
+            Tag::Kw(Keyword::CloseBrace(_)) => {
                 assert!(true, "Should be Keyword::CloseBrace")
             }
             _ => assert!(false, "Should be Keyword::CloseBrace"),
         }
 
         match tokens[5].tag {
-            TokenTag::Keyword(Keyword::SemiColon(_)) => {
+            Tag::Kw(Keyword::SemiColon(_)) => {
                 assert!(true, "Should be Keyword::SemiColon")
             }
             _ => assert!(false, "Should be Keyword::SemiColon"),
         }
 
         match tokens[6].tag {
-            TokenTag::Eof => assert!(true, "Should be TokenTag::Eof"),
+            Tag::Eof => assert!(true, "Should be TokenTag::Eof"),
             _ => assert!(false, "Should be TokenTag::Eof"),
         }
     }
