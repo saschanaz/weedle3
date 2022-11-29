@@ -38,13 +38,30 @@ macro_rules! eat {
     };
 }
 
-pub fn includes_statement(tokens: Tokens) -> IResult<Tokens, (Token, Token, Token, Token)> {
-    nom::sequence::tuple((
+pub struct IncludesStatement<'a> {
+    pub target: Token<'a>,
+    pub includes: Token<'a>,
+    pub mixin: Token<'a>,
+    pub termination: Token<'a>,
+}
+
+pub fn includes_statement(tokens: Tokens) -> IResult<Tokens, IncludesStatement> {
+    let (remaining, (target, includes, mixin, termination)) = nom::sequence::tuple((
         eat!(Tag::Id(_)),
         eat!(Tag::Kw(Keyword::Includes(_))),
         eat!(Tag::Id(_)),
         eat!(Tag::Kw(Keyword::SemiColon(_))),
-    ))(tokens)
+    ))(tokens)?;
+
+    Ok((
+        remaining,
+        IncludesStatement {
+            target,
+            includes,
+            mixin,
+            termination,
+        },
+    ))
 }
 
 pub fn parse(input: &str) -> IResult<Vec<Token>, (), ErrorKind> {
@@ -95,9 +112,12 @@ mod tests {
         let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
 
         assert!(matches!(unread.0[0].tag, Tag::Eof));
-        assert!(matches!(result.0.tag, Tag::Id(_)));
-        assert!(matches!(result.1.tag, Tag::Kw(Keyword::Includes(_))));
-        assert!(matches!(result.2.tag, Tag::Id(_)));
-        assert!(matches!(result.3.tag, Tag::Kw(Keyword::SemiColon(_))));
+        assert!(matches!(result.target.tag, Tag::Id(_)));
+        assert!(matches!(result.includes.tag, Tag::Kw(Keyword::Includes(_))));
+        assert!(matches!(result.mixin.tag, Tag::Id(_)));
+        assert!(matches!(
+            result.termination.tag,
+            Tag::Kw(Keyword::SemiColon(_))
+        ));
     }
 }
