@@ -1,20 +1,22 @@
 mod impl_nom_traits;
 use impl_nom_traits::Tokens;
 
-use nom::IResult;
+use nom::{IResult, InputIter};
 
 use crate::lexer::{keywords::Keyword, lex, Tag, Token};
 
+#[derive(Debug)]
 pub enum ErrorKind<'a> {
     Lexer(nom::Err<nom::error::Error<&'a str>>),
-    Parser(nom::Err<nom::error::Error<&'a [Token<'a>]>>),
+    Parser(nom::Err<nom::error::Error<Vec<Token<'a>>>>),
 }
 
 // XXX: Working around the lambda function limitation about lifetimes
 // https://github.com/rust-lang/rust/issues/58052
-fn annotate<'a, F>(f: F) -> F
+fn annotate<'slice, 'token, F>(f: F) -> F
 where
-    F: Fn(Tokens<'a>) -> IResult<Tokens<'a>, Token<'a>>,
+    F: Fn(Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, Token<'token>>,
+    'token: 'slice,
 {
     f
 }
@@ -38,6 +40,12 @@ macro_rules! eat {
     };
 }
 
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Definition<'a> {
+    Includes(IncludesStatement<'a>),
+}
+
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatement<'a> {
     pub target: Token<'a>,
     pub includes: Token<'a>,
@@ -45,7 +53,9 @@ pub struct IncludesStatement<'a> {
     pub termination: Token<'a>,
 }
 
-pub fn includes_statement(tokens: Tokens) -> IResult<Tokens, IncludesStatement> {
+pub fn includes_statement<'slice, 'token>(
+    tokens: Tokens<'slice, 'token>,
+) -> IResult<Tokens<'slice, 'token>, IncludesStatement<'token>> {
     let (remaining, (target, includes, mixin, termination)) = nom::sequence::tuple((
         eat!(Tag::Id(_)),
         eat!(Tag::Kw(Keyword::Includes(_))),
@@ -64,10 +74,28 @@ pub fn includes_statement(tokens: Tokens) -> IResult<Tokens, IncludesStatement> 
     ))
 }
 
-pub fn parse(input: &str) -> IResult<Vec<Token>, (), ErrorKind> {
-    let tokens = lex(input).map_err(|err| nom::Err::Failure(ErrorKind::Lexer(err)))?;
+pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
+    let tokens = lex(input).map_err(ErrorKind::Lexer)?;
 
-    Ok((tokens, ()))
+    // TODO: eat EOF
+    let result = nom::multi::many0(nom::branch::alt((nom::combinator::map(
+        includes_statement,
+        Definition::Includes,
+    ),)))(Tokens(&tokens[..]))
+    .map(|(_, result)| result)
+    .map_err(|err| match err {
+        nom::Err::Incomplete(need) => ErrorKind::Parser(nom::Err::Incomplete(need)),
+        nom::Err::Error(err) => ErrorKind::Parser(nom::Err::Error(nom::error::Error {
+            code: err.code,
+            input: err.input.iter_elements().collect(),
+        })),
+        nom::Err::Failure(err) => ErrorKind::Parser(nom::Err::Failure(nom::error::Error {
+            code: err.code,
+            input: err.input.iter_elements().collect(),
+        })),
+    });
+
+    result
 }
 
 #[cfg(test)]
@@ -119,5 +147,13 @@ mod tests {
             result.termination.tag,
             Tag::Kw(Keyword::SemiColon(_))
         ));
+    }
+
+    #[test]
+    fn parse() {
+        let result = super::parse("Foo includes Bar;").unwrap();
+
+        assert_eq!(result.len(), 1);
+        assert!(matches!(result[0], Definition::Includes(_)));
     }
 }

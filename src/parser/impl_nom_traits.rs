@@ -11,16 +11,16 @@ use crate::lexer::Token;
 // https://github.com/Geal/nom/blob/main/doc/custom_input_types.md
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Tokens<'a>(pub &'a [Token<'a>]);
+pub struct Tokens<'slice, 'token>(pub &'slice [Token<'token>]);
 
-impl<'a> InputLength for Tokens<'a> {
+impl<'slice, 'token> InputLength for Tokens<'slice, 'token> {
     #[inline]
     fn input_len(&self) -> usize {
         self.0.input_len()
     }
 }
 
-impl<'a> InputTake for Tokens<'a> {
+impl<'slice, 'token> InputTake for Tokens<'slice, 'token> {
     #[inline]
     fn take(&self, count: usize) -> Self {
         Self(&self.0[..count])
@@ -40,38 +40,38 @@ impl<'a> InputLength for Token<'a> {
     }
 }
 
-impl<'a> Slice<Range<usize>> for Tokens<'a> {
+impl<'slice, 'token> Slice<Range<usize>> for Tokens<'slice, 'token> {
     #[inline]
     fn slice(&self, range: Range<usize>) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'a> Slice<RangeTo<usize>> for Tokens<'a> {
+impl<'slice, 'token> Slice<RangeTo<usize>> for Tokens<'slice, 'token> {
     #[inline]
     fn slice(&self, range: RangeTo<usize>) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'a> Slice<RangeFrom<usize>> for Tokens<'a> {
+impl<'slice, 'token> Slice<RangeFrom<usize>> for Tokens<'slice, 'token> {
     #[inline]
     fn slice(&self, range: RangeFrom<usize>) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'a> Slice<RangeFull> for Tokens<'a> {
+impl<'slice, 'token> Slice<RangeFull> for Tokens<'slice, 'token> {
     #[inline]
     fn slice(&self, range: RangeFull) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'a> InputIter for Tokens<'a> {
-    type Item = Token<'a>;
+impl<'slice, 'token> InputIter for Tokens<'slice, 'token> {
+    type Item = Token<'token>;
     type Iter = Enumerate<Self::IterElem>;
-    type IterElem = Copied<::std::slice::Iter<'a, Token<'a>>>;
+    type IterElem = Copied<::std::slice::Iter<'slice, Token<'token>>>;
 
     #[inline]
     fn iter_indices(&self) -> Self::Iter {
