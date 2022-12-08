@@ -1,9 +1,15 @@
 mod impl_nom_traits;
 use impl_nom_traits::Tokens;
 
+#[macro_use]
+mod eat;
+mod includes;
+
 use nom::{IResult, InputIter};
 
-use crate::lexer::{keywords::Keyword, lex, Tag, Token};
+use crate::lexer::{lex, Tag, Token};
+
+use self::includes::{includes_statement, IncludesStatement};
 
 #[derive(Debug)]
 pub enum ErrorKind<'a> {
@@ -11,68 +17,10 @@ pub enum ErrorKind<'a> {
     Parser(nom::Err<nom::error::Error<Vec<Token<'a>>>>),
 }
 
-// XXX: Working around the lambda function limitation about lifetimes
-// https://github.com/rust-lang/rust/issues/58052
-fn annotate<'slice, 'token, F>(f: F) -> F
-where
-    F: Fn(Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, Token<'token>>,
-    'token: 'slice,
-{
-    f
-}
-
-macro_rules! eat {
-    ($matcher:pat_param) => {
-        annotate(|input: Tokens| -> IResult<Tokens, Token> {
-            use nom::{InputIter, Slice};
-            match input
-                .iter_elements()
-                .next()
-                .map(|t| (t, matches!(t.tag, $matcher)))
-            {
-                Some((t, true)) => Ok((input.slice(1..), t)),
-                _ => Err(nom::Err::Error(nom::error::Error {
-                    input,
-                    code: nom::error::ErrorKind::Char,
-                })),
-            }
-        })
-    };
-}
-
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
     Includes(IncludesStatement<'a>),
     Eof(Token<'a>),
-}
-
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct IncludesStatement<'a> {
-    pub target: Token<'a>,
-    pub includes: Token<'a>,
-    pub mixin: Token<'a>,
-    pub termination: Token<'a>,
-}
-
-pub fn includes_statement<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, IncludesStatement<'token>> {
-    let (remaining, (target, includes, mixin, termination)) = nom::sequence::tuple((
-        eat!(Tag::Id(_)),
-        eat!(Tag::Kw(Keyword::Includes(_))),
-        eat!(Tag::Id(_)),
-        eat!(Tag::Kw(Keyword::SemiColon(_))),
-    ))(tokens)?;
-
-    Ok((
-        remaining,
-        IncludesStatement {
-            target,
-            includes,
-            mixin,
-            termination,
-        },
-    ))
 }
 
 pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
@@ -107,7 +55,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lexer;
+    use crate::lexer::{keywords::Keyword, lex};
 
     use super::{impl_nom_traits::Tokens, *};
 
@@ -143,7 +91,7 @@ mod tests {
 
     #[test]
     fn interface_mixin() {
-        let tokens = lexer::lex("Foo includes Bar;").unwrap();
+        let tokens = lex("Foo includes Bar;").unwrap();
         let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
 
         assert!(matches!(unread.0[0].tag, Tag::Eof));
