@@ -43,6 +43,7 @@ macro_rules! eat {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
     Includes(IncludesStatement<'a>),
+    Eof(Token<'a>),
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -77,12 +78,13 @@ pub fn includes_statement<'slice, 'token>(
 pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
     let tokens = lex(input).map_err(ErrorKind::Lexer)?;
 
-    // TODO: eat EOF
-    let result = nom::multi::many0(nom::branch::alt((nom::combinator::map(
-        includes_statement,
-        Definition::Includes,
-    ),)))(Tokens(&tokens[..]))
-    .map(|(_, result)| result)
+    let (unread, (mut defs, eof)) = nom::sequence::tuple((
+        nom::multi::many0(nom::branch::alt((nom::combinator::map(
+            includes_statement,
+            Definition::Includes,
+        ),))),
+        nom::combinator::map(eat!(Tag::Eof), Definition::Eof),
+    ))(Tokens(&tokens[..]))
     .map_err(|err| match err {
         nom::Err::Incomplete(need) => ErrorKind::Parser(nom::Err::Incomplete(need)),
         nom::Err::Error(err) => ErrorKind::Parser(nom::Err::Error(nom::error::Error {
@@ -93,9 +95,14 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
             code: err.code,
             input: err.input.iter_elements().collect(),
         })),
-    });
+    })?;
 
-    result
+    // Cannot be empty here since eof would fail then
+    assert!(unread.0.is_empty());
+
+    defs.push(eof);
+
+    Ok(defs)
 }
 
 #[cfg(test)]
@@ -153,7 +160,8 @@ mod tests {
     fn parse() {
         let result = super::parse("Foo includes Bar;").unwrap();
 
-        assert_eq!(result.len(), 1);
+        assert_eq!(result.len(), 2);
         assert!(matches!(result[0], Definition::Includes(_)));
+        assert!(matches!(result[1], Definition::Eof(_)));
     }
 }

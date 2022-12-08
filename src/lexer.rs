@@ -38,6 +38,12 @@ pub struct Token<'a> {
     // index: u32,
 }
 
+impl Token<'_> {
+    pub fn new<'a>((trivia, tag): (&'a str, Tag<'a>)) -> Token<'a> {
+        Token { tag, trivia }
+    }
+}
+
 // fn keyword(input: &str) -> NomResult<ch
 
 fn other(input: &str) -> NomResult<char> {
@@ -58,21 +64,24 @@ fn token(input: &str) -> NomResult<Tag> {
 pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
     // A little bit of hack with tuple since many0 is not compatible with eof
     // (It requires consuming at least one character)
-    let (unread, (mut tokens, (eof_trivia, _))) = nom::sequence::tuple((
+    let (unread, (mut tokens, eof)) = nom::sequence::tuple((
         many0(nom::combinator::map(
             nom::sequence::tuple((sp, token)),
-            |(trivia, tag)| Token { tag, trivia },
+            Token::new,
         )),
-        nom::sequence::tuple((sp, nom::combinator::eof)),
+        nom::combinator::map(
+            nom::sequence::tuple((sp, nom::combinator::eof)),
+            |(trivia, _)| Token {
+                tag: Tag::Eof,
+                trivia,
+            },
+        ),
     ))(input)?;
 
     // Cannot be empty here since eof would fail then
     assert!(unread.is_empty());
 
-    tokens.push(Token {
-        tag: Tag::Eof,
-        trivia: eof_trivia,
-    });
+    tokens.push(eof);
 
     Ok(tokens)
 }
