@@ -25,6 +25,8 @@
  * ```
  */
 
+// TODO: Get a custom nom::branch::alt that supports more branches
+
 macro_rules! generate_keywords_enum {
     (
         ($($typ:ident => $tok:expr,)*),
@@ -35,35 +37,71 @@ macro_rules! generate_keywords_enum {
         ($($typ_other:ident => $tok_other:expr,)*),
         ($($typ_other2:ident => $tok_other2:expr,)*)
     ) => {
+        $(
+            #[doc=$tok]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ<'a>(pub &'a str);
+        )*
+        $(
+            #[doc=$tok_typename]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ_typename<'a>(pub &'a str);
+        )*
+        $(
+            #[doc=$tok_string]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ_string<'a>(pub &'a str);
+        )*
+        $(
+            #[doc=$tok_argname]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ_argname<'a>(pub &'a str);
+        )*
+        $(
+            #[doc=$tok_argname2]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ_argname2<'a>(pub &'a str);
+        )*
+        $(
+            #[doc=$tok_other]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ_other<'a>(pub &'a str);
+        )*
+        $(
+            #[doc=$tok_other2]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ_other2<'a>(pub &'a str);
+        )*
+
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub enum Keyword<'a> {
             $(
                 #[doc=$tok]
-                $typ(&'a str),
+                $typ($typ<'a>),
             )*
             $(
                 #[doc=$tok_typename]
-                $typ_typename(&'a str),
+                $typ_typename($typ_typename<'a>),
             )*
             $(
                 #[doc=$tok_string]
-                $typ_string(&'a str),
+                $typ_string($typ_string<'a>),
             )*
             $(
                 #[doc=$tok_argname]
-                $typ_argname(&'a str),
+                $typ_argname($typ_argname<'a>),
             )*
             $(
                 #[doc=$tok_argname2]
-                $typ_argname2(&'a str),
+                $typ_argname2($typ_argname2<'a>),
             )*
             $(
                 #[doc=$tok_other]
-                $typ_other(&'a str),
+                $typ_other($typ_other<'a>),
             )*
             $(
                 #[doc=$tok_other2]
-                $typ_other2(&'a str),
+                $typ_other2($typ_other2<'a>),
             )*
         }
 
@@ -73,43 +111,43 @@ macro_rules! generate_keywords_enum {
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize(nom::bytes::complete::tag($tok)),
-                            Keyword::$typ
+                            |k| Keyword::$typ($typ(k))
                         ),)*
                     )),
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize($crate::term::ident_tag($tok_typename)),
-                            Keyword::$typ_typename
+                            |k| Keyword::$typ_typename($typ_typename(k))
                         ),)*
                     )),
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize($crate::term::ident_tag($tok_string)),
-                            Keyword::$typ_string
+                            |k| Keyword::$typ_string($typ_string(k))
                         ),)*
                     )),
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize($crate::term::ident_tag($tok_argname)),
-                            Keyword::$typ_argname
+                            |k| Keyword::$typ_argname($typ_argname(k))
                         ),)*
                     )),
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize($crate::term::ident_tag($tok_argname2)),
-                            Keyword::$typ_argname2
+                            |k| Keyword::$typ_argname2($typ_argname2(k))
                         ),)*
                     )),
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize($crate::term::ident_tag($tok_other)),
-                            Keyword::$typ_other
+                            |k| Keyword::$typ_other($typ_other(k))
                         ),)*
                     )),
                     nom::branch::alt((
                         $(nom::combinator::map(
                             nom::combinator::recognize($crate::term::ident_tag($tok_other2)),
-                            Keyword::$typ_other2
+                            |k| Keyword::$typ_other2($typ_other2(k))
                         ),)*
                     )),
                 ))(input)

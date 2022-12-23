@@ -1,14 +1,20 @@
 use nom::IResult;
 
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
-use crate::{common::Identifier, lexer::Token};
+use crate::{
+    common::Identifier,
+    lexer::{
+        keywords::{Includes, SemiColon},
+        Token,
+    },
+};
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatement<'a> {
     pub target: VariantToken<'a, Identifier<'a>>,
-    pub includes: VariantToken<'a, &'a str>,
+    pub includes: VariantToken<'a, Includes<'a>>,
     pub mixin: VariantToken<'a, Identifier<'a>>,
-    pub termination: VariantToken<'a, &'a str>,
+    pub termination: VariantToken<'a, SemiColon<'a>>,
 }
 
 pub fn includes_statement<'slice, 'token>(
@@ -43,8 +49,8 @@ mod tests {
 
         assert!(matches!(unread.0[0].tag, Tag::Eof(_)));
         assert_eq!(result.target.variant.0, "Foo");
-        assert_eq!(result.includes.variant, "includes");
+        assert_eq!(result.includes.variant.0, "includes");
         assert_eq!(result.mixin.variant.0, "Bar");
-        assert_eq!(result.termination.variant, ";");
+        assert_eq!(result.termination.variant.0, ";");
     }
 }
