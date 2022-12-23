@@ -18,7 +18,7 @@ pub enum Tag<'a> {
     Id(Identifier<'a>),
     Str(StringLit<'a>),
     Other(char),
-    Eof,
+    Eof(()),
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -72,7 +72,7 @@ pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>>
         nom::combinator::map(
             nom::sequence::tuple((sp, nom::combinator::eof)),
             |(trivia, _)| Token {
-                tag: Tag::Eof,
+                tag: Tag::Eof(()),
                 trivia,
             },
         ),
@@ -134,7 +134,7 @@ mod tests {
         }
 
         match tokens[6].tag {
-            Tag::Eof => assert!(true, "Should be TokenTag::Eof"),
+            Tag::Eof(_) => assert!(true, "Should be TokenTag::Eof"),
             _ => assert!(false, "Should be TokenTag::Eof"),
         }
     }

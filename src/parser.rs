@@ -9,7 +9,10 @@ use nom::{IResult, InputIter};
 
 use crate::lexer::{lex, Tag, Token};
 
-use self::includes::{includes_statement, IncludesStatement};
+use self::{
+    eat::VariantToken,
+    includes::{includes_statement, IncludesStatement},
+};
 
 #[derive(Debug)]
 pub enum ErrorKind<'a> {
@@ -20,7 +23,7 @@ pub enum ErrorKind<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
     Includes(IncludesStatement<'a>),
-    Eof(Token<'a>),
+    Eof(VariantToken<'a, ()>),
 }
 
 pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
@@ -31,7 +34,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
             includes_statement,
             Definition::Includes,
         ),))),
-        nom::combinator::map(eat!(Tag::Eof), Definition::Eof),
+        nom::combinator::map(eat!(Eof), Definition::Eof),
     ))(Tokens(&tokens[..]))
     .map_err(|err| match err {
         nom::Err::Incomplete(need) => ErrorKind::Parser(nom::Err::Incomplete(need)),
@@ -55,38 +58,27 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lexer::{keywords::Keyword, lex};
+    use crate::lexer::lex;
 
     use super::{impl_nom_traits::Tokens, *};
 
     #[test]
     fn test() {
-        let (remaining, (id1, id2)) =
-            nom::sequence::tuple((eat!(Tag::Id(_)), eat!(Tag::Id(_))))(Tokens(&[
-                Token {
-                    tag: Tag::Id(crate::common::Identifier("foo")),
-                    trivia: "",
-                },
-                Token {
-                    tag: Tag::Id(crate::common::Identifier("bar")),
-                    trivia: "",
-                },
-            ]))
-            .unwrap();
+        let (remaining, (id1, id2)) = nom::sequence::tuple((eat!(Id), eat!(Id)))(Tokens(&[
+            Token {
+                tag: Tag::Id(crate::common::Identifier("foo")),
+                trivia: "",
+            },
+            Token {
+                tag: Tag::Id(crate::common::Identifier("bar")),
+                trivia: "",
+            },
+        ]))
+        .unwrap();
 
         assert!(remaining.0.is_empty());
-
-        if let Tag::Id(crate::common::Identifier(id)) = id1.tag {
-            assert_eq!(id, "foo", "id1 should be foo");
-        } else {
-            assert!(false, "id1 should be foo")
-        }
-
-        if let Tag::Id(crate::common::Identifier(id)) = id2.tag {
-            assert_eq!(id, "bar", "id2 should be bar");
-        } else {
-            assert!(false, "id2 should be bar")
-        }
+        assert_eq!(id1.variant.0, "foo", "id1 should be foo");
+        assert_eq!(id2.variant.0, "bar", "id2 should be bar");
     }
 
     #[test]
@@ -94,14 +86,11 @@ mod tests {
         let tokens = lex("Foo includes Bar;").unwrap();
         let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
 
-        assert!(matches!(unread.0[0].tag, Tag::Eof));
-        assert!(matches!(result.target.tag, Tag::Id(_)));
-        assert!(matches!(result.includes.tag, Tag::Kw(Keyword::Includes(_))));
-        assert!(matches!(result.mixin.tag, Tag::Id(_)));
-        assert!(matches!(
-            result.termination.tag,
-            Tag::Kw(Keyword::SemiColon(_))
-        ));
+        assert!(matches!(unread.0[0].tag, Tag::Eof(_)));
+        assert_eq!(result.target.variant.0, "Foo");
+        assert_eq!(result.includes.variant, "includes");
+        assert_eq!(result.mixin.variant.0, "Bar");
+        assert_eq!(result.termination.variant, ";");
     }
 
     #[test]
