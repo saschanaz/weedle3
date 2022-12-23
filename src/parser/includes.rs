@@ -27,3 +27,24 @@ pub fn includes_statement<'slice, 'token>(
         },
     ))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{
+        lexer::{lex, Tag},
+        parser::impl_nom_traits::Tokens,
+    };
+
+    #[test]
+    fn interface_mixin() {
+        let tokens = lex("Foo includes Bar;").unwrap();
+        let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
+
+        assert!(matches!(unread.0[0].tag, Tag::Eof(_)));
+        assert_eq!(result.target.variant.0, "Foo");
+        assert_eq!(result.includes.variant, "includes");
+        assert_eq!(result.mixin.variant.0, "Bar");
+        assert_eq!(result.termination.variant, ";");
+    }
+}

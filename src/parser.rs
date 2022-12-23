@@ -58,7 +58,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lexer::{lex, Tag};
+    use crate::lexer::Tag;
 
     use super::{impl_nom_traits::Tokens, *};
 
@@ -79,18 +79,6 @@ mod tests {
         assert!(remaining.0.is_empty());
         assert_eq!(id1.variant.0, "foo", "id1 should be foo");
         assert_eq!(id2.variant.0, "bar", "id2 should be bar");
-    }
-
-    #[test]
-    fn interface_mixin() {
-        let tokens = lex("Foo includes Bar;").unwrap();
-        let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
-
-        assert!(matches!(unread.0[0].tag, Tag::Eof(_)));
-        assert_eq!(result.target.variant.0, "Foo");
-        assert_eq!(result.includes.variant, "includes");
-        assert_eq!(result.mixin.variant.0, "Bar");
-        assert_eq!(result.termination.variant, ";");
     }
 
     #[test]
