@@ -1,6 +1,5 @@
 use super::impl_nom_traits::Tokens;
 
-
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct VariantToken<'a, T> {
     pub variant: T,
@@ -21,20 +20,19 @@ macro_rules! eat {
     ($variant:ident) => {
         crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
             use nom::{InputIter, Slice};
-            if let Some(Token {
-                tag: crate::lexer::Tag::$variant(variant),
-                trivia,
-            }) = input.iter_elements().next()
-            {
-                return Ok((
+            match input.iter_elements().next() {
+                Some(Token {
+                    tag: crate::lexer::Tag::$variant(variant),
+                    trivia,
+                }) => Ok((
                     input.slice(1..),
                     crate::parser::eat::VariantToken { variant, trivia },
-                ));
+                )),
+                _ => Err(nom::Err::Error(nom::error::Error {
+                    input,
+                    code: nom::error::ErrorKind::Char,
+                })),
             }
-            Err(nom::Err::Error(nom::error::Error {
-                input,
-                code: nom::error::ErrorKind::Char,
-            }))
         })
     };
 }
@@ -44,20 +42,19 @@ macro_rules! eatKey {
         crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
             use crate::lexer::{keywords::Keyword, Tag};
             use nom::{InputIter, Slice};
-            if let Some(Token {
-                tag: Tag::Kw(Keyword::$variant(variant)),
-                trivia,
-            }) = input.iter_elements().next()
-            {
-                return Ok((
+            match input.iter_elements().next() {
+                Some(Token {
+                    tag: Tag::Kw(Keyword::$variant(variant)),
+                    trivia,
+                }) => Ok((
                     input.slice(1..),
                     crate::parser::eat::VariantToken { variant, trivia },
-                ));
+                )),
+                _ => Err(nom::Err::Error(nom::error::Error {
+                    input,
+                    code: nom::error::ErrorKind::Char,
+                })),
             }
-            Err(nom::Err::Error(nom::error::Error {
-                input,
-                code: nom::error::ErrorKind::Char,
-            }))
         })
     };
 }

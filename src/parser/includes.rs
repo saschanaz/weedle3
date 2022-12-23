@@ -1,10 +1,7 @@
 use nom::IResult;
 
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
-use crate::{
-    common::Identifier,
-    lexer::{Token},
-};
+use crate::{common::Identifier, lexer::Token};
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatement<'a> {
