@@ -9,10 +9,7 @@ fn should_lex(resource: &str) {
 
     let tokens = result.unwrap();
 
-    match tokens.last().unwrap().tag {
-        weedle::lexer::Tag::Eof => assert!(true, "Last token should be EOF"),
-        _ => assert!(false, "Last token should be EOF"),
-    }
+    assert!(matches!(tokens.last().unwrap().tag, weedle::lexer::Tag::Eof(_)), "Last token should be EOF");
 
     // TODO: source file reconstruction test
 }

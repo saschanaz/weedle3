@@ -3,7 +3,7 @@ use nom::IResult;
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
 use crate::{
     common::Identifier,
-    lexer::{keywords::Keyword, Tag, Token},
+    lexer::{Token},
 };
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

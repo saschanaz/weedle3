@@ -7,7 +7,7 @@ mod includes;
 
 use nom::{IResult, InputIter};
 
-use crate::lexer::{lex, Tag, Token};
+use crate::lexer::{lex, Token};
 
 use self::{
     eat::VariantToken,
@@ -58,7 +58,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lexer::lex;
+    use crate::lexer::{lex, Tag};
 
     use super::{impl_nom_traits::Tokens, *};
 
