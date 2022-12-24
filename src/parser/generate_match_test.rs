@@ -1,3 +1,4 @@
+#[cfg(test)]
 macro_rules! test_match {
     ($name:ident, $func:ident, $input:literal, $match:pat_param) => {
         #[test]
@@ -21,6 +22,7 @@ macro_rules! test_match {
     };
 }
 
+#[cfg(test)]
 macro_rules! test_result_match {
     ($name:ident, $func:ident, $input:literal, $match:pat_param) => {
         #[test]
