@@ -31,20 +31,15 @@ pub struct IntegerType<'a> {
 fn integer_size<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, IntegerSize<'token>> {
-    let (tokens, short) = eat_key_optional!(Short)(tokens);
-    if let Some(short) = short {
-        return Ok((tokens, IntegerSize::Short(Short(short))));
-    }
-
-    let (tokens, long) = eat_key!(Long)(tokens)?;
-    let (tokens, long_long) = eat_key_optional!(Long)(tokens);
-    Ok((
-        tokens,
-        match long_long {
-            Some(long_long) => IntegerSize::LongLong(LongLong { long, long_long }),
-            _ => IntegerSize::Long(Long(long)),
-        },
-    ))
+    nom::branch::alt((
+        eat_key!(Short).map(|short| IntegerSize::Short(Short(short))),
+        nom::sequence::tuple((eat_key!(Long), nom::combinator::opt(eat_key!(Long)))).map(
+            |(long, long_long)| match long_long {
+                Some(long_long) => IntegerSize::LongLong(LongLong { long, long_long }),
+                None => IntegerSize::Long(Long(long)),
+            },
+        ),
+    ))(tokens)
 }
 
 fn integer_type<'slice, 'token>(

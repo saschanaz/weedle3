@@ -58,30 +58,3 @@ macro_rules! eat_key {
         })
     };
 }
-
-pub fn annotate_optional<'slice, 'token, F, R>(f: F) -> F
-where
-    F: Fn(Tokens<'slice, 'token>) -> (Tokens<'slice, 'token>, Option<R>),
-    'token: 'slice,
-{
-    f
-}
-
-macro_rules! eat_key_optional {
-    ($variant:ident) => {
-        crate::parser::eat::annotate_optional(|input: Tokens| -> (Tokens, Option<_>) {
-            use crate::lexer::{keywords::Keyword, Tag};
-            use nom::{InputIter, Slice};
-            match input.iter_elements().next() {
-                Some(Token {
-                    tag: Tag::Kw(Keyword::$variant(variant)),
-                    trivia,
-                }) => (
-                    input.slice(1..),
-                    Some(crate::parser::eat::VariantToken { variant, trivia }),
-                ),
-                _ => (input, None),
-            }
-        })
-    };
-}
