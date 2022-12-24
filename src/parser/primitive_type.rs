@@ -1,69 +1,68 @@
 // https://webidl.spec.whatwg.org/#prod-PrimitiveType
 
-use nom::IResult;
+use nom::{IResult, Parser};
 
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
 use crate::lexer::{keywords, Token};
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct LongLong<'a> {
-    pub unsigned: Option<VariantToken<'a, keywords::Unsigned<'a>>>,
     pub long: VariantToken<'a, keywords::Long<'a>>,
     pub long_long: VariantToken<'a, keywords::Long<'a>>,
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Long<'a> {
-    pub unsigned: Option<VariantToken<'a, keywords::Unsigned<'a>>>,
-    pub long: VariantToken<'a, keywords::Long<'a>>,
-}
+pub struct Long<'a>(pub VariantToken<'a, keywords::Long<'a>>);
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Short<'a> {
-    pub unsigned: Option<VariantToken<'a, keywords::Unsigned<'a>>>,
-    pub short: VariantToken<'a, keywords::Short<'a>>,
-}
-pub enum IntegerType<'a> {
+pub struct Short<'a>(pub VariantToken<'a, keywords::Short<'a>>);
+
+pub enum IntegerSize<'a> {
     LongLong(LongLong<'a>),
     Long(Long<'a>),
     Short(Short<'a>),
 }
 
-fn signed_integer_type<'slice, 'token>(
-    unsigned: Option<VariantToken<'token, keywords::Unsigned<'token>>>,
-) -> impl Fn(Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, IntegerType<'token>>
-where
-    'token: 'slice,
-{
-    move |tokens| {
-        let (tokens, short) = eat_key_optional!(Short)(tokens);
-        if let Some(short) = short {
-            return Ok((tokens, IntegerType::Short(Short { unsigned, short })));
-        }
+pub struct IntegerType<'a> {
+    pub unsigned: Option<VariantToken<'a, keywords::Unsigned<'a>>>,
+    pub size: IntegerSize<'a>,
+}
 
-        let (tokens, long) = eat_key!(Long)(tokens)?;
-        let (tokens, long_long) = eat_key_optional!(Long)(tokens);
-        Ok((
-            tokens,
-            match long_long {
-                Some(long_long) => IntegerType::LongLong(LongLong {
-                    unsigned,
-                    long,
-                    long_long,
-                }),
-                _ => IntegerType::Long(Long { unsigned, long }),
-            },
-        ))
+fn integer_size<'slice, 'token>(
+    tokens: Tokens<'slice, 'token>,
+) -> IResult<Tokens<'slice, 'token>, IntegerSize<'token>> {
+    let (tokens, short) = eat_key_optional!(Short)(tokens);
+    if let Some(short) = short {
+        return Ok((tokens, IntegerSize::Short(Short(short))));
     }
+
+    let (tokens, long) = eat_key!(Long)(tokens)?;
+    let (tokens, long_long) = eat_key_optional!(Long)(tokens);
+    Ok((
+        tokens,
+        match long_long {
+            Some(long_long) => IntegerSize::LongLong(LongLong { long, long_long }),
+            _ => IntegerSize::Long(Long(long)),
+        },
+    ))
 }
 
 fn integer_type<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, IntegerType<'token>> {
-    let (tokens, unsigned) = eat_key_optional!(Unsigned)(tokens);
-
     // TODO: use nom::error::VerboseErrorKind? how?
-    nom::combinator::cut(signed_integer_type(unsigned))(tokens)
+    nom::branch::alt((
+        nom::sequence::tuple((eat_key!(Unsigned), nom::combinator::cut(integer_size))).map(
+            |(unsigned, size)| IntegerType {
+                unsigned: Some(unsigned),
+                size,
+            },
+        ),
+        integer_size.map(|size| IntegerType {
+            unsigned: None,
+            size,
+        }),
+    ))(tokens)
 }
 
 #[cfg(test)]
@@ -74,51 +73,60 @@ mod tests {
         unsigned_long_long,
         integer_type,
         "unsigned long long",
-        IntegerType::LongLong(LongLong {
+        IntegerType {
             unsigned: Some(_),
-            ..
-        })
+            size: IntegerSize::LongLong(_),
+        }
     );
 
     test_match!(
         signed_long_long,
         integer_type,
         "long long",
-        IntegerType::LongLong(LongLong { unsigned: None, .. })
+        IntegerType {
+            unsigned: None,
+            size: IntegerSize::LongLong(_),
+        }
     );
 
     test_match!(
         unsigned_long,
         integer_type,
         "unsigned long",
-        IntegerType::Long(Long {
+        IntegerType {
             unsigned: Some(_),
-            ..
-        })
+            size: IntegerSize::Long(_),
+        }
     );
 
     test_match!(
         signed_long,
         integer_type,
         "long",
-        IntegerType::Long(Long { unsigned: None, .. })
+        IntegerType {
+            unsigned: None,
+            size: IntegerSize::Long(_)
+        }
     );
 
     test_match!(
         unsigned_short,
         integer_type,
         "unsigned short",
-        IntegerType::Short(Short {
+        IntegerType {
             unsigned: Some(_),
-            ..
-        })
+            size: IntegerSize::Short(_)
+        }
     );
 
     test_match!(
         signed_short,
         integer_type,
         "short",
-        IntegerType::Short(Short { unsigned: None, .. })
+        IntegerType {
+            unsigned: None,
+            size: IntegerSize::Short(_)
+        }
     );
 
     test_result_match!(
