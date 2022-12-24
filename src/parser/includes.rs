@@ -21,7 +21,9 @@ pub fn includes_statement<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, IncludesStatement<'token>> {
     let (remaining, (target, includes, mixin, termination)) =
-        nom::sequence::tuple((eat!(Id), eatKey!(Includes), eat!(Id), eatKey!(SemiColon)))(tokens)?;
+        nom::sequence::tuple((eat!(Id), eat_key!(Includes), eat!(Id), eat_key!(SemiColon)))(
+            tokens,
+        )?;
 
     Ok((
         remaining,
@@ -48,9 +50,19 @@ mod tests {
         let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
 
         assert!(matches!(unread.0[0].tag, Tag::Eof(_)));
-        assert_eq!(result.target.variant.0, "Foo");
-        assert_eq!(result.includes.variant.0, "includes");
-        assert_eq!(result.mixin.variant.0, "Bar");
-        assert_eq!(result.termination.variant.0, ";");
+        assert!(matches!(
+            result,
+            IncludesStatement {
+                target: VariantToken {
+                    variant: Identifier("Foo"),
+                    ..
+                },
+                mixin: VariantToken {
+                    variant: Identifier("Bar"),
+                    ..
+                },
+                ..
+            }
+        ));
     }
 }

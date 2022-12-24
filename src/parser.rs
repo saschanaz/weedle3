@@ -4,6 +4,7 @@ use impl_nom_traits::Tokens;
 #[macro_use]
 mod eat;
 mod includes;
+mod primitive_type;
 
 use nom::{IResult, InputIter};
 
