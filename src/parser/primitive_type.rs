@@ -30,27 +30,31 @@ pub enum IntegerType<'a> {
 }
 
 fn signed_integer_type<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
     unsigned: Option<VariantToken<'token, keywords::Unsigned<'token>>>,
-) -> IResult<Tokens<'slice, 'token>, IntegerType<'token>> {
-    let (tokens, short) = eat_key_optional!(Short)(tokens);
-    if let Some(short) = short {
-        return Ok((tokens, IntegerType::Short(Short { unsigned, short })));
-    }
+) -> impl Fn(Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, IntegerType<'token>>
+where
+    'token: 'slice,
+{
+    move |tokens| {
+        let (tokens, short) = eat_key_optional!(Short)(tokens);
+        if let Some(short) = short {
+            return Ok((tokens, IntegerType::Short(Short { unsigned, short })));
+        }
 
-    let (tokens, long) = eat_key!(Long)(tokens)?;
-    let (tokens, long_long) = eat_key_optional!(Long)(tokens);
-    Ok((
-        tokens,
-        match long_long {
-            Some(long_long) => IntegerType::LongLong(LongLong {
-                unsigned,
-                long,
-                long_long,
-            }),
-            _ => IntegerType::Long(Long { unsigned, long }),
-        },
-    ))
+        let (tokens, long) = eat_key!(Long)(tokens)?;
+        let (tokens, long_long) = eat_key_optional!(Long)(tokens);
+        Ok((
+            tokens,
+            match long_long {
+                Some(long_long) => IntegerType::LongLong(LongLong {
+                    unsigned,
+                    long,
+                    long_long,
+                }),
+                _ => IntegerType::Long(Long { unsigned, long }),
+            },
+        ))
+    }
 }
 
 fn integer_type<'slice, 'token>(
@@ -58,16 +62,8 @@ fn integer_type<'slice, 'token>(
 ) -> IResult<Tokens<'slice, 'token>, IntegerType<'token>> {
     let (tokens, unsigned) = eat_key_optional!(Unsigned)(tokens);
 
-    signed_integer_type(tokens, unsigned).map_err(|err| {
-        match unsigned {
-            Some(_) => nom::Err::Failure(nom::error::Error {
-                input: tokens,
-                // TODO: use nom::error::VerboseErrorKind?
-                code: nom::error::ErrorKind::Fail,
-            }),
-            None => err,
-        }
-    })
+    // TODO: use nom::error::VerboseErrorKind? how?
+    nom::combinator::cut(signed_integer_type(unsigned))(tokens)
 }
 
 #[cfg(test)]
