@@ -39,9 +39,7 @@ fn signed_integer_type<'slice, 'token>(
     }
 
     let (tokens, long) = eat_key!(Long)(tokens)?;
-    println!("{tokens:?}");
     let (tokens, long_long) = eat_key_optional!(Long)(tokens);
-    println!("{tokens:?}");
     Ok((
         tokens,
         match long_long {
@@ -60,8 +58,6 @@ fn integer_type<'slice, 'token>(
 ) -> IResult<Tokens<'slice, 'token>, IntegerType<'token>> {
     let (tokens, unsigned) = eat_key_optional!(Unsigned)(tokens);
 
-    println!("{tokens:?}");
-
     signed_integer_type(tokens, unsigned).map_err(|err| {
         match unsigned {
             Some(_) => nom::Err::Failure(nom::error::Error {
@@ -77,140 +73,62 @@ fn integer_type<'slice, 'token>(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
-        lexer::{lex, Tag},
-        parser::impl_nom_traits::Tokens,
-    };
 
-    #[test]
-    fn unsigned_long_long() {
-        let tokens = lex("unsigned long long").unwrap();
-        println!("{tokens:?}");
-        let (unread, result) = integer_type(Tokens(&tokens[..])).unwrap();
+    test_match!(
+        unsigned_long_long,
+        integer_type,
+        "unsigned long long",
+        IntegerType::LongLong(LongLong {
+            unsigned: Some(_),
+            ..
+        })
+    );
 
-        assert!(matches!(
-            unread.0,
-            [Token {
-                tag: Tag::Eof(_),
-                ..
-            }]
-        ));
-        assert!(matches!(
-            result,
-            IntegerType::LongLong(LongLong {
-                unsigned: Some(_),
-                ..
-            })
-        ));
-    }
+    test_match!(
+        signed_long_long,
+        integer_type,
+        "long long",
+        IntegerType::LongLong(LongLong { unsigned: None, .. })
+    );
 
-    #[test]
-    fn signed_long_long() {
-        let tokens = lex("long long").unwrap();
-        println!("{tokens:?}");
-        let (unread, result) = integer_type(Tokens(&tokens[..])).unwrap();
+    test_match!(
+        unsigned_long,
+        integer_type,
+        "unsigned long",
+        IntegerType::Long(Long {
+            unsigned: Some(_),
+            ..
+        })
+    );
 
-        assert!(matches!(
-            unread.0,
-            [Token {
-                tag: Tag::Eof(_),
-                ..
-            }]
-        ));
-        assert!(matches!(
-            result,
-            IntegerType::LongLong(LongLong { unsigned: None, .. })
-        ));
-    }
+    test_match!(
+        signed_long,
+        integer_type,
+        "long",
+        IntegerType::Long(Long { unsigned: None, .. })
+    );
 
-    #[test]
-    fn unsigned_long() {
-        let tokens = lex("unsigned long").unwrap();
-        println!("{tokens:?}");
-        let (unread, result) = integer_type(Tokens(&tokens[..])).unwrap();
+    test_match!(
+        unsigned_short,
+        integer_type,
+        "unsigned short",
+        IntegerType::Short(Short {
+            unsigned: Some(_),
+            ..
+        })
+    );
 
-        assert!(matches!(
-            unread.0,
-            [Token {
-                tag: Tag::Eof(_),
-                ..
-            }]
-        ));
-        assert!(matches!(
-            result,
-            IntegerType::Long(Long {
-                unsigned: Some(_),
-                ..
-            })
-        ));
-    }
+    test_match!(
+        signed_short,
+        integer_type,
+        "short",
+        IntegerType::Short(Short { unsigned: None, .. })
+    );
 
-    #[test]
-    fn signed_long() {
-        let tokens = lex("long").unwrap();
-        println!("{tokens:?}");
-        let (unread, result) = integer_type(Tokens(&tokens[..])).unwrap();
-
-        assert!(matches!(
-            unread.0,
-            [Token {
-                tag: Tag::Eof(_),
-                ..
-            }]
-        ));
-        assert!(matches!(
-            result,
-            IntegerType::Long(Long { unsigned: None, .. })
-        ));
-    }
-
-    #[test]
-    fn unsigned_short() {
-        let tokens = lex("unsigned short").unwrap();
-        println!("{tokens:?}");
-        let (unread, result) = integer_type(Tokens(&tokens[..])).unwrap();
-
-        assert!(matches!(
-            unread.0,
-            [Token {
-                tag: Tag::Eof(_),
-                ..
-            }]
-        ));
-        assert!(matches!(
-            result,
-            IntegerType::Short(Short {
-                unsigned: Some(_),
-                ..
-            })
-        ));
-    }
-
-    #[test]
-    fn signed_short() {
-        let tokens = lex("short").unwrap();
-        println!("{tokens:?}");
-        let (unread, result) = integer_type(Tokens(&tokens[..])).unwrap();
-
-        assert!(matches!(
-            unread.0,
-            [Token {
-                tag: Tag::Eof(_),
-                ..
-            }]
-        ));
-        assert!(matches!(
-            result,
-            IntegerType::Short(Short { unsigned: None, .. })
-        ));
-    }
-
-    #[test]
-    fn unsigned_foo() {
-        let tokens = lex("unsigned foo").unwrap();
-        println!("{tokens:?}");
-        let result = integer_type(Tokens(&tokens[..]));
-
-        assert!(matches!(result, Err(nom::Err::Failure(_))));
-    }
+    test_result_match!(
+        unsigned_foo,
+        integer_type,
+        "unsigned foo",
+        Err(nom::Err::Failure(_))
+    );
 }

@@ -3,6 +3,8 @@ use impl_nom_traits::Tokens;
 
 #[macro_use]
 mod eat;
+#[macro_use]
+mod generate_match_test;
 mod includes;
 mod primitive_type;
 

@@ -39,30 +39,21 @@ pub fn includes_statement<'slice, 'token>(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
-        lexer::{lex, Tag},
-        parser::impl_nom_traits::Tokens,
-    };
 
-    #[test]
-    fn interface_mixin() {
-        let tokens = lex("Foo includes Bar;").unwrap();
-        let (unread, result) = includes_statement(Tokens(&tokens[..])).unwrap();
-
-        assert!(matches!(unread.0[0].tag, Tag::Eof(_)));
-        assert!(matches!(
-            result,
-            IncludesStatement {
-                target: VariantToken {
-                    variant: Identifier("Foo"),
-                    ..
-                },
-                mixin: VariantToken {
-                    variant: Identifier("Bar"),
-                    ..
-                },
+    test_match!(
+        interface_mixin,
+        includes_statement,
+        "Foo includes Bar;",
+        IncludesStatement {
+            target: VariantToken {
+                variant: Identifier("Foo"),
                 ..
-            }
-        ));
-    }
+            },
+            mixin: VariantToken {
+                variant: Identifier("Bar"),
+                ..
+            },
+            ..
+        }
+    );
 }
