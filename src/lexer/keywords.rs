@@ -124,6 +124,7 @@ generate_keywords_enum!(
     Infinity => "Infinity",
     NaN => "NaN",
     ObservableArray => "ObservableArray",
+    Bigint => "bigint",
     Boolean => "boolean",
     Byte => "byte",
     Double => "double",

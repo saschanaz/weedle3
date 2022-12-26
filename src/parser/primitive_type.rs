@@ -26,6 +26,15 @@ pub struct FloatType<'a> {
     pub size: FloatSize<'a>,
 }
 
+pub enum PrimitiveType<'a> {
+    Integer(IntegerType<'a>),
+    Float(FloatType<'a>),
+    Boolean(VariantToken<'a, keywords::Boolean<'a>>),
+    Byte(VariantToken<'a, keywords::Byte<'a>>),
+    Octet(VariantToken<'a, keywords::Octet<'a>>),
+    Bigint(VariantToken<'a, keywords::Bigint<'a>>),
+}
+
 fn integer_size<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, IntegerSize<'token>> {
@@ -82,6 +91,19 @@ fn float_type<'slice, 'token>(
             unrestricted: None,
             size,
         }),
+    ))(tokens)
+}
+
+pub fn primitive_type<'slice, 'token>(
+    tokens: Tokens<'slice, 'token>,
+) -> IResult<Tokens<'slice, 'token>, PrimitiveType<'token>> {
+    nom::branch::alt((
+        integer_type.map(PrimitiveType::Integer),
+        float_type.map(PrimitiveType::Float),
+        nom::combinator::map(eat_key!(Boolean), PrimitiveType::Boolean),
+        nom::combinator::map(eat_key!(Byte), PrimitiveType::Byte),
+        nom::combinator::map(eat_key!(Octet), PrimitiveType::Octet),
+        nom::combinator::map(eat_key!(Bigint), PrimitiveType::Bigint),
     ))(tokens)
 }
 
@@ -201,5 +223,33 @@ mod tests {
         float_type,
         "unrestricted foo",
         Err(nom::Err::Failure(_))
+    );
+
+    test_match!(
+        boolean,
+        primitive_type,
+        "boolean",
+        PrimitiveType::Boolean(_)
+    );
+
+    test_match!(
+        byte,
+        primitive_type,
+        "byte",
+        PrimitiveType::Byte(_)
+    );
+
+    test_match!(
+        octet,
+        primitive_type,
+        "octet",
+        PrimitiveType::Octet(_)
+    );
+
+    test_match!(
+        bigint,
+        primitive_type,
+        "bigint",
+        PrimitiveType::Bigint(_)
     );
 }
