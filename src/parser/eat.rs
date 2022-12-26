@@ -21,7 +21,7 @@ macro_rules! eat {
         crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
             use nom::{InputIter, Slice};
             match input.iter_elements().next() {
-                Some(Token {
+                Some(crate::lexer::Token {
                     tag: crate::lexer::Tag::$variant(variant),
                     trivia,
                 }) => Ok((
@@ -43,7 +43,7 @@ macro_rules! eat_key {
             use crate::lexer::{keywords::Keyword, Tag};
             use nom::{InputIter, Slice};
             match input.iter_elements().next() {
-                Some(Token {
+                Some(crate::lexer::Token {
                     tag: Tag::Kw(Keyword::$variant(variant)),
                     trivia,
                 }) => Ok((

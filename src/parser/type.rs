@@ -5,7 +5,7 @@ use nom::{IResult, Parser};
 
 use self::primitive_type::PrimitiveType;
 
-use super::{impl_nom_traits::Tokens};
+use super::impl_nom_traits::Tokens;
 
 pub enum Type<'a> {
     Primitive(PrimitiveType<'a>),
@@ -14,6 +14,7 @@ pub enum Type<'a> {
 pub fn r#type<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, Type<'token>> {
+    // TODO: fill more things
     nom::branch::alt((primitive_type.map(Type::Primitive),))(tokens)
 }
 

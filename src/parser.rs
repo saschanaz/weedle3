@@ -5,14 +5,16 @@ use impl_nom_traits::Tokens;
 mod eat;
 #[macro_use]
 mod generate_match_test;
+mod dictionary;
 mod includes;
 mod r#type;
 
-use nom::{IResult, InputIter};
+use nom::{IResult, InputIter, Parser};
 
 use crate::lexer::{lex, Token};
 
 use self::{
+    dictionary::{dictionary, Dictionary},
     eat::VariantToken,
     includes::{includes_statement, IncludesStatement},
 };
@@ -26,6 +28,7 @@ pub enum ErrorKind<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
     Includes(IncludesStatement<'a>),
+    Dictionary(Dictionary<'a>),
     Eof(VariantToken<'a, ()>),
 }
 
@@ -33,10 +36,10 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
     let tokens = lex(input).map_err(ErrorKind::Lexer)?;
 
     let (unread, (mut defs, eof)) = nom::sequence::tuple((
-        nom::multi::many0(nom::branch::alt((nom::combinator::map(
-            includes_statement,
-            Definition::Includes,
-        ),))),
+        nom::multi::many0(nom::branch::alt((
+            includes_statement.map(Definition::Includes),
+            dictionary.map(Definition::Dictionary),
+        ))),
         nom::combinator::map(eat!(Eof), Definition::Eof),
     ))(Tokens(&tokens[..]))
     .map_err(|err| match err {
@@ -86,10 +89,15 @@ mod tests {
 
     #[test]
     fn parse() {
-        let result = super::parse("Foo includes Bar;").unwrap();
+        let result = super::parse("Foo includes Bar;dictionary Foo {};").unwrap();
 
-        assert_eq!(result.len(), 2);
-        assert!(matches!(result[0], Definition::Includes(_)));
-        assert!(matches!(result[1], Definition::Eof(_)));
+        assert!(matches!(
+            &result[..],
+            [
+                Definition::Includes(_),
+                Definition::Dictionary(_),
+                Definition::Eof(_),
+            ]
+        ));
     }
 }

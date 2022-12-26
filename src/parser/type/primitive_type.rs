@@ -2,11 +2,16 @@
 
 use nom::{IResult, Parser};
 
+use crate::lexer::keywords;
 use crate::parser::{eat::VariantToken, impl_nom_traits::Tokens};
-use crate::lexer::{keywords, Token};
 
 pub enum IntegerSize<'a> {
-    LongLong((VariantToken<'a, keywords::Long<'a>>, VariantToken<'a, keywords::Long<'a>>)),
+    LongLong(
+        (
+            VariantToken<'a, keywords::Long<'a>>,
+            VariantToken<'a, keywords::Long<'a>>,
+        ),
+    ),
     Long(VariantToken<'a, keywords::Long<'a>>),
     Short(VariantToken<'a, keywords::Short<'a>>),
 }
@@ -232,24 +237,9 @@ mod tests {
         PrimitiveType::Boolean(_)
     );
 
-    test_match!(
-        byte,
-        primitive_type,
-        "byte",
-        PrimitiveType::Byte(_)
-    );
+    test_match!(byte, primitive_type, "byte", PrimitiveType::Byte(_));
 
-    test_match!(
-        octet,
-        primitive_type,
-        "octet",
-        PrimitiveType::Octet(_)
-    );
+    test_match!(octet, primitive_type, "octet", PrimitiveType::Octet(_));
 
-    test_match!(
-        bigint,
-        primitive_type,
-        "bigint",
-        PrimitiveType::Bigint(_)
-    );
+    test_match!(bigint, primitive_type, "bigint", PrimitiveType::Bigint(_));
 }
