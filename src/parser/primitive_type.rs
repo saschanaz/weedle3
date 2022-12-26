@@ -5,22 +5,10 @@ use nom::{IResult, Parser};
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
 use crate::lexer::{keywords, Token};
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct LongLong<'a> {
-    pub long: VariantToken<'a, keywords::Long<'a>>,
-    pub long_long: VariantToken<'a, keywords::Long<'a>>,
-}
-
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Long<'a>(pub VariantToken<'a, keywords::Long<'a>>);
-
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Short<'a>(pub VariantToken<'a, keywords::Short<'a>>);
-
 pub enum IntegerSize<'a> {
-    LongLong(LongLong<'a>),
-    Long(Long<'a>),
-    Short(Short<'a>),
+    LongLong((VariantToken<'a, keywords::Long<'a>>, VariantToken<'a, keywords::Long<'a>>)),
+    Long(VariantToken<'a, keywords::Long<'a>>),
+    Short(VariantToken<'a, keywords::Short<'a>>),
 }
 
 pub struct IntegerType<'a> {
