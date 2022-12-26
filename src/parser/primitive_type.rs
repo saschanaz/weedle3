@@ -16,15 +16,25 @@ pub struct IntegerType<'a> {
     pub size: IntegerSize<'a>,
 }
 
+pub enum FloatSize<'a> {
+    Float(VariantToken<'a, keywords::Float<'a>>),
+    Double(VariantToken<'a, keywords::Double<'a>>),
+}
+
+pub struct FloatType<'a> {
+    pub unrestricted: Option<VariantToken<'a, keywords::Unrestricted<'a>>>,
+    pub size: FloatSize<'a>,
+}
+
 fn integer_size<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, IntegerSize<'token>> {
     nom::branch::alt((
-        eat_key!(Short).map(|short| IntegerSize::Short(Short(short))),
+        eat_key!(Short).map(IntegerSize::Short),
         nom::sequence::tuple((eat_key!(Long), nom::combinator::opt(eat_key!(Long)))).map(
             |(long, long_long)| match long_long {
-                Some(long_long) => IntegerSize::LongLong(LongLong { long, long_long }),
-                None => IntegerSize::Long(Long(long)),
+                Some(long_long) => IntegerSize::LongLong((long, long_long)),
+                None => IntegerSize::Long(long),
             },
         ),
     ))(tokens)
@@ -43,6 +53,33 @@ fn integer_type<'slice, 'token>(
         ),
         integer_size.map(|size| IntegerType {
             unsigned: None,
+            size,
+        }),
+    ))(tokens)
+}
+
+fn float_size<'slice, 'token>(
+    tokens: Tokens<'slice, 'token>,
+) -> IResult<Tokens<'slice, 'token>, FloatSize<'token>> {
+    nom::branch::alt((
+        eat_key!(Float).map(FloatSize::Float),
+        eat_key!(Double).map(FloatSize::Double),
+    ))(tokens)
+}
+
+fn float_type<'slice, 'token>(
+    tokens: Tokens<'slice, 'token>,
+) -> IResult<Tokens<'slice, 'token>, FloatType<'token>> {
+    // TODO: use nom::error::VerboseErrorKind? how?
+    nom::branch::alt((
+        nom::sequence::tuple((eat_key!(Unrestricted), nom::combinator::cut(float_size))).map(
+            |(unrestricted, size)| FloatType {
+                unrestricted: Some(unrestricted),
+                size,
+            },
+        ),
+        float_size.map(|size| FloatType {
+            unrestricted: None,
             size,
         }),
     ))(tokens)
@@ -116,6 +153,53 @@ mod tests {
         unsigned_foo,
         integer_type,
         "unsigned foo",
+        Err(nom::Err::Failure(_))
+    );
+
+    test_match!(
+        unrestricted_float,
+        float_type,
+        "unrestricted float",
+        FloatType {
+            unrestricted: Some(_),
+            size: FloatSize::Float(_)
+        }
+    );
+
+    test_match!(
+        float,
+        float_type,
+        "float",
+        FloatType {
+            unrestricted: None,
+            size: FloatSize::Float(_)
+        }
+    );
+
+    test_match!(
+        unrestricted_double,
+        float_type,
+        "unrestricted double",
+        FloatType {
+            unrestricted: Some(_),
+            size: FloatSize::Double(_)
+        }
+    );
+
+    test_match!(
+        double,
+        float_type,
+        "double",
+        FloatType {
+            unrestricted: None,
+            size: FloatSize::Double(_)
+        }
+    );
+
+    test_result_match!(
+        unrestricted_foo,
+        float_type,
+        "unrestricted foo",
         Err(nom::Err::Failure(_))
     );
 }
