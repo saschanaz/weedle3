@@ -6,7 +6,7 @@ mod eat;
 #[macro_use]
 mod generate_match_test;
 mod includes;
-mod primitive_type;
+mod r#type;
 
 use nom::{IResult, InputIter};
 

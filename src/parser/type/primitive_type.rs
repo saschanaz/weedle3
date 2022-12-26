@@ -2,7 +2,7 @@
 
 use nom::{IResult, Parser};
 
-use super::{eat::VariantToken, impl_nom_traits::Tokens};
+use crate::parser::{eat::VariantToken, impl_nom_traits::Tokens};
 use crate::lexer::{keywords, Token};
 
 pub enum IntegerSize<'a> {

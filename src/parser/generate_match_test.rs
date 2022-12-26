@@ -4,7 +4,7 @@ macro_rules! test_match {
         #[test]
         fn $name() {
             use crate::{
-                lexer::{lex, Tag},
+                lexer::{lex, Tag, Token},
                 parser::impl_nom_traits::Tokens,
             };
             let tokens = lex($input).unwrap();
