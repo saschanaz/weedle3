@@ -6,6 +6,7 @@ mod eat;
 #[macro_use]
 mod generate_match_test;
 mod dictionary;
+mod extended_attributes;
 mod includes;
 mod r#type;
 
