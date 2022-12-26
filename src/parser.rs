@@ -25,7 +25,7 @@ pub enum ErrorKind<'a> {
     Parser(nom::Err<nom::error::Error<Vec<Token<'a>>>>),
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
     Dictionary(DictionaryDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),

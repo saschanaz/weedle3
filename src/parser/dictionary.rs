@@ -1,29 +1,34 @@
+mod member;
+
 use nom::IResult;
 
 use crate::{common::Identifier, lexer::keywords};
 
+use self::member::{dictionary_member, DictionaryMember};
+
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DictionaryDefinition<'a> {
-    dictionary: VariantToken<'a, keywords::Dictionary<'a>>,
-    identifier: VariantToken<'a, Identifier<'a>>,
-    open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
-    close_brace: VariantToken<'a, keywords::CloseBrace<'a>>,
-    semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
+    pub dictionary: VariantToken<'a, keywords::Dictionary<'a>>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
+    pub body: Vec<DictionaryMember<'a>>,
+    pub close_brace: VariantToken<'a, keywords::CloseBrace<'a>>,
+    pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
 pub fn dictionary<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, DictionaryDefinition<'token>> {
     // TODO: fill more things
-    let (tokens, (dictionary, identifier, open_brace, close_brace, semi_colon)) =
+    let (tokens, (dictionary, identifier, open_brace, members, semi_colon)) =
         nom::sequence::tuple((
             eat_key!(Dictionary),
-            eat!(Id),
-            eat_key!(OpenBrace),
-            eat_key!(CloseBrace),
-            eat_key!(SemiColon),
+            nom::combinator::cut(eat!(Id)),
+            nom::combinator::cut(eat_key!(OpenBrace)),
+            nom::multi::many_till(dictionary_member, eat_key!(CloseBrace)),
+            nom::combinator::cut(eat_key!(SemiColon)),
         ))(tokens)?;
 
     Ok((
@@ -32,7 +37,8 @@ pub fn dictionary<'slice, 'token>(
             dictionary,
             identifier,
             open_brace,
-            close_brace,
+            body: members.0,
+            close_brace: members.1,
             semi_colon,
         },
     ))
@@ -40,6 +46,8 @@ pub fn dictionary<'slice, 'token>(
 
 #[cfg(test)]
 mod tests {
+    use crate::parser::r#type::{primitive_type::PrimitiveType, Type};
+
     use super::*;
 
     test_match!(
@@ -53,5 +61,27 @@ mod tests {
             },
             ..
         }
+    );
+
+    test_match!(
+        single_member_dictionary,
+        dictionary,
+        "dictionary Foo { required float bar; };",
+        DictionaryDefinition {
+            identifier: VariantToken {
+                variant: Identifier("Foo"),
+                ..
+            },
+            body,
+            ..
+        } if matches!(&body[..], [DictionaryMember {
+            required: Some(_),
+            r#type: Type::Primitive(PrimitiveType::Float(_)),
+            identifier: VariantToken {
+                variant: Identifier("bar"),
+                ..
+            },
+            ..
+        }])
     );
 }

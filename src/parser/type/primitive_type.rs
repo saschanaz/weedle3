@@ -5,6 +5,7 @@ use nom::{IResult, Parser};
 use crate::lexer::keywords;
 use crate::parser::{eat::VariantToken, impl_nom_traits::Tokens};
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum IntegerSize<'a> {
     LongLong(
         (
@@ -16,21 +17,25 @@ pub enum IntegerSize<'a> {
     Short(VariantToken<'a, keywords::Short<'a>>),
 }
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IntegerType<'a> {
     pub unsigned: Option<VariantToken<'a, keywords::Unsigned<'a>>>,
     pub size: IntegerSize<'a>,
 }
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatSize<'a> {
     Float(VariantToken<'a, keywords::Float<'a>>),
     Double(VariantToken<'a, keywords::Double<'a>>),
 }
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FloatType<'a> {
     pub unrestricted: Option<VariantToken<'a, keywords::Unrestricted<'a>>>,
     pub size: FloatSize<'a>,
 }
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum PrimitiveType<'a> {
     Integer(IntegerType<'a>),
     Float(FloatType<'a>),

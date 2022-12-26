@@ -6,7 +6,7 @@ use crate::{
     lexer::keywords::{Includes, SemiColon},
 };
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatementDefinition<'a> {
     pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub includes: VariantToken<'a, Includes<'a>>,

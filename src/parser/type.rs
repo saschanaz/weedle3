@@ -1,5 +1,5 @@
-mod primitive_type;
-use primitive_type::primitive_type;
+pub mod primitive_type;
+pub use primitive_type::primitive_type;
 
 use nom::{IResult, Parser};
 
@@ -7,6 +7,7 @@ use self::primitive_type::PrimitiveType;
 
 use super::impl_nom_traits::Tokens;
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Primitive(PrimitiveType<'a>),
 }

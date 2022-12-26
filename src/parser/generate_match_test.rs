@@ -1,6 +1,6 @@
 #[cfg(test)]
 macro_rules! test_match {
-    ($name:ident, $func:ident, $input:literal, $match:pat_param) => {
+    ($name:ident, $func:ident, $input:literal, $match:pat_param $(if $guard:expr)?) => {
         #[test]
         fn $name() {
             use crate::{
@@ -17,7 +17,7 @@ macro_rules! test_match {
                     ..
                 }]
             ));
-            assert!(matches!(result, $match));
+            assert!(matches!(result, $match $(if $guard )?));
         }
     };
 }

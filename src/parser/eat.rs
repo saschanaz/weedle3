@@ -1,6 +1,6 @@
 use super::impl_nom_traits::Tokens;
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct VariantToken<'a, T> {
     pub variant: T,
     pub trivia: &'a str,
