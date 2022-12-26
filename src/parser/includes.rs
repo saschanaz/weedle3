@@ -7,28 +7,28 @@ use crate::{
 };
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct IncludesStatement<'a> {
-    pub target: VariantToken<'a, Identifier<'a>>,
+pub struct IncludesStatementDefinition<'a> {
+    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub includes: VariantToken<'a, Includes<'a>>,
-    pub mixin: VariantToken<'a, Identifier<'a>>,
-    pub termination: VariantToken<'a, SemiColon<'a>>,
+    pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub semi_colon: VariantToken<'a, SemiColon<'a>>,
 }
 
 pub fn includes_statement<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, IncludesStatement<'token>> {
-    let (remaining, (target, includes, mixin, termination)) =
+) -> IResult<Tokens<'slice, 'token>, IncludesStatementDefinition<'token>> {
+    let (remaining, (lhs_identifier, includes, rhs_identifier, termination)) =
         nom::sequence::tuple((eat!(Id), eat_key!(Includes), eat!(Id), eat_key!(SemiColon)))(
             tokens,
         )?;
 
     Ok((
         remaining,
-        IncludesStatement {
-            target,
+        IncludesStatementDefinition {
+            lhs_identifier,
             includes,
-            mixin,
-            termination,
+            rhs_identifier,
+            semi_colon: termination,
         },
     ))
 }
@@ -41,12 +41,12 @@ mod tests {
         interface_mixin,
         includes_statement,
         "Foo includes Bar;",
-        IncludesStatement {
-            target: VariantToken {
+        IncludesStatementDefinition {
+            lhs_identifier: VariantToken {
                 variant: Identifier("Foo"),
                 ..
             },
-            mixin: VariantToken {
+            rhs_identifier: VariantToken {
                 variant: Identifier("Bar"),
                 ..
             },

@@ -14,9 +14,9 @@ use nom::{IResult, InputIter, Parser};
 use crate::lexer::{lex, Token};
 
 use self::{
-    dictionary::{dictionary, Dictionary},
+    dictionary::{dictionary, DictionaryDefinition},
     eat::VariantToken,
-    includes::{includes_statement, IncludesStatement},
+    includes::{includes_statement, IncludesStatementDefinition},
 };
 
 #[derive(Debug)]
@@ -27,8 +27,8 @@ pub enum ErrorKind<'a> {
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
-    Includes(IncludesStatement<'a>),
-    Dictionary(Dictionary<'a>),
+    Dictionary(DictionaryDefinition<'a>),
+    IncludesStatement(IncludesStatementDefinition<'a>),
     Eof(VariantToken<'a, ()>),
 }
 
@@ -37,7 +37,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
 
     let (unread, (mut defs, eof)) = nom::sequence::tuple((
         nom::multi::many0(nom::branch::alt((
-            includes_statement.map(Definition::Includes),
+            includes_statement.map(Definition::IncludesStatement),
             dictionary.map(Definition::Dictionary),
         ))),
         nom::combinator::map(eat!(Eof), Definition::Eof),
@@ -94,7 +94,7 @@ mod tests {
         assert!(matches!(
             &result[..],
             [
-                Definition::Includes(_),
+                Definition::IncludesStatement(_),
                 Definition::Dictionary(_),
                 Definition::Eof(_),
             ]
