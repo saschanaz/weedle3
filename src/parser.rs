@@ -9,11 +9,11 @@ mod generate_match_test;
 mod extended_attributes;
 mod r#type;
 
-mod interface;
 mod dictionary;
 mod enumeration;
 mod includes;
 mod interface;
+mod typedef;
 
 use nom::{IResult, InputIter, Parser};
 
@@ -29,6 +29,7 @@ use self::{
     extended_attributes::ExtendedAttributeList,
     includes::{includes_statement, IncludesStatementDefinition},
     interface::{interface, InterfaceDefinition},
+    typedef::TypedefDefinition,
 };
 
 #[derive(Debug)]
@@ -42,6 +43,7 @@ pub enum Definition<'a> {
     Interface(InterfaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
     Enum(EnumDefinition<'a>),
+    Typedef(TypedefDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),
     Eof(VariantToken<'a, ()>),
 }
@@ -57,6 +59,9 @@ fn set_ext_attr<'a>(
             d.ext_attrs = ext_attrs;
         }
         Definition::Enum(d) => {
+            d.ext_attrs = ext_attrs;
+        }
+        Definition::Typedef(d) => {
             d.ext_attrs = ext_attrs;
         }
         Definition::IncludesStatement(d) => {
