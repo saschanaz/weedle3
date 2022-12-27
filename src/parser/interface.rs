@@ -1,3 +1,5 @@
+mod const_member;
+pub use const_member::{const_member, ConstMember};
 mod stringifier;
 pub use stringifier::{stringifier, StringifierOperation};
 
@@ -11,7 +13,7 @@ use super::{
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum InterfaceMember<'a> {
-    // Const(Const<'a>),
+    Const(ConstMember<'a>),
     Stringifier(StringifierOperation<'a>),
 }
 
@@ -29,7 +31,10 @@ pub struct InterfaceDefinition<'a> {
 pub fn interface_member<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, InterfaceMember<'token>> {
-    nom::branch::alt((stringifier.map(InterfaceMember::Stringifier),))(tokens)
+    nom::branch::alt((
+        const_member.map(InterfaceMember::Const),
+        stringifier.map(InterfaceMember::Stringifier),
+    ))(tokens)
 }
 
 pub fn interface<'slice, 'token>(
@@ -88,6 +93,23 @@ mod tests {
             body,
             ..
         } if matches!(&body[..], [InterfaceMember::Stringifier(_)])
+    );
+
+    test_match!(
+        double_member_interface,
+        interface,
+        "interface Foo {
+          const short bar = 42;
+          stringifier;
+        };",
+        InterfaceDefinition {
+            identifier: VariantToken {
+                variant: Identifier("Foo"),
+                ..
+            },
+            body,
+            ..
+        } if matches!(&body[..], [InterfaceMember::Const(_), InterfaceMember::Stringifier(_)])
     );
 
     test_result_match!(
