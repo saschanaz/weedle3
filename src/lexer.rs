@@ -46,8 +46,6 @@ impl Token<'_> {
     }
 }
 
-// fn keyword(input: &str) -> NomResult<ch
-
 fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
@@ -95,35 +93,59 @@ mod tests {
     #[test]
     fn test() {
         let tokens = lex("interface mixin Foo {};").unwrap();
-        assert_eq!(tokens.len(), 7);
 
-        assert!(
-            matches!(tokens[0].tag, Tag::Kw(Keyword::Interface(_))),
-            "Should be Keyword::Interface"
-        );
-        assert!(
-            matches!(tokens[1].tag, Tag::Kw(Keyword::Mixin(_))),
-            "Should be Keyword::Mixin"
-        );
-        assert!(
-            matches!(tokens[2].tag, Tag::Id(_)),
-            "Should be an identifier"
-        );
-        assert!(
-            matches!(tokens[3].tag, Tag::Kw(Keyword::OpenBrace(_))),
-            "Should be Keyword::OpenBrace"
-        );
-        assert!(
-            matches!(tokens[4].tag, Tag::Kw(Keyword::CloseBrace(_))),
-            "Should be Keyword::CloseBrace"
-        );
-        assert!(
-            matches!(tokens[5].tag, Tag::Kw(Keyword::SemiColon(_))),
-            "Should be Keyword::SemiColon"
-        );
-        assert!(
-            matches!(tokens[6].tag, Tag::Eof(_)),
-            "Should be TokenTag::Eof"
-        );
+        assert!(matches!(
+            &tokens[..],
+            [
+                Token {
+                    tag: Tag::Kw(Keyword::Interface(_)),
+                    ..
+                },
+                Token {
+                    tag: Tag::Kw(Keyword::Mixin(_)),
+                    ..
+                },
+                Token {
+                    tag: Tag::Id(_),
+                    ..
+                },
+                Token {
+                    tag: Tag::Kw(Keyword::OpenBrace(_)),
+                    ..
+                },
+                Token {
+                    tag: Tag::Kw(Keyword::CloseBrace(_)),
+                    ..
+                },
+                Token {
+                    tag: Tag::Kw(Keyword::SemiColon(_)),
+                    ..
+                },
+                Token {
+                    tag: Tag::Eof(_),
+                    ..
+                }
+            ]
+        ));
+    }
+
+    #[test]
+    fn negative_infinity() {
+        let tokens = lex("-Infinity").unwrap();
+        println!("{tokens:?}");
+
+        assert!(matches!(
+            &tokens[..],
+            [
+                Token {
+                    tag: Tag::Kw(Keyword::NegInfinity(_)),
+                    ..
+                },
+                Token {
+                    tag: Tag::Eof(_),
+                    ..
+                }
+            ]
+        ));
     }
 }
