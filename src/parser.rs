@@ -8,6 +8,7 @@ mod generate_match_test;
 mod dictionary;
 mod extended_attributes;
 mod includes;
+mod interface;
 mod r#type;
 
 use nom::{IResult, InputIter, Parser};
@@ -22,6 +23,7 @@ use self::{
     eat::VariantToken,
     extended_attributes::ExtendedAttributeList,
     includes::{includes_statement, IncludesStatementDefinition},
+    interface::{interface, InterfaceDefinition},
 };
 
 #[derive(Debug)]
@@ -32,6 +34,7 @@ pub enum ErrorKind<'a> {
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
+    Interface(InterfaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),
     Eof(VariantToken<'a, ()>),
@@ -41,8 +44,11 @@ fn set_ext_attr<'a>(
     (ext_attrs, mut def): (Option<ExtendedAttributeList<'a>>, Definition<'a>),
 ) -> Definition<'a> {
     match &mut def {
-        Definition::Dictionary(dict) => {
-            dict.ext_attrs = ext_attrs;
+        Definition::Interface(int) => {
+            int.ext_attrs = ext_attrs;
+        }
+        Definition::Dictionary(dic) => {
+            dic.ext_attrs = ext_attrs;
         }
         Definition::IncludesStatement(inc) => {
             inc.ext_attrs = ext_attrs;
@@ -60,8 +66,9 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
             nom::sequence::tuple((
                 nom::combinator::opt(extended_attribute_list),
                 nom::branch::alt((
-                    includes_statement.map(Definition::IncludesStatement),
+                    interface.map(Definition::Interface),
                     dictionary.map(Definition::Dictionary),
+                    includes_statement.map(Definition::IncludesStatement),
                 )),
             ))
             .map(set_ext_attr),

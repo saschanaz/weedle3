@@ -22,9 +22,9 @@ pub fn dictionary_member<'slice, 'token>(
     let (tokens, (ext_attrs, required, r#type, identifier, semi_colon)) = nom::sequence::tuple((
         nom::combinator::opt(extended_attribute_list),
         nom::combinator::opt(eat_key!(Required)),
-        type_with_extended_attributes,
-        eat!(Id),
-        eat_key!(SemiColon),
+        nom::combinator::cut(type_with_extended_attributes),
+        nom::combinator::cut(eat!(Id)),
+        nom::combinator::cut(eat_key!(SemiColon)),
     ))(tokens)?;
 
     Ok((
@@ -118,6 +118,27 @@ mod tests {
         double_extended_member,
         dictionary_member,
         "[Foo] [Clamp] float foo;",
+        Err(nom::Err::Failure(_))
+    );
+
+    test_result_match!(
+        required_blank,
+        dictionary_member,
+        "required;",
+        Err(nom::Err::Failure(_))
+    );
+
+    test_result_match!(
+        no_type_member,
+        dictionary_member,
+        "foo;",
+        Err(nom::Err::Failure(_))
+    );
+
+    test_result_match!(
+        no_semi_colon,
+        dictionary_member,
+        "float foo",
         Err(nom::Err::Failure(_))
     );
 }
