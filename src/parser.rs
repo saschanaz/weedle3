@@ -5,22 +5,26 @@ use impl_nom_traits::Tokens;
 mod eat;
 #[macro_use]
 mod generate_match_test;
-mod dictionary;
+
 mod extended_attributes;
+mod r#type;
+
+mod dictionary;
+mod enumeration;
 mod includes;
 mod interface;
-mod r#type;
 
 use nom::{IResult, InputIter, Parser};
 
 use crate::{
     lexer::{lex, Token},
-    parser::extended_attributes::extended_attribute_list,
+    parser::{enumeration::r#enum, extended_attributes::extended_attribute_list},
 };
 
 use self::{
     dictionary::{dictionary, DictionaryDefinition},
     eat::VariantToken,
+    enumeration::EnumDefinition,
     extended_attributes::ExtendedAttributeList,
     includes::{includes_statement, IncludesStatementDefinition},
     interface::{interface, InterfaceDefinition},
@@ -36,6 +40,7 @@ pub enum ErrorKind<'a> {
 pub enum Definition<'a> {
     Interface(InterfaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
+    Enum(EnumDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),
     Eof(VariantToken<'a, ()>),
 }
@@ -44,14 +49,17 @@ fn set_ext_attr<'a>(
     (ext_attrs, mut def): (Option<ExtendedAttributeList<'a>>, Definition<'a>),
 ) -> Definition<'a> {
     match &mut def {
-        Definition::Interface(int) => {
-            int.ext_attrs = ext_attrs;
+        Definition::Interface(d) => {
+            d.ext_attrs = ext_attrs;
         }
-        Definition::Dictionary(dic) => {
-            dic.ext_attrs = ext_attrs;
+        Definition::Dictionary(d) => {
+            d.ext_attrs = ext_attrs;
         }
-        Definition::IncludesStatement(inc) => {
-            inc.ext_attrs = ext_attrs;
+        Definition::Enum(d) => {
+            d.ext_attrs = ext_attrs;
+        }
+        Definition::IncludesStatement(d) => {
+            d.ext_attrs = ext_attrs;
         }
         Definition::Eof(_) => panic!("Unexpected EOF"),
     }
@@ -68,6 +76,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
                 nom::branch::alt((
                     interface.map(Definition::Interface),
                     dictionary.map(Definition::Dictionary),
+                    r#enum.map(Definition::Enum),
                     includes_statement.map(Definition::IncludesStatement),
                 )),
             ))
