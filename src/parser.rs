@@ -29,7 +29,7 @@ use self::{
     extended_attributes::ExtendedAttributeList,
     includes::{includes_statement, IncludesStatementDefinition},
     interface::{interface, InterfaceDefinition},
-    typedef::TypedefDefinition,
+    typedef::{typedef, TypedefDefinition},
 };
 
 #[derive(Debug)]
@@ -83,6 +83,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
                     interface.map(Definition::Interface),
                     dictionary.map(Definition::Dictionary),
                     r#enum.map(Definition::Enum),
+                    typedef.map(Definition::Typedef),
                     includes_statement.map(Definition::IncludesStatement),
                 )),
             ))
