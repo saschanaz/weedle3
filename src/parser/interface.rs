@@ -11,6 +11,7 @@ use super::{
     eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
 };
 
+#[allow(clippy::large_enum_variant)]
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum InterfaceMember<'a> {
     Const(ConstMember<'a>),
