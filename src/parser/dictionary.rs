@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-Dictionary
+
 mod member;
 
 use nom::IResult;

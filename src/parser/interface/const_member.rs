@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-Const
+
 use nom::{IResult, Parser};
 
 use crate::{

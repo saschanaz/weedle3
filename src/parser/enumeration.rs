@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-Enum
+
 use nom::IResult;
 
 use crate::{common::Identifier, lexer::keywords, literal::StringLit};

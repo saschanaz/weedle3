@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-DictionaryMember
+
 use nom::IResult;
 
 use crate::parser::extended_attributes::{extended_attribute_list, ExtendedAttributeList};

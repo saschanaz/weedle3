@@ -9,6 +9,7 @@ mod generate_match_test;
 mod extended_attributes;
 mod r#type;
 
+mod interface;
 mod dictionary;
 mod enumeration;
 mod includes;

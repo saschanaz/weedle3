@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-InterfaceRest
+
 mod const_member;
 pub use const_member::{const_member, ConstMember};
 mod stringifier;

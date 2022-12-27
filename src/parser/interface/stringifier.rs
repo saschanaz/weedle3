@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-Stringifier
+
 use nom::IResult;
 
 use crate::{

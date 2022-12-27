@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-Type
+
 pub mod primitive_type;
 pub use primitive_type::primitive_type;
 

@@ -1,3 +1,5 @@
+// https://webidl.spec.whatwg.org/#prod-ExtendedAttributeList
+
 use nom::{IResult, Parser};
 
 use super::{eat::VariantToken, impl_nom_traits::Tokens};
