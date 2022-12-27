@@ -1,6 +1,8 @@
 use nom::IResult;
 
-use super::{eat::VariantToken, impl_nom_traits::Tokens};
+use super::{
+    eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
+};
 use crate::{
     common::Identifier,
     lexer::keywords::{Includes, SemiColon},
@@ -8,6 +10,7 @@ use crate::{
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatementDefinition<'a> {
+    pub ext_attrs: Option<ExtendedAttributeList<'a>>,
     pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub includes: VariantToken<'a, Includes<'a>>,
     pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
@@ -25,6 +28,7 @@ pub fn includes_statement<'slice, 'token>(
     Ok((
         remaining,
         IncludesStatementDefinition {
+            ext_attrs: None,
             lhs_identifier,
             includes,
             rhs_identifier,

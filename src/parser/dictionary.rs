@@ -6,10 +6,13 @@ use crate::{common::Identifier, lexer::keywords};
 
 use self::member::{dictionary_member, DictionaryMember};
 
-use super::{eat::VariantToken, impl_nom_traits::Tokens};
+use super::{
+    eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
+};
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DictionaryDefinition<'a> {
+    pub ext_attrs: Option<ExtendedAttributeList<'a>>,
     pub dictionary: VariantToken<'a, keywords::Dictionary<'a>>,
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
@@ -34,6 +37,7 @@ pub fn dictionary<'slice, 'token>(
     Ok((
         tokens,
         DictionaryDefinition {
+            ext_attrs: None,
             dictionary,
             identifier,
             open_brace,

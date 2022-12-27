@@ -12,11 +12,15 @@ mod r#type;
 
 use nom::{IResult, InputIter, Parser};
 
-use crate::lexer::{lex, Token};
+use crate::{
+    lexer::{lex, Token},
+    parser::extended_attributes::extended_attribute_list,
+};
 
 use self::{
     dictionary::{dictionary, DictionaryDefinition},
     eat::VariantToken,
+    extended_attributes::ExtendedAttributeList,
     includes::{includes_statement, IncludesStatementDefinition},
 };
 
@@ -33,14 +37,35 @@ pub enum Definition<'a> {
     Eof(VariantToken<'a, ()>),
 }
 
+fn set_ext_attr<'a>(
+    (ext_attrs, mut def): (Option<ExtendedAttributeList<'a>>, Definition<'a>),
+) -> Definition<'a> {
+    match &mut def {
+        Definition::Dictionary(dict) => {
+            dict.ext_attrs = ext_attrs;
+        }
+        Definition::IncludesStatement(inc) => {
+            inc.ext_attrs = ext_attrs;
+        }
+        Definition::Eof(_) => panic!("Unexpected EOF"),
+    }
+    def
+}
+
 pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
     let tokens = lex(input).map_err(ErrorKind::Lexer)?;
 
     let (unread, (mut defs, eof)) = nom::sequence::tuple((
-        nom::multi::many0(nom::branch::alt((
-            includes_statement.map(Definition::IncludesStatement),
-            dictionary.map(Definition::Dictionary),
-        ))),
+        nom::multi::many0(
+            nom::sequence::tuple((
+                nom::combinator::opt(extended_attribute_list),
+                nom::branch::alt((
+                    includes_statement.map(Definition::IncludesStatement),
+                    dictionary.map(Definition::Dictionary),
+                )),
+            ))
+            .map(set_ext_attr),
+        ),
         nom::combinator::map(eat!(Eof), Definition::Eof),
     ))(Tokens(&tokens[..]))
     .map_err(|err| match err {
@@ -65,7 +90,11 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lexer::Tag;
+    use crate::{
+        common::Identifier,
+        lexer::Tag,
+        parser::extended_attributes::{ExtendedAttribute, ExtendedAttributeNoArgs},
+    };
 
     use super::{impl_nom_traits::Tokens, *};
 
@@ -99,6 +128,34 @@ mod tests {
                 Definition::Dictionary(_),
                 Definition::Eof(_),
             ]
+        ));
+    }
+
+    #[test]
+    fn parse_with_ext_attrs() {
+        let result = super::parse("[Bar] dictionary Foo {};").unwrap();
+
+        assert!(matches!(
+            &result[..],
+            [
+                Definition::Dictionary(DictionaryDefinition {
+                    ext_attrs: Some(ExtendedAttributeList {
+                        body: ext_attrs,
+                        ..
+                    }),
+                    identifier: VariantToken{
+                        variant: Identifier("Foo"),
+                        ..
+                    },
+                    ..
+                }),
+                Definition::Eof(_),
+            ] if matches!(&ext_attrs[..], [
+                ExtendedAttribute::NoArgs(ExtendedAttributeNoArgs(VariantToken {
+                    variant: Identifier("Bar"),
+                    ..
+                }))
+            ])
         ));
     }
 }
