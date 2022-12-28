@@ -1,7 +1,7 @@
 use nom::{multi::many0, IResult};
 
 use crate::common::Identifier;
-use crate::literal::{FloatLit, IntegerLit, StringLit};
+use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::whitespace::sp;
 use crate::Parse;
 
@@ -16,7 +16,7 @@ pub type NomResult<'a, O> = IResult<&'a str, O>;
 pub enum Tag<'a> {
     Kw(Keyword<'a>),
     Int(IntegerLit<'a>),
-    Dec(FloatLit<'a>),
+    Dec(FloatValueLit<'a>),
     Id(Identifier<'a>),
     Str(StringLit<'a>),
     Other(char),
@@ -52,9 +52,9 @@ fn other(input: &str) -> NomResult<char> {
 
 fn token(input: &str) -> NomResult<Tag> {
     nom::branch::alt((
-        nom::combinator::map(Keyword::parse, Tag::Kw),
+        nom::combinator::map(FloatValueLit::parse, Tag::Dec),
         nom::combinator::map(IntegerLit::parse, Tag::Int),
-        nom::combinator::map(FloatLit::parse, Tag::Dec),
+        nom::combinator::map(Keyword::parse, Tag::Kw),
         nom::combinator::map(Identifier::parse, Tag::Id),
         nom::combinator::map(StringLit::parse, Tag::Str),
         nom::combinator::map(other, Tag::Other),
