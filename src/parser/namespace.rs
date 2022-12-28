@@ -20,7 +20,7 @@ pub enum NamespaceMember<'a> {
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct NamespaceDefinition<'a> {
     pub ext_attrs: Option<ExtendedAttributeList<'a>>,
-    pub interface: VariantToken<'a, keywords::Interface<'a>>,
+    pub namespace: VariantToken<'a, keywords::Namespace<'a>>,
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
     pub body: Vec<NamespaceMember<'a>>,
@@ -38,9 +38,9 @@ pub fn namespace<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, NamespaceDefinition<'token>> {
     // TODO: fill more things
-    let (tokens, (interface, identifier, open_brace, members, semi_colon)) =
+    let (tokens, (namespace, identifier, open_brace, members, semi_colon)) =
         nom::sequence::tuple((
-            eat_key!(Interface),
+            eat_key!(Namespace),
             nom::combinator::cut(eat!(Id)),
             nom::combinator::cut(eat_key!(OpenBrace)),
             nom::multi::many_till(namespace_member, eat_key!(CloseBrace)),
@@ -51,7 +51,7 @@ pub fn namespace<'slice, 'token>(
         tokens,
         NamespaceDefinition {
             ext_attrs: None,
-            interface,
+            namespace,
             identifier,
             open_brace,
             body: members.0,
