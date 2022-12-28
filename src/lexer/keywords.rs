@@ -69,6 +69,8 @@ generate_keywords_enum!(
     Uint16Array => "Uint16Array",
     Uint32Array => "Uint32Array",
     Uint8ClampedArray => "Uint8ClampedArray",
+    BigInt64Array => "BigInt64Array",
+    BigUint64Array => "BigUint64Array",
     Float32Array => "Float32Array",
     Float64Array => "Float64Array",
     Any => "any",

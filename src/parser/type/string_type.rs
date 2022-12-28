@@ -1,4 +1,4 @@
-// https://webidl.spec.whatwg.org/#prod-PrimitiveType
+// https://webidl.spec.whatwg.org/#prod-StringType
 
 use nom::{IResult, Parser};
 
