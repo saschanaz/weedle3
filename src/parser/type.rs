@@ -1,20 +1,24 @@
 // https://webidl.spec.whatwg.org/#prod-Type
 
 pub mod primitive_type;
-pub use primitive_type::primitive_type;
+pub use primitive_type::PrimitiveType;
 
 use nom::{IResult, Parser};
 
-use self::primitive_type::PrimitiveType;
-
-use super::{
-    extended_attributes::{extended_attribute_list, ExtendedAttributeList},
-    impl_nom_traits::Tokens,
-};
+use super::{extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens};
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Primitive(PrimitiveType<'a>),
+}
+
+impl Type<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, Type<'token>> {
+        // TODO: fill more things
+        nom::branch::alt((PrimitiveType::parse.map(Type::Primitive),))(tokens)
+    }
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -23,21 +27,18 @@ pub struct TypeWithExtendedAttributes<'a> {
     pub r#type: Type<'a>,
 }
 
-pub fn r#type<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, Type<'token>> {
-    // TODO: fill more things
-    nom::branch::alt((primitive_type.map(Type::Primitive),))(tokens)
-}
+impl TypeWithExtendedAttributes<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, TypeWithExtendedAttributes<'token>> {
+        // TODO: fill more things
+        let (tokens, (ext_attrs, r#type)) = nom::sequence::tuple((
+            nom::combinator::opt(ExtendedAttributeList::parse),
+            Type::parse,
+        ))(tokens)?;
 
-pub fn type_with_extended_attributes<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, TypeWithExtendedAttributes<'token>> {
-    // TODO: fill more things
-    let (tokens, (ext_attrs, r#type)) =
-        nom::sequence::tuple((nom::combinator::opt(extended_attribute_list), r#type))(tokens)?;
-
-    Ok((tokens, TypeWithExtendedAttributes { ext_attrs, r#type }))
+        Ok((tokens, TypeWithExtendedAttributes { ext_attrs, r#type }))
+    }
 }
 
 #[cfg(test)]
@@ -54,14 +55,14 @@ mod tests {
 
     test_match!(
         unsigned_long_long,
-        r#type,
+        Type::parse,
         "unsigned long long",
         Type::Primitive(_)
     );
 
     test_match!(
         clamp_unsigned_long_long,
-        type_with_extended_attributes,
+        TypeWithExtendedAttributes::parse,
         "[Clamp] unsigned long long",
         TypeWithExtendedAttributes {
             ext_attrs: Some(attrs),

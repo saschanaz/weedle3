@@ -23,31 +23,33 @@ pub struct DictionaryDefinition<'a> {
     pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn dictionary<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, DictionaryDefinition<'token>> {
-    // TODO: fill more things
-    let (tokens, (dictionary, identifier, open_brace, members, semi_colon)) =
-        nom::sequence::tuple((
-            eat_key!(Dictionary),
-            nom::combinator::cut(eat!(Id)),
-            nom::combinator::cut(eat_key!(OpenBrace)),
-            nom::multi::many_till(DictionaryMember::parse, eat_key!(CloseBrace)),
-            nom::combinator::cut(eat_key!(SemiColon)),
-        ))(tokens)?;
+impl DictionaryDefinition<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, DictionaryDefinition<'token>> {
+        // TODO: fill more things
+        let (tokens, (dictionary, identifier, open_brace, members, semi_colon)) =
+            nom::sequence::tuple((
+                eat_key!(Dictionary),
+                nom::combinator::cut(eat!(Id)),
+                nom::combinator::cut(eat_key!(OpenBrace)),
+                nom::multi::many_till(DictionaryMember::parse, eat_key!(CloseBrace)),
+                nom::combinator::cut(eat_key!(SemiColon)),
+            ))(tokens)?;
 
-    Ok((
-        tokens,
-        DictionaryDefinition {
-            ext_attrs: None,
-            dictionary,
-            identifier,
-            open_brace,
-            body: members.0,
-            close_brace: members.1,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            DictionaryDefinition {
+                ext_attrs: None,
+                dictionary,
+                identifier,
+                open_brace,
+                body: members.0,
+                close_brace: members.1,
+                semi_colon,
+            },
+        ))
+    }
 }
 
 #[cfg(test)]
@@ -58,7 +60,7 @@ mod tests {
 
     test_match!(
         empty_dictionary,
-        dictionary,
+        DictionaryDefinition::parse,
         "dictionary Foo {};",
         DictionaryDefinition {
             identifier: VariantToken {
@@ -71,7 +73,7 @@ mod tests {
 
     test_match!(
         single_member_dictionary,
-        dictionary,
+        DictionaryDefinition::parse,
         "dictionary Foo { required float bar; };",
         DictionaryDefinition {
             identifier: VariantToken {

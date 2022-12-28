@@ -5,10 +5,8 @@ use nom::IResult;
 use crate::{common::Identifier, lexer::keywords};
 
 use super::{
-    eat::VariantToken,
-    extended_attributes::ExtendedAttributeList,
-    impl_nom_traits::Tokens,
-    r#type::{r#type, Type},
+    eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
+    r#type::Type,
 };
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -23,33 +21,35 @@ pub struct CallbackDefinition<'a> {
     pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn callback<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, CallbackDefinition<'token>> {
-    let (tokens, (callback, identifier, assign, r#type, open_paren, close_paren, semi_colon)) =
-        nom::sequence::tuple((
-            eat_key!(Callback),
-            nom::combinator::cut(eat!(Id)),
-            nom::combinator::cut(eat_key!(Assign)),
-            nom::combinator::cut(r#type),
-            nom::combinator::cut(eat_key!(OpenParen)),
-            nom::combinator::cut(eat_key!(CloseParen)),
-            nom::combinator::cut(eat_key!(SemiColon)),
-        ))(tokens)?;
+impl CallbackDefinition<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, CallbackDefinition<'token>> {
+        let (tokens, (callback, identifier, assign, r#type, open_paren, close_paren, semi_colon)) =
+            nom::sequence::tuple((
+                eat_key!(Callback),
+                nom::combinator::cut(eat!(Id)),
+                nom::combinator::cut(eat_key!(Assign)),
+                nom::combinator::cut(Type::parse),
+                nom::combinator::cut(eat_key!(OpenParen)),
+                nom::combinator::cut(eat_key!(CloseParen)),
+                nom::combinator::cut(eat_key!(SemiColon)),
+            ))(tokens)?;
 
-    Ok((
-        tokens,
-        CallbackDefinition {
-            ext_attrs: None,
-            callback,
-            identifier,
-            assign,
-            r#type,
-            open_paren,
-            close_paren,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            CallbackDefinition {
+                ext_attrs: None,
+                callback,
+                identifier,
+                assign,
+                r#type,
+                open_paren,
+                close_paren,
+                semi_colon,
+            },
+        ))
+    }
 }
 
 #[cfg(test)]
@@ -60,7 +60,7 @@ mod tests {
 
     test_match!(
         no_argument_callback,
-        callback,
+        CallbackDefinition::parse,
         "callback Foo = float ();",
         CallbackDefinition {
             identifier: VariantToken {

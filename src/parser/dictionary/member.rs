@@ -2,8 +2,8 @@
 
 use nom::IResult;
 
-use crate::parser::extended_attributes::{extended_attribute_list, ExtendedAttributeList};
-use crate::parser::r#type::{type_with_extended_attributes, TypeWithExtendedAttributes};
+use crate::parser::extended_attributes::ExtendedAttributeList;
+use crate::parser::r#type::TypeWithExtendedAttributes;
 use crate::{common::Identifier, lexer::keywords};
 
 use crate::parser::{eat::VariantToken, impl_nom_traits::Tokens};
@@ -24,9 +24,9 @@ impl DictionaryMember<'_> {
         // TODO: fill more things
         let (tokens, (ext_attrs, required, r#type, identifier, semi_colon)) =
             nom::sequence::tuple((
-                nom::combinator::opt(extended_attribute_list),
+                nom::combinator::opt(ExtendedAttributeList::parse),
                 nom::combinator::opt(eat_key!(Required)),
-                nom::combinator::cut(type_with_extended_attributes),
+                nom::combinator::cut(TypeWithExtendedAttributes::parse),
                 nom::combinator::cut(eat!(Id)),
                 nom::combinator::cut(eat_key!(SemiColon)),
             ))(tokens)?;

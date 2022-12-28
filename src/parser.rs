@@ -19,21 +19,13 @@ mod typedef;
 
 use nom::{IResult, InputIter, Parser};
 
-use crate::{
-    lexer::{lex, Token},
-    parser::{enumeration::r#enum, extended_attributes::extended_attribute_list},
-};
+use crate::lexer::{lex, Token};
 
 use self::{
-    callback::{callback, CallbackDefinition},
-    dictionary::{dictionary, DictionaryDefinition},
-    eat::VariantToken,
-    enumeration::EnumDefinition,
-    extended_attributes::ExtendedAttributeList,
-    includes::{includes_statement, IncludesStatementDefinition},
-    interface::{interface, InterfaceDefinition},
-    namespace::{namespace, NamespaceDefinition},
-    typedef::{typedef, TypedefDefinition},
+    callback::CallbackDefinition, dictionary::DictionaryDefinition, eat::VariantToken,
+    enumeration::EnumDefinition, extended_attributes::ExtendedAttributeList,
+    includes::IncludesStatementDefinition, interface::InterfaceDefinition,
+    namespace::NamespaceDefinition, typedef::TypedefDefinition,
 };
 
 #[derive(Debug)]
@@ -90,15 +82,15 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
     let (unread, (mut defs, eof)) = nom::sequence::tuple((
         nom::multi::many0(
             nom::sequence::tuple((
-                nom::combinator::opt(extended_attribute_list),
+                nom::combinator::opt(ExtendedAttributeList::parse),
                 nom::branch::alt((
-                    callback.map(Definition::Callback),
-                    interface.map(Definition::Interface),
-                    namespace.map(Definition::Namespace),
-                    dictionary.map(Definition::Dictionary),
-                    r#enum.map(Definition::Enum),
-                    typedef.map(Definition::Typedef),
-                    includes_statement.map(Definition::IncludesStatement),
+                    CallbackDefinition::parse.map(Definition::Callback),
+                    InterfaceDefinition::parse.map(Definition::Interface),
+                    NamespaceDefinition::parse.map(Definition::Namespace),
+                    DictionaryDefinition::parse.map(Definition::Dictionary),
+                    EnumDefinition::parse.map(Definition::Enum),
+                    TypedefDefinition::parse.map(Definition::Typedef),
+                    IncludesStatementDefinition::parse.map(Definition::IncludesStatement),
                 )),
             ))
             .map(set_ext_attr),

@@ -13,17 +13,19 @@ pub struct StringifierOperation<'a> {
     semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn stringifier<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, StringifierOperation<'token>> {
-    let (tokens, (stringifier, semi_colon)) =
-        nom::sequence::tuple((eat_key!(Stringifier), eat_key!(SemiColon)))(tokens)?;
+impl StringifierOperation<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, StringifierOperation<'token>> {
+        let (tokens, (stringifier, semi_colon)) =
+            nom::sequence::tuple((eat_key!(Stringifier), eat_key!(SemiColon)))(tokens)?;
 
-    Ok((
-        tokens,
-        StringifierOperation {
-            stringifier,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            StringifierOperation {
+                stringifier,
+                semi_colon,
+            },
+        ))
+    }
 }

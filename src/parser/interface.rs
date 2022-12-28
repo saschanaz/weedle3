@@ -3,7 +3,7 @@
 mod const_member;
 pub use const_member::ConstMember;
 mod stringifier;
-pub use stringifier::{stringifier, StringifierOperation};
+pub use stringifier::StringifierOperation;
 
 use nom::{IResult, Parser};
 
@@ -20,6 +20,17 @@ pub enum InterfaceMember<'a> {
     Stringifier(StringifierOperation<'a>),
 }
 
+impl InterfaceMember<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, InterfaceMember<'token>> {
+        nom::branch::alt((
+            ConstMember::parse.map(InterfaceMember::Const),
+            StringifierOperation::parse.map(InterfaceMember::Stringifier),
+        ))(tokens)
+    }
+}
+
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct InterfaceDefinition<'a> {
     pub ext_attrs: Option<ExtendedAttributeList<'a>>,
@@ -31,40 +42,33 @@ pub struct InterfaceDefinition<'a> {
     pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn interface_member<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, InterfaceMember<'token>> {
-    nom::branch::alt((
-        ConstMember::parse.map(InterfaceMember::Const),
-        stringifier.map(InterfaceMember::Stringifier),
-    ))(tokens)
-}
+impl InterfaceDefinition<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, InterfaceDefinition<'token>> {
+        // TODO: fill more things
+        let (tokens, (interface, identifier, open_brace, members, semi_colon)) =
+            nom::sequence::tuple((
+                eat_key!(Interface),
+                nom::combinator::cut(eat!(Id)),
+                nom::combinator::cut(eat_key!(OpenBrace)),
+                nom::multi::many_till(InterfaceMember::parse, eat_key!(CloseBrace)),
+                nom::combinator::cut(eat_key!(SemiColon)),
+            ))(tokens)?;
 
-pub fn interface<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, InterfaceDefinition<'token>> {
-    // TODO: fill more things
-    let (tokens, (interface, identifier, open_brace, members, semi_colon)) =
-        nom::sequence::tuple((
-            eat_key!(Interface),
-            nom::combinator::cut(eat!(Id)),
-            nom::combinator::cut(eat_key!(OpenBrace)),
-            nom::multi::many_till(interface_member, eat_key!(CloseBrace)),
-            nom::combinator::cut(eat_key!(SemiColon)),
-        ))(tokens)?;
-
-    Ok((
-        tokens,
-        InterfaceDefinition {
-            ext_attrs: None,
-            interface,
-            identifier,
-            open_brace,
-            body: members.0,
-            close_brace: members.1,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            InterfaceDefinition {
+                ext_attrs: None,
+                interface,
+                identifier,
+                open_brace,
+                body: members.0,
+                close_brace: members.1,
+                semi_colon,
+            },
+        ))
+    }
 }
 
 #[cfg(test)]
@@ -73,7 +77,7 @@ mod tests {
 
     test_match!(
         empty_interface,
-        interface,
+        InterfaceDefinition::parse,
         "interface Foo {};",
         InterfaceDefinition {
             identifier: VariantToken {
@@ -86,7 +90,7 @@ mod tests {
 
     test_match!(
         single_member_interface,
-        interface,
+        InterfaceDefinition::parse,
         "interface Foo { stringifier; };",
         InterfaceDefinition {
             identifier: VariantToken {
@@ -100,7 +104,7 @@ mod tests {
 
     test_match!(
         double_member_interface,
-        interface,
+        InterfaceDefinition::parse,
         "interface Foo {
           const short bar = 42;
           stringifier;
@@ -117,14 +121,14 @@ mod tests {
 
     test_result_match!(
         semi_colon_less,
-        interface,
+        InterfaceDefinition::parse,
         "interface Foo {}",
         Err(nom::Err::Failure(_))
     );
 
     test_result_match!(
         body_less,
-        interface,
+        InterfaceDefinition::parse,
         "interface Foo",
         Err(nom::Err::Failure(_))
     );

@@ -6,11 +6,7 @@ use crate::{
     common::Identifier,
     lexer::keywords,
     literal::IntegerLit,
-    parser::{
-        eat::VariantToken,
-        impl_nom_traits::Tokens,
-        r#type::primitive_type::{primitive_type, PrimitiveType},
-    },
+    parser::{eat::VariantToken, impl_nom_traits::Tokens, r#type::primitive_type::PrimitiveType},
 };
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -23,7 +19,7 @@ pub fn const_type<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, ConstType<'token>> {
     nom::branch::alt((
-        primitive_type.map(ConstType::Primitive),
+        PrimitiveType::parse.map(ConstType::Primitive),
         eat!(Id).map(ConstType::Identifier),
     ))(tokens)
 }

@@ -19,33 +19,35 @@ pub struct EnumDefinition<'a> {
     pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn r#enum<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, EnumDefinition<'token>> {
-    let (tokens, (r#enum, identifier, open_brace, body, _, close_brace, semi_colon)) =
-        nom::sequence::tuple((
-            eat_key!(Enum),
-            nom::combinator::cut(eat!(Id)),
-            nom::combinator::cut(eat_key!(OpenBrace)),
-            // TODO: store commas too
-            nom::combinator::cut(nom::multi::separated_list1(eat_key!(Comma), eat!(Str))),
-            nom::combinator::opt(eat_key!(Comma)),
-            nom::combinator::cut(eat_key!(CloseBrace)),
-            nom::combinator::cut(eat_key!(SemiColon)),
-        ))(tokens)?;
+impl EnumDefinition<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, EnumDefinition<'token>> {
+        let (tokens, (r#enum, identifier, open_brace, body, _, close_brace, semi_colon)) =
+            nom::sequence::tuple((
+                eat_key!(Enum),
+                nom::combinator::cut(eat!(Id)),
+                nom::combinator::cut(eat_key!(OpenBrace)),
+                // TODO: store commas too
+                nom::combinator::cut(nom::multi::separated_list1(eat_key!(Comma), eat!(Str))),
+                nom::combinator::opt(eat_key!(Comma)),
+                nom::combinator::cut(eat_key!(CloseBrace)),
+                nom::combinator::cut(eat_key!(SemiColon)),
+            ))(tokens)?;
 
-    Ok((
-        tokens,
-        EnumDefinition {
-            ext_attrs: None,
-            r#enum,
-            identifier,
-            open_brace,
-            body,
-            close_brace,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            EnumDefinition {
+                ext_attrs: None,
+                r#enum,
+                identifier,
+                open_brace,
+                body,
+                close_brace,
+                semi_colon,
+            },
+        ))
+    }
 }
 
 #[cfg(test)]
@@ -54,7 +56,7 @@ mod tests {
 
     test_match!(
         enum_single,
-        r#enum,
+        EnumDefinition::parse,
         "enum Foo { \"foo\" };",
         EnumDefinition {
             identifier: VariantToken {
@@ -73,7 +75,7 @@ mod tests {
 
     test_match!(
         enum_double_dangling_comma,
-        r#enum,
+        EnumDefinition::parse,
         "enum Foo { \"foo\", \"bar\", };",
         EnumDefinition {
             identifier: VariantToken {
@@ -96,7 +98,7 @@ mod tests {
 
     test_result_match!(
         enum_empty,
-        r#enum,
+        EnumDefinition::parse,
         "enum Foo {};",
         Err(nom::Err::Failure(_))
     );
