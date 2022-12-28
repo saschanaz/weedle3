@@ -125,7 +125,7 @@ impl ConstMember<'_> {
 mod tests {
     use crate::{
         literal::DecLit,
-        parser::r#type::primitive_type::{IntegerSize, IntegerType, FloatType, FloatSize},
+        parser::r#type::primitive_type::{FloatSize, FloatType, IntegerSize, IntegerType},
     };
 
     use super::*;
