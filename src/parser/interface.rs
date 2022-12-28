@@ -1,7 +1,7 @@
 // https://webidl.spec.whatwg.org/#prod-InterfaceRest
 
 mod const_member;
-pub use const_member::{const_member, ConstMember};
+pub use const_member::ConstMember;
 mod stringifier;
 pub use stringifier::{stringifier, StringifierOperation};
 
@@ -35,7 +35,7 @@ pub fn interface_member<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, InterfaceMember<'token>> {
     nom::branch::alt((
-        const_member.map(InterfaceMember::Const),
+        ConstMember::parse.map(InterfaceMember::Const),
         stringifier.map(InterfaceMember::Stringifier),
     ))(tokens)
 }

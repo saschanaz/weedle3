@@ -1,6 +1,6 @@
 #[cfg(test)]
 macro_rules! test_match {
-    ($name:ident, $func:ident, $input:literal, $match:pat_param $(if $guard:expr)?) => {
+    ($name:ident, $func:path, $input:literal, $match:pat_param $(if $guard:expr)?) => {
         #[test]
         fn $name() {
             use crate::{
@@ -24,7 +24,7 @@ macro_rules! test_match {
 
 #[cfg(test)]
 macro_rules! test_result_match {
-    ($name:ident, $func:ident, $input:literal, $match:pat_param) => {
+    ($name:ident, $func:path, $input:literal, $match:pat_param) => {
         #[test]
         fn $name() {
             use crate::{lexer::lex, parser::impl_nom_traits::Tokens};

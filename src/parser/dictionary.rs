@@ -6,7 +6,7 @@ use nom::IResult;
 
 use crate::{common::Identifier, lexer::keywords};
 
-use self::member::{dictionary_member, DictionaryMember};
+use self::member::DictionaryMember;
 
 use super::{
     eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
@@ -32,7 +32,7 @@ pub fn dictionary<'slice, 'token>(
             eat_key!(Dictionary),
             nom::combinator::cut(eat!(Id)),
             nom::combinator::cut(eat_key!(OpenBrace)),
-            nom::multi::many_till(dictionary_member, eat_key!(CloseBrace)),
+            nom::multi::many_till(DictionaryMember::parse, eat_key!(CloseBrace)),
             nom::combinator::cut(eat_key!(SemiColon)),
         ))(tokens)?;
 

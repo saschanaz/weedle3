@@ -17,28 +17,31 @@ pub struct DictionaryMember<'a> {
     pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn dictionary_member<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, DictionaryMember<'token>> {
-    // TODO: fill more things
-    let (tokens, (ext_attrs, required, r#type, identifier, semi_colon)) = nom::sequence::tuple((
-        nom::combinator::opt(extended_attribute_list),
-        nom::combinator::opt(eat_key!(Required)),
-        nom::combinator::cut(type_with_extended_attributes),
-        nom::combinator::cut(eat!(Id)),
-        nom::combinator::cut(eat_key!(SemiColon)),
-    ))(tokens)?;
+impl DictionaryMember<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, DictionaryMember<'token>> {
+        // TODO: fill more things
+        let (tokens, (ext_attrs, required, r#type, identifier, semi_colon)) =
+            nom::sequence::tuple((
+                nom::combinator::opt(extended_attribute_list),
+                nom::combinator::opt(eat_key!(Required)),
+                nom::combinator::cut(type_with_extended_attributes),
+                nom::combinator::cut(eat!(Id)),
+                nom::combinator::cut(eat_key!(SemiColon)),
+            ))(tokens)?;
 
-    Ok((
-        tokens,
-        DictionaryMember {
-            ext_attrs,
-            required,
-            r#type,
-            identifier,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            DictionaryMember {
+                ext_attrs,
+                required,
+                r#type,
+                identifier,
+                semi_colon,
+            },
+        ))
+    }
 }
 
 #[cfg(test)]
@@ -51,7 +54,7 @@ mod tests {
 
     test_match!(
         required_member,
-        dictionary_member,
+        DictionaryMember::parse,
         "required float foo;",
         DictionaryMember {
             required: Some(_),
@@ -69,7 +72,7 @@ mod tests {
 
     test_match!(
         non_required_member,
-        dictionary_member,
+        DictionaryMember::parse,
         "float foo;",
         DictionaryMember {
             required: None,
@@ -87,7 +90,7 @@ mod tests {
 
     test_match!(
         extended_required_member,
-        dictionary_member,
+        DictionaryMember::parse,
         "[Foo] required [Clamp] float foo;",
         DictionaryMember {
             ext_attrs: Some(ExtendedAttributeList{
@@ -118,28 +121,28 @@ mod tests {
 
     test_result_match!(
         double_extended_member,
-        dictionary_member,
+        DictionaryMember::parse,
         "[Foo] [Clamp] float foo;",
         Err(nom::Err::Failure(_))
     );
 
     test_result_match!(
         required_blank,
-        dictionary_member,
+        DictionaryMember::parse,
         "required;",
         Err(nom::Err::Failure(_))
     );
 
     test_result_match!(
         no_type_member,
-        dictionary_member,
+        DictionaryMember::parse,
         "foo;",
         Err(nom::Err::Failure(_))
     );
 
     test_result_match!(
         no_semi_colon,
-        dictionary_member,
+        DictionaryMember::parse,
         "float foo",
         Err(nom::Err::Failure(_))
     );

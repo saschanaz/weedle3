@@ -49,30 +49,32 @@ pub struct ConstMember<'a> {
     semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
 }
 
-pub fn const_member<'slice, 'token>(
-    tokens: Tokens<'slice, 'token>,
-) -> IResult<Tokens<'slice, 'token>, ConstMember<'token>> {
-    let (tokens, (r#const, const_type, identifier, assign, const_value, semi_colon)) =
-        nom::sequence::tuple((
-            eat_key!(Const),
-            nom::combinator::cut(const_type),
-            nom::combinator::cut(eat!(Id)),
-            nom::combinator::cut(eat_key!(Assign)),
-            nom::combinator::cut(const_value),
-            nom::combinator::cut(eat_key!(SemiColon)),
-        ))(tokens)?;
+impl ConstMember<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, ConstMember<'token>> {
+        let (tokens, (r#const, const_type, identifier, assign, const_value, semi_colon)) =
+            nom::sequence::tuple((
+                eat_key!(Const),
+                nom::combinator::cut(const_type),
+                nom::combinator::cut(eat!(Id)),
+                nom::combinator::cut(eat_key!(Assign)),
+                nom::combinator::cut(const_value),
+                nom::combinator::cut(eat_key!(SemiColon)),
+            ))(tokens)?;
 
-    Ok((
-        tokens,
-        ConstMember {
-            r#const,
-            const_type,
-            identifier,
-            assign,
-            const_value,
-            semi_colon,
-        },
-    ))
+        Ok((
+            tokens,
+            ConstMember {
+                r#const,
+                const_type,
+                identifier,
+                assign,
+                const_value,
+                semi_colon,
+            },
+        ))
+    }
 }
 
 #[cfg(test)]
@@ -86,7 +88,7 @@ mod tests {
 
     test_match!(
         integer_type,
-        const_member,
+        ConstMember::parse,
         "const short Foo = 42;",
         ConstMember {
             const_type: ConstType::Primitive(PrimitiveType::Integer(IntegerType {

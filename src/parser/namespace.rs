@@ -5,10 +5,8 @@ use nom::{IResult, Parser};
 use crate::{common::Identifier, lexer::keywords};
 
 use super::{
-    eat::VariantToken,
-    extended_attributes::ExtendedAttributeList,
-    impl_nom_traits::Tokens,
-    interface::{const_member, ConstMember},
+    eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
+    interface::ConstMember,
 };
 
 #[allow(clippy::large_enum_variant)]
@@ -31,7 +29,7 @@ pub struct NamespaceDefinition<'a> {
 pub fn namespace_member<'slice, 'token>(
     tokens: Tokens<'slice, 'token>,
 ) -> IResult<Tokens<'slice, 'token>, NamespaceMember<'token>> {
-    nom::branch::alt((const_member.map(NamespaceMember::Const),))(tokens)
+    nom::branch::alt((ConstMember::parse.map(NamespaceMember::Const),))(tokens)
 }
 
 pub fn namespace<'slice, 'token>(
