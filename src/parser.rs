@@ -14,6 +14,7 @@ mod dictionary;
 mod enumeration;
 mod includes;
 mod interface;
+mod namespace;
 mod typedef;
 
 use nom::{IResult, InputIter, Parser};
@@ -31,6 +32,7 @@ use self::{
     extended_attributes::ExtendedAttributeList,
     includes::{includes_statement, IncludesStatementDefinition},
     interface::{interface, InterfaceDefinition},
+    namespace::{namespace, NamespaceDefinition},
     typedef::{typedef, TypedefDefinition},
 };
 
@@ -44,6 +46,7 @@ pub enum ErrorKind<'a> {
 pub enum Definition<'a> {
     Callback(CallbackDefinition<'a>),
     Interface(InterfaceDefinition<'a>),
+    Namespace(NamespaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
     Enum(EnumDefinition<'a>),
     Typedef(TypedefDefinition<'a>),
@@ -59,6 +62,9 @@ fn set_ext_attr<'a>(
             d.ext_attrs = ext_attrs;
         }
         Definition::Interface(d) => {
+            d.ext_attrs = ext_attrs;
+        }
+        Definition::Namespace(d) => {
             d.ext_attrs = ext_attrs;
         }
         Definition::Dictionary(d) => {
@@ -88,6 +94,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
                 nom::branch::alt((
                     callback.map(Definition::Callback),
                     interface.map(Definition::Interface),
+                    namespace.map(Definition::Namespace),
                     dictionary.map(Definition::Dictionary),
                     r#enum.map(Definition::Enum),
                     typedef.map(Definition::Typedef),
