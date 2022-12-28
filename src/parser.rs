@@ -9,6 +9,7 @@ mod generate_match_test;
 mod extended_attributes;
 mod r#type;
 
+mod callback;
 mod dictionary;
 mod enumeration;
 mod includes;
@@ -23,6 +24,7 @@ use crate::{
 };
 
 use self::{
+    callback::{callback, CallbackDefinition},
     dictionary::{dictionary, DictionaryDefinition},
     eat::VariantToken,
     enumeration::EnumDefinition,
@@ -40,6 +42,7 @@ pub enum ErrorKind<'a> {
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
+    Callback(CallbackDefinition<'a>),
     Interface(InterfaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
     Enum(EnumDefinition<'a>),
@@ -52,6 +55,9 @@ fn set_ext_attr<'a>(
     (ext_attrs, mut def): (Option<ExtendedAttributeList<'a>>, Definition<'a>),
 ) -> Definition<'a> {
     match &mut def {
+        Definition::Callback(d) => {
+            d.ext_attrs = ext_attrs;
+        }
         Definition::Interface(d) => {
             d.ext_attrs = ext_attrs;
         }
@@ -80,6 +86,7 @@ pub fn parse(input: &str) -> Result<Vec<Definition>, ErrorKind> {
             nom::sequence::tuple((
                 nom::combinator::opt(extended_attribute_list),
                 nom::branch::alt((
+                    callback.map(Definition::Callback),
                     interface.map(Definition::Interface),
                     dictionary.map(Definition::Dictionary),
                     r#enum.map(Definition::Enum),
