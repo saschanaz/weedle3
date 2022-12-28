@@ -3,6 +3,9 @@
 pub mod primitive_type;
 pub use primitive_type::PrimitiveType;
 
+pub mod string_type;
+pub use string_type::StringType;
+
 use nom::{IResult, Parser};
 
 use super::{extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens};
@@ -10,6 +13,7 @@ use super::{extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens}
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Primitive(PrimitiveType<'a>),
+    String(StringType<'a>),
 }
 
 impl Type<'_> {
@@ -17,7 +21,10 @@ impl Type<'_> {
         tokens: Tokens<'slice, 'token>,
     ) -> IResult<Tokens<'slice, 'token>, Type<'token>> {
         // TODO: fill more things
-        nom::branch::alt((PrimitiveType::parse.map(Type::Primitive),))(tokens)
+        nom::branch::alt((
+            PrimitiveType::parse.map(Type::Primitive),
+            StringType::parse.map(Type::String),
+        ))(tokens)
     }
 }
 
