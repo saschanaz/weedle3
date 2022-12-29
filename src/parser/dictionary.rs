@@ -54,7 +54,9 @@ impl DictionaryDefinition<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::parser::r#type::{primitive_type::PrimitiveType, Type, TypeWithExtendedAttributes};
+    use crate::parser::r#type::{
+        primitive_type::PrimitiveType, NullableType, Type, TypeWithExtendedAttributes,
+    };
 
     use super::*;
 
@@ -85,7 +87,7 @@ mod tests {
         } if matches!(&body[..], [DictionaryMember {
             required: Some(_),
             r#type: TypeWithExtendedAttributes {
-                r#type: Type::Primitive(PrimitiveType::Float(_)),
+                r#type: NullableType { r#type: Type::Primitive(PrimitiveType::Float(_)) , .. },
                 ..
             },
             identifier: VariantToken {

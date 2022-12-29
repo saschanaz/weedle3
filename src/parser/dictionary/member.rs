@@ -49,7 +49,7 @@ mod tests {
     use super::*;
     use crate::parser::{
         extended_attributes::{ExtendedAttribute, ExtendedAttributeNoArgs},
-        r#type::{primitive_type::PrimitiveType, Type},
+        r#type::{primitive_type::PrimitiveType, NullableType, Type},
     };
 
     test_match!(
@@ -59,7 +59,10 @@ mod tests {
         DictionaryMember {
             required: Some(_),
             r#type: TypeWithExtendedAttributes {
-                r#type: Type::Primitive(PrimitiveType::Float(_)),
+                r#type: NullableType {
+                    r#type: Type::Primitive(PrimitiveType::Float(_)),
+                    ..
+                },
                 ..
             },
             identifier: VariantToken {
@@ -77,7 +80,10 @@ mod tests {
         DictionaryMember {
             required: None,
             r#type: TypeWithExtendedAttributes {
-                r#type: Type::Primitive(PrimitiveType::Float(_)),
+                r#type: NullableType {
+                    r#type: Type::Primitive(PrimitiveType::Float(_)),
+                    ..
+                },
                 ..
             },
             identifier: VariantToken {
@@ -103,7 +109,7 @@ mod tests {
                     body: typ_ext_attrs,
                     ..
                 }),
-                r#type: Type::Primitive(PrimitiveType::Float(_)),
+                r#type: NullableType { r#type: Type::Primitive(PrimitiveType::Float(_)), .. },
             },
             identifier: VariantToken {
                 variant: Identifier("foo"),

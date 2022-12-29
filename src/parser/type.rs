@@ -52,9 +52,28 @@ impl Type<'_> {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct NullableType<'a> {
+    pub r#type: Type<'a>,
+    pub q_mark: Option<VariantToken<'a, keywords::QuestionMark<'a>>>,
+}
+
+impl NullableType<'_> {
+    pub fn parse<'slice, 'token>(
+        tokens: Tokens<'slice, 'token>,
+    ) -> IResult<Tokens<'slice, 'token>, NullableType<'token>> {
+        let (tokens, (r#type, q_mark)) = nom::sequence::tuple((
+            Type::parse,
+            nom::combinator::opt(eat_key!(QuestionMark)),
+        ))(tokens)?;
+
+        Ok((tokens, NullableType { r#type, q_mark }))
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct TypeWithExtendedAttributes<'a> {
     pub ext_attrs: Option<ExtendedAttributeList<'a>>,
-    pub r#type: Type<'a>,
+    pub r#type: NullableType<'a>,
 }
 
 impl TypeWithExtendedAttributes<'_> {
@@ -64,7 +83,7 @@ impl TypeWithExtendedAttributes<'_> {
         // TODO: fill more things
         let (tokens, (ext_attrs, r#type)) = nom::sequence::tuple((
             nom::combinator::opt(ExtendedAttributeList::parse),
-            Type::parse,
+            NullableType::parse,
         ))(tokens)?;
 
         Ok((tokens, TypeWithExtendedAttributes { ext_attrs, r#type }))
@@ -96,12 +115,24 @@ mod tests {
         "[Clamp] unsigned long long",
         TypeWithExtendedAttributes {
             ext_attrs: Some(attrs),
-            r#type: Type::Primitive(_),
+            r#type: NullableType { r#type: Type::Primitive(_), q_mark: None }
         } if matches!(&attrs.body[..], [
             ExtendedAttribute::NoArgs(ExtendedAttributeNoArgs(VariantToken {
                 variant: Identifier("Clamp"),
                 ..
             }))
+        ])
+    );
+
+    test_match!(
+        xfoo_foo_null,
+        TypeWithExtendedAttributes::parse,
+        "[XFoo] Foo?",
+        TypeWithExtendedAttributes {
+            ext_attrs: Some(attrs),
+            r#type: NullableType { r#type: Type::Identifier(_), q_mark: Some(_) }
+        } if matches!(&attrs.body[..], [
+            ExtendedAttribute::NoArgs(_)
         ])
     );
 }

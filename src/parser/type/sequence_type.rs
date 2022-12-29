@@ -52,7 +52,7 @@ impl SequenceType<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::parser::r#type::{primitive_type::PrimitiveType, Type};
+    use crate::parser::r#type::{primitive_type::PrimitiveType, NullableType, Type};
 
     use super::*;
 
@@ -65,7 +65,7 @@ mod tests {
             r#type,
             ..
         } if matches!(*r#type, TypeWithExtendedAttributes {
-            r#type: Type::Primitive(PrimitiveType::Integer(_)),
+            r#type: NullableType { r#type: Type::Primitive(PrimitiveType::Integer(_)), .. },
             ..
         })
     );
