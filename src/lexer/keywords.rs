@@ -45,13 +45,12 @@ macro_rules! generate_keywords_enum {
 
         impl<'a> Keyword<'a> {
             pub fn parse(input: &str) -> nom::IResult<&str, Keyword> {
-                use crate::lexer::nom_branch_alt::alt;
-                alt((
+                alt!(
                     $(nom::combinator::map(
                         nom::combinator::recognize(nom::bytes::complete::tag($tok)),
                         |k| Keyword::$typ($typ(k))
                     ),)*
-                ))(input)
+                )(input)
             }
         }
     };
