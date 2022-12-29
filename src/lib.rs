@@ -1,5 +1,3 @@
-#![recursion_limit = "256"]
-
 //! Weedle - A WebIDL Parser
 //!
 //! Parses valid WebIDL definitions & produces a data structure starting from

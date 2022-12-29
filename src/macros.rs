@@ -14,11 +14,14 @@ macro_rules! weedle {
 
 // nom::branch::alt supports at-most 21 parsers, increasing to infinity ones.
 macro_rules! alt {
-    ($member0:expr,) => {
-        $member0
+    ($member0:expr, $member1:expr, $($member2:expr,)+) => {
+        nom::branch::alt(($member0, $member1, alt!($($member2,)+)))
     };
     ($member0:expr, $($member1:expr,)+) => {
-       nom::branch::alt(($member0, alt!($($member1,)+)))
+        nom::branch::alt(($member0, alt!($($member1,)+)))
+    };
+    ($member0:expr,) => {
+        $member0
     };
 }
 
