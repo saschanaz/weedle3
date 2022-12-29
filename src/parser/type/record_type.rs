@@ -49,7 +49,9 @@ impl RecordType<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::parser::r#type::{primitive_type::PrimitiveType, NullableType, Type};
+    use crate::parser::r#type::{
+        primitive_type::PrimitiveType, DistinguishableType, NullableType, Type,
+    };
 
     use super::*;
 
@@ -62,7 +64,7 @@ mod tests {
             r#type,
             ..
         } if matches!(*r#type, TypeWithExtendedAttributes {
-            r#type: NullableType { r#type: Type::Primitive(PrimitiveType::Integer(_)), .. },
+            r#type: Type::Distinguishable(NullableType { r#type: DistinguishableType::Primitive(PrimitiveType::Integer(_)), .. }),
             ..
         })
     );

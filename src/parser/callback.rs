@@ -6,7 +6,7 @@ use crate::{common::Identifier, lexer::keywords};
 
 use super::{
     eat::VariantToken, extended_attributes::ExtendedAttributeList, impl_nom_traits::Tokens,
-    r#type::Type,
+    r#type::DistinguishableType,
 };
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -15,7 +15,7 @@ pub struct CallbackDefinition<'a> {
     pub callback: VariantToken<'a, keywords::Callback<'a>>,
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: VariantToken<'a, keywords::Assign<'a>>,
-    pub r#type: Type<'a>,
+    pub r#type: DistinguishableType<'a>,
     pub open_paren: VariantToken<'a, keywords::OpenParen<'a>>,
     pub close_paren: VariantToken<'a, keywords::CloseParen<'a>>,
     pub semi_colon: VariantToken<'a, keywords::SemiColon<'a>>,
@@ -30,7 +30,7 @@ impl CallbackDefinition<'_> {
                 eat_key!(Callback),
                 nom::combinator::cut(eat!(Id)),
                 nom::combinator::cut(eat_key!(Assign)),
-                nom::combinator::cut(Type::parse),
+                nom::combinator::cut(DistinguishableType::parse),
                 nom::combinator::cut(eat_key!(OpenParen)),
                 nom::combinator::cut(eat_key!(CloseParen)),
                 nom::combinator::cut(eat_key!(SemiColon)),
@@ -67,7 +67,7 @@ mod tests {
                 variant: Identifier("Foo"),
                 ..
             },
-            r#type: Type::Primitive(PrimitiveType::Float(_)),
+            r#type: DistinguishableType::Primitive(PrimitiveType::Float(_)),
             ..
         }
     );
