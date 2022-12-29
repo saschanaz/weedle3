@@ -12,7 +12,7 @@ macro_rules! weedle {
     };
 }
 
-// nom::branch::alt supports at-most 21 parsers, increasing to 42 ones.
+// nom::branch::alt supports at-most 21 parsers, increasing to infinity ones.
 macro_rules! alt {
     ($member0:expr,) => {
         $member0
