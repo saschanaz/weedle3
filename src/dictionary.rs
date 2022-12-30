@@ -1,3 +1,5 @@
+use derive::Weedle;
+
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier};
 use crate::types::Type;
@@ -5,16 +7,15 @@ use crate::types::Type;
 /// Parses dictionary members
 pub type DictionaryMembers<'a> = Vec<DictionaryMember<'a>>;
 
-ast_types! {
-    /// Parses dictionary member `[attributes]? required? type identifier ( = default )?;`
-    struct DictionaryMember<'a> {
-        attributes: Option<ExtendedAttributeList<'a>>,
-        required: Option<term!(required)>,
-        type_: Type<'a>,
-        identifier: Identifier<'a>,
-        default: Option<Default<'a>>,
-        semi_colon: term!(;),
-    }
+/// Parses dictionary member `[attributes]? required? type identifier ( = default )?;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct DictionaryMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub required: Option<term!(required)>,
+    pub type_: Type<'a>,
+    pub identifier: Identifier<'a>,
+    pub default: Option<Default<'a>>,
+    pub semi_colon: term!(;),
 }
 
 #[cfg(test)]
