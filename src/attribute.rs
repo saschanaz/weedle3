@@ -1,3 +1,5 @@
+use derive::Weedle;
+
 use crate::argument::ArgumentList;
 use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated};
 use crate::literal::{FloatLit, IntegerLit, StringLit};
@@ -11,95 +13,118 @@ pub type StringList<'a> = Punctuated<StringLit<'a>, term!(,)>;
 pub type FloatList<'a> = Punctuated<FloatLit<'a>, term!(,)>;
 pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
 
-ast_types! {
-    /// Parses on of the forms of attribute
-    enum ExtendedAttribute<'a> {
-        /// Parses an argument list. Ex: `Constructor((double x, double y))`
-        ///
-        /// (( )) means ( ) chars
-        ArgList(struct ExtendedAttributeArgList<'a> {
-            identifier: Identifier<'a>,
-            args: Parenthesized<ArgumentList<'a>>,
-        }),
-        /// Parses a named argument list. Ex: `NamedConstructor=Image((DOMString src))`
-        ///
-        /// (( )) means ( ) chars
-        NamedArgList(struct ExtendedAttributeNamedArgList<'a> {
-            lhs_identifier: Identifier<'a>,
-            assign: term!(=),
-            rhs_identifier: Identifier<'a>,
-            args: Parenthesized<ArgumentList<'a>>,
+/// Parses an argument list. Ex: `Constructor((double x, double y))`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeArgList<'a> {
+    pub identifier: Identifier<'a>,
+    pub args: Parenthesized<ArgumentList<'a>>,
+}
 
-        }),
-        /// Parses an identifier list. Ex: `Exposed=((Window,Worker))`
-        ///
-        /// (( )) means ( ) chars
-        IdentList(struct ExtendedAttributeIdentList<'a> {
-            identifier: Identifier<'a>,
-            assign: term!(=),
-            list: Parenthesized<IdentifierList<'a>>,
-        }),
-        /// Parses an attribute with an identifier. Ex: `PutForwards=name`
-        #[derive(Copy)]
-        Ident(struct ExtendedAttributeIdent<'a> {
-            lhs_identifier: Identifier<'a>,
-            assign: term!(=),
-            rhs: Identifier<'a>,
-        }),
-        /// Parses an attribute with a wildcard. Ex: `Exposed=*`
-        #[derive(Copy)]
-        Wildcard(struct ExtendedAttributeWildcard<'a> {
-            lhs_identifier: Identifier<'a>,
-            assign: term!(=),
-            wildcard: term!(*),
-        }),
+/// Parses a named argument list. Ex: `NamedConstructor=Image((DOMString src))`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeNamedArgList<'a> {
+    pub lhs_identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub rhs_identifier: Identifier<'a>,
+    pub args: Parenthesized<ArgumentList<'a>>,
+}
 
-        /// Things that are not used by the standard Web IDL, but still allowed
-        /// and used by others e.g. Blink and JSDOM
-        /// https://github.com/w3c/webidl2.js/issues/256
-        /// https://github.com/w3c/webidl2.js/issues/455
+/// Parses an identifier list. Ex: `Exposed=((Window,Worker))`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeIdentList<'a> {
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub list: Parenthesized<IdentifierList<'a>>,
+}
 
-        /// Parses an attribute with a string. E: `ReflectOnly="on"`
-        #[derive(Copy)]
-        String(struct ExtendedAttributeString<'a> {
-            lhs_identifier: Identifier<'a>,
-            assign: term!(=),
-            rhs: StringLit<'a>,
-        }),
-        StringList(struct ExtendedAttributeStringList<'a> {
-            identifier: Identifier<'a>,
-            assign: term!(=),
-            list: Parenthesized<StringList<'a>>,
-        }),
-        #[derive(Copy)]
-        Float(struct ExtendedAttributeFloat<'a> {
-            lhs_identifier: Identifier<'a>,
-            assign: term!(=),
-            rhs: FloatLit<'a>,
-        }),
-        FloatList(struct ExtendedAttributeFloatList<'a> {
-            identifier: Identifier<'a>,
-            assign: term!(=),
-            list: Parenthesized<FloatList<'a>>,
-        }),
-        #[derive(Copy)]
-        Integer(struct ExtendedAttributeInteger<'a> {
-            lhs_identifier: Identifier<'a>,
-            assign: term!(=),
-            rhs: IntegerLit<'a>,
-        }),
-        IntegerList(struct ExtendedAttributeIntegerList<'a> {
-            identifier: Identifier<'a>,
-            assign: term!(=),
-            list: Parenthesized<IntegerList<'a>>,
-        }),
+/// Parses an attribute with an identifier. Ex: `PutForwards=name`
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeIdent<'a> {
+    pub lhs_identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub rhs: Identifier<'a>,
+}
 
-        /// Parses a plain attribute. Ex: `Replaceable`
-        #[derive(Copy)]
-        NoArgs(struct ExtendedAttributeNoArgs<'a>(
-            Identifier<'a>,
-        )),
-    }
+/// Parses an attribute with a wildcard. Ex: `Exposed=*`
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeWildcard<'a> {
+    pub lhs_identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub wildcard: term!(*),
+}
+
+/// Things that are not used by the standard Web IDL, but still allowed
+/// and used by others e.g. Blink and JSDOM
+/// https://github.com/w3c/webidl2.js/issues/256
+/// https://github.com/w3c/webidl2.js/issues/455
+
+/// Parses an attribute with a string. E: `ReflectOnly="on"`
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeString<'a> {
+    pub lhs_identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub rhs: StringLit<'a>,
+}
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeStringList<'a> {
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub list: Parenthesized<StringList<'a>>,
+}
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeFloat<'a> {
+    pub lhs_identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub rhs: FloatLit<'a>,
+}
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeFloatList<'a> {
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub list: Parenthesized<FloatList<'a>>,
+}
+
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeInteger<'a> {
+    pub lhs_identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub rhs: IntegerLit<'a>,
+}
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeIntegerList<'a> {
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub list: Parenthesized<IntegerList<'a>>,
+}
+
+/// Parses a plain attribute. Ex: `Replaceable`
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ExtendedAttributeNoArgs<'a>(pub Identifier<'a>);
+
+/// Parses on of the forms of attribute
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum ExtendedAttribute<'a> {
+    ArgList(ExtendedAttributeArgList<'a>),
+    NamedArgList(ExtendedAttributeNamedArgList<'a>),
+    IdentList(ExtendedAttributeIdentList<'a>),
+    Ident(ExtendedAttributeIdent<'a>),
+    Wildcard(ExtendedAttributeWildcard<'a>),
+    String(ExtendedAttributeString<'a>),
+    StringList(ExtendedAttributeStringList<'a>),
+    Float(ExtendedAttributeFloat<'a>),
+    FloatList(ExtendedAttributeFloatList<'a>),
+    Integer(ExtendedAttributeInteger<'a>),
+    IntegerList(ExtendedAttributeIntegerList<'a>),
+    NoArgs(ExtendedAttributeNoArgs<'a>),
 }
 
 #[cfg(test)]

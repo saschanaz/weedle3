@@ -21,7 +21,55 @@ fn string_to_tokens(s: &str) -> Result<proc_macro2::TokenStream> {
     Ok(expr.to_token_stream())
 }
 
-fn generate_struct(
+fn string_to_ident(s: String) -> Result<Ident> {
+    let lit = syn::parse2::<Lit>(s.to_token_stream())?;
+    let s = match lit {
+        Lit::Str(s) => s,
+        _ => panic!("How did we get non-str literal?"),
+    };
+    let ident: Ident = s.parse()?;
+    Ok(ident)
+}
+
+fn generate_tuple_struct(
+    id: &Ident,
+    generics: &Generics,
+    data_struct: &DataStruct,
+) -> Result<TokenStream> {
+    let mut count = 0;
+    let field_ids = data_struct
+        .fields
+        .iter()
+        .map(|_| {
+            let id = string_to_ident(format!("m{count}")).unwrap();
+            count += 1;
+            quote! { #id }
+        })
+        .collect::<Vec<_>>();
+    let field_parsers = data_struct.fields.iter().map(|field| {
+        let ty = &field.ty;
+        quote! { weedle!(#ty) }
+    });
+
+    let result = quote! {
+        impl<'a> crate::Parse<'a> for #id #generics {
+            fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+                use nom::lib::std::result::Result::Ok;
+                let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
+                    #(#field_parsers,)*
+                ))(input)?;
+
+                Ok((input, Self(#(#field_ids,)*)))
+            }
+        }
+    };
+
+    // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
+
+    Ok(result.into())
+}
+
+fn generate_named_struct(
     id: &Ident,
     generics: &Generics,
     data_struct: &DataStruct,
@@ -80,6 +128,19 @@ fn generate_struct(
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
     Ok(result.into())
+}
+
+fn generate_struct(
+    id: &Ident,
+    generics: &Generics,
+    data_struct: &DataStruct,
+) -> Result<TokenStream> {
+    let all_named = data_struct.fields.iter().all(|field| field.ident.is_some());
+    if all_named {
+        generate_named_struct(id, generics, data_struct)
+    } else {
+        generate_tuple_struct(id, generics, data_struct)
+    }
 }
 
 fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Result<TokenStream> {
