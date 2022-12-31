@@ -59,10 +59,10 @@ pub struct ExtendedAttributeWildcard<'a> {
     pub wildcard: term!(*),
 }
 
-/// Things that are not used by the standard Web IDL, but still allowed
-/// and used by others e.g. Blink and JSDOM
-/// https://github.com/w3c/webidl2.js/issues/256
-/// https://github.com/w3c/webidl2.js/issues/455
+// Things that are not used by the standard Web IDL, but still allowed
+// and used by others e.g. Blink and JSDOM
+// https://github.com/w3c/webidl2.js/issues/256
+// https://github.com/w3c/webidl2.js/issues/455
 
 /// Parses an attribute with a string. E: `ReflectOnly="on"`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
