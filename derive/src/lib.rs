@@ -91,10 +91,7 @@ fn generate_named_struct(
         .fields
         .iter()
         .map(|field| {
-            let id = field
-                .ident
-                .as_ref()
-                .expect("How did we get unnamed field?");
+            let id = field.ident.as_ref().expect("How did we get unnamed field?");
             quote! { #id }
         })
         .collect();
@@ -102,10 +99,7 @@ fn generate_named_struct(
         .fields
         .iter()
         .map(|field| -> Result<proc_macro2::TokenStream> {
-            let id = field
-                .ident
-                .as_ref()
-                .expect("How did we get unnamed field?");
+            let id = field.ident.as_ref().expect("How did we get unnamed field?");
             let parser = get_parser_from_field(field)?;
             Ok(quote! { let (input, #id) = #parser(input)?; })
         })
