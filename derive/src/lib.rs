@@ -96,10 +96,7 @@ fn generate_named_struct(
             let ty = &field.ty;
             let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
             let parser = match args.parse {
-                Some(p) => {
-                    let expr = string_to_tokens(&p)?;
-                    quote! { #expr }
-                }
+                Some(p) => string_to_tokens(&p)?,
                 _ => quote! { weedle!(#ty) },
             };
             Ok(quote! { let (input, #id) = #parser(input)?; })
