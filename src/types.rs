@@ -80,7 +80,7 @@ pub struct ObservableArrayType<'a> {
 /// Parses a nullable type. Ex: `object | object??`
 ///
 /// `??` means an actual ? not an optional requirement
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct MayBeNull<T> {
     pub type_: T,
@@ -95,28 +95,28 @@ pub struct PromiseType<'a> {
 }
 
 /// Parses `unsigned? long long`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct LongLongType {
     pub unsigned: Option<term!(unsigned)>,
     pub long_long: (term!(long), term!(long)),
 }
 
 /// Parses `unsigned? long`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct LongType {
     pub unsigned: Option<term!(unsigned)>,
     pub long: term!(long),
 }
 
 /// Parses `unsigned? short`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ShortType {
     pub unsigned: Option<term!(unsigned)>,
     pub short: term!(short),
 }
 
 /// Parses `unsigned? short|long|(long long)`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum IntegerType {
     LongLong(LongLongType),
     Long(LongType),
@@ -124,21 +124,21 @@ pub enum IntegerType {
 }
 
 /// Parses `unrestricted? float`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FloatType {
     pub unrestricted: Option<term!(unrestricted)>,
     pub float: term!(float),
 }
 
 /// Parses `unrestricted? double`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DoubleType {
     pub unrestricted: Option<term!(unrestricted)>,
     pub double: term!(double),
 }
 
 /// Parses `unrestricted? float|double`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatingPointType {
     Float(FloatType),
     Double(DoubleType),

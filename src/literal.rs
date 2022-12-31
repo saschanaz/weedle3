@@ -49,7 +49,7 @@ impl<'a> Parse<'a> for OctLit<'a> {
 }
 
 /// Represents an integer value
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum IntegerLit<'a> {
     Dec(DecLit<'a>),
     Hex(HexLit<'a>),
@@ -74,21 +74,21 @@ impl<'a> Parse<'a> for StringLit<'a> {
 }
 
 /// Represents `[ ]`
-#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EmptyArrayLit {
     pub open_bracket: term!(OpenBracket),
     pub close_bracket: term!(CloseBracket),
 }
 
 /// Represents `{ }`
-#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EmptyDictionaryLit {
     pub open_brace: term!(OpenBrace),
     pub close_brace: term!(CloseBrace),
 }
 
 /// Represents a default literal value. Ex: `34|34.23|"value"|[ ]|true|false|null`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum DefaultValue<'a> {
     Boolean(BooleanLit),
     EmptyArray(EmptyArrayLit),
@@ -100,7 +100,7 @@ pub enum DefaultValue<'a> {
 }
 
 /// Represents `true`, `false`, `34.23`, `null`, `56`, ...
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ConstValue<'a> {
     Boolean(BooleanLit),
     Float(FloatLit<'a>),
@@ -172,7 +172,7 @@ impl<'a> Parse<'a> for FloatValueLit<'a> {
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatLit<'a> {
     Value(FloatValueLit<'a>),
     NegInfinity(term!(-Infinity)),

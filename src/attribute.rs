@@ -44,7 +44,7 @@ pub struct ExtendedAttributeIdentList<'a> {
 }
 
 /// Parses an attribute with an identifier. Ex: `PutForwards=name`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIdent<'a> {
     pub lhs_identifier: Identifier<'a>,
     pub assign: term!(=),
@@ -52,7 +52,7 @@ pub struct ExtendedAttributeIdent<'a> {
 }
 
 /// Parses an attribute with a wildcard. Ex: `Exposed=*`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeWildcard<'a> {
     pub lhs_identifier: Identifier<'a>,
     pub assign: term!(=),
@@ -65,7 +65,7 @@ pub struct ExtendedAttributeWildcard<'a> {
 /// https://github.com/w3c/webidl2.js/issues/455
 
 /// Parses an attribute with a string. E: `ReflectOnly="on"`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeString<'a> {
     pub lhs_identifier: Identifier<'a>,
     pub assign: term!(=),
@@ -78,7 +78,7 @@ pub struct ExtendedAttributeStringList<'a> {
     pub assign: term!(=),
     pub list: Parenthesized<StringList<'a>>,
 }
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeFloat<'a> {
     pub lhs_identifier: Identifier<'a>,
     pub assign: term!(=),
@@ -92,7 +92,7 @@ pub struct ExtendedAttributeFloatList<'a> {
     pub list: Parenthesized<FloatList<'a>>,
 }
 
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeInteger<'a> {
     pub lhs_identifier: Identifier<'a>,
     pub assign: term!(=),
@@ -107,7 +107,7 @@ pub struct ExtendedAttributeIntegerList<'a> {
 }
 
 /// Parses a plain attribute. Ex: `Replaceable`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeNoArgs<'a>(pub Identifier<'a>);
 
 /// Parses on of the forms of attribute

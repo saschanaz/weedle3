@@ -10,7 +10,7 @@ use crate::types::{AttributedType, ConstType, ReturnType};
 pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
 
 /// Parses inheritance clause `: identifier`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Inheritance<'a> {
     pub colon: term!(:),
     pub identifier: Identifier<'a>,
@@ -137,7 +137,7 @@ pub struct SetlikeInterfaceMember<'a> {
 }
 
 /// Parses `stringifier;`
-#[derive(Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct StringifierMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: term!(stringifier),
@@ -159,7 +159,7 @@ pub enum InterfaceMember<'a> {
 }
 
 /// Parses one of the special keyword `getter|setter|deleter`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Special {
     Getter(term!(getter)),
     Setter(term!(setter)),
@@ -168,7 +168,7 @@ pub enum Special {
 }
 
 /// Parses `stringifier|inherit|static`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StringifierOrInheritOrStatic {
     Stringifier(term!(stringifier)),
     Inherit(term!(inherit)),
@@ -176,7 +176,7 @@ pub enum StringifierOrInheritOrStatic {
 }
 
 /// Parses `stringifier|static`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StringifierOrStatic {
     Stringifier(term!(stringifier)),
     Static(term!(static)),

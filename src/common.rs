@@ -36,7 +36,7 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
 }
 
 /// Parses `( body )`
-#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Parenthesized<T> {
     pub open_paren: term::OpenParen,
@@ -45,7 +45,7 @@ pub struct Parenthesized<T> {
 }
 
 /// Parses `[ body ]`
-#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<T> {
     pub open_bracket: term::OpenBracket,
@@ -54,7 +54,7 @@ pub struct Bracketed<T> {
 }
 
 /// Parses `{ body }`
-#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Braced<T> {
     pub open_brace: term::OpenBrace,
@@ -63,7 +63,7 @@ pub struct Braced<T> {
 }
 
 /// Parses `< body >`
-#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Generics<T> {
     pub open_angle: term::LessThan,
@@ -137,7 +137,7 @@ impl<'a> Parse<'a> for Identifier<'a> {
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Default<'a> {
     pub assign: term!(=),
     pub value: DefaultValue<'a>,
