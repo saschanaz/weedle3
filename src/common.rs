@@ -73,15 +73,21 @@ ast_types! {
         list: Vec<T> = nom::multi::separated_list0(weedle!(S), weedle!(T)),
         separator: S = marker,
     }
+}
 
-    /// Parses `item1, item2, item3, ...`
-    struct PunctuatedNonEmpty<T, S> where [T: Parse<'a>, S: Parse<'a> + ::std::default::Default] {
-        list: Vec<T> = nom::sequence::terminated(
+/// Parses `item1, item2, item3, ...`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>, S: Parse<'a> + ::std::default::Default")]
+pub struct PunctuatedNonEmpty<T, S> {
+    #[weedle(parse = "
+        nom::sequence::terminated(
             nom::multi::separated_list1(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S))
-        ),
-        separator: S = marker,
-    }
+        )
+    ")]
+    pub list: Vec<T>,
+    #[weedle(parse = "marker")]
+    pub separator: S,
 }
 
 /// Represents an identifier

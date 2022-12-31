@@ -1,9 +1,15 @@
-use darling::{FromField, ToTokens};
+use darling::{FromDeriveInput, FromField, ToTokens};
 use proc_macro::TokenStream;
 use syn::*;
 
 #[macro_use]
 extern crate quote;
+
+#[derive(FromDeriveInput, Debug)]
+#[darling(attributes(weedle))]
+struct MacroTopArgs {
+    impl_bound: Option<String>,
+}
 
 #[derive(FromField, Debug)]
 #[darling(attributes(weedle))]
@@ -11,36 +17,37 @@ struct MacroArgs {
     parse: Option<String>,
 }
 
-fn string_to_tokens(s: &str) -> Result<proc_macro2::TokenStream> {
-    let lit = syn::parse2::<Lit>(s.to_token_stream())?;
+fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
+    s: String,
+) -> Result<proc_macro2::TokenStream> {
+    let lit = syn::parse2::<Lit>(s.to_token_stream()).expect("How did we get non-literal?");
     let s = match lit {
         Lit::Str(s) => s,
         _ => panic!("How did we get non-str literal?"),
     };
-    let expr: Expr = s.parse()?;
+    let expr: T = s.parse()?;
     Ok(expr.to_token_stream())
-}
-
-fn string_to_ident(s: String) -> Result<Ident> {
-    let lit = syn::parse2::<Lit>(s.to_token_stream())?;
-    let s = match lit {
-        Lit::Str(s) => s,
-        _ => panic!("How did we get non-str literal?"),
-    };
-    let ident: Ident = s.parse()?;
-    Ok(ident)
 }
 
 fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
     let parser = match args.parse {
-        Some(p) => string_to_tokens(&p)?,
+        Some(p) => string_to_tokens::<Expr>(p)?,
         _ => {
             let ty = &field.ty;
             quote! { weedle!(#ty) }
         }
     };
     Ok(parser)
+}
+
+fn get_where_from_derive_input(input: &DeriveInput) -> Result<proc_macro2::TokenStream> {
+    let args = MacroTopArgs::from_derive_input(input).map_err(syn::Error::from)?;
+    let impl_bound = match args.impl_bound {
+        Some(b) => string_to_tokens::<WhereClause>(b)?,
+        _ => quote! {},
+    };
+    Ok(impl_bound)
 }
 
 fn generate_tuple_struct(
@@ -53,7 +60,7 @@ fn generate_tuple_struct(
         .fields
         .iter()
         .map(|_| {
-            let id = string_to_ident(format!("m{count}")).unwrap();
+            let id = string_to_tokens::<Ident>(format!("m{count}")).unwrap();
             count += 1;
             quote! { #id }
         })
@@ -86,6 +93,7 @@ fn generate_named_struct(
     id: &Ident,
     generics: &Generics,
     data_struct: &DataStruct,
+    impl_bound: &proc_macro2::TokenStream,
 ) -> Result<TokenStream> {
     let field_ids: Vec<_> = data_struct
         .fields
@@ -105,8 +113,14 @@ fn generate_named_struct(
         })
         .collect::<Result<Vec<_>>>()?;
 
+    let type_param_ids = generics
+        .type_params()
+        .into_iter()
+        .map(|p| &p.ident)
+        .collect::<Vec<_>>();
+
     let result = quote! {
-        impl<'a> crate::Parse<'a> for #id #generics {
+        impl<'a,#(#type_param_ids),*> crate::Parse<'a> for #id #generics #impl_bound {
             fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
                 use nom::lib::std::result::Result::Ok;
                 #(#field_parsers)*
@@ -127,10 +141,11 @@ fn generate_struct(
     id: &Ident,
     generics: &Generics,
     data_struct: &DataStruct,
+    impl_bound: &proc_macro2::TokenStream,
 ) -> Result<TokenStream> {
     let all_named = data_struct.fields.iter().all(|field| field.ident.is_some());
     if all_named {
-        generate_named_struct(id, generics, data_struct)
+        generate_named_struct(id, generics, data_struct, impl_bound)
     } else {
         generate_tuple_struct(id, generics, data_struct)
     }
@@ -171,8 +186,9 @@ fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Resul
 fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
     let id = &ast.ident;
     let generics = &ast.generics;
+    let impl_bound = get_where_from_derive_input(&ast)?;
     match &ast.data {
-        syn::Data::Struct(data_struct) => generate_struct(id, generics, data_struct),
+        syn::Data::Struct(data_struct) => generate_struct(id, generics, data_struct, &impl_bound),
         syn::Data::Enum(data_enum) => generate_enum(id, generics, data_enum),
         syn::Data::Union(_) => panic!("Unions not supported"),
     }
