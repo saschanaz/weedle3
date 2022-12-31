@@ -7,6 +7,9 @@ use crate::types::{AttributedType, Type};
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 
+/// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
+///
+/// Note: `= default` is only allowed if `optional` is present
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SingleArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
@@ -22,6 +25,7 @@ pub struct SingleArgument<'a> {
     pub default: Option<Default<'a>>,
 }
 
+/// Parses `[attributes]? type... identifier`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct VariadicArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
@@ -33,11 +37,7 @@ pub struct VariadicArgument<'a> {
 /// Parses an argument. Ex: `double v1|double... v1s`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Argument<'a> {
-    /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
-    ///
-    /// Note: `= default` is only allowed if `optional` is present
     Single(SingleArgument<'a>),
-    /// Parses `[attributes]? type... identifier`
     Variadic(VariadicArgument<'a>),
 }
 

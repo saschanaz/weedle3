@@ -35,44 +35,50 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
     parser!(nom::sequence::tuple((T::parse, U::parse, V::parse)));
 }
 
-ast_types! {
-    /// Parses `( body )`
-    #[derive(Copy, Default)]
-    struct Parenthesized<T> where [T: Parse<'a>] {
-        open_paren: term::OpenParen,
-        body: T,
-        close_paren: term::CloseParen,
-    }
+/// Parses `( body )`
+#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
+pub struct Parenthesized<T> {
+    pub open_paren: term::OpenParen,
+    pub body: T,
+    pub close_paren: term::CloseParen,
+}
 
-    /// Parses `[ body ]`
-    #[derive(Copy, Default)]
-    struct Bracketed<T> where [T: Parse<'a>] {
-        open_bracket: term::OpenBracket,
-        body: T,
-        close_bracket: term::CloseBracket,
-    }
+/// Parses `[ body ]`
+#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
+pub struct Bracketed<T> {
+    pub open_bracket: term::OpenBracket,
+    pub body: T,
+    pub close_bracket: term::CloseBracket,
+}
 
-    /// Parses `{ body }`
-    #[derive(Copy, Default)]
-    struct Braced<T> where [T: Parse<'a>] {
-        open_brace: term::OpenBrace,
-        body: T,
-        close_brace: term::CloseBrace,
-    }
+/// Parses `{ body }`
+#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
+pub struct Braced<T> {
+    pub open_brace: term::OpenBrace,
+    pub body: T,
+    pub close_brace: term::CloseBrace,
+}
 
-    /// Parses `< body >`
-    #[derive(Copy, Default)]
-    struct Generics<T> where [T: Parse<'a>] {
-        open_angle: term::LessThan,
-        body: T,
-        close_angle: term::GreaterThan,
-    }
+/// Parses `< body >`
+#[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
+pub struct Generics<T> {
+    pub open_angle: term::LessThan,
+    pub body: T,
+    pub close_angle: term::GreaterThan,
+}
 
-    /// Parses `(item1, item2, item3,...)?`
-    struct Punctuated<T, S> where [T: Parse<'a>, S: Parse<'a> + ::std::default::Default] {
-        list: Vec<T> = nom::multi::separated_list0(weedle!(S), weedle!(T)),
-        separator: S = marker,
-    }
+/// Parses `(item1, item2, item3,...)?`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>, S: Parse<'a> + ::std::default::Default")]
+pub struct Punctuated<T, S> {
+    #[weedle(parse = "nom::multi::separated_list0(weedle!(S), weedle!(T))")]
+    pub list: Vec<T>,
+    #[weedle(parse = "marker")]
+    pub separator: S,
 }
 
 /// Parses `item1, item2, item3, ...`

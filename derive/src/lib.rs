@@ -171,9 +171,9 @@ fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Resul
         impl<'a> crate::Parse<'a> for #id #generics {
             fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
                 use nom::Parser;
-                nom::branch::alt((
-                    #(#field_parsers),*
-                ))(input)
+                alt!(
+                    #(#field_parsers,)*
+                )(input)
             }
         }
     };
@@ -186,7 +186,7 @@ fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Resul
 fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
     let id = &ast.ident;
     let generics = &ast.generics;
-    let impl_bound = get_where_from_derive_input(&ast)?;
+    let impl_bound = get_where_from_derive_input(ast)?;
     match &ast.data {
         syn::Data::Struct(data_struct) => generate_struct(id, generics, data_struct, &impl_bound),
         syn::Data::Enum(data_enum) => generate_enum(id, generics, data_enum),

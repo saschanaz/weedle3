@@ -9,6 +9,9 @@ use crate::types::{AttributedType, ConstType, ReturnType};
 /// Parses namespace members declaration
 pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
 
+/// Parses `[attributes]? returntype identifier? (( args ));`
+///
+/// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
@@ -18,6 +21,7 @@ pub struct OperationNamespaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
+/// Parses `[attribute]? readonly attributetype type identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributeNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
@@ -28,6 +32,7 @@ pub struct AttributeNamespaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
+/// Parses `[attributes]? const type identifier = value;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
@@ -42,13 +47,8 @@ pub struct ConstMember<'a> {
 /// Parses namespace member declaration
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum NamespaceMember<'a> {
-    /// Parses `[attributes]? returntype identifier? (( args ));`
-    ///
-    /// (( )) means ( ) chars
     Operation(OperationNamespaceMember<'a>),
-    /// Parses `[attribute]? readonly attributetype type identifier;`
     Attribute(AttributeNamespaceMember<'a>),
-    /// Parses `[attributes]? const type identifier = value;`
     Const(ConstMember<'a>),
 }
 
