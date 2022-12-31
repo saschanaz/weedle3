@@ -1,4 +1,4 @@
-use darling::{FromDeriveInput, FromField, ToTokens};
+use darling::{FromDeriveInput, ToTokens};
 use proc_macro::TokenStream;
 use syn::*;
 
@@ -9,12 +9,6 @@ extern crate quote;
 #[darling(attributes(weedle))]
 struct MacroTopArgs {
     impl_bound: Option<String>,
-}
-
-#[derive(FromField, Debug)]
-#[darling(attributes(weedle))]
-struct MacroArgs {
-    parse: Option<String>,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -29,16 +23,9 @@ fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
     Ok(expr.to_token_stream())
 }
 
-fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
-    let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
-    let parser = match args.parse {
-        Some(p) => string_to_tokens::<Expr>(p)?,
-        _ => {
-            let ty = &field.ty;
-            quote! { weedle!(#ty) }
-        }
-    };
-    Ok(parser)
+fn get_parser_from_field(field: &Field) -> proc_macro2::TokenStream {
+    let ty = &field.ty;
+    quote! { weedle!(#ty) }
 }
 
 fn get_where_from_derive_input(input: &DeriveInput) -> Result<proc_macro2::TokenStream> {
@@ -65,11 +52,7 @@ fn generate_tuple_struct(
             quote! { #id }
         })
         .collect::<Vec<_>>();
-    let field_parsers = data_struct
-        .fields
-        .iter()
-        .map(get_parser_from_field)
-        .collect::<Result<Vec<_>>>()?;
+    let field_parsers = data_struct.fields.iter().map(get_parser_from_field);
 
     let result = quote! {
         impl<'a> crate::Parse<'a> for #id #generics {
@@ -108,7 +91,7 @@ fn generate_named_struct(
         .iter()
         .map(|field| -> Result<proc_macro2::TokenStream> {
             let id = field.ident.as_ref().expect("How did we get unnamed field?");
-            let parser = get_parser_from_field(field)?;
+            let parser = get_parser_from_field(field);
             Ok(quote! { let (input, #id) = #parser(input)?; })
         })
         .collect::<Result<Vec<_>>>()?;

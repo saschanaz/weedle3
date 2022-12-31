@@ -72,49 +72,69 @@ pub struct Generics<T> {
 }
 
 /// Parses `(item1, item2, item3,...)?`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'a>, S: Parse<'a> + ::std::default::Default")]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Punctuated<T, S> {
-    #[weedle(parse = "nom::multi::separated_list0(weedle!(S), weedle!(T))")]
     pub list: Vec<T>,
-    #[weedle(parse = "marker")]
     pub separator: S,
 }
 
+impl<'a, T, S> Parse<'a> for Punctuated<T, S>
+where
+    T: Parse<'a>,
+    S: Parse<'a> + ::std::default::Default,
+{
+    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        let (input, (list, separator)) = nom::sequence::tuple((
+            nom::multi::separated_list0(weedle!(S), weedle!(T)),
+            marker,
+        ))(input)?;
+        Ok((input, Self { list, separator }))
+    }
+}
+
 /// Parses `item1, item2, item3, ...`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'a>, S: Parse<'a> + ::std::default::Default")]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PunctuatedNonEmpty<T, S> {
-    #[weedle(parse = "
-        nom::sequence::terminated(
-            nom::multi::separated_list1(weedle!(S), weedle!(T)),
-            nom::combinator::opt(weedle!(S))
-        )
-    ")]
     pub list: Vec<T>,
-    #[weedle(parse = "marker")]
     pub separator: S,
+}
+
+impl<'a, T, S> Parse<'a> for PunctuatedNonEmpty<T, S>
+where
+    T: Parse<'a>,
+    S: Parse<'a> + ::std::default::Default,
+{
+    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        let (input, (list, separator)) = nom::sequence::tuple((
+            nom::sequence::terminated(
+                nom::multi::separated_list1(weedle!(S), weedle!(T)),
+                nom::combinator::opt(weedle!(S)),
+            ),
+            marker,
+        ))(input)?;
+        Ok((input, Self { list, separator }))
+    }
 }
 
 /// Represents an identifier
 ///
 /// Follows `/[_-]?[A-Za-z][0-9A-Z_a-z-]*/`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Identifier<'a>(
-    #[weedle(parse = "
-        crate::whitespace::ws(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::branch::alt((
-                    nom::character::complete::char('_'),
-                    nom::character::complete::char('-')
-                ))),
-                nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
-                nom::bytes::complete::take_while(is_alphanum_underscore_dash),
-            )))
-        )
-    ")]
-    pub &'a str,
-);
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Identifier<'a>(pub &'a str);
+
+impl<'a> Parse<'a> for Identifier<'a> {
+    parser!(nom::combinator::map(
+        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::branch::alt((
+                nom::character::complete::char('_'),
+                nom::character::complete::char('-')
+            ))),
+            nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
+            nom::bytes::complete::take_while(is_alphanum_underscore_dash),
+        )))),
+        Identifier
+    ));
+}
 
 /// Parses rhs of an assignment expression. Ex: `= 45`
 #[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

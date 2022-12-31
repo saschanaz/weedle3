@@ -1,44 +1,52 @@
 use derive::Weedle;
 
+use crate::Parse;
+
 /// Parses `-?[1-9][0-9]*`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct DecLit<'a>(
-    #[weedle(parse = "
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct DecLit<'a>(pub &'a str);
+
+impl<'a> Parse<'a> for DecLit<'a> {
+    parser!(nom::combinator::map(
         crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
-            nom::character::complete::one_of(\"123456789\"),
+            nom::character::complete::one_of("123456789"),
             nom::bytes::complete::take_while(nom::AsChar::is_dec_digit)
-        ))))
-    ")]
-    pub &'a str,
-);
+        )))),
+        DecLit
+    ));
+}
 
 /// Parses `-?0[Xx][0-9A-Fa-f]+)`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct HexLit<'a>(
-    #[weedle(parse = "
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct HexLit<'a>(pub &'a str);
+
+impl<'a> Parse<'a> for HexLit<'a> {
+    parser!(nom::combinator::map(
         crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
-            nom::character::complete::one_of(\"xX\"),
+            nom::character::complete::one_of("xX"),
             nom::bytes::complete::take_while(nom::AsChar::is_hex_digit)
-        ))))
-    ")]
-    pub &'a str,
-);
+        )))),
+        HexLit
+    ));
+}
 
 /// Parses `-?0[0-7]*`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct OctLit<'a>(
-    #[weedle(parse = "
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct OctLit<'a>(pub &'a str);
+
+impl<'a> Parse<'a> for OctLit<'a> {
+    parser!(nom::combinator::map(
         crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
             nom::bytes::complete::take_while(nom::AsChar::is_oct_digit)
-        ))))
-    ")]
-    pub &'a str,
-);
+        )))),
+        OctLit
+    ));
+}
 
 /// Represents an integer value
 #[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -51,17 +59,19 @@ pub enum IntegerLit<'a> {
 /// Represents a string value
 ///
 /// Follow `/"[^"]*"/`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct StringLit<'a>(
-    #[weedle(parse = "
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct StringLit<'a>(pub &'a str);
+
+impl<'a> Parse<'a> for StringLit<'a> {
+    parser!(nom::combinator::map(
         crate::whitespace::ws(nom::sequence::delimited(
             nom::character::complete::char('\"'),
             nom::bytes::complete::take_while(|c| c != '\"'),
             nom::character::complete::char('\"'),
-        ))
-    ")]
-    pub &'a str,
-);
+        )),
+        StringLit
+    ));
+}
 
 /// Represents `[ ]`
 #[derive(Copy, Default, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -99,57 +109,67 @@ pub enum ConstValue<'a> {
 }
 
 /// Represents either `true` or `false`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct BooleanLit(
-    #[weedle(parse = "
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct BooleanLit(bool);
+
+impl<'a> Parse<'a> for BooleanLit {
+    parser!(nom::combinator::map(
         nom::branch::alt((
             nom::combinator::value(true, weedle!(term!(true))),
             nom::combinator::value(false, weedle!(term!(false))),
-        ))
-    ")]
-    bool,
-);
+        )),
+        BooleanLit
+    ));
+}
 
 /// Parses `/-?(([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([Ee][+-]?[0-9]+)?|[0-9]+[Ee][+-]?[0-9]+)/`
-#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct FloatValueLit<'a>(
-    #[weedle(parse = "
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct FloatValueLit<'a>(pub &'a str);
+
+impl<'a> Parse<'a> for FloatValueLit<'a> {
+    parser!(nom::combinator::map(
         crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::branch::alt((
-                nom::combinator::value((), nom::sequence::tuple((
-                    // (?:[0-9]+\\.[0-9]*|[0-9]*\\.[0-9]+)
-                    nom::branch::alt((
-                        nom::sequence::tuple((
-                            nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                            nom::character::complete::char('.'),
-                            nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                nom::combinator::value(
+                    (),
+                    nom::sequence::tuple((
+                        // (?:[0-9]+\.[0-9]*|[0-9]*\.[0-9]+)
+                        nom::branch::alt((
+                            nom::sequence::tuple((
+                                nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                                nom::character::complete::char('.'),
+                                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                            )),
+                            nom::sequence::tuple((
+                                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                                nom::character::complete::char('.'),
+                                nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                            )),
                         )),
-                        nom::sequence::tuple((
-                            nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
-                            nom::character::complete::char('.'),
+                        // (?:[Ee][+-]?[0-9]+)?
+                        nom::combinator::opt(nom::sequence::tuple((
+                            nom::character::complete::one_of("eE"),
+                            nom::combinator::opt(nom::character::complete::one_of("+-")),
                             nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                        )),
-                    )),
-                    // (?:[Ee][+-]?[0-9]+)?
-                    nom::combinator::opt(nom::sequence::tuple((
-                        nom::character::complete::one_of(\"eE\"),
-                        nom::combinator::opt(nom::character::complete::one_of(\"+-\")),
-                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                    ))),
-                ))),
+                        ))),
+                    ))
+                ),
                 // [0-9]+[Ee][+-]?[0-9]+
-                nom::combinator::value((), nom::sequence::tuple((
-                    nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                    nom::character::complete::one_of(\"eE\"),
-                    nom::combinator::opt(nom::character::complete::one_of(\"+-\")),
-                    nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                ))),
+                nom::combinator::value(
+                    (),
+                    nom::sequence::tuple((
+                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                        nom::character::complete::one_of("eE"),
+                        nom::combinator::opt(nom::character::complete::one_of("+-")),
+                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                    ))
+                ),
             )),
-        ))))
-    ")]
-    pub &'a str,
-);
+        )))),
+        FloatValueLit
+    ));
+}
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
 #[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
