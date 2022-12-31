@@ -85,32 +85,26 @@ fn generate_named_struct(
             quote! { #id }
         })
         .collect();
-    let field_parsers = data_struct.fields.iter().map(|field| {
-        let id = field
-            .ident
-            .as_ref()
-            .expect("Tuple struct not supported yet");
-        let ty = &field.ty;
-        let args = match MacroArgs::from_field(field) {
-            Ok(v) => v,
-            Err(e) => {
-                return TokenStream::from(e.write_errors()).into();
-            }
-        };
-        let parser = match args.parse {
-            Some(p) => {
-                let stream = string_to_tokens(&p);
-                match stream {
-                    Ok(expr) => quote! { #expr },
-                    Err(e) => {
-                        return TokenStream::from(e.to_compile_error()).into();
-                    }
+    let field_parsers = data_struct
+        .fields
+        .iter()
+        .map(|field| -> Result<proc_macro2::TokenStream> {
+            let id = field
+                .ident
+                .as_ref()
+                .expect("Tuple struct not supported yet");
+            let ty = &field.ty;
+            let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
+            let parser = match args.parse {
+                Some(p) => {
+                    let expr = string_to_tokens(&p)?;
+                    quote! { #expr }
                 }
-            }
-            _ => quote! { weedle!(#ty) },
-        };
-        quote! { let (input, #id) = #parser(input)?; }
-    });
+                _ => quote! { weedle!(#ty) },
+            };
+            Ok(quote! { let (input, #id) = #parser(input)?; })
+        })
+        .collect::<Result<Vec<_>>>()?;
 
     let result = quote! {
         impl<'a> crate::Parse<'a> for #id #generics {
