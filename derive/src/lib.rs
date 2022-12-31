@@ -31,6 +31,18 @@ fn string_to_ident(s: String) -> Result<Ident> {
     Ok(ident)
 }
 
+fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
+    let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
+    let parser = match args.parse {
+        Some(p) => string_to_tokens(&p)?,
+        _ => {
+            let ty = &field.ty;
+            quote! { weedle!(#ty) }
+        }
+    };
+    Ok(parser)
+}
+
 fn generate_tuple_struct(
     id: &Ident,
     generics: &Generics,
@@ -46,10 +58,11 @@ fn generate_tuple_struct(
             quote! { #id }
         })
         .collect::<Vec<_>>();
-    let field_parsers = data_struct.fields.iter().map(|field| {
-        let ty = &field.ty;
-        quote! { weedle!(#ty) }
-    });
+    let field_parsers = data_struct
+        .fields
+        .iter()
+        .map(get_parser_from_field)
+        .collect::<Result<Vec<_>>>()?;
 
     let result = quote! {
         impl<'a> crate::Parse<'a> for #id #generics {
@@ -81,7 +94,7 @@ fn generate_named_struct(
             let id = field
                 .ident
                 .as_ref()
-                .expect("Tuple struct not supported yet");
+                .expect("How did we get unnamed field?");
             quote! { #id }
         })
         .collect();
@@ -92,13 +105,8 @@ fn generate_named_struct(
             let id = field
                 .ident
                 .as_ref()
-                .expect("Tuple struct not supported yet");
-            let ty = &field.ty;
-            let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
-            let parser = match args.parse {
-                Some(p) => string_to_tokens(&p)?,
-                _ => quote! { weedle!(#ty) },
-            };
+                .expect("How did we get unnamed field?");
+            let parser = get_parser_from_field(field)?;
             Ok(quote! { let (input, #id) = #parser(input)?; })
         })
         .collect::<Result<Vec<_>>>()?;

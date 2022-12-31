@@ -1,3 +1,5 @@
+use derive::Weedle;
+
 use crate::literal::DefaultValue;
 use crate::{term, IResult, Parse};
 
@@ -80,13 +82,15 @@ ast_types! {
         ),
         separator: S = marker,
     }
+}
 
-    /// Represents an identifier
-    ///
-    /// Follows `/[_-]?[A-Za-z][0-9A-Z_a-z-]*/`
-    #[derive(Copy)]
-    struct Identifier<'a>(
-        &'a str = crate::whitespace::ws(
+/// Represents an identifier
+///
+/// Follows `/[_-]?[A-Za-z][0-9A-Z_a-z-]*/`
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Identifier<'a>(
+    #[weedle(parse = "
+        crate::whitespace::ws(
             nom::combinator::recognize(nom::sequence::tuple((
                 nom::combinator::opt(nom::branch::alt((
                     nom::character::complete::char('_'),
@@ -95,15 +99,16 @@ ast_types! {
                 nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
                 nom::bytes::complete::take_while(is_alphanum_underscore_dash),
             )))
-        ),
-    )
+        )
+    ")]
+    pub &'a str,
+);
 
-    /// Parses rhs of an assignment expression. Ex: `= 45`
-    #[derive(Copy)]
-    struct Default<'a> {
-        assign: term!(=),
-        value: DefaultValue<'a>,
-    }
+/// Parses rhs of an assignment expression. Ex: `= 45`
+#[derive(Copy, Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Default<'a> {
+    pub assign: term!(=),
+    pub value: DefaultValue<'a>,
 }
 
 #[cfg(test)]
