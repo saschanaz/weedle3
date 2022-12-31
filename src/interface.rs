@@ -1,4 +1,4 @@
-use derive::Weedle;
+use weedle_derive::Weedle;
 
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;

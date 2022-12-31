@@ -30,8 +30,8 @@ use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, ReturnType};
-use derive::Weedle;
 pub use nom::{error::Error, Err, IResult};
+use weedle_derive::Weedle;
 
 #[macro_use]
 mod macros;
