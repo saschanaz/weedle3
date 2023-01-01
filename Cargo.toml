@@ -15,8 +15,12 @@ exclude = ["tests"]
 [lib]
 name = "weedle"
 
+[workspace]
+members = ["derive"]
+
 [dependencies]
 nom = "7.1.0"
+weedle_derive = { path = "derive" }
 
 [dev-dependencies]
 test-generator = "0.3.0"

@@ -1,3 +1,5 @@
+use weedle_derive::Weedle;
+
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
@@ -7,39 +9,47 @@ use crate::types::{AttributedType, ConstType, ReturnType};
 /// Parses namespace members declaration
 pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
 
-ast_types! {
-    /// Parses namespace member declaration
-    enum NamespaceMember<'a> {
-        /// Parses `[attributes]? returntype identifier? (( args ));`
-        ///
-        /// (( )) means ( ) chars
-        Operation(struct OperationNamespaceMember<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            return_type: ReturnType<'a>,
-            identifier: Option<Identifier<'a>>,
-            args: Parenthesized<ArgumentList<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attribute]? readonly attributetype type identifier;`
-        Attribute(struct AttributeNamespaceMember<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            readonly: term!(readonly),
-            attribute: term!(attribute),
-            type_: AttributedType<'a>,
-            identifier: Identifier<'a>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? const type identifier = value;`
-        Const(struct ConstMember<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            const_: term!(const),
-            const_type: ConstType<'a>,
-            identifier: Identifier<'a>,
-            assign: term!(=),
-            const_value: ConstValue<'a>,
-            semi_colon: term!(;),
-        }),
-    }
+/// Parses `[attributes]? returntype identifier? (( args ));`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct OperationNamespaceMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub return_type: ReturnType<'a>,
+    pub identifier: Option<Identifier<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attribute]? readonly attributetype type identifier;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct AttributeNamespaceMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub readonly: term!(readonly),
+    pub attribute: term!(attribute),
+    pub type_: AttributedType<'a>,
+    pub identifier: Identifier<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? const type identifier = value;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ConstMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub const_: term!(const),
+    pub const_type: ConstType<'a>,
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub const_value: ConstValue<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses namespace member declaration
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum NamespaceMember<'a> {
+    Operation(OperationNamespaceMember<'a>),
+    Attribute(AttributeNamespaceMember<'a>),
+    Const(ConstMember<'a>),
 }
 
 #[cfg(test)]

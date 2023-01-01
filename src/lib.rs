@@ -31,6 +31,7 @@ use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, ReturnType};
 pub use nom::{error::Error, Err, IResult};
+use weedle_derive::Weedle;
 
 #[macro_use]
 mod macros;
@@ -100,134 +101,175 @@ pub trait Parse<'a>: Sized {
 /// It is recommended to use [`parse`](fn.parse.html) instead.
 pub type Definitions<'a> = Vec<Definition<'a>>;
 
-ast_types! {
-    /// Parses a definition
-    enum Definition<'a> {
-        /// Parses `[attributes]? callback identifier = type ( (arg1, arg2, ..., argN)? );`
-        Callback(struct CallbackDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            callback: term!(callback),
-            identifier: Identifier<'a>,
-            assign: term!(=),
-            return_type: ReturnType<'a>,
-            arguments: Parenthesized<ArgumentList<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? callback interface identifier ( : inheritance )? { members };`
-        CallbackInterface(struct CallbackInterfaceDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            callback: term!(callback),
-            interface: term!(interface),
-            identifier: Identifier<'a>,
-            inheritance: Option<Inheritance<'a>>,
-            members: Braced<InterfaceMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? interface identifier ( : inheritance )? { members };`
-        Interface(struct InterfaceDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            interface: term!(interface),
-            identifier: Identifier<'a>,
-            inheritance: Option<Inheritance<'a>>,
-            members: Braced<InterfaceMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? interface mixin identifier { members };`
-        InterfaceMixin(struct InterfaceMixinDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            interface: term!(interface),
-            mixin: term!(mixin),
-            identifier: Identifier<'a>,
-            members: Braced<MixinMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? namespace identifier { members };`
-        Namespace(struct NamespaceDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            namespace: term!(namespace),
-            identifier: Identifier<'a>,
-            members: Braced<NamespaceMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? dictionary identifier ( : inheritance )? { members };`
-        Dictionary(struct DictionaryDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            dictionary: term!(dictionary),
-            identifier: Identifier<'a>,
-            inheritance: Option<Inheritance<'a>>,
-            members: Braced<DictionaryMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? partial interface identifier { members };`
-        PartialInterface(struct PartialInterfaceDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            partial: term!(partial),
-            interface: term!(interface),
-            identifier: Identifier<'a>,
-            members: Braced<InterfaceMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? partial interface mixin identifier { members };`
-        PartialInterfaceMixin(struct PartialInterfaceMixinDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            partial: term!(partial),
-            interface: term!(interface),
-            mixin: term!(mixin),
-            identifier: Identifier<'a>,
-            members: Braced<MixinMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? partial dictionary identifier { members };`
-        PartialDictionary(struct PartialDictionaryDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            partial: term!(partial),
-            dictionary: term!(dictionary),
-            identifier: Identifier<'a>,
-            members: Braced<DictionaryMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? partial namespace identifier { members };`
-        PartialNamespace(struct PartialNamespaceDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            partial: term!(partial),
-            namespace: term!(namespace),
-            identifier: Identifier<'a>,
-            members: Braced<NamespaceMembers<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? enum identifier { values };`
-        Enum(struct EnumDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            enum_: term!(enum),
-            identifier: Identifier<'a>,
-            values: Braced<EnumValueList<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? typedef attributedtype identifier;`
-        Typedef(struct TypedefDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            typedef: term!(typedef),
-            type_: AttributedType<'a>,
-            identifier: Identifier<'a>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? identifier includes identifier;`
-        IncludesStatement(struct IncludesStatementDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            lhs_identifier: Identifier<'a>,
-            includes: term!(includes),
-            rhs_identifier: Identifier<'a>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? identifier implements identifier;`
-        Implements(struct ImplementsDefinition<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            lhs_identifier: Identifier<'a>,
-            includes: term!(implements),
-            rhs_identifier: Identifier<'a>,
-            semi_colon: term!(;),
-        }),
-    }
+/// Parses `[attributes]? callback identifier = type ( (arg1, arg2, ..., argN)? );`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct CallbackDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub callback: term!(callback),
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub return_type: ReturnType<'a>,
+    pub arguments: Parenthesized<ArgumentList<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? callback interface identifier ( : inheritance )? { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct CallbackInterfaceDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub callback: term!(callback),
+    pub interface: term!(interface),
+    pub identifier: Identifier<'a>,
+    pub inheritance: Option<Inheritance<'a>>,
+    pub members: Braced<InterfaceMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? interface identifier ( : inheritance )? { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct InterfaceDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub interface: term!(interface),
+    pub identifier: Identifier<'a>,
+    pub inheritance: Option<Inheritance<'a>>,
+    pub members: Braced<InterfaceMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? interface mixin identifier { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct InterfaceMixinDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub interface: term!(interface),
+    pub mixin: term!(mixin),
+    pub identifier: Identifier<'a>,
+    pub members: Braced<MixinMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? namespace identifier { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct NamespaceDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub namespace: term!(namespace),
+    pub identifier: Identifier<'a>,
+    pub members: Braced<NamespaceMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? dictionary identifier ( : inheritance )? { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct DictionaryDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub dictionary: term!(dictionary),
+    pub identifier: Identifier<'a>,
+    pub inheritance: Option<Inheritance<'a>>,
+    pub members: Braced<DictionaryMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? partial interface identifier { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct PartialInterfaceDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub partial: term!(partial),
+    pub interface: term!(interface),
+    pub identifier: Identifier<'a>,
+    pub members: Braced<InterfaceMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? partial interface mixin identifier { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct PartialInterfaceMixinDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub partial: term!(partial),
+    pub interface: term!(interface),
+    pub mixin: term!(mixin),
+    pub identifier: Identifier<'a>,
+    pub members: Braced<MixinMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? partial dictionary identifier { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct PartialDictionaryDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub partial: term!(partial),
+    pub dictionary: term!(dictionary),
+    pub identifier: Identifier<'a>,
+    pub members: Braced<DictionaryMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? partial namespace identifier { members };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct PartialNamespaceDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub partial: term!(partial),
+    pub namespace: term!(namespace),
+    pub identifier: Identifier<'a>,
+    pub members: Braced<NamespaceMembers<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? enum identifier { values };`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct EnumDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub enum_: term!(enum),
+    pub identifier: Identifier<'a>,
+    pub values: Braced<EnumValueList<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? typedef attributedtype identifier;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct TypedefDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub typedef: term!(typedef),
+    pub type_: AttributedType<'a>,
+    pub identifier: Identifier<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? identifier includes identifier;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct IncludesStatementDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub lhs_identifier: Identifier<'a>,
+    pub includes: term!(includes),
+    pub rhs_identifier: Identifier<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? identifier implements identifier;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ImplementsDefinition<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub lhs_identifier: Identifier<'a>,
+    pub includes: term!(implements),
+    pub rhs_identifier: Identifier<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses a definition
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Definition<'a> {
+    Callback(CallbackDefinition<'a>),
+    CallbackInterface(CallbackInterfaceDefinition<'a>),
+    Interface(InterfaceDefinition<'a>),
+    InterfaceMixin(InterfaceMixinDefinition<'a>),
+    Namespace(NamespaceDefinition<'a>),
+    Dictionary(DictionaryDefinition<'a>),
+    PartialInterface(PartialInterfaceDefinition<'a>),
+    PartialInterfaceMixin(PartialInterfaceMixinDefinition<'a>),
+    PartialDictionary(PartialDictionaryDefinition<'a>),
+    PartialNamespace(PartialNamespaceDefinition<'a>),
+    Enum(EnumDefinition<'a>),
+    Typedef(TypedefDefinition<'a>),
+    IncludesStatement(IncludesStatementDefinition<'a>),
+    Implements(ImplementsDefinition<'a>),
 }
 
 /// Parses a non-empty enum value list
