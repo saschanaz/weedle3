@@ -1,3 +1,5 @@
+use weedle_derive::Weedle;
+
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
@@ -7,33 +9,38 @@ use crate::types::{AttributedType, ReturnType};
 /// Parses the members declarations of a mixin
 pub type MixinMembers<'a> = Vec<MixinMember<'a>>;
 
-ast_types! {
-    /// Parses one of the variants of a mixin member
-    enum MixinMember<'a> {
-        Const(ConstMember<'a>),
-        /// Parses `[attributes]? stringifier? returntype identifier? (( args ));`
-        ///
-        /// (( )) means ( ) chars
-        Operation(struct OperationMixinMember<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            stringifier: Option<term!(stringifier)>,
-            return_type: ReturnType<'a>,
-            identifier: Option<Identifier<'a>>,
-            args: Parenthesized<ArgumentList<'a>>,
-            semi_colon: term!(;),
-        }),
-        /// Parses `[attributes]? stringifier? readonly? attribute attributedtype identifier;`
-        Attribute(struct AttributeMixinMember<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            stringifier: Option<term!(stringifier)>,
-            readonly: Option<term!(readonly)>,
-            attribute: term!(attribute),
-            type_: AttributedType<'a>,
-            identifier: Identifier<'a>,
-            semi_colon: term!(;),
-        }),
-        Stringifier(StringifierMember<'a>),
-    }
+/// Parses `[attributes]? stringifier? returntype identifier? (( args ));`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct OperationMixinMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub stringifier: Option<term!(stringifier)>,
+    pub return_type: ReturnType<'a>,
+    pub identifier: Option<Identifier<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? stringifier? readonly? attribute attributedtype identifier;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct AttributeMixinMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub stringifier: Option<term!(stringifier)>,
+    pub readonly: Option<term!(readonly)>,
+    pub attribute: term!(attribute),
+    pub type_: AttributedType<'a>,
+    pub identifier: Identifier<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses one of the variants of a mixin member
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum MixinMember<'a> {
+    Const(ConstMember<'a>),
+    Operation(OperationMixinMember<'a>),
+    Attribute(AttributeMixinMember<'a>),
+    Stringifier(StringifierMember<'a>),
 }
 
 #[cfg(test)]

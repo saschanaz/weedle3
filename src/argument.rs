@@ -1,34 +1,64 @@
+use weedle_derive::Weedle;
+
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::types::{AttributedType, Type};
+use crate::Parse;
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 
-ast_types! {
-    /// Parses an argument. Ex: `double v1|double... v1s`
-    enum Argument<'a> {
-        /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
-        ///
-        /// Note: `= default` is only allowed if `optional` is present
-        Single(struct SingleArgument<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            optional: Option<term!(optional)>,
-            type_: AttributedType<'a>,
-            identifier: Identifier<'a>,
-            default: Option<Default<'a>> = nom::combinator::map(
-                nom::combinator::cond(optional.is_some(), weedle!(Option<Default<'a>>)),
-                |default| default.unwrap_or(None)
-            ),
-        }),
-        /// Parses `[attributes]? type... identifier`
-        Variadic(struct VariadicArgument<'a> {
-            attributes: Option<ExtendedAttributeList<'a>>,
-            type_: Type<'a>,
-            ellipsis: term!(...),
-            identifier: Identifier<'a>,
-        }),
+/// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
+///
+/// Note: `= default` is only allowed if `optional` is present
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct SingleArgument<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub optional: Option<term!(optional)>,
+    pub type_: AttributedType<'a>,
+    pub identifier: Identifier<'a>,
+    pub default: Option<Default<'a>>,
+}
+
+impl<'a> Parse<'a> for SingleArgument<'a> {
+    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
+            weedle!(Option<ExtendedAttributeList<'a>>),
+            weedle!(Option<term!(optional)>),
+            weedle!(AttributedType<'a>),
+            weedle!(Identifier<'a>),
+        ))(input)?;
+        let (input, default) = nom::combinator::map(
+            nom::combinator::cond(optional.is_some(), weedle!(Option<Default<'a>>)),
+            |default| default.unwrap_or(None),
+        )(input)?;
+        Ok((
+            input,
+            Self {
+                attributes,
+                optional,
+                type_,
+                identifier,
+                default,
+            },
+        ))
     }
+}
+
+/// Parses `[attributes]? type... identifier`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct VariadicArgument<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub type_: Type<'a>,
+    pub ellipsis: term!(...),
+    pub identifier: Identifier<'a>,
+}
+
+/// Parses an argument. Ex: `double v1|double... v1s`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Argument<'a> {
+    Single(SingleArgument<'a>),
+    Variadic(VariadicArgument<'a>),
 }
 
 #[cfg(test)]
@@ -72,5 +102,10 @@ mod test {
             assign: term!(=),
             value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
         });
+    });
+
+    test!(should_not_parse_default_if_not_optional { "short a = 5" =>
+        "= 5";
+        SingleArgument;
     });
 }
