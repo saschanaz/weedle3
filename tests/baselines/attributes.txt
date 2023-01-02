@@ -2,20 +2,35 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n\n",
+            },
             identifier: Identifier(
                 "Person",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute,
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: "\n\n  // A simple attribute that can be set to any value the range an unsigned\n  // short can take.\n  ",
+                            },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -25,9 +40,19 @@
                                                 type_: Short(
                                                     ShortType {
                                                         unsigned: Some(
-                                                            Unsigned,
+                                                            VariantToken {
+                                                                variant: Unsigned(
+                                                                    "unsigned",
+                                                                ),
+                                                                trivia: "",
+                                                            },
                                                         ),
-                                                        short: Short,
+                                                        short: VariantToken {
+                                                            variant: Short(
+                                                                "short",
+                                                            ),
+                                                            trivia: "",
+                                                        },
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -39,7 +64,12 @@
                             identifier: Identifier(
                                 "age",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                     Attribute(
@@ -47,25 +77,50 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute,
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: "\n\n  // required is an allowed attribute name\n  ",
+                            },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     Any(
-                                        Any,
+                                        VariantToken {
+                                            variant: Any(
+                                                "any",
+                                            ),
+                                            trivia: "",
+                                        },
                                     ),
                                 ),
                             },
                             identifier: Identifier(
                                 "required",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

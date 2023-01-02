@@ -3,6 +3,7 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
+use crate::lex_term;
 use crate::literal::ConstValue;
 use crate::types::{AttributedType, ConstType, ReturnType};
 
@@ -17,31 +18,31 @@ pub struct OperationNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: ReturnType<'a>,
     pub identifier: Option<Identifier<'a>>,
-    pub args: Parenthesized<ArgumentList<'a>>,
-    pub semi_colon: term!(;),
+    pub args: Parenthesized<'a, ArgumentList<'a>>,
+    pub semi_colon: lex_term!(;),
 }
 
 /// Parses `[attribute]? readonly attributetype type identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributeNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub readonly: term!(readonly),
-    pub attribute: term!(attribute),
+    pub readonly: lex_term!(readonly),
+    pub attribute: lex_term!(attribute),
     pub type_: AttributedType<'a>,
     pub identifier: Identifier<'a>,
-    pub semi_colon: term!(;),
+    pub semi_colon: lex_term!(;),
 }
 
 /// Parses `[attributes]? const type identifier = value;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub const_: term!(const),
+    pub const_: lex_term!(const),
     pub const_type: ConstType<'a>,
     pub identifier: Identifier<'a>,
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub const_value: ConstValue<'a>,
-    pub semi_colon: term!(;),
+    pub semi_colon: lex_term!(;),
 }
 
 /// Parses namespace member declaration

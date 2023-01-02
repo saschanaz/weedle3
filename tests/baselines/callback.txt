@@ -2,16 +2,36 @@
     Callback(
         CallbackDefinition {
             attributes: None,
-            callback: Callback,
+            callback: VariantToken {
+                variant: Callback(
+                    "callback",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "AsyncOperationCallback",
             ),
-            assign: Assign,
+            assign: VariantToken {
+                variant: Assign(
+                    "=",
+                ),
+                trivia: "",
+            },
             return_type: Undefined(
-                Undefined,
+                VariantToken {
+                    variant: Undefined(
+                        "undefined",
+                    ),
+                    trivia: " ",
+                },
             ),
             arguments: Parenthesized {
-                open_paren: OpenParen,
+                open_paren: VariantToken {
+                    variant: OpenParen(
+                        "(",
+                    ),
+                    trivia: "",
+                },
                 body: Punctuated {
                     list: [
                         Single(
@@ -24,7 +44,12 @@
                                         NonAny(
                                             DOMString(
                                                 MayBeNull {
-                                                    type_: DOMString,
+                                                    type_: VariantToken {
+                                                        variant: DOMString(
+                                                            "DOMString",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                     q_mark: None,
                                                 },
                                             ),
@@ -38,24 +63,49 @@
                             },
                         ),
                     ],
-                    separator: Comma,
+                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                 },
-                close_paren: CloseParen,
+                close_paren: VariantToken {
+                    variant: CloseParen(
+                        ")",
+                    ),
+                    trivia: "",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     CallbackInterface(
         CallbackInterfaceDefinition {
             attributes: None,
-            callback: Callback,
-            interface: Interface,
+            callback: VariantToken {
+                variant: Callback(
+                    "callback",
+                ),
+                trivia: "\n\n",
+            },
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "EventHandler",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -63,7 +113,12 @@
                             modifier: None,
                             special: None,
                             return_type: Undefined(
-                                Undefined,
+                                VariantToken {
+                                    variant: Undefined(
+                                        "undefined",
+                                    ),
+                                    trivia: "\n  ",
+                                },
                             ),
                             identifier: Some(
                                 Identifier(
@@ -71,7 +126,12 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen,
+                                open_paren: VariantToken {
+                                    variant: OpenParen(
+                                        "(",
+                                    ),
+                                    trivia: "",
+                                },
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -84,7 +144,12 @@
                                                         NonAny(
                                                             DOMString(
                                                                 MayBeNull {
-                                                                    type_: DOMString,
+                                                                    type_: VariantToken {
+                                                                        variant: DOMString(
+                                                                            "DOMString",
+                                                                        ),
+                                                                        trivia: "",
+                                                                    },
                                                                     q_mark: None,
                                                                 },
                                                             ),
@@ -98,33 +163,68 @@
                                             },
                                         ),
                                     ],
-                                    separator: Comma,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                 },
-                                close_paren: CloseParen,
+                                close_paren: VariantToken {
+                                    variant: CloseParen(
+                                        ")",
+                                    ),
+                                    trivia: "",
+                                },
                             },
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     Callback(
         CallbackDefinition {
             attributes: None,
-            callback: Callback,
+            callback: VariantToken {
+                variant: Callback(
+                    "callback",
+                ),
+                trivia: "\n\n",
+            },
             identifier: Identifier(
                 "SortCallback",
             ),
-            assign: Assign,
+            assign: VariantToken {
+                variant: Assign(
+                    "=",
+                ),
+                trivia: "",
+            },
             return_type: Type(
                 Single(
                     NonAny(
                         Boolean(
                             MayBeNull {
-                                type_: Boolean,
+                                type_: VariantToken {
+                                    variant: Boolean(
+                                        "boolean",
+                                    ),
+                                    trivia: " ",
+                                },
                                 q_mark: None,
                             },
                         ),
@@ -132,7 +232,12 @@
                 ),
             ),
             arguments: Parenthesized {
-                open_paren: OpenParen,
+                open_paren: VariantToken {
+                    variant: OpenParen(
+                        "(",
+                    ),
+                    trivia: "",
+                },
                 body: Punctuated {
                     list: [
                         Single(
@@ -143,7 +248,12 @@
                                     attributes: None,
                                     type_: Single(
                                         Any(
-                                            Any,
+                                            VariantToken {
+                                                variant: Any(
+                                                    "any",
+                                                ),
+                                                trivia: "",
+                                            },
                                         ),
                                     ),
                                 },
@@ -161,7 +271,12 @@
                                     attributes: None,
                                     type_: Single(
                                         Any(
-                                            Any,
+                                            VariantToken {
+                                                variant: Any(
+                                                    "any",
+                                                ),
+                                                trivia: " ",
+                                            },
                                         ),
                                     ),
                                 },
@@ -172,11 +287,21 @@
                             },
                         ),
                     ],
-                    separator: Comma,
+                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                 },
-                close_paren: CloseParen,
+                close_paren: VariantToken {
+                    variant: CloseParen(
+                        ")",
+                    ),
+                    trivia: "",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

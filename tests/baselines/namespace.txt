@@ -2,18 +2,38 @@
     Namespace(
         NamespaceDefinition {
             attributes: None,
-            namespace: Namespace,
+            namespace: VariantToken {
+                variant: Namespace(
+                    "namespace",
+                ),
+                trivia: "// Extracted from Web IDL editors draft March 27 2017\n",
+            },
             identifier: Identifier(
                 "VectorUtils",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Attribute(
                         AttributeNamespaceMember {
                             attributes: None,
-                            readonly: ReadOnly,
-                            attribute: Attribute,
+                            readonly: VariantToken {
+                                variant: ReadOnly(
+                                    "readonly",
+                                ),
+                                trivia: "\n  ",
+                            },
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: "",
+                            },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -32,7 +52,12 @@
                             identifier: Identifier(
                                 "unit",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                     Operation(
@@ -46,7 +71,12 @@
                                                 type_: Double(
                                                     DoubleType {
                                                         unrestricted: None,
-                                                        double: Double,
+                                                        double: VariantToken {
+                                                            variant: Double(
+                                                                "double",
+                                                            ),
+                                                            trivia: "\n  ",
+                                                        },
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -61,7 +91,12 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen,
+                                open_paren: VariantToken {
+                                    variant: OpenParen(
+                                        "(",
+                                    ),
+                                    trivia: "",
+                                },
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -115,11 +150,21 @@
                                             },
                                         ),
                                     ],
-                                    separator: Comma,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                 },
-                                close_paren: CloseParen,
+                                close_paren: VariantToken {
+                                    variant: CloseParen(
+                                        ")",
+                                    ),
+                                    trivia: "",
+                                },
                             },
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                     Operation(
@@ -145,7 +190,12 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen,
+                                open_paren: VariantToken {
+                                    variant: OpenParen(
+                                        "(",
+                                    ),
+                                    trivia: "",
+                                },
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -199,23 +249,43 @@
                                             },
                                         ),
                                     ],
-                                    separator: Comma,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                 },
-                                close_paren: CloseParen,
+                                close_paren: VariantToken {
+                                    variant: CloseParen(
+                                        ")",
+                                    ),
+                                    trivia: "",
+                                },
                             },
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                     Const(
                         ConstMember {
                             attributes: None,
-                            const_: Const,
+                            const_: VariantToken {
+                                variant: Const(
+                                    "const",
+                                ),
+                                trivia: "\n  ",
+                            },
                             const_type: Integer(
                                 MayBeNull {
                                     type_: Short(
                                         ShortType {
                                             unsigned: None,
-                                            short: Short,
+                                            short: VariantToken {
+                                                variant: Short(
+                                                    "short",
+                                                ),
+                                                trivia: "",
+                                            },
                                         },
                                     ),
                                     q_mark: None,
@@ -224,7 +294,12 @@
                             identifier: Identifier(
                                 "CONST",
                             ),
-                            assign: Assign,
+                            assign: VariantToken {
+                                variant: Assign(
+                                    "=",
+                                ),
+                                trivia: "",
+                            },
                             const_value: Integer(
                                 Dec(
                                     DecLit(
@@ -232,44 +307,104 @@
                                     ),
                                 ),
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     PartialNamespace(
         PartialNamespaceDefinition {
             attributes: None,
-            partial: Partial,
-            namespace: Namespace,
+            partial: VariantToken {
+                variant: Partial(
+                    "partial",
+                ),
+                trivia: "\n\n",
+            },
+            namespace: VariantToken {
+                variant: Namespace(
+                    "namespace",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "SomeNamespace",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n  /* namespace_members... */\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     Namespace(
         NamespaceDefinition {
             attributes: None,
-            namespace: Namespace,
+            namespace: VariantToken {
+                variant: Namespace(
+                    "namespace",
+                ),
+                trivia: "\n\n",
+            },
             identifier: Identifier(
                 "_ScalarUtils",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

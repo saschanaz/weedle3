@@ -2,13 +2,23 @@
     Dictionary(
         DictionaryDefinition {
             attributes: None,
-            dictionary: Dictionary,
+            dictionary: VariantToken {
+                variant: Dictionary(
+                    "dictionary",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "PaintOptions",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     DictionaryMember {
                         attributes: None,
@@ -17,9 +27,19 @@
                             NonAny(
                                 DOMString(
                                     MayBeNull {
-                                        type_: DOMString,
+                                        type_: VariantToken {
+                                            variant: DOMString(
+                                                "DOMString",
+                                            ),
+                                            trivia: "\n  ",
+                                        },
                                         q_mark: Some(
-                                            QMark,
+                                            VariantToken {
+                                                variant: QuestionMark(
+                                                    "?",
+                                                ),
+                                                trivia: "",
+                                            },
                                         ),
                                     },
                                 ),
@@ -30,7 +50,12 @@
                         ),
                         default: Some(
                             Default {
-                                assign: Assign,
+                                assign: VariantToken {
+                                    variant: Assign(
+                                        "=",
+                                    ),
+                                    trivia: "",
+                                },
                                 value: String(
                                     StringLit(
                                         "black",
@@ -38,7 +63,12 @@
                                 ),
                             },
                         ),
-                        semi_colon: SemiColon,
+                        semi_colon: VariantToken {
+                            variant: SemiColon(
+                                ";",
+                            ),
+                            trivia: "",
+                        },
                     },
                     DictionaryMember {
                         attributes: None,
@@ -47,9 +77,19 @@
                             NonAny(
                                 DOMString(
                                     MayBeNull {
-                                        type_: DOMString,
+                                        type_: VariantToken {
+                                            variant: DOMString(
+                                                "DOMString",
+                                            ),
+                                            trivia: "\n  ",
+                                        },
                                         q_mark: Some(
-                                            QMark,
+                                            VariantToken {
+                                                variant: QuestionMark(
+                                                    "?",
+                                                ),
+                                                trivia: "",
+                                            },
                                         ),
                                     },
                                 ),
@@ -60,13 +100,28 @@
                         ),
                         default: Some(
                             Default {
-                                assign: Assign,
+                                assign: VariantToken {
+                                    variant: Assign(
+                                        "=",
+                                    ),
+                                    trivia: "",
+                                },
                                 value: Null(
-                                    Null,
+                                    VariantToken {
+                                        variant: Null(
+                                            "null",
+                                        ),
+                                        trivia: " ",
+                                    },
                                 ),
                             },
                         ),
-                        semi_colon: SemiColon,
+                        semi_colon: VariantToken {
+                            variant: SemiColon(
+                                ";",
+                            ),
+                            trivia: "",
+                        },
                     },
                     DictionaryMember {
                         attributes: None,
@@ -87,31 +142,61 @@
                             "position",
                         ),
                         default: None,
-                        semi_colon: SemiColon,
+                        semi_colon: VariantToken {
+                            variant: SemiColon(
+                                ";",
+                            ),
+                            trivia: "",
+                        },
                     },
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     Dictionary(
         DictionaryDefinition {
             attributes: None,
-            dictionary: Dictionary,
+            dictionary: VariantToken {
+                variant: Dictionary(
+                    "dictionary",
+                ),
+                trivia: "\n\n",
+            },
             identifier: Identifier(
                 "WetPaintOptions",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon,
+                    colon: VariantToken {
+                        variant: Colon(
+                            ":",
+                        ),
+                        trivia: "",
+                    },
                     identifier: Identifier(
                         "PaintOptions",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     DictionaryMember {
                         attributes: None,
@@ -123,7 +208,12 @@
                                         type_: Float(
                                             FloatType {
                                                 unrestricted: None,
-                                                float: Float,
+                                                float: VariantToken {
+                                                    variant: Float(
+                                                        "float",
+                                                    ),
+                                                    trivia: "\n  ",
+                                                },
                                             },
                                         ),
                                         q_mark: None,
@@ -135,12 +225,27 @@
                             "hydrometry",
                         ),
                         default: None,
-                        semi_colon: SemiColon,
+                        semi_colon: VariantToken {
+                            variant: SemiColon(
+                                ";",
+                            ),
+                            trivia: "",
+                        },
                     },
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

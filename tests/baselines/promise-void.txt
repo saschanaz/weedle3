@@ -2,29 +2,54 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "Cat",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute,
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: "\n    ",
+                            },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         Promise(
                                             PromiseType {
-                                                promise: Promise,
+                                                promise: VariantToken {
+                                                    variant: Promise(
+                                                        "Promise",
+                                                    ),
+                                                    trivia: "",
+                                                },
                                                 generics: Generics {
-                                                    open_angle: LessThan,
+                                                    open_angle: VariantToken {
+                                                        variant: LessThan(
+                                                            "<",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                     body: Type(
                                                         Single(
                                                             NonAny(
@@ -39,7 +64,12 @@
                                                             ),
                                                         ),
                                                     ),
-                                                    close_angle: GreaterThan,
+                                                    close_angle: VariantToken {
+                                                        variant: GreaterThan(
+                                                            ">",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 },
                                             },
                                         ),
@@ -49,13 +79,28 @@
                             identifier: Identifier(
                                 "meow",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

@@ -2,22 +2,47 @@
     InterfaceMixin(
         InterfaceMixinDefinition {
             attributes: None,
-            interface: Interface,
-            mixin: Mixin,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "// Extracted from https://heycam.github.io/webidl/#using-mixins-and-partials on 2017-11-02\n\n",
+            },
+            mixin: VariantToken {
+                variant: Mixin(
+                    "mixin",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "GlobalCrypto",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Attribute(
                         AttributeMixinMember {
                             attributes: None,
                             stringifier: None,
                             readonly: Some(
-                                ReadOnly,
+                                VariantToken {
+                                    variant: ReadOnly(
+                                        "readonly",
+                                    ),
+                                    trivia: "\n  ",
+                                },
                             ),
-                            attribute: Attribute,
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: "",
+                            },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -36,13 +61,28 @@
                             identifier: Identifier(
                                 "crypto",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     IncludesStatement(
@@ -51,11 +91,21 @@
             lhs_identifier: Identifier(
                 "Window",
             ),
-            includes: Includes,
+            includes: VariantToken {
+                variant: Includes(
+                    "includes",
+                ),
+                trivia: "",
+            },
             rhs_identifier: Identifier(
                 "GlobalCrypto",
             ),
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     IncludesStatement(
@@ -64,33 +114,73 @@
             lhs_identifier: Identifier(
                 "WorkerGlobalScope",
             ),
-            includes: Includes,
+            includes: VariantToken {
+                variant: Includes(
+                    "includes",
+                ),
+                trivia: "",
+            },
             rhs_identifier: Identifier(
                 "GlobalCrypto",
             ),
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     PartialInterfaceMixin(
         PartialInterfaceMixinDefinition {
             attributes: None,
-            partial: Partial,
-            interface: Interface,
-            mixin: Mixin,
+            partial: VariantToken {
+                variant: Partial(
+                    "partial",
+                ),
+                trivia: "\n\n",
+            },
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "",
+            },
+            mixin: VariantToken {
+                variant: Mixin(
+                    "mixin",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "WindowOrWorkerGlobalScope",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Attribute(
                         AttributeMixinMember {
                             attributes: None,
                             stringifier: None,
                             readonly: Some(
-                                ReadOnly,
+                                VariantToken {
+                                    variant: ReadOnly(
+                                        "readonly",
+                                    ),
+                                    trivia: "\n  ",
+                                },
                             ),
-                            attribute: Attribute,
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: "",
+                            },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -109,29 +199,69 @@
                             identifier: Identifier(
                                 "crypto",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     InterfaceMixin(
         InterfaceMixinDefinition {
             attributes: None,
-            interface: Interface,
-            mixin: Mixin,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "\n\n",
+            },
+            mixin: VariantToken {
+                variant: Mixin(
+                    "mixin",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "_LocalCrypto",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

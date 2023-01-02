@@ -1,6 +1,6 @@
 use super::impl_nom_traits::Tokens;
 
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct VariantToken<'a, T> {
     pub variant: T,
     pub trivia: &'a str,
@@ -37,6 +37,7 @@ macro_rules! eat {
     };
 }
 
+#[macro_export]
 macro_rules! eat_key {
     ($variant:ident) => {
         crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {

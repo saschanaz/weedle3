@@ -3,7 +3,12 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket,
+                    open_bracket: VariantToken {
+                        variant: OpenBracket(
+                            "[",
+                        ),
+                        trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+                    },
                     body: Punctuated {
                         list: [
                             Ident(
@@ -11,7 +16,12 @@
                                     lhs_identifier: Identifier(
                                         "NamedConstructor",
                                     ),
-                                    assign: Assign,
+                                    assign: VariantToken {
+                                        variant: Assign(
+                                            "=",
+                                        ),
+                                        trivia: "",
+                                    },
                                     rhs: Identifier(
                                         "Audio",
                                     ),
@@ -22,12 +32,22 @@
                                     lhs_identifier: Identifier(
                                         "NamedConstructor",
                                     ),
-                                    assign: Assign,
+                                    assign: VariantToken {
+                                        variant: Assign(
+                                            "=",
+                                        ),
+                                        trivia: "",
+                                    },
                                     rhs_identifier: Identifier(
                                         "Audio",
                                     ),
                                     args: Parenthesized {
-                                        open_paren: OpenParen,
+                                        open_paren: VariantToken {
+                                            variant: OpenParen(
+                                                "(",
+                                            ),
+                                            trivia: "",
+                                        },
                                         body: Punctuated {
                                             list: [
                                                 Single(
@@ -40,7 +60,12 @@
                                                                 NonAny(
                                                                     DOMString(
                                                                         MayBeNull {
-                                                                            type_: DOMString,
+                                                                            type_: VariantToken {
+                                                                                variant: DOMString(
+                                                                                    "DOMString",
+                                                                                ),
+                                                                                trivia: "",
+                                                                            },
                                                                             q_mark: None,
                                                                         },
                                                                     ),
@@ -54,36 +79,71 @@
                                                     },
                                                 ),
                                             ],
-                                            separator: Comma,
+                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                         },
-                                        close_paren: CloseParen,
+                                        close_paren: VariantToken {
+                                            variant: CloseParen(
+                                                ")",
+                                            ),
+                                            trivia: "",
+                                        },
                                     },
                                 },
                             ),
                         ],
-                        separator: Comma,
+                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                     },
-                    close_bracket: CloseBracket,
+                    close_bracket: VariantToken {
+                        variant: CloseBracket(
+                            "]",
+                        ),
+                        trivia: "",
+                    },
                 },
             ),
-            interface: Interface,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "\n",
+            },
             identifier: Identifier(
                 "HTMLAudioElement",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon,
+                    colon: VariantToken {
+                        variant: Colon(
+                            ":",
+                        ),
+                        trivia: "",
+                    },
                     identifier: Identifier(
                         "HTMLMediaElement",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n  // ...\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

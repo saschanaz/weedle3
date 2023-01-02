@@ -2,15 +2,17 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
-use crate::term;
+use crate::lex_term;
 use crate::Parse;
+use crate::lexer::keywords;
+use crate::parser::eat::VariantToken;
 
 /// Parses a union of types
-pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)>>;
+pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, lex_term!(or)>>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
-    Any(term!(any)),
+    Any(lex_term!(any)),
     NonAny(NonAnyType<'a>),
 }
 
@@ -18,63 +20,60 @@ pub enum SingleType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Single(SingleType<'a>),
-    Union(MayBeNull<UnionType<'a>>),
+    Union(MayBeNull<'a, UnionType<'a>>),
 }
 
 // Parses any single non-any type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum NonAnyType<'a> {
     Promise(PromiseType<'a>),
-    Integer(MayBeNull<IntegerType>),
-    FloatingPoint(MayBeNull<FloatingPointType>),
-    Boolean(MayBeNull<term!(boolean)>),
-    Byte(MayBeNull<term!(byte)>),
-    Octet(MayBeNull<term!(octet)>),
-    ByteString(MayBeNull<term!(ByteString)>),
-    DOMString(MayBeNull<term!(DOMString)>),
-    USVString(MayBeNull<term!(USVString)>),
-    Sequence(MayBeNull<SequenceType<'a>>),
-    Object(MayBeNull<term!(object)>),
-    Symbol(MayBeNull<term!(symbol)>),
-    Error(MayBeNull<term!(Error)>),
-    ArrayBuffer(MayBeNull<term!(ArrayBuffer)>),
-    DataView(MayBeNull<term!(DataView)>),
-    Int8Array(MayBeNull<term!(Int8Array)>),
-    Int16Array(MayBeNull<term!(Int16Array)>),
-    Int32Array(MayBeNull<term!(Int32Array)>),
-    Uint8Array(MayBeNull<term!(Uint8Array)>),
-    Uint16Array(MayBeNull<term!(Uint16Array)>),
-    Uint32Array(MayBeNull<term!(Uint32Array)>),
-    Uint8ClampedArray(MayBeNull<term!(Uint8ClampedArray)>),
-    Float32Array(MayBeNull<term!(Float32Array)>),
-    Float64Array(MayBeNull<term!(Float64Array)>),
-    ArrayBufferView(MayBeNull<term!(ArrayBufferView)>),
-    BufferSource(MayBeNull<term!(BufferSource)>),
-    FrozenArrayType(MayBeNull<FrozenArrayType<'a>>),
-    ObservableArrayType(MayBeNull<ObservableArrayType<'a>>),
-    RecordType(MayBeNull<RecordType<'a>>),
-    Identifier(MayBeNull<Identifier<'a>>),
+    Integer(MayBeNull<'a, IntegerType<'a>>),
+    FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
+    Boolean(MayBeNull<'a, lex_term!(boolean)>),
+    Byte(MayBeNull<'a, lex_term!(byte)>),
+    Octet(MayBeNull<'a, lex_term!(octet)>),
+    ByteString(MayBeNull<'a, lex_term!(ByteString)>),
+    DOMString(MayBeNull<'a, lex_term!(DOMString)>),
+    USVString(MayBeNull<'a, lex_term!(USVString)>),
+    Sequence(MayBeNull<'a, SequenceType<'a>>),
+    Object(MayBeNull<'a, lex_term!(object)>),
+    Symbol(MayBeNull<'a, lex_term!(symbol)>),
+    ArrayBuffer(MayBeNull<'a, lex_term!(ArrayBuffer)>),
+    DataView(MayBeNull<'a, lex_term!(DataView)>),
+    Int8Array(MayBeNull<'a, lex_term!(Int8Array)>),
+    Int16Array(MayBeNull<'a, lex_term!(Int16Array)>),
+    Int32Array(MayBeNull<'a, lex_term!(Int32Array)>),
+    Uint8Array(MayBeNull<'a, lex_term!(Uint8Array)>),
+    Uint16Array(MayBeNull<'a, lex_term!(Uint16Array)>),
+    Uint32Array(MayBeNull<'a, lex_term!(Uint32Array)>),
+    Uint8ClampedArray(MayBeNull<'a, lex_term!(Uint8ClampedArray)>),
+    Float32Array(MayBeNull<'a, lex_term!(Float32Array)>),
+    Float64Array(MayBeNull<'a, lex_term!(Float64Array)>),
+    FrozenArrayType(MayBeNull<'a, FrozenArrayType<'a>>),
+    ObservableArrayType(MayBeNull<'a, ObservableArrayType<'a>>),
+    RecordType(MayBeNull<'a, RecordType<'a>>),
+    Identifier(MayBeNull<'a, Identifier<'a>>),
 }
 
 /// Parses `sequence<Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SequenceType<'a> {
-    pub sequence: term!(sequence),
-    pub generics: Generics<Box<AttributedType<'a>>>,
+    pub sequence: lex_term!(sequence),
+    pub generics: Generics<'a, Box<AttributedType<'a>>>,
 }
 
 /// Parses `FrozenArray<Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FrozenArrayType<'a> {
-    pub frozen_array: term!(FrozenArray),
-    pub generics: Generics<Box<AttributedType<'a>>>,
+    pub frozen_array: lex_term!(FrozenArray),
+    pub generics: Generics<'a, Box<AttributedType<'a>>>,
 }
 
 /// Parses `ObservableArray<Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ObservableArrayType<'a> {
-    pub observable_array: term!(ObservableArray),
-    pub generics: Generics<Box<AttributedType<'a>>>,
+    pub observable_array: lex_term!(ObservableArray),
+    pub generics: Generics<'a, Box<AttributedType<'a>>>,
 }
 
 /// Parses a nullable type. Ex: `object | object??`
@@ -82,81 +81,81 @@ pub struct ObservableArrayType<'a> {
 /// `??` means an actual ? not an optional requirement
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
-pub struct MayBeNull<T> {
+pub struct MayBeNull<'a, T> {
     pub type_: T,
-    pub q_mark: Option<term::QMark>,
+    pub q_mark: Option<VariantToken<'a, keywords::QuestionMark<'a>>>,
 }
 
 /// Parses a `Promise<Type|undefined>` type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PromiseType<'a> {
-    pub promise: term!(Promise),
-    pub generics: Generics<Box<ReturnType<'a>>>,
+    pub promise: lex_term!(Promise),
+    pub generics: Generics<'a, Box<ReturnType<'a>>>,
 }
 
 /// Parses `unsigned? long long`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct LongLongType {
-    pub unsigned: Option<term!(unsigned)>,
-    pub long_long: (term!(long), term!(long)),
+pub struct LongLongType<'a> {
+    pub unsigned: Option<lex_term!(unsigned)>,
+    pub long_long: (lex_term!(long), lex_term!(long)),
 }
 
 /// Parses `unsigned? long`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct LongType {
-    pub unsigned: Option<term!(unsigned)>,
-    pub long: term!(long),
+pub struct LongType<'a> {
+    pub unsigned: Option<lex_term!(unsigned)>,
+    pub long: lex_term!(long),
 }
 
 /// Parses `unsigned? short`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ShortType {
-    pub unsigned: Option<term!(unsigned)>,
-    pub short: term!(short),
+pub struct ShortType<'a> {
+    pub unsigned: Option<lex_term!(unsigned)>,
+    pub short: lex_term!(short),
 }
 
 /// Parses `unsigned? short|long|(long long)`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum IntegerType {
-    LongLong(LongLongType),
-    Long(LongType),
-    Short(ShortType),
+pub enum IntegerType<'a> {
+    LongLong(LongLongType<'a>),
+    Long(LongType<'a>),
+    Short(ShortType<'a>),
 }
 
 /// Parses `unrestricted? float`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct FloatType {
-    pub unrestricted: Option<term!(unrestricted)>,
-    pub float: term!(float),
+pub struct FloatType<'a> {
+    pub unrestricted: Option<lex_term!(unrestricted)>,
+    pub float: lex_term!(float),
 }
 
 /// Parses `unrestricted? double`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct DoubleType {
-    pub unrestricted: Option<term!(unrestricted)>,
-    pub double: term!(double),
+pub struct DoubleType<'a> {
+    pub unrestricted: Option<lex_term!(unrestricted)>,
+    pub double: lex_term!(double),
 }
 
 /// Parses `unrestricted? float|double`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum FloatingPointType {
-    Float(FloatType),
-    Double(DoubleType),
+pub enum FloatingPointType<'a> {
+    Float(FloatType<'a>),
+    Double(DoubleType<'a>),
 }
 
 /// Parses `record<StringType, Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct RecordType<'a> {
-    pub record: term!(record),
-    pub generics: Generics<(Box<RecordKeyType<'a>>, term!(,), Box<AttributedType<'a>>)>,
+    pub record: lex_term!(record),
+    pub generics: Generics<'a, (Box<RecordKeyType<'a>>, lex_term!(,), Box<AttributedType<'a>>)>,
 }
 
 /// Parses one of the string types `ByteString|DOMString|USVString` or any other type.
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum RecordKeyType<'a> {
-    Byte(term!(ByteString)),
-    DOM(term!(DOMString)),
-    USV(term!(USVString)),
+    Byte(lex_term!(ByteString)),
+    DOM(lex_term!(DOMString)),
+    USV(lex_term!(USVString)),
     NonAny(NonAnyType<'a>),
 }
 
@@ -164,24 +163,24 @@ pub enum RecordKeyType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum UnionMemberType<'a> {
     Single(AttributedNonAnyType<'a>),
-    Union(MayBeNull<UnionType<'a>>),
+    Union(MayBeNull<'a, UnionType<'a>>),
 }
 
 /// Parses a const type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ConstType<'a> {
-    Integer(MayBeNull<IntegerType>),
-    FloatingPoint(MayBeNull<FloatingPointType>),
-    Boolean(MayBeNull<term!(boolean)>),
-    Byte(MayBeNull<term!(byte)>),
-    Octet(MayBeNull<term!(octet)>),
-    Identifier(MayBeNull<Identifier<'a>>),
+    Integer(MayBeNull<'a, IntegerType<'a>>),
+    FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
+    Boolean(MayBeNull<'a, lex_term!(boolean)>),
+    Byte(MayBeNull<'a, lex_term!(byte)>),
+    Octet(MayBeNull<'a, lex_term!(octet)>),
+    Identifier(MayBeNull<'a, Identifier<'a>>),
 }
 
 /// Parses the return type which may be `undefined` or any given Type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ReturnType<'a> {
-    Undefined(term!(undefined)),
+    Undefined(lex_term!(undefined)),
     Type(Type<'a>),
 }
 
@@ -247,7 +246,6 @@ mod test {
             Sequence == "sequence<short>",
             Object == "object",
             Symbol == "symbol",
-            Error == "Error",
             ArrayBuffer == "ArrayBuffer",
             DataView == "DataView",
             Int8Array == "Int8Array",
@@ -259,8 +257,6 @@ mod test {
             Uint8ClampedArray == "Uint8ClampedArray",
             Float32Array == "Float32Array",
             Float64Array == "Float64Array",
-            ArrayBufferView == "ArrayBufferView",
-            BufferSource == "BufferSource",
             FrozenArrayType == "FrozenArray<short>",
             RecordType == "record<DOMString, short>",
             Identifier == "mango"

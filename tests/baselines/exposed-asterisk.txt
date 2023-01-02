@@ -3,7 +3,12 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket,
+                    open_bracket: VariantToken {
+                        variant: OpenBracket(
+                            "[",
+                        ),
+                        trivia: "",
+                    },
                     body: Punctuated {
                         list: [
                             Wildcard(
@@ -11,27 +16,62 @@
                                     lhs_identifier: Identifier(
                                         "Exposed",
                                     ),
-                                    assign: Assign,
-                                    wildcard: Wildcard,
+                                    assign: VariantToken {
+                                        variant: Assign(
+                                            "=",
+                                        ),
+                                        trivia: "",
+                                    },
+                                    wildcard: VariantToken {
+                                        variant: Wildcard(
+                                            "*",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                         ],
-                        separator: Comma,
+                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                     },
-                    close_bracket: CloseBracket,
+                    close_bracket: VariantToken {
+                        variant: CloseBracket(
+                            "]",
+                        ),
+                        trivia: "",
+                    },
                 },
             ),
-            interface: Interface,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "\n",
+            },
             identifier: Identifier(
                 "X",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

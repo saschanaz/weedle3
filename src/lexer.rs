@@ -5,8 +5,12 @@ use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::whitespace::sp;
 use crate::Parse;
 
+#[macro_use]
 pub mod keywords;
 use keywords::Keyword;
+
+#[macro_use]
+pub mod pseudo_lex;
 
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 
@@ -48,15 +52,27 @@ fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-fn token(input: &str) -> NomResult<Tag> {
+fn id_or_keyword(input: &str) -> NomResult<Tag> {
+    let (input, id) = Identifier::parse(input)?;
+    match Keyword::parse(id.0) {
+        Ok(("", keyword)) => Ok((input, Tag::Kw(keyword))),
+        _ => Ok((input, Tag::Id(id))),
+    }
+}
+
+fn tag(input: &str) -> NomResult<Tag> {
     nom::branch::alt((
         nom::combinator::map(FloatValueLit::parse, Tag::Dec),
         nom::combinator::map(IntegerLit::parse, Tag::Int),
-        nom::combinator::map(Keyword::parse, Tag::Kw),
-        nom::combinator::map(Identifier::parse, Tag::Id),
         nom::combinator::map(StringLit::parse, Tag::Str),
+        id_or_keyword,
+        nom::combinator::map(Keyword::parse, Tag::Kw),
         nom::combinator::map(other, Tag::Other),
     ))(input)
+}
+
+pub fn lex_single(input: &str) -> NomResult<Token> {
+    nom::combinator::map(nom::sequence::tuple((sp, tag)), Token::new)(input)
 }
 
 pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
@@ -64,7 +80,7 @@ pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>>
     // (It requires consuming at least one character)
     let (unread, (mut tokens, eof)) = nom::sequence::tuple((
         many0(nom::combinator::map(
-            nom::sequence::tuple((sp, token)),
+            nom::sequence::tuple((sp, tag)),
             Token::new,
         )),
         nom::combinator::map(
@@ -91,6 +107,7 @@ mod tests {
     #[test]
     fn test() {
         let tokens = lex("interface mixin Foo {};").unwrap();
+        println!("{tokens:?}");
 
         assert!(matches!(
             &tokens[..],

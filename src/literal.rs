@@ -1,6 +1,6 @@
 use weedle_derive::Weedle;
 
-use crate::Parse;
+use crate::{Parse, lex_term};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -75,27 +75,27 @@ impl<'a> Parse<'a> for StringLit<'a> {
 
 /// Represents `[ ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct EmptyArrayLit {
-    pub open_bracket: term!(OpenBracket),
-    pub close_bracket: term!(CloseBracket),
+pub struct EmptyArrayLit<'a> {
+    pub open_bracket: lex_term!(OpenBracket),
+    pub close_bracket: lex_term!(CloseBracket),
 }
 
 /// Represents `{ }`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct EmptyDictionaryLit {
-    pub open_brace: term!(OpenBrace),
-    pub close_brace: term!(CloseBrace),
+pub struct EmptyDictionaryLit<'a> {
+    pub open_brace: lex_term!(OpenBrace),
+    pub close_brace: lex_term!(CloseBrace),
 }
 
 /// Represents a default literal value. Ex: `34|34.23|"value"|[ ]|true|false|null`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum DefaultValue<'a> {
     Boolean(BooleanLit),
-    EmptyArray(EmptyArrayLit),
-    EmptyDictionary(EmptyDictionaryLit),
+    EmptyArray(EmptyArrayLit<'a>),
+    EmptyDictionary(EmptyDictionaryLit<'a>),
     Float(FloatLit<'a>),
     Integer(IntegerLit<'a>),
-    Null(term!(null)),
+    Null(lex_term!(null)),
     String(StringLit<'a>),
 }
 
@@ -105,7 +105,7 @@ pub enum ConstValue<'a> {
     Boolean(BooleanLit),
     Float(FloatLit<'a>),
     Integer(IntegerLit<'a>),
-    Null(term!(null)),
+    Null(lex_term!(null)),
 }
 
 /// Represents either `true` or `false`
@@ -115,8 +115,8 @@ pub struct BooleanLit(bool);
 impl<'a> Parse<'a> for BooleanLit {
     parser!(nom::combinator::map(
         nom::branch::alt((
-            nom::combinator::value(true, weedle!(term!(true))),
-            nom::combinator::value(false, weedle!(term!(false))),
+            nom::combinator::value(true, weedle!(lex_term!(true))),
+            nom::combinator::value(false, weedle!(lex_term!(false))),
         )),
         BooleanLit
     ));
@@ -175,9 +175,9 @@ impl<'a> Parse<'a> for FloatValueLit<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatLit<'a> {
     Value(FloatValueLit<'a>),
-    NegInfinity(term!(-Infinity)),
-    Infinity(term!(Infinity)),
-    NaN(term!(NaN)),
+    NegInfinity(lex_term!(-Infinity)),
+    Infinity(lex_term!(Infinity)),
+    NaN(lex_term!(NaN)),
 }
 
 #[cfg(test)]
@@ -185,6 +185,7 @@ mod test {
     use super::*;
     use crate::term::*;
     use crate::Parse;
+    use crate::parser::eat::VariantToken;
 
     test!(should_parse_integer { "45" =>
         "";
@@ -258,12 +259,18 @@ mod test {
 
     test!(should_parse_neg_infinity { "-Infinity" =>
         "";
-        FloatLit => FloatLit::NegInfinity(term!(-Infinity))
+        FloatLit => FloatLit::NegInfinity(VariantToken {
+            variant: crate::lexer::keywords::NegInfinity("-Infinity"),
+            trivia: "",
+        })
     });
 
     test!(should_parse_infinity { "Infinity" =>
         "";
-        FloatLit => FloatLit::Infinity(term!(Infinity))
+        FloatLit => FloatLit::Infinity(VariantToken {
+            variant: crate::lexer::keywords::Infinity("Infinity"),
+            trivia: "",
+        })
     });
 
     test!(should_parse_string { r#""this is a string""# =>

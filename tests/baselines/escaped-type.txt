@@ -2,7 +2,12 @@
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: Typedef,
+            typedef: VariantToken {
+                variant: Typedef(
+                    "typedef",
+                ),
+                trivia: "",
+            },
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
@@ -21,13 +26,23 @@
             identifier: Identifier(
                 "EscapedType",
             ),
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: Typedef,
+            typedef: VariantToken {
+                variant: Typedef(
+                    "typedef",
+                ),
+                trivia: "\n",
+            },
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
@@ -35,9 +50,19 @@
                         Sequence(
                             MayBeNull {
                                 type_: SequenceType {
-                                    sequence: Sequence,
+                                    sequence: VariantToken {
+                                        variant: Sequence(
+                                            "sequence",
+                                        ),
+                                        trivia: "",
+                                    },
                                     generics: Generics {
-                                        open_angle: LessThan,
+                                        open_angle: VariantToken {
+                                            variant: LessThan(
+                                                "<",
+                                            ),
+                                            trivia: "",
+                                        },
                                         body: AttributedType {
                                             attributes: None,
                                             type_: Single(
@@ -53,7 +78,12 @@
                                                 ),
                                             ),
                                         },
-                                        close_angle: GreaterThan,
+                                        close_angle: VariantToken {
+                                            variant: GreaterThan(
+                                                ">",
+                                            ),
+                                            trivia: "",
+                                        },
                                     },
                                 },
                                 q_mark: None,
@@ -65,7 +95,12 @@
             identifier: Identifier(
                 "EscapedSequence",
             ),
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

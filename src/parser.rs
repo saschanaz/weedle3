@@ -1,8 +1,8 @@
 mod impl_nom_traits;
-use impl_nom_traits::Tokens;
+pub use impl_nom_traits::Tokens;
 
 #[macro_use]
-mod eat;
+pub mod eat;
 #[macro_use]
 mod generate_match_test;
 

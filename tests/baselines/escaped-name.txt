@@ -2,24 +2,49 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface,
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "_Iroha",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon,
+                    colon: VariantToken {
+                        variant: Colon(
+                            ":",
+                        ),
+                        trivia: "",
+                    },
                     identifier: Identifier(
                         "_Magic",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
     IncludesStatement(
@@ -28,11 +53,21 @@
             lhs_identifier: Identifier(
                 "_Iroha",
             ),
-            includes: Includes,
+            includes: VariantToken {
+                variant: Includes(
+                    "includes",
+                ),
+                trivia: "",
+            },
             rhs_identifier: Identifier(
                 "_Color",
             ),
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

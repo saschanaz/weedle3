@@ -3,10 +3,10 @@ use weedle_derive::Weedle;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::types::{AttributedType, Type};
-use crate::Parse;
+use crate::{Parse, lex_term};
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
-pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
+pub type ArgumentList<'a> = Punctuated<Argument<'a>, lex_term!(,)>;
 
 /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
 ///
@@ -14,7 +14,7 @@ pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SingleArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub optional: Option<term!(optional)>,
+    pub optional: Option<lex_term!(optional)>,
     pub type_: AttributedType<'a>,
     pub identifier: Identifier<'a>,
     pub default: Option<Default<'a>>,
@@ -24,7 +24,7 @@ impl<'a> Parse<'a> for SingleArgument<'a> {
     fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
         let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
             weedle!(Option<ExtendedAttributeList<'a>>),
-            weedle!(Option<term!(optional)>),
+            weedle!(Option<lex_term!(optional)>),
             weedle!(AttributedType<'a>),
             weedle!(Identifier<'a>),
         ))(input)?;
@@ -50,7 +50,7 @@ impl<'a> Parse<'a> for SingleArgument<'a> {
 pub struct VariadicArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub type_: Type<'a>,
-    pub ellipsis: term!(...),
+    pub ellipsis: lex_term!(...),
     pub identifier: Identifier<'a>,
 }
 
@@ -66,6 +66,7 @@ mod test {
     use super::*;
     use crate::literal::{DecLit, DefaultValue, IntegerLit};
     use crate::Parse;
+    use crate::parser::eat::VariantToken;
 
     test!(should_parse_single_argument { "short a" =>
         "";
@@ -99,7 +100,7 @@ mod test {
         optional.is_some();
         identifier.0 == "a";
         default == Some(Default {
-            assign: term!(=),
+            assign: VariantToken::default(),
             value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
         });
     });

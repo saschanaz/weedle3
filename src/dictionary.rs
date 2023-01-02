@@ -2,6 +2,7 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier};
+use crate::lex_term;
 use crate::types::Type;
 
 /// Parses dictionary members
@@ -11,11 +12,11 @@ pub type DictionaryMembers<'a> = Vec<DictionaryMember<'a>>;
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DictionaryMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub required: Option<term!(required)>,
+    pub required: Option<lex_term!(required)>,
     pub type_: Type<'a>,
     pub identifier: Identifier<'a>,
     pub default: Option<Default<'a>>,
-    pub semi_colon: term!(;),
+    pub semi_colon: lex_term!(;),
 }
 
 #[cfg(test)]

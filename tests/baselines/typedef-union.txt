@@ -2,13 +2,23 @@
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: Typedef,
+            typedef: VariantToken {
+                variant: Typedef(
+                    "typedef",
+                ),
+                trivia: "  ",
+            },
             type_: AttributedType {
                 attributes: None,
                 type_: Union(
                     MayBeNull {
                         type_: Parenthesized {
-                            open_paren: OpenParen,
+                            open_paren: VariantToken {
+                                variant: OpenParen(
+                                    "(",
+                                ),
+                                trivia: "",
+                            },
                             body: Punctuated {
                                 list: [
                                     Single(
@@ -64,9 +74,14 @@
                                         },
                                     ),
                                 ],
-                                separator: Or,
+                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Or>>,
                             },
-                            close_paren: CloseParen,
+                            close_paren: VariantToken {
+                                variant: CloseParen(
+                                    ")",
+                                ),
+                                trivia: "",
+                            },
                         },
                         q_mark: None,
                     },
@@ -75,7 +90,12 @@
             identifier: Identifier(
                 "TexImageSource",
             ),
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

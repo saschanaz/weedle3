@@ -1,4 +1,5 @@
 use test_generator::test_resources;
+use weedle::parser::eat::VariantToken;
 
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
@@ -62,7 +63,7 @@ fn interface_constructor() {
     match definition {
         Definition::Interface(mut interface) => {
             assert!(interface.attributes.is_none());
-            assert_eq!(interface.interface, term!(interface));
+            assert_eq!(interface.interface, VariantToken::default());
             assert_eq!(interface.identifier.0, "InterfaceWithConstructor");
             assert_eq!(interface.inheritance, None);
 
@@ -103,7 +104,10 @@ fn interface_constructor() {
                         _ => unreachable!(),
                     };
 
-                    assert_eq!(constructor.constructor, term::Constructor);
+                    assert_eq!(constructor.constructor, VariantToken {
+                        variant: Default::default(),
+                        trivia: "\n  ",
+                    });
                 }
                 _ => unreachable!(),
             }

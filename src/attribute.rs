@@ -2,16 +2,17 @@ use weedle_derive::Weedle;
 
 use crate::argument::ArgumentList;
 use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated};
+use crate::lex_term;
 use crate::literal::{FloatLit, IntegerLit, StringLit};
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
-pub type ExtendedAttributeList<'a> = Bracketed<Punctuated<ExtendedAttribute<'a>, term!(,)>>;
+pub type ExtendedAttributeList<'a> = Bracketed<'a, Punctuated<ExtendedAttribute<'a>, lex_term!(,)>>;
 
 /// Matches comma separated identifier list
-pub type IdentifierList<'a> = Punctuated<Identifier<'a>, term!(,)>;
-pub type StringList<'a> = Punctuated<StringLit<'a>, term!(,)>;
-pub type FloatList<'a> = Punctuated<FloatLit<'a>, term!(,)>;
-pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
+pub type IdentifierList<'a> = Punctuated<Identifier<'a>, lex_term!(,)>;
+pub type StringList<'a> = Punctuated<StringLit<'a>, lex_term!(,)>;
+pub type FloatList<'a> = Punctuated<FloatLit<'a>, lex_term!(,)>;
+pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, lex_term!(,)>;
 
 /// Parses an argument list. Ex: `Constructor((double x, double y))`
 ///
@@ -19,7 +20,7 @@ pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeArgList<'a> {
     pub identifier: Identifier<'a>,
-    pub args: Parenthesized<ArgumentList<'a>>,
+    pub args: Parenthesized<'a, ArgumentList<'a>>,
 }
 
 /// Parses a named argument list. Ex: `NamedConstructor=Image((DOMString src))`
@@ -28,9 +29,9 @@ pub struct ExtendedAttributeArgList<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeNamedArgList<'a> {
     pub lhs_identifier: Identifier<'a>,
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub rhs_identifier: Identifier<'a>,
-    pub args: Parenthesized<ArgumentList<'a>>,
+    pub args: Parenthesized<'a, ArgumentList<'a>>,
 }
 
 /// Parses an identifier list. Ex: `Exposed=((Window,Worker))`
@@ -39,15 +40,15 @@ pub struct ExtendedAttributeNamedArgList<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIdentList<'a> {
     pub identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub list: Parenthesized<IdentifierList<'a>>,
+    pub assign: lex_term!(=),
+    pub list: Parenthesized<'a, IdentifierList<'a>>,
 }
 
 /// Parses an attribute with an identifier. Ex: `PutForwards=name`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIdent<'a> {
     pub lhs_identifier: Identifier<'a>,
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub rhs: Identifier<'a>,
 }
 
@@ -55,8 +56,8 @@ pub struct ExtendedAttributeIdent<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeWildcard<'a> {
     pub lhs_identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub wildcard: term!(*),
+    pub assign: lex_term!(=),
+    pub wildcard: lex_term!(*),
 }
 
 // Things that are not used by the standard Web IDL, but still allowed
@@ -68,42 +69,42 @@ pub struct ExtendedAttributeWildcard<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeString<'a> {
     pub lhs_identifier: Identifier<'a>,
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub rhs: StringLit<'a>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeStringList<'a> {
     pub identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub list: Parenthesized<StringList<'a>>,
+    pub assign: lex_term!(=),
+    pub list: Parenthesized<'a, StringList<'a>>,
 }
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeFloat<'a> {
     pub lhs_identifier: Identifier<'a>,
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub rhs: FloatLit<'a>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeFloatList<'a> {
     pub identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub list: Parenthesized<FloatList<'a>>,
+    pub assign: lex_term!(=),
+    pub list: Parenthesized<'a, FloatList<'a>>,
 }
 
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeInteger<'a> {
     pub lhs_identifier: Identifier<'a>,
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub rhs: IntegerLit<'a>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIntegerList<'a> {
     pub identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub list: Parenthesized<IntegerList<'a>>,
+    pub assign: lex_term!(=),
+    pub list: Parenthesized<'a, IntegerList<'a>>,
 }
 
 /// Parses a plain attribute. Ex: `Replaceable`

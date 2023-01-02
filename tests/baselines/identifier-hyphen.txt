@@ -2,19 +2,39 @@
     PartialInterface(
         PartialInterfaceDefinition {
             attributes: None,
-            partial: Partial,
-            interface: Interface,
+            partial: VariantToken {
+                variant: Partial(
+                    "partial",
+                ),
+                trivia: "",
+            },
+            interface: VariantToken {
+                variant: Interface(
+                    "interface",
+                ),
+                trivia: "",
+            },
             identifier: Identifier(
                 "CSSStyleDeclaration",
             ),
             members: Braced {
-                open_brace: OpenBrace,
+                open_brace: VariantToken {
+                    variant: OpenBrace(
+                        "{",
+                    ),
+                    trivia: "",
+                },
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: Some(
                                 Bracketed {
-                                    open_bracket: OpenBracket,
+                                    open_bracket: VariantToken {
+                                        variant: OpenBracket(
+                                            "[",
+                                        ),
+                                        trivia: "\n  ",
+                                    },
                                     body: Punctuated {
                                         list: [
                                             NoArgs(
@@ -25,18 +45,33 @@
                                                 ),
                                             ),
                                         ],
-                                        separator: Comma,
+                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                     },
-                                    close_bracket: CloseBracket,
+                                    close_bracket: VariantToken {
+                                        variant: CloseBracket(
+                                            "]",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute,
+                            attribute: VariantToken {
+                                variant: Attribute(
+                                    "attribute",
+                                ),
+                                trivia: " ",
+                            },
                             type_: AttributedType {
                                 attributes: Some(
                                     Bracketed {
-                                        open_bracket: OpenBracket,
+                                        open_bracket: VariantToken {
+                                            variant: OpenBracket(
+                                                "[",
+                                            ),
+                                            trivia: "",
+                                        },
                                         body: Punctuated {
                                             list: [
                                                 Ident(
@@ -44,16 +79,26 @@
                                                         lhs_identifier: Identifier(
                                                             "TreatNullAs",
                                                         ),
-                                                        assign: Assign,
+                                                        assign: VariantToken {
+                                                            variant: Assign(
+                                                                "=",
+                                                            ),
+                                                            trivia: "",
+                                                        },
                                                         rhs: Identifier(
                                                             "EmptyString",
                                                         ),
                                                     },
                                                 ),
                                             ],
-                                            separator: Comma,
+                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                         },
-                                        close_bracket: CloseBracket,
+                                        close_bracket: VariantToken {
+                                            variant: CloseBracket(
+                                                "]",
+                                            ),
+                                            trivia: "",
+                                        },
                                     },
                                 ),
                                 type_: Single(
@@ -72,13 +117,28 @@
                             identifier: Identifier(
                                 "-will-change",
                             ),
-                            semi_colon: SemiColon,
+                            semi_colon: VariantToken {
+                                variant: SemiColon(
+                                    ";",
+                                ),
+                                trivia: "",
+                            },
                         },
                     ),
                 ],
-                close_brace: CloseBrace,
+                close_brace: VariantToken {
+                    variant: CloseBrace(
+                        "}",
+                    ),
+                    trivia: "\n",
+                },
             },
-            semi_colon: SemiColon,
+            semi_colon: VariantToken {
+                variant: SemiColon(
+                    ";",
+                ),
+                trivia: "",
+            },
         },
     ),
 ]

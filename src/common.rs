@@ -1,7 +1,11 @@
+use std::marker::PhantomData;
+
 use weedle_derive::Weedle;
 
+use crate::lexer::keywords;
 use crate::literal::DefaultValue;
-use crate::{term, IResult, Parse};
+use crate::parser::eat::VariantToken;
+use crate::{lex_term, term, IResult, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
@@ -36,59 +40,62 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
 }
 
 /// Parses `( body )`
-#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
-pub struct Parenthesized<T> {
-    pub open_paren: term::OpenParen,
+pub struct Parenthesized<'a, T> {
+    pub open_paren: VariantToken<'a, keywords::OpenParen<'a>>,
     pub body: T,
-    pub close_paren: term::CloseParen,
+    pub close_paren: VariantToken<'a, keywords::CloseParen<'a>>,
 }
 
 /// Parses `[ body ]`
-#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
-pub struct Bracketed<T> {
-    pub open_bracket: term::OpenBracket,
+pub struct Bracketed<'a, T> {
+    pub open_bracket: VariantToken<'a, keywords::OpenBracket<'a>>,
     pub body: T,
-    pub close_bracket: term::CloseBracket,
+    pub close_bracket: VariantToken<'a, keywords::CloseBracket<'a>>,
 }
 
 /// Parses `{ body }`
-#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
-pub struct Braced<T> {
-    pub open_brace: term::OpenBrace,
+pub struct Braced<'a, T> {
+    pub open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
     pub body: T,
-    pub close_brace: term::CloseBrace,
+    pub close_brace: VariantToken<'a, keywords::CloseBrace<'a>>,
 }
 
 /// Parses `< body >`
-#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
-pub struct Generics<T> {
-    pub open_angle: term::LessThan,
+pub struct Generics<'a, T> {
+    pub open_angle: VariantToken<'a, keywords::LessThan<'a>>,
     pub body: T,
-    pub close_angle: term::GreaterThan,
+    pub close_angle: VariantToken<'a, keywords::GreaterThan<'a>>,
 }
 
 /// Parses `(item1, item2, item3,...)?`
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Punctuated<T, S> {
     pub list: Vec<T>,
-    pub separator: S,
+    pub separator: std::marker::PhantomData<S>,
 }
 
 impl<'a, T, S> Parse<'a> for Punctuated<T, S>
 where
     T: Parse<'a>,
-    S: Parse<'a> + ::std::default::Default,
+    S: Parse<'a>,
 {
     fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        let (input, (list, separator)) = nom::sequence::tuple((
-            nom::multi::separated_list0(weedle!(S), weedle!(T)),
-            marker,
-        ))(input)?;
-        Ok((input, Self { list, separator }))
+        let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
+        Ok((
+            input,
+            Self {
+                list,
+                separator: PhantomData::default(),
+            },
+        ))
     }
 }
 
@@ -96,23 +103,26 @@ where
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PunctuatedNonEmpty<T, S> {
     pub list: Vec<T>,
-    pub separator: S,
+    pub separator: std::marker::PhantomData<S>,
 }
 
 impl<'a, T, S> Parse<'a> for PunctuatedNonEmpty<T, S>
 where
     T: Parse<'a>,
-    S: Parse<'a> + ::std::default::Default,
+    S: Parse<'a>,
 {
     fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        let (input, (list, separator)) = nom::sequence::tuple((
-            nom::sequence::terminated(
-                nom::multi::separated_list1(weedle!(S), weedle!(T)),
-                nom::combinator::opt(weedle!(S)),
-            ),
-            marker,
-        ))(input)?;
-        Ok((input, Self { list, separator }))
+        let (input, list) = nom::sequence::terminated(
+            nom::multi::separated_list1(weedle!(S), weedle!(T)),
+            nom::combinator::opt(weedle!(S)),
+        )(input)?;
+        Ok((
+            input,
+            Self {
+                list,
+                separator: PhantomData::default(),
+            },
+        ))
     }
 }
 
@@ -139,7 +149,7 @@ impl<'a> Parse<'a> for Identifier<'a> {
 /// Parses rhs of an assignment expression. Ex: `= 45`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Default<'a> {
-    pub assign: term!(=),
+    pub assign: lex_term!(=),
     pub value: DefaultValue<'a>,
 }
 
@@ -196,22 +206,22 @@ mod test {
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(Identifier, term!(,), Identifier)> =>
+        Generics<(Identifier, VariantToken<keywords::Comma>, Identifier)> =>
             Generics {
-                open_angle: term!(<),
-                body: (Identifier("one"), term!(,), Identifier("two")),
-                close_angle: term!(>),
+                open_angle: VariantToken::default(),
+                body: (Identifier("one"), VariantToken::default(), Identifier("two")),
+                close_angle: VariantToken::default(),
             }
     });
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<Identifier, term!(,)>;
+        Punctuated<Identifier, VariantToken<keywords::Comma>>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<Identifier, term!(,)>
+        PunctuatedNonEmpty<Identifier, VariantToken<keywords::Comma>>
     });
 
     test!(should_parse_identifier { "hello" =>
