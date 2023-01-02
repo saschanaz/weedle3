@@ -41,8 +41,8 @@ macro_rules! eat {
 macro_rules! eat_key {
     ($variant:ident) => {
         $crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
-            use $crate::lexer::{keywords::Keyword, Tag};
             use nom::{InputIter, Slice};
+            use $crate::lexer::{keywords::Keyword, Tag};
             match input.iter_elements().next() {
                 Some($crate::lexer::Token {
                     tag: Tag::Kw(Keyword::$variant(variant)),

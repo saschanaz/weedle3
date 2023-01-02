@@ -104,10 +104,13 @@ fn interface_constructor() {
                         _ => unreachable!(),
                     };
 
-                    assert_eq!(constructor.constructor, VariantToken {
-                        variant: Default::default(),
-                        trivia: "\n  ",
-                    });
+                    assert_eq!(
+                        constructor.constructor,
+                        VariantToken {
+                            variant: Default::default(),
+                            trivia: "\n  ",
+                        }
+                    );
                 }
                 _ => unreachable!(),
             }

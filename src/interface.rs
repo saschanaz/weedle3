@@ -185,7 +185,7 @@ pub enum StringifierOrStatic<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::{Parse, parser::eat::VariantToken};
+    use crate::{parser::eat::VariantToken, Parse};
 
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";

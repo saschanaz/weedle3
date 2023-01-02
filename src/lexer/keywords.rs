@@ -25,7 +25,7 @@
  * ```
  */
 
-use crate::parser::{Tokens, eat::VariantToken};
+use crate::parser::{eat::VariantToken, Tokens};
 use nom::IResult;
 
 macro_rules! generate_keywords_enum {

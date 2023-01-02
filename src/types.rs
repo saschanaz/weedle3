@@ -3,9 +3,9 @@ use weedle_derive::Weedle;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
 use crate::lex_term;
-use crate::Parse;
 use crate::lexer::keywords;
 use crate::parser::eat::VariantToken;
+use crate::Parse;
 
 /// Parses a union of types
 pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, lex_term!(or)>>;
@@ -147,7 +147,14 @@ pub enum FloatingPointType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct RecordType<'a> {
     pub record: lex_term!(record),
-    pub generics: Generics<'a, (Box<RecordKeyType<'a>>, lex_term!(,), Box<AttributedType<'a>>)>,
+    pub generics: Generics<
+        'a,
+        (
+            Box<RecordKeyType<'a>>,
+            lex_term!(,),
+            Box<AttributedType<'a>>,
+        ),
+    >,
 }
 
 /// Parses one of the string types `ByteString|DOMString|USVString` or any other type.

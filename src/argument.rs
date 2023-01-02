@@ -3,7 +3,7 @@ use weedle_derive::Weedle;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::types::{AttributedType, Type};
-use crate::{Parse, lex_term};
+use crate::{lex_term, Parse};
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, lex_term!(,)>;
@@ -65,8 +65,8 @@ pub enum Argument<'a> {
 mod test {
     use super::*;
     use crate::literal::{DecLit, DefaultValue, IntegerLit};
-    use crate::Parse;
     use crate::parser::eat::VariantToken;
+    use crate::Parse;
 
     test!(should_parse_single_argument { "short a" =>
         "";

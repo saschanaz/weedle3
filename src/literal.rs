@@ -1,6 +1,6 @@
 use weedle_derive::Weedle;
 
-use crate::{Parse, lex_term};
+use crate::{lex_term, Parse};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -183,9 +183,9 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::parser::eat::VariantToken;
     use crate::term::*;
     use crate::Parse;
-    use crate::parser::eat::VariantToken;
 
     test!(should_parse_integer { "45" =>
         "";
