@@ -265,7 +265,7 @@ pub enum Definition<'a> {
 }
 
 /// Parses a non-empty enum value list
-pub type EnumValueList<'a> = PunctuatedNonEmpty<StringLit<'a>, term!(,)>;
+pub type EnumValueList<'a> = PunctuatedNonEmpty<VariantToken<'a, StringLit<'a>>, term!(,)>;
 
 #[cfg(test)]
 mod test {

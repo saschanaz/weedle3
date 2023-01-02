@@ -132,7 +132,7 @@ mod test {
         identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
         default == Some(Default {
             assign: VariantToken::default(),
-            value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
+            value: DefaultValue::Integer(VariantToken { variant: IntegerLit::Dec(DecLit("5")), trivia: " " }),
         });
     });
 

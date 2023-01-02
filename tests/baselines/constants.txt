@@ -106,11 +106,14 @@
                                 trivia: "",
                             },
                             const_value: Integer(
-                                Dec(
-                                    DecLit(
-                                        "-1",
+                                VariantToken {
+                                    variant: Dec(
+                                        DecLit(
+                                            "-1",
+                                        ),
                                     ),
-                                ),
+                                    trivia: " ",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -153,11 +156,14 @@
                                 trivia: "",
                             },
                             const_value: Integer(
-                                Dec(
-                                    DecLit(
-                                        "10",
+                                VariantToken {
+                                    variant: Dec(
+                                        DecLit(
+                                            "10",
+                                        ),
                                     ),
-                                ),
+                                    trivia: " ",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -212,11 +218,14 @@
                                 trivia: "",
                             },
                             const_value: Integer(
-                                Hex(
-                                    HexLit(
-                                        "0x0000fc00",
+                                VariantToken {
+                                    variant: Hex(
+                                        HexLit(
+                                            "0x0000fc00",
+                                        ),
                                     ),
-                                ),
+                                    trivia: " ",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -265,9 +274,12 @@
                             },
                             const_value: Float(
                                 Value(
-                                    FloatValueLit(
-                                        "6.022e23",
-                                    ),
+                                    VariantToken {
+                                        variant: FloatValueLit(
+                                            "6.022e23",
+                                        ),
+                                        trivia: " ",
+                                    },
                                 ),
                             ),
                             semi_colon: VariantToken {

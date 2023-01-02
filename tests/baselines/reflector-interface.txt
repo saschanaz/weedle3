@@ -64,9 +64,12 @@
                                                         ),
                                                         trivia: "",
                                                     },
-                                                    rhs: StringLit(
-                                                        "on",
-                                                    ),
+                                                    rhs: VariantToken {
+                                                        variant: StringLit(
+                                                            "on",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 },
                                             ),
                                         ],
@@ -177,12 +180,18 @@
                                                         },
                                                         body: Punctuated {
                                                             list: [
-                                                                StringLit(
-                                                                    "anonymous",
-                                                                ),
-                                                                StringLit(
-                                                                    "use-credentials",
-                                                                ),
+                                                                VariantToken {
+                                                                    variant: StringLit(
+                                                                        "anonymous",
+                                                                    ),
+                                                                    trivia: "",
+                                                                },
+                                                                VariantToken {
+                                                                    variant: StringLit(
+                                                                        "use-credentials",
+                                                                    ),
+                                                                    trivia: " ",
+                                                                },
                                                             ],
                                                             separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                                         },
@@ -291,16 +300,22 @@
                                                         },
                                                         body: Punctuated {
                                                             list: [
-                                                                Dec(
-                                                                    DecLit(
-                                                                        "1",
+                                                                VariantToken {
+                                                                    variant: Dec(
+                                                                        DecLit(
+                                                                            "1",
+                                                                        ),
                                                                     ),
-                                                                ),
-                                                                Dec(
-                                                                    DecLit(
-                                                                        "4",
+                                                                    trivia: "",
+                                                                },
+                                                                VariantToken {
+                                                                    variant: Dec(
+                                                                        DecLit(
+                                                                            "4",
+                                                                        ),
                                                                     ),
-                                                                ),
+                                                                    trivia: " ",
+                                                                },
                                                             ],
                                                             separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                                         },

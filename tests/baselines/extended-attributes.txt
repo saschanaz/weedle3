@@ -190,9 +190,12 @@
                                         trivia: "",
                                     },
                                     rhs: Value(
-                                        FloatValueLit(
-                                            "3.14",
-                                        ),
+                                        VariantToken {
+                                            variant: FloatValueLit(
+                                                "3.14",
+                                            ),
+                                            trivia: "",
+                                        },
                                     ),
                                 },
                             ),
@@ -210,9 +213,12 @@
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: StringLit(
-                                        "abc",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: StringLit(
+                                            "abc",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                             Ident(
@@ -308,9 +314,12 @@
                                         body: Punctuated {
                                             list: [
                                                 Value(
-                                                    FloatValueLit(
-                                                        "3.14",
-                                                    ),
+                                                    VariantToken {
+                                                        variant: FloatValueLit(
+                                                            "3.14",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                             ],
                                             separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,

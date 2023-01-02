@@ -1,6 +1,6 @@
 use weedle_derive::Weedle;
 
-use crate::{term, Parse};
+use crate::{parser::eat::VariantToken, term, Parse};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -56,21 +56,59 @@ pub enum IntegerLit<'a> {
     Oct(OctLit<'a>),
 }
 
+impl<'a> Parse<'a> for VariantToken<'a, IntegerLit<'a>> {
+    parser!(|input: &'a str| {
+        use crate::parser::Tokens;
+        use nom::IResult;
+
+        let (i, token) = crate::lexer::lex_single(input)?;
+        let array = [token];
+        let tokens = Tokens(&array);
+        match crate::eat!(Int)(tokens) {
+            Ok((_, token)) => Ok((i, token)),
+            Err(_) => Err(nom::Err::Error(nom::error::Error {
+                input: i,
+                code: nom::error::ErrorKind::Char,
+            })),
+        }
+    });
+}
+
 /// Represents a string value
 ///
 /// Follow `/"[^"]*"/`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct StringLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for StringLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::sequence::delimited(
-            nom::character::complete::char('\"'),
-            nom::bytes::complete::take_while(|c| c != '\"'),
-            nom::character::complete::char('\"'),
-        )),
-        StringLit
-    ));
+impl<'a> StringLit<'a> {
+    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::combinator::map(
+            crate::whitespace::ws(nom::sequence::delimited(
+                nom::character::complete::char('\"'),
+                nom::bytes::complete::take_while(|c| c != '\"'),
+                nom::character::complete::char('\"'),
+            )),
+            StringLit,
+        )(input)
+    }
+}
+
+impl<'a> Parse<'a> for VariantToken<'a, StringLit<'a>> {
+    parser!(|input: &'a str| {
+        use crate::parser::Tokens;
+        use nom::IResult;
+
+        let (i, token) = crate::lexer::lex_single(input)?;
+        let array = [token];
+        let tokens = Tokens(&array);
+        match crate::eat!(Str)(tokens) {
+            Ok((_, token)) => Ok((i, token)),
+            Err(_) => Err(nom::Err::Error(nom::error::Error {
+                input: i,
+                code: nom::error::ErrorKind::Char,
+            })),
+        }
+    });
 }
 
 /// Represents `[ ]`
@@ -94,9 +132,9 @@ pub enum DefaultValue<'a> {
     EmptyArray(EmptyArrayLit<'a>),
     EmptyDictionary(EmptyDictionaryLit<'a>),
     Float(FloatLit<'a>),
-    Integer(IntegerLit<'a>),
+    Integer(VariantToken<'a, IntegerLit<'a>>),
     Null(term!(null)),
-    String(StringLit<'a>),
+    String(VariantToken<'a, StringLit<'a>>),
 }
 
 /// Represents `true`, `false`, `34.23`, `null`, `56`, ...
@@ -104,7 +142,7 @@ pub enum DefaultValue<'a> {
 pub enum ConstValue<'a> {
     Boolean(BooleanLit),
     Float(FloatLit<'a>),
-    Integer(IntegerLit<'a>),
+    Integer(VariantToken<'a, IntegerLit<'a>>),
     Null(term!(null)),
 }
 
@@ -126,55 +164,75 @@ impl<'a> Parse<'a> for BooleanLit {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FloatValueLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for FloatValueLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
-            nom::combinator::opt(nom::character::complete::char('-')),
-            nom::branch::alt((
-                nom::combinator::value(
-                    (),
-                    nom::sequence::tuple((
-                        // (?:[0-9]+\.[0-9]*|[0-9]*\.[0-9]+)
-                        nom::branch::alt((
-                            nom::sequence::tuple((
-                                nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                                nom::character::complete::char('.'),
-                                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+impl<'a> FloatValueLit<'a> {
+    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::combinator::map(
+            crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+                nom::combinator::opt(nom::character::complete::char('-')),
+                nom::branch::alt((
+                    nom::combinator::value(
+                        (),
+                        nom::sequence::tuple((
+                            // (?:[0-9]+\.[0-9]*|[0-9]*\.[0-9]+)
+                            nom::branch::alt((
+                                nom::sequence::tuple((
+                                    nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                                    nom::character::complete::char('.'),
+                                    nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                                )),
+                                nom::sequence::tuple((
+                                    nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                                    nom::character::complete::char('.'),
+                                    nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                                )),
                             )),
-                            nom::sequence::tuple((
-                                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
-                                nom::character::complete::char('.'),
+                            // (?:[Ee][+-]?[0-9]+)?
+                            nom::combinator::opt(nom::sequence::tuple((
+                                nom::character::complete::one_of("eE"),
+                                nom::combinator::opt(nom::character::complete::one_of("+-")),
                                 nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                            )),
+                            ))),
                         )),
-                        // (?:[Ee][+-]?[0-9]+)?
-                        nom::combinator::opt(nom::sequence::tuple((
+                    ),
+                    // [0-9]+[Ee][+-]?[0-9]+
+                    nom::combinator::value(
+                        (),
+                        nom::sequence::tuple((
+                            nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
                             nom::character::complete::one_of("eE"),
                             nom::combinator::opt(nom::character::complete::one_of("+-")),
                             nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                        ))),
-                    ))
-                ),
-                // [0-9]+[Ee][+-]?[0-9]+
-                nom::combinator::value(
-                    (),
-                    nom::sequence::tuple((
-                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                        nom::character::complete::one_of("eE"),
-                        nom::combinator::opt(nom::character::complete::one_of("+-")),
-                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                    ))
-                ),
-            )),
-        )))),
-        FloatValueLit
-    ));
+                        )),
+                    ),
+                )),
+            )))),
+            FloatValueLit,
+        )(input)
+    }
+}
+
+impl<'a> Parse<'a> for VariantToken<'a, FloatValueLit<'a>> {
+    parser!(|input: &'a str| {
+        use crate::parser::Tokens;
+        use nom::IResult;
+
+        let (i, token) = crate::lexer::lex_single(input)?;
+        let array = [token];
+        let tokens = Tokens(&array);
+        match crate::eat!(Dec)(tokens) {
+            Ok((_, token)) => Ok((i, token)),
+            Err(_) => Err(nom::Err::Error(nom::error::Error {
+                input: i,
+                code: nom::error::ErrorKind::Char,
+            })),
+        }
+    });
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatLit<'a> {
-    Value(FloatValueLit<'a>),
+    Value(VariantToken<'a, FloatValueLit<'a>>),
     NegInfinity(term!(-Infinity)),
     Infinity(term!(Infinity)),
     NaN(term!(NaN)),
@@ -229,32 +287,32 @@ mod test {
 
     test!(should_parse_float { "45.434" =>
         "";
-        FloatLit => FloatLit::Value(FloatValueLit("45.434"))
+        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("45.434"), trivia: "" })
     });
 
     test!(should_parse_float_surrounding_with_spaces { "  2345.2345  " =>
         "";
-        FloatLit => FloatLit::Value(FloatValueLit("2345.2345"))
+        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("2345.2345"), trivia: "  " })
     });
 
     test!(should_parse_float_preceding_others { "3453.32334 string" =>
         "string";
-        FloatLit => FloatLit::Value(FloatValueLit("3453.32334"))
+        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("3453.32334"), trivia: "" })
     });
 
     test!(should_parse_neg_float { "-435.3435" =>
         "";
-        FloatLit => FloatLit::Value(FloatValueLit("-435.3435"))
+        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("-435.3435"), trivia: "" })
     });
 
     test!(should_parse_float_exp { "3e23" =>
         "";
-        FloatLit => FloatLit::Value(FloatValueLit("3e23"))
+        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("3e23"), trivia: "" })
     });
 
     test!(should_parse_float_exp_with_decimal { "5.3434e23" =>
         "";
-        FloatLit => FloatLit::Value(FloatValueLit("5.3434e23"))
+        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("5.3434e23"), trivia: "" })
     });
 
     test!(should_parse_neg_infinity { "-Infinity" =>

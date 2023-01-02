@@ -11,9 +11,9 @@ pub type ExtendedAttributeList<'a> = Bracketed<'a, Punctuated<ExtendedAttribute<
 
 /// Matches comma separated identifier list
 pub type IdentifierList<'a> = Punctuated<VariantToken<'a, Identifier<'a>>, term!(,)>;
-pub type StringList<'a> = Punctuated<StringLit<'a>, term!(,)>;
+pub type StringList<'a> = Punctuated<VariantToken<'a, StringLit<'a>>, term!(,)>;
 pub type FloatList<'a> = Punctuated<FloatLit<'a>, term!(,)>;
-pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
+pub type IntegerList<'a> = Punctuated<VariantToken<'a, IntegerLit<'a>>, term!(,)>;
 
 /// Parses an argument list. Ex: `Constructor((double x, double y))`
 ///
@@ -71,7 +71,7 @@ pub struct ExtendedAttributeWildcard<'a> {
 pub struct ExtendedAttributeString<'a> {
     pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub rhs: StringLit<'a>,
+    pub rhs: VariantToken<'a, StringLit<'a>>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -175,14 +175,14 @@ mod test {
         "";
         ExtendedAttributeString;
         lhs_identifier.variant.0 == "ReflectOnly";
-        rhs.0 == "on";
+        rhs.variant.0 == "on";
     });
 
     test!(should_parse_float { "FloatAttr=3.14" =>
         "";
         ExtendedAttributeFloat;
         lhs_identifier.variant.0 == "FloatAttr";
-        rhs == FloatLit::Value(FloatValueLit("3.14"));
+        rhs == FloatLit::Value(VariantToken { variant: FloatValueLit("3.14"), trivia: "" });
     });
 
     test!(should_parse_extattr_list { "[IntAttr=0, FloatAttr=3.14]" =>
