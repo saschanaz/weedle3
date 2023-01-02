@@ -179,7 +179,7 @@ generate_keywords_enum!(
 );
 
 #[macro_export]
-macro_rules! lex_term {
+macro_rules! term {
     (OpenParen) => {
         $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::OpenParen<'a>>
     };

@@ -1,6 +1,6 @@
 use weedle_derive::Weedle;
 
-use crate::{lex_term, Parse};
+use crate::{term, Parse};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -76,15 +76,15 @@ impl<'a> Parse<'a> for StringLit<'a> {
 /// Represents `[ ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EmptyArrayLit<'a> {
-    pub open_bracket: lex_term!(OpenBracket),
-    pub close_bracket: lex_term!(CloseBracket),
+    pub open_bracket: term!(OpenBracket),
+    pub close_bracket: term!(CloseBracket),
 }
 
 /// Represents `{ }`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EmptyDictionaryLit<'a> {
-    pub open_brace: lex_term!(OpenBrace),
-    pub close_brace: lex_term!(CloseBrace),
+    pub open_brace: term!(OpenBrace),
+    pub close_brace: term!(CloseBrace),
 }
 
 /// Represents a default literal value. Ex: `34|34.23|"value"|[ ]|true|false|null`
@@ -95,7 +95,7 @@ pub enum DefaultValue<'a> {
     EmptyDictionary(EmptyDictionaryLit<'a>),
     Float(FloatLit<'a>),
     Integer(IntegerLit<'a>),
-    Null(lex_term!(null)),
+    Null(term!(null)),
     String(StringLit<'a>),
 }
 
@@ -105,7 +105,7 @@ pub enum ConstValue<'a> {
     Boolean(BooleanLit),
     Float(FloatLit<'a>),
     Integer(IntegerLit<'a>),
-    Null(lex_term!(null)),
+    Null(term!(null)),
 }
 
 /// Represents either `true` or `false`
@@ -115,8 +115,8 @@ pub struct BooleanLit(bool);
 impl<'a> Parse<'a> for BooleanLit {
     parser!(nom::combinator::map(
         nom::branch::alt((
-            nom::combinator::value(true, weedle!(lex_term!(true))),
-            nom::combinator::value(false, weedle!(lex_term!(false))),
+            nom::combinator::value(true, weedle!(term!(true))),
+            nom::combinator::value(false, weedle!(term!(false))),
         )),
         BooleanLit
     ));
@@ -175,9 +175,9 @@ impl<'a> Parse<'a> for FloatValueLit<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatLit<'a> {
     Value(FloatValueLit<'a>),
-    NegInfinity(lex_term!(-Infinity)),
-    Infinity(lex_term!(Infinity)),
-    NaN(lex_term!(NaN)),
+    NegInfinity(term!(-Infinity)),
+    Infinity(term!(Infinity)),
+    NaN(term!(NaN)),
 }
 
 #[cfg(test)]

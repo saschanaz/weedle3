@@ -107,132 +107,132 @@ pub type Definitions<'a> = Vec<Definition<'a>>;
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub callback: lex_term!(callback),
+    pub callback: term!(callback),
     pub identifier: Identifier<'a>,
-    pub assign: lex_term!(=),
+    pub assign: term!(=),
     pub return_type: ReturnType<'a>,
     pub arguments: Parenthesized<'a, ArgumentList<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? callback interface identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct CallbackInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub callback: lex_term!(callback),
-    pub interface: lex_term!(interface),
+    pub callback: term!(callback),
+    pub interface: term!(interface),
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? interface identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub interface: lex_term!(interface),
+    pub interface: term!(interface),
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? interface mixin identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct InterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub interface: lex_term!(interface),
-    pub mixin: lex_term!(mixin),
+    pub interface: term!(interface),
+    pub mixin: term!(mixin),
     pub identifier: Identifier<'a>,
     pub members: Braced<'a, MixinMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? namespace identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub namespace: lex_term!(namespace),
+    pub namespace: term!(namespace),
     pub identifier: Identifier<'a>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? dictionary identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub dictionary: lex_term!(dictionary),
+    pub dictionary: term!(dictionary),
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial interface identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PartialInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub partial: lex_term!(partial),
-    pub interface: lex_term!(interface),
+    pub partial: term!(partial),
+    pub interface: term!(interface),
     pub identifier: Identifier<'a>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial interface mixin identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PartialInterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub partial: lex_term!(partial),
-    pub interface: lex_term!(interface),
-    pub mixin: lex_term!(mixin),
+    pub partial: term!(partial),
+    pub interface: term!(interface),
+    pub mixin: term!(mixin),
     pub identifier: Identifier<'a>,
     pub members: Braced<'a, MixinMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial dictionary identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PartialDictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub partial: lex_term!(partial),
-    pub dictionary: lex_term!(dictionary),
+    pub partial: term!(partial),
+    pub dictionary: term!(dictionary),
     pub identifier: Identifier<'a>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial namespace identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PartialNamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub partial: lex_term!(partial),
-    pub namespace: lex_term!(namespace),
+    pub partial: term!(partial),
+    pub namespace: term!(namespace),
     pub identifier: Identifier<'a>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? enum identifier { values };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub enum_: lex_term!(enum),
+    pub enum_: term!(enum),
     pub identifier: Identifier<'a>,
     pub values: Braced<'a, EnumValueList<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? typedef attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub typedef: lex_term!(typedef),
+    pub typedef: term!(typedef),
     pub type_: AttributedType<'a>,
     pub identifier: Identifier<'a>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? identifier includes identifier;`
@@ -240,9 +240,9 @@ pub struct TypedefDefinition<'a> {
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub lhs_identifier: Identifier<'a>,
-    pub includes: lex_term!(includes),
+    pub includes: term!(includes),
     pub rhs_identifier: Identifier<'a>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses a definition
@@ -264,7 +264,7 @@ pub enum Definition<'a> {
 }
 
 /// Parses a non-empty enum value list
-pub type EnumValueList<'a> = PunctuatedNonEmpty<StringLit<'a>, lex_term!(,)>;
+pub type EnumValueList<'a> = PunctuatedNonEmpty<StringLit<'a>, term!(,)>;
 
 #[cfg(test)]
 mod test {

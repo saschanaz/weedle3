@@ -2,17 +2,17 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
-use crate::lex_term;
 use crate::lexer::keywords;
 use crate::parser::eat::VariantToken;
+use crate::term;
 use crate::Parse;
 
 /// Parses a union of types
-pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, lex_term!(or)>>;
+pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, term!(or)>>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
-    Any(lex_term!(any)),
+    Any(term!(any)),
     NonAny(NonAnyType<'a>),
 }
 
@@ -29,26 +29,26 @@ pub enum NonAnyType<'a> {
     Promise(PromiseType<'a>),
     Integer(MayBeNull<'a, IntegerType<'a>>),
     FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
-    Boolean(MayBeNull<'a, lex_term!(boolean)>),
-    Byte(MayBeNull<'a, lex_term!(byte)>),
-    Octet(MayBeNull<'a, lex_term!(octet)>),
-    ByteString(MayBeNull<'a, lex_term!(ByteString)>),
-    DOMString(MayBeNull<'a, lex_term!(DOMString)>),
-    USVString(MayBeNull<'a, lex_term!(USVString)>),
+    Boolean(MayBeNull<'a, term!(boolean)>),
+    Byte(MayBeNull<'a, term!(byte)>),
+    Octet(MayBeNull<'a, term!(octet)>),
+    ByteString(MayBeNull<'a, term!(ByteString)>),
+    DOMString(MayBeNull<'a, term!(DOMString)>),
+    USVString(MayBeNull<'a, term!(USVString)>),
     Sequence(MayBeNull<'a, SequenceType<'a>>),
-    Object(MayBeNull<'a, lex_term!(object)>),
-    Symbol(MayBeNull<'a, lex_term!(symbol)>),
-    ArrayBuffer(MayBeNull<'a, lex_term!(ArrayBuffer)>),
-    DataView(MayBeNull<'a, lex_term!(DataView)>),
-    Int8Array(MayBeNull<'a, lex_term!(Int8Array)>),
-    Int16Array(MayBeNull<'a, lex_term!(Int16Array)>),
-    Int32Array(MayBeNull<'a, lex_term!(Int32Array)>),
-    Uint8Array(MayBeNull<'a, lex_term!(Uint8Array)>),
-    Uint16Array(MayBeNull<'a, lex_term!(Uint16Array)>),
-    Uint32Array(MayBeNull<'a, lex_term!(Uint32Array)>),
-    Uint8ClampedArray(MayBeNull<'a, lex_term!(Uint8ClampedArray)>),
-    Float32Array(MayBeNull<'a, lex_term!(Float32Array)>),
-    Float64Array(MayBeNull<'a, lex_term!(Float64Array)>),
+    Object(MayBeNull<'a, term!(object)>),
+    Symbol(MayBeNull<'a, term!(symbol)>),
+    ArrayBuffer(MayBeNull<'a, term!(ArrayBuffer)>),
+    DataView(MayBeNull<'a, term!(DataView)>),
+    Int8Array(MayBeNull<'a, term!(Int8Array)>),
+    Int16Array(MayBeNull<'a, term!(Int16Array)>),
+    Int32Array(MayBeNull<'a, term!(Int32Array)>),
+    Uint8Array(MayBeNull<'a, term!(Uint8Array)>),
+    Uint16Array(MayBeNull<'a, term!(Uint16Array)>),
+    Uint32Array(MayBeNull<'a, term!(Uint32Array)>),
+    Uint8ClampedArray(MayBeNull<'a, term!(Uint8ClampedArray)>),
+    Float32Array(MayBeNull<'a, term!(Float32Array)>),
+    Float64Array(MayBeNull<'a, term!(Float64Array)>),
     FrozenArrayType(MayBeNull<'a, FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<'a, ObservableArrayType<'a>>),
     RecordType(MayBeNull<'a, RecordType<'a>>),
@@ -58,21 +58,21 @@ pub enum NonAnyType<'a> {
 /// Parses `sequence<Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SequenceType<'a> {
-    pub sequence: lex_term!(sequence),
+    pub sequence: term!(sequence),
     pub generics: Generics<'a, Box<AttributedType<'a>>>,
 }
 
 /// Parses `FrozenArray<Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FrozenArrayType<'a> {
-    pub frozen_array: lex_term!(FrozenArray),
+    pub frozen_array: term!(FrozenArray),
     pub generics: Generics<'a, Box<AttributedType<'a>>>,
 }
 
 /// Parses `ObservableArray<Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ObservableArrayType<'a> {
-    pub observable_array: lex_term!(ObservableArray),
+    pub observable_array: term!(ObservableArray),
     pub generics: Generics<'a, Box<AttributedType<'a>>>,
 }
 
@@ -89,29 +89,29 @@ pub struct MayBeNull<'a, T> {
 /// Parses a `Promise<Type|undefined>` type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PromiseType<'a> {
-    pub promise: lex_term!(Promise),
+    pub promise: term!(Promise),
     pub generics: Generics<'a, Box<ReturnType<'a>>>,
 }
 
 /// Parses `unsigned? long long`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct LongLongType<'a> {
-    pub unsigned: Option<lex_term!(unsigned)>,
-    pub long_long: (lex_term!(long), lex_term!(long)),
+    pub unsigned: Option<term!(unsigned)>,
+    pub long_long: (term!(long), term!(long)),
 }
 
 /// Parses `unsigned? long`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct LongType<'a> {
-    pub unsigned: Option<lex_term!(unsigned)>,
-    pub long: lex_term!(long),
+    pub unsigned: Option<term!(unsigned)>,
+    pub long: term!(long),
 }
 
 /// Parses `unsigned? short`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ShortType<'a> {
-    pub unsigned: Option<lex_term!(unsigned)>,
-    pub short: lex_term!(short),
+    pub unsigned: Option<term!(unsigned)>,
+    pub short: term!(short),
 }
 
 /// Parses `unsigned? short|long|(long long)`
@@ -125,15 +125,15 @@ pub enum IntegerType<'a> {
 /// Parses `unrestricted? float`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FloatType<'a> {
-    pub unrestricted: Option<lex_term!(unrestricted)>,
-    pub float: lex_term!(float),
+    pub unrestricted: Option<term!(unrestricted)>,
+    pub float: term!(float),
 }
 
 /// Parses `unrestricted? double`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DoubleType<'a> {
-    pub unrestricted: Option<lex_term!(unrestricted)>,
-    pub double: lex_term!(double),
+    pub unrestricted: Option<term!(unrestricted)>,
+    pub double: term!(double),
 }
 
 /// Parses `unrestricted? float|double`
@@ -146,23 +146,16 @@ pub enum FloatingPointType<'a> {
 /// Parses `record<StringType, Type>`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct RecordType<'a> {
-    pub record: lex_term!(record),
-    pub generics: Generics<
-        'a,
-        (
-            Box<RecordKeyType<'a>>,
-            lex_term!(,),
-            Box<AttributedType<'a>>,
-        ),
-    >,
+    pub record: term!(record),
+    pub generics: Generics<'a, (Box<RecordKeyType<'a>>, term!(,), Box<AttributedType<'a>>)>,
 }
 
 /// Parses one of the string types `ByteString|DOMString|USVString` or any other type.
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum RecordKeyType<'a> {
-    Byte(lex_term!(ByteString)),
-    DOM(lex_term!(DOMString)),
-    USV(lex_term!(USVString)),
+    Byte(term!(ByteString)),
+    DOM(term!(DOMString)),
+    USV(term!(USVString)),
     NonAny(NonAnyType<'a>),
 }
 
@@ -178,16 +171,16 @@ pub enum UnionMemberType<'a> {
 pub enum ConstType<'a> {
     Integer(MayBeNull<'a, IntegerType<'a>>),
     FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
-    Boolean(MayBeNull<'a, lex_term!(boolean)>),
-    Byte(MayBeNull<'a, lex_term!(byte)>),
-    Octet(MayBeNull<'a, lex_term!(octet)>),
+    Boolean(MayBeNull<'a, term!(boolean)>),
+    Byte(MayBeNull<'a, term!(byte)>),
+    Octet(MayBeNull<'a, term!(octet)>),
     Identifier(MayBeNull<'a, Identifier<'a>>),
 }
 
 /// Parses the return type which may be `undefined` or any given Type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ReturnType<'a> {
-    Undefined(lex_term!(undefined)),
+    Undefined(term!(undefined)),
     Type(Type<'a>),
 }
 

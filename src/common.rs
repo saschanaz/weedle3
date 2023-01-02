@@ -5,7 +5,7 @@ use weedle_derive::Weedle;
 use crate::lexer::keywords;
 use crate::literal::DefaultValue;
 use crate::parser::eat::VariantToken;
-use crate::{lex_term, Parse};
+use crate::{term, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
@@ -142,7 +142,7 @@ impl<'a> Parse<'a> for Identifier<'a> {
 /// Parses rhs of an assignment expression. Ex: `= 45`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Default<'a> {
-    pub assign: lex_term!(=),
+    pub assign: term!(=),
     pub value: DefaultValue<'a>,
 }
 

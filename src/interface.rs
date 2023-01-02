@@ -3,8 +3,8 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
-use crate::lex_term;
 use crate::literal::ConstValue;
+use crate::term;
 use crate::types::{AttributedType, ConstType, ReturnType};
 
 /// Parses interface members
@@ -13,7 +13,7 @@ pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
 /// Parses inheritance clause `: identifier`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Inheritance<'a> {
-    pub colon: lex_term!(:),
+    pub colon: term!(:),
     pub identifier: Identifier<'a>,
 }
 
@@ -21,12 +21,12 @@ pub struct Inheritance<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub const_: lex_term!(const),
+    pub const_: term!(const),
     pub const_type: ConstType<'a>,
     pub identifier: Identifier<'a>,
-    pub assign: lex_term!(=),
+    pub assign: term!(=),
     pub const_value: ConstValue<'a>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
@@ -34,11 +34,11 @@ pub struct ConstMember<'a> {
 pub struct AttributeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub modifier: Option<StringifierOrInheritOrStatic<'a>>,
-    pub readonly: Option<lex_term!(readonly)>,
-    pub attribute: lex_term!(attribute),
+    pub readonly: Option<term!(readonly)>,
+    pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     pub identifier: Identifier<'a>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? constructor(( args ));`
@@ -47,9 +47,9 @@ pub struct AttributeInterfaceMember<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ConstructorInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub constructor: lex_term!(constructor),
+    pub constructor: term!(constructor),
     pub args: Parenthesized<'a, ArgumentList<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? (stringifier|static)? special? returntype identifier? (( args ));`
@@ -63,25 +63,25 @@ pub struct OperationInterfaceMember<'a> {
     pub return_type: ReturnType<'a>,
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses an iterable declaration `[attributes]? iterable<attributedtype>;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SingleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub iterable: lex_term!(iterable),
+    pub iterable: term!(iterable),
     pub generics: Generics<'a, AttributedType<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses an iterable declaration `[attributes]? iterable<attributedtype, attributedtype>;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DoubleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub iterable: lex_term!(iterable),
-    pub generics: Generics<'a, (AttributedType<'a>, lex_term!(,), AttributedType<'a>)>,
-    pub semi_colon: lex_term!(;),
+    pub iterable: term!(iterable),
+    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub semi_colon: term!(;),
 }
 
 /// Parses an iterable declaration `[attributes]? (iterable<attributedtype> | iterable<attributedtype, attributedtype>) ;`
@@ -95,20 +95,20 @@ pub enum IterableInterfaceMember<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SingleTypedAsyncIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub async_iterable: (lex_term!(async), lex_term!(iterable)),
+    pub async_iterable: (term!(async), term!(iterable)),
     pub generics: Generics<'a, AttributedType<'a>>,
     pub args: Option<Parenthesized<'a, ArgumentList<'a>>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses an async iterable declaration `[attributes]? async iterable<attributedtype, attributedtype> (( args ))? ;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DoubleTypedAsyncIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub async_iterable: (lex_term!(async), lex_term!(iterable)),
-    pub generics: Generics<'a, (AttributedType<'a>, lex_term!(,), AttributedType<'a>)>,
+    pub async_iterable: (term!(async), term!(iterable)),
+    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
     pub args: Option<Parenthesized<'a, ArgumentList<'a>>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses an async iterable declaration `[attributes]? async (iterable<attributedtype> | iterable<attributedtype, attributedtype>) (( args ))? ;`
@@ -122,27 +122,27 @@ pub enum AsyncIterableInterfaceMember<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct MaplikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub readonly: Option<lex_term!(readonly)>,
-    pub maplike: lex_term!(maplike),
-    pub generics: Generics<'a, (AttributedType<'a>, lex_term!(,), AttributedType<'a>)>,
-    pub semi_colon: lex_term!(;),
+    pub readonly: Option<term!(readonly)>,
+    pub maplike: term!(maplike),
+    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub semi_colon: term!(;),
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SetlikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub readonly: Option<lex_term!(readonly)>,
-    pub setlike: lex_term!(setlike),
+    pub readonly: Option<term!(readonly)>,
+    pub setlike: term!(setlike),
     pub generics: Generics<'a, AttributedType<'a>>,
-    pub semi_colon: lex_term!(;),
+    pub semi_colon: term!(;),
 }
 
 /// Parses `stringifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct StringifierMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub stringifier: lex_term!(stringifier),
-    pub semi_colon: lex_term!(;),
+    pub stringifier: term!(stringifier),
+    pub semi_colon: term!(;),
 }
 
 /// Parses one of the interface member variants
@@ -162,24 +162,24 @@ pub enum InterfaceMember<'a> {
 /// Parses one of the special keyword `getter|setter|deleter`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Special<'a> {
-    Getter(lex_term!(getter)),
-    Setter(lex_term!(setter)),
-    Deleter(lex_term!(deleter)),
+    Getter(term!(getter)),
+    Setter(term!(setter)),
+    Deleter(term!(deleter)),
 }
 
 /// Parses `stringifier|inherit|static`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StringifierOrInheritOrStatic<'a> {
-    Stringifier(lex_term!(stringifier)),
-    Inherit(lex_term!(inherit)),
-    Static(lex_term!(static)),
+    Stringifier(term!(stringifier)),
+    Inherit(term!(inherit)),
+    Static(term!(static)),
 }
 
 /// Parses `stringifier|static`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StringifierOrStatic<'a> {
-    Stringifier(lex_term!(stringifier)),
-    Static(lex_term!(static)),
+    Stringifier(term!(stringifier)),
+    Static(term!(static)),
 }
 
 #[cfg(test)]
