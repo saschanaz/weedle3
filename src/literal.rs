@@ -241,8 +241,8 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::lexer::keywords::{Null, Keyword};
     use crate::parser::eat::VariantToken;
-    use crate::term::*;
     use crate::Parse;
 
     test!(should_parse_integer { "45" =>
@@ -364,7 +364,7 @@ mod test {
 
     test!(should_parse_null { "null" =>
         "";
-        Null => Null
+        Keyword => Keyword::Null(Null("null"))
     });
 
     test!(should_parse_empty_array { "[]" =>
