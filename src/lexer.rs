@@ -9,9 +9,6 @@ use crate::Parse;
 pub mod keywords;
 use keywords::Keyword;
 
-#[macro_use]
-pub mod pseudo_lex;
-
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

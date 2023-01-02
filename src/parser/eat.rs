@@ -18,15 +18,15 @@ where
 
 macro_rules! eat {
     ($variant:ident) => {
-        crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
+        $crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
             use nom::{InputIter, Slice};
             match input.iter_elements().next() {
-                Some(crate::lexer::Token {
-                    tag: crate::lexer::Tag::$variant(variant),
+                Some($crate::lexer::Token {
+                    tag: $crate::lexer::Tag::$variant(variant),
                     trivia,
                 }) => Ok((
                     input.slice(1..),
-                    crate::parser::eat::VariantToken { variant, trivia },
+                    $crate::parser::eat::VariantToken { variant, trivia },
                 )),
                 _ => Err(nom::Err::Error(nom::error::Error {
                     input,
@@ -40,16 +40,16 @@ macro_rules! eat {
 #[macro_export]
 macro_rules! eat_key {
     ($variant:ident) => {
-        crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
-            use crate::lexer::{keywords::Keyword, Tag};
+        $crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
+            use $crate::lexer::{keywords::Keyword, Tag};
             use nom::{InputIter, Slice};
             match input.iter_elements().next() {
-                Some(crate::lexer::Token {
+                Some($crate::lexer::Token {
                     tag: Tag::Kw(Keyword::$variant(variant)),
                     trivia,
                 }) => Ok((
                     input.slice(1..),
-                    crate::parser::eat::VariantToken { variant, trivia },
+                    $crate::parser::eat::VariantToken { variant, trivia },
                 )),
                 _ => Err(nom::Err::Error(nom::error::Error {
                     input,

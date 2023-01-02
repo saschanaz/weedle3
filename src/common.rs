@@ -5,17 +5,10 @@ use weedle_derive::Weedle;
 use crate::lexer::keywords;
 use crate::literal::DefaultValue;
 use crate::parser::eat::VariantToken;
-use crate::{lex_term, term, IResult, Parse};
+use crate::{lex_term, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
-}
-
-fn marker<S>(i: &str) -> IResult<&str, S>
-where
-    S: ::std::default::Default,
-{
-    Ok((i, S::default()))
 }
 
 impl<'a, T: Parse<'a>> Parse<'a> for Option<T> {
