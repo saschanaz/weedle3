@@ -13,9 +13,12 @@
                         list: [
                             NoArgs(
                                 ExtendedAttributeNoArgs(
-                                    Identifier(
-                                        "PrototypeRoot",
-                                    ),
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "PrototypeRoot",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                         ],
@@ -35,9 +38,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Node",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Node",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -96,7 +102,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "nodeType",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "nodeType",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(

@@ -4,6 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
 use crate::literal::ConstValue;
+use crate::parser::eat::VariantToken;
 use crate::term;
 use crate::types::{AttributedType, ConstType, ReturnType};
 
@@ -14,7 +15,7 @@ pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Inheritance<'a> {
     pub colon: term!(:),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
 }
 
 /// Parses a const interface member `[attributes]? const type identifier = value;`
@@ -23,10 +24,17 @@ pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub const_: term!(const),
     pub const_type: ConstType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: term!(=),
     pub const_value: ConstValue<'a>,
     pub semi_colon: term!(;),
+}
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum AttributeName<'a> {
+    Identifier(VariantToken<'a, Identifier<'a>>),
+    Async(term!(async)),
+    Required(term!(required)),
 }
 
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
@@ -37,7 +45,7 @@ pub struct AttributeInterfaceMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: AttributeName<'a>,
     pub semi_colon: term!(;),
 }
 
@@ -52,6 +60,12 @@ pub struct ConstructorInterfaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum OperationName<'a> {
+    Identifier(VariantToken<'a, Identifier<'a>>),
+    Includes(term!(includes)),
+}
+
 /// Parses `[attributes]? (stringifier|static)? special? returntype identifier? (( args ));`
 ///
 /// (( )) means ( ) chars
@@ -61,7 +75,7 @@ pub struct OperationInterfaceMember<'a> {
     pub modifier: Option<StringifierOrStatic<'a>>,
     pub special: Option<Special<'a>>,
     pub return_type: ReturnType<'a>,
-    pub identifier: Option<Identifier<'a>>,
+    pub identifier: Option<OperationName<'a>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
@@ -221,7 +235,7 @@ mod test {
         AttributeInterfaceMember;
         attributes.is_none();
         readonly == Some(VariantToken::default());
-        identifier.0 == "width";
+        identifier == AttributeName::Identifier(VariantToken { variant: Identifier("width"), trivia: "" });
     });
 
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>
@@ -283,6 +297,6 @@ mod test {
         "";
         ConstMember;
         attributes.is_none();
-        identifier.0 == "name";
+        identifier.variant.0 == "name";
     });
 }

@@ -2,6 +2,7 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier};
+use crate::parser::eat::VariantToken;
 use crate::term;
 use crate::types::Type;
 
@@ -14,7 +15,7 @@ pub struct DictionaryMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub required: Option<term!(required)>,
     pub type_: Type<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub default: Option<Default<'a>>,
     pub semi_colon: term!(;),
 }
@@ -29,7 +30,7 @@ mod test {
         DictionaryMember;
         attributes.is_none();
         required.is_some();
-        identifier.0 == "num";
+        identifier.variant.0 == "num";
         default.is_some();
     });
 }

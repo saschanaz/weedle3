@@ -64,7 +64,7 @@ fn interface_constructor() {
         Definition::Interface(mut interface) => {
             assert!(interface.attributes.is_none());
             assert_eq!(interface.interface, VariantToken::default());
-            assert_eq!(interface.identifier.0, "InterfaceWithConstructor");
+            assert_eq!(interface.identifier.variant.0, "InterfaceWithConstructor");
             assert_eq!(interface.inheritance, None);
 
             assert_eq!(interface.members.body.len(), 1);
@@ -79,7 +79,7 @@ fn interface_constructor() {
 
                     match attribute {
                         attribute::ExtendedAttribute::NoArgs(attribute) => {
-                            assert_eq!((attribute.0).0, "Throws");
+                            assert_eq!((attribute.0).variant.0, "Throws");
                         }
                         _ => unreachable!(),
                     }

@@ -13,9 +13,12 @@
                         list: [
                             IdentList(
                                 ExtendedAttributeIdentList {
-                                    identifier: Identifier(
-                                        "Global",
-                                    ),
+                                    identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Global",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -31,12 +34,18 @@
                                         },
                                         body: Punctuated {
                                             list: [
-                                                Identifier(
-                                                    "Worker",
-                                                ),
-                                                Identifier(
-                                                    "ServiceWorker",
-                                                ),
+                                                VariantToken {
+                                                    variant: Identifier(
+                                                        "Worker",
+                                                    ),
+                                                    trivia: "",
+                                                },
+                                                VariantToken {
+                                                    variant: Identifier(
+                                                        "ServiceWorker",
+                                                    ),
+                                                    trivia: "",
+                                                },
                                             ],
                                             separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                         },
@@ -51,18 +60,24 @@
                             ),
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Exposed",
+                                        ),
+                                        trivia: " ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "ServiceWorker",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "ServiceWorker",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                         ],
@@ -82,9 +97,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "ServiceWorkerGlobalScope",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "ServiceWorkerGlobalScope",
+                ),
+                trivia: "",
+            },
             inheritance: Some(
                 Inheritance {
                     colon: VariantToken {
@@ -93,9 +111,12 @@
                         ),
                         trivia: "",
                     },
-                    identifier: Identifier(
-                        "WorkerGlobalScope",
-                    ),
+                    identifier: VariantToken {
+                        variant: Identifier(
+                            "WorkerGlobalScope",
+                        ),
+                        trivia: " ",
+                    },
                 },
             ),
             members: Braced {
@@ -135,9 +156,12 @@
                         list: [
                             Integer(
                                 ExtendedAttributeInteger {
-                                    lhs_identifier: Identifier(
-                                        "IntAttr",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "IntAttr",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -153,9 +177,12 @@
                             ),
                             Float(
                                 ExtendedAttributeFloat {
-                                    lhs_identifier: Identifier(
-                                        "FloatAttr",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "FloatAttr",
+                                        ),
+                                        trivia: " ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -171,9 +198,12 @@
                             ),
                             String(
                                 ExtendedAttributeString {
-                                    lhs_identifier: Identifier(
-                                        "StringAttr",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "StringAttr",
+                                        ),
+                                        trivia: " ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -187,25 +217,34 @@
                             ),
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "IdentifierAttr",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "IdentifierAttr",
+                                        ),
+                                        trivia: " ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "_null",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "_null",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                             IdentList(
                                 ExtendedAttributeIdentList {
-                                    identifier: Identifier(
-                                        "IdentifiersAttr",
-                                    ),
+                                    identifier: VariantToken {
+                                        variant: Identifier(
+                                            "IdentifiersAttr",
+                                        ),
+                                        trivia: " ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -221,12 +260,18 @@
                                         },
                                         body: Punctuated {
                                             list: [
-                                                Identifier(
-                                                    "_null",
-                                                ),
-                                                Identifier(
-                                                    "_const",
-                                                ),
+                                                VariantToken {
+                                                    variant: Identifier(
+                                                        "_null",
+                                                    ),
+                                                    trivia: "",
+                                                },
+                                                VariantToken {
+                                                    variant: Identifier(
+                                                        "_const",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                             ],
                                             separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
                                         },
@@ -241,9 +286,12 @@
                             ),
                             FloatList(
                                 ExtendedAttributeFloatList {
-                                    identifier: Identifier(
-                                        "FloatList",
-                                    ),
+                                    identifier: VariantToken {
+                                        variant: Identifier(
+                                            "FloatList",
+                                        ),
+                                        trivia: " ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -293,9 +341,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "IdInterface",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "IdInterface",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -334,16 +385,22 @@
                         list: [
                             NoArgs(
                                 ExtendedAttributeNoArgs(
-                                    Identifier(
-                                        "Constructor",
-                                    ),
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "Constructor",
+                                        ),
+                                        trivia: "\n  ",
+                                    },
                                 ),
                             ),
                             ArgList(
                                 ExtendedAttributeArgList {
-                                    identifier: Identifier(
-                                        "Constructor",
-                                    ),
+                                    identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Constructor",
+                                        ),
+                                        trivia: "\n  ",
+                                    },
                                     args: Parenthesized {
                                         open_paren: VariantToken {
                                             variant: OpenParen(
@@ -381,7 +438,12 @@
                                                             ),
                                                         },
                                                         identifier: Identifier(
-                                                            "radius",
+                                                            VariantToken {
+                                                                variant: Identifier(
+                                                                    "radius",
+                                                                ),
+                                                                trivia: "",
+                                                            },
                                                         ),
                                                         default: None,
                                                     },
@@ -415,9 +477,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Circle",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Circle",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -462,7 +527,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "r",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "r",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -507,7 +577,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "cx",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "cx",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -552,7 +627,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "cy",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "cy",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -604,7 +684,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "circumference",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "circumference",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -644,18 +729,24 @@
                         list: [
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Exposed",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "Window",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "Window",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                         ],
@@ -675,9 +766,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "I",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "I",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -711,9 +805,12 @@
                                             list: [
                                                 NoArgs(
                                                     ExtendedAttributeNoArgs(
-                                                        Identifier(
-                                                            "XAttr",
-                                                        ),
+                                                        VariantToken {
+                                                            variant: Identifier(
+                                                                "XAttr",
+                                                            ),
+                                                            trivia: "",
+                                                        },
                                                     ),
                                                 ),
                                             ],
@@ -764,9 +861,12 @@
                                                             attributes: None,
                                                             type_: Identifier(
                                                                 MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "Node",
-                                                                    ),
+                                                                    type_: VariantToken {
+                                                                        variant: Identifier(
+                                                                            "Node",
+                                                                        ),
+                                                                        trivia: "",
+                                                                    },
                                                                     q_mark: None,
                                                                 },
                                                             ),
@@ -787,7 +887,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "attrib",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "attrib",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(

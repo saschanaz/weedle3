@@ -360,6 +360,9 @@ macro_rules! term {
     (octet) => {
         $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Octet<'a>>
     };
+    (bigint) => {
+        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Bigint<'a>>
+    };
     (sequence) => {
         $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Sequence<'a>>
     };
@@ -404,6 +407,12 @@ macro_rules! term {
     };
     (Uint8ClampedArray) => {
         $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Uint8ClampedArray<'a>>
+    };
+    (BigInt64Array) => {
+        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::BigInt64Array<'a>>
+    };
+    (BigUint64Array) => {
+        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::BigUint64Array<'a>>
     };
     (Float32Array) => {
         $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Float32Array<'a>>

@@ -125,18 +125,38 @@ where
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Identifier<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for Identifier<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
-            nom::combinator::opt(nom::branch::alt((
-                nom::character::complete::char('_'),
-                nom::character::complete::char('-')
-            ))),
-            nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
-            nom::bytes::complete::take_while(is_alphanum_underscore_dash),
-        )))),
-        Identifier
-    ));
+impl<'a> Identifier<'a> {
+    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::combinator::map(
+            crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+                nom::combinator::opt(nom::branch::alt((
+                    nom::character::complete::char('_'),
+                    nom::character::complete::char('-'),
+                ))),
+                nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
+                nom::bytes::complete::take_while(is_alphanum_underscore_dash),
+            )))),
+            Identifier,
+        )(input)
+    }
+}
+
+impl<'a> Parse<'a> for VariantToken<'a, Identifier<'a>> {
+    parser!(|input: &'a str| {
+        use crate::parser::Tokens;
+        use nom::IResult;
+
+        let (i, token) = crate::lexer::lex_single(input)?;
+        let array = [token];
+        let tokens = Tokens(&array);
+        match crate::eat!(Id)(tokens) {
+            Ok((_, token)) => Ok((i, token)),
+            Err(_) => Err(nom::Err::Error(nom::error::Error {
+                input: i,
+                code: nom::error::ErrorKind::Char,
+            })),
+        }
+    });
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`
@@ -152,69 +172,73 @@ mod test {
 
     test!(should_parse_optional_present { "one" =>
         "";
-        Option<Identifier>;
+        Option<VariantToken<Identifier>>;
         is_some();
     });
 
     test!(should_parse_optional_not_present { "" =>
         "";
-        Option<Identifier>;
+        Option<VariantToken<Identifier>>;
         is_none();
     });
 
     test!(should_parse_boxed { "one" =>
         "";
-        Box<Identifier>;
+        Box<VariantToken<Identifier>>;
     });
 
     test!(should_parse_vec { "one two three" =>
         "";
-        Vec<Identifier>;
+        Vec<VariantToken<Identifier>>;
         len() == 3;
     });
 
     test!(should_parse_parenthesized { "( one )" =>
         "";
-        Parenthesized<Identifier>;
-        body.0 == "one";
+        Parenthesized<VariantToken<Identifier>>;
+        body.variant.0 == "one";
     });
 
     test!(should_parse_bracketed { "[ one ]" =>
         "";
-        Bracketed<Identifier>;
-        body.0 == "one";
+        Bracketed<VariantToken<Identifier>>;
+        body.variant.0 == "one";
     });
 
     test!(should_parse_braced { "{ one }" =>
         "";
-        Braced<Identifier>;
-        body.0 == "one";
+        Braced<VariantToken<Identifier>>;
+        body.variant.0 == "one";
     });
 
     test!(should_parse_generics { "<one>" =>
         "";
-        Generics<Identifier>;
-        body.0 == "one";
+        Generics<VariantToken<Identifier>>;
+        body.variant.0 == "one";
     });
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(Identifier, VariantToken<keywords::Comma>, Identifier)> =>
+        Generics<(VariantToken<Identifier>, VariantToken<keywords::Comma>, VariantToken<Identifier>)> =>
             Generics {
                 open_angle: VariantToken::default(),
-                body: (Identifier("one"), VariantToken::default(), Identifier("two")),
+                body: (
+                    VariantToken { variant: Identifier("one"), trivia: "" },
+                    VariantToken::default(),
+                    VariantToken { variant: Identifier("two"), trivia: " " },
+                ),
                 close_angle: VariantToken::default(),
             }
     });
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<Identifier, VariantToken<keywords::Comma>>;
+        Punctuated<VariantToken<Identifier>, VariantToken<keywords::Comma>>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<Identifier, VariantToken<keywords::Comma>>
+        PunctuatedNonEmpty<VariantToken<Identifier>, VariantToken<keywords::Comma>>
     });
 
     test!(should_parse_identifier { "hello" =>

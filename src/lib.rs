@@ -31,6 +31,7 @@ use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, ReturnType};
 pub use nom::{error::Error, Err, IResult};
+use parser::eat::VariantToken;
 use weedle_derive::Weedle;
 
 #[macro_use]
@@ -71,7 +72,7 @@ pub mod parser;
 /// ```
 pub fn parse(raw: &str) -> Result<Definitions<'_>, Err<Error<&str>>> {
     let (remaining, parsed) = Definitions::parse(raw)?;
-    if remaining.is_empty() || crate::whitespace::sp(remaining).is_ok() {
+    if remaining.is_empty() || crate::whitespace::sp(remaining)?.0.is_empty() {
         Ok(parsed)
     } else {
         Err(nom::Err::Failure(Error {
@@ -108,7 +109,7 @@ pub type Definitions<'a> = Vec<Definition<'a>>;
 pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: term!(=),
     pub return_type: ReturnType<'a>,
     pub arguments: Parenthesized<'a, ArgumentList<'a>>,
@@ -121,7 +122,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
     pub interface: term!(interface),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
@@ -132,7 +133,7 @@ pub struct CallbackInterfaceDefinition<'a> {
 pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
@@ -144,7 +145,7 @@ pub struct InterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
     pub mixin: term!(mixin),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, MixinMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -154,7 +155,7 @@ pub struct InterfaceMixinDefinition<'a> {
 pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -164,7 +165,7 @@ pub struct NamespaceDefinition<'a> {
 pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
     pub semi_colon: term!(;),
@@ -176,7 +177,7 @@ pub struct PartialInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub interface: term!(interface),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -188,7 +189,7 @@ pub struct PartialInterfaceMixinDefinition<'a> {
     pub partial: term!(partial),
     pub interface: term!(interface),
     pub mixin: term!(mixin),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, MixinMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -199,7 +200,7 @@ pub struct PartialDictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -210,7 +211,7 @@ pub struct PartialNamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub namespace: term!(namespace),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -220,7 +221,7 @@ pub struct PartialNamespaceDefinition<'a> {
 pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub values: Braced<'a, EnumValueList<'a>>,
     pub semi_colon: term!(;),
 }
@@ -231,7 +232,7 @@ pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub typedef: term!(typedef),
     pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -239,9 +240,9 @@ pub struct TypedefDefinition<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub lhs_identifier: Identifier<'a>,
+    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub includes: term!(includes),
-    pub rhs_identifier: Identifier<'a>,
+    pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -274,22 +275,22 @@ mod test {
         "";
         IncludesStatementDefinition;
         attributes.is_none();
-        lhs_identifier.0 == "first";
-        rhs_identifier.0 == "second";
+        lhs_identifier.variant.0 == "first";
+        rhs_identifier.variant.0 == "second";
     });
 
     test!(should_parse_typedef { "typedef short Short;" =>
         "";
         TypedefDefinition;
         attributes.is_none();
-        identifier.0 == "Short";
+        identifier.variant.0 == "Short";
     });
 
     test!(should_parse_enum { r#"enum name { "first", "second" };"# =>
         "";
         EnumDefinition;
         attributes.is_none();
-        identifier.0 == "name";
+        identifier.variant.0 == "name";
         values.body.list.len() == 2;
     });
 
@@ -297,7 +298,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.0 == "A";
+        identifier.variant.0 == "A";
         inheritance.is_none();
         members.body.len() == 2;
     });
@@ -306,7 +307,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.0 == "C";
+        identifier.variant.0 == "C";
         inheritance.is_some();
         members.body.len() == 2;
     });
@@ -321,7 +322,7 @@ mod test {
         "\n    ";
         PartialNamespaceDefinition;
         attributes.is_none();
-        identifier.0 == "VectorUtils";
+        identifier.variant.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -329,7 +330,7 @@ mod test {
         "";
         PartialDictionaryDefinition;
         attributes.is_none();
-        identifier.0 == "C";
+        identifier.variant.0 == "C";
         members.body.len() == 2;
     });
 
@@ -341,7 +342,7 @@ mod test {
         "\n    ";
         PartialInterfaceMixinDefinition;
         attributes.is_none();
-        identifier.0 == "WindowSessionStorage";
+        identifier.variant.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -353,7 +354,7 @@ mod test {
         "\n    ";
         PartialInterfaceDefinition;
         attributes.is_none();
-        identifier.0 == "Window";
+        identifier.variant.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -367,7 +368,7 @@ mod test {
         "\n    ";
         NamespaceDefinition;
         attributes.is_none();
-        identifier.0 == "VectorUtils";
+        identifier.variant.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -379,7 +380,7 @@ mod test {
         "\n    ";
         InterfaceMixinDefinition;
         attributes.is_none();
-        identifier.0 == "WindowSessionStorage";
+        identifier.variant.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -391,7 +392,7 @@ mod test {
         "\n    ";
         InterfaceDefinition;
         attributes.is_none();
-        identifier.0 == "Window";
+        identifier.variant.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -405,7 +406,7 @@ mod test {
         "\n    ";
         CallbackInterfaceDefinition;
         attributes.is_none();
-        identifier.0 == "Options";
+        identifier.variant.0 == "Options";
         members.body.len() == 3;
     });
 
@@ -413,7 +414,7 @@ mod test {
         "";
         CallbackDefinition;
         attributes.is_none();
-        identifier.0 == "AsyncOperationCallback";
+        identifier.variant.0 == "AsyncOperationCallback";
         arguments.body.list.len() == 1;
     });
 

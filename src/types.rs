@@ -14,6 +14,7 @@ pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, term!
 pub enum SingleType<'a> {
     Any(term!(any)),
     NonAny(NonAnyType<'a>),
+    Promise(PromiseType<'a>),
 }
 
 /// Parses either single type or a union type
@@ -26,12 +27,12 @@ pub enum Type<'a> {
 // Parses any single non-any type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum NonAnyType<'a> {
-    Promise(PromiseType<'a>),
     Integer(MayBeNull<'a, IntegerType<'a>>),
     FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
     Boolean(MayBeNull<'a, term!(boolean)>),
     Byte(MayBeNull<'a, term!(byte)>),
     Octet(MayBeNull<'a, term!(octet)>),
+    Bigint(MayBeNull<'a, term!(bigint)>),
     ByteString(MayBeNull<'a, term!(ByteString)>),
     DOMString(MayBeNull<'a, term!(DOMString)>),
     USVString(MayBeNull<'a, term!(USVString)>),
@@ -47,12 +48,15 @@ pub enum NonAnyType<'a> {
     Uint16Array(MayBeNull<'a, term!(Uint16Array)>),
     Uint32Array(MayBeNull<'a, term!(Uint32Array)>),
     Uint8ClampedArray(MayBeNull<'a, term!(Uint8ClampedArray)>),
+    BigInt64Array(MayBeNull<'a, term!(BigInt64Array)>),
+    BigUint64Array(MayBeNull<'a, term!(BigUint64Array)>),
     Float32Array(MayBeNull<'a, term!(Float32Array)>),
     Float64Array(MayBeNull<'a, term!(Float64Array)>),
     FrozenArrayType(MayBeNull<'a, FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<'a, ObservableArrayType<'a>>),
     RecordType(MayBeNull<'a, RecordType<'a>>),
-    Identifier(MayBeNull<'a, Identifier<'a>>),
+    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
+    Undefined(MayBeNull<'a, term!(undefined)>),
 }
 
 /// Parses `sequence<Type>`
@@ -174,7 +178,8 @@ pub enum ConstType<'a> {
     Boolean(MayBeNull<'a, term!(boolean)>),
     Byte(MayBeNull<'a, term!(byte)>),
     Octet(MayBeNull<'a, term!(octet)>),
-    Identifier(MayBeNull<'a, Identifier<'a>>),
+    Bigint(MayBeNull<'a, term!(bigint)>),
+    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
 }
 
 /// Parses the return type which may be `undefined` or any given Type
@@ -234,7 +239,6 @@ mod test {
 
     test_variants!(
         NonAnyType {
-            Promise == "Promise<long>",
             Integer == "long",
             FloatingPoint == "float",
             Boolean == "boolean",
@@ -346,7 +350,8 @@ mod test {
     test_variants!(
         SingleType {
             Any == "any",
-            NonAny == "Promise<short>",
+            NonAny == "record<DOMString, short>",
+            Promise == "Promise<long>",
         }
     );
 

@@ -4,6 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
 use crate::literal::ConstValue;
+use crate::parser::eat::VariantToken;
 use crate::term;
 use crate::types::{AttributedType, ConstType, ReturnType};
 
@@ -17,7 +18,7 @@ pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
 pub struct OperationNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: ReturnType<'a>,
-    pub identifier: Option<Identifier<'a>>,
+    pub identifier: Option<VariantToken<'a, Identifier<'a>>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
@@ -29,7 +30,7 @@ pub struct AttributeNamespaceMember<'a> {
     pub readonly: term!(readonly),
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -39,7 +40,7 @@ pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub const_: term!(const),
     pub const_type: ConstType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: term!(=),
     pub const_value: ConstValue<'a>,
     pub semi_colon: term!(;),
@@ -62,7 +63,7 @@ mod test {
         "";
         AttributeNamespaceMember;
         attributes.is_none();
-        identifier.0 == "name";
+        identifier.variant.0 == "name";
     });
 
     test!(should_parse_operation_namespace_member { "short (long a, long b);" =>

@@ -2,11 +2,42 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
+use crate::parser::eat::VariantToken;
 use crate::types::{AttributedType, Type};
 use crate::{term, Parse};
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum ArgumentName<'a> {
+    Identifier(VariantToken<'a, Identifier<'a>>),
+    Async(term!(async)),
+    Attribute(term!(attribute)),
+    Callback(term!(callback)),
+    Const(term!(const)),
+    Constructor(term!(constructor)),
+    Deleter(term!(deleter)),
+    Dictionary(term!(dictionary)),
+    Enum(term!(enum)),
+    Getter(term!(getter)),
+    Includes(term!(includes)),
+    Inherit(term!(inherit)),
+    Interface(term!(interface)),
+    Iterable(term!(iterable)),
+    Maplike(term!(maplike)),
+    Mixin(term!(mixin)),
+    Namespace(term!(namespace)),
+    Partial(term!(partial)),
+    Readonly(term!(readonly)),
+    Required(term!(required)),
+    Setlike(term!(setlike)),
+    Setter(term!(setter)),
+    Static(term!(static)),
+    Stringifier(term!(stringifier)),
+    Typedef(term!(typedef)),
+    Unrestricted(term!(unrestricted)),
+}
 
 /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
 ///
@@ -16,7 +47,7 @@ pub struct SingleArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub optional: Option<term!(optional)>,
     pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: ArgumentName<'a>,
     pub default: Option<Default<'a>>,
 }
 
@@ -26,7 +57,7 @@ impl<'a> Parse<'a> for SingleArgument<'a> {
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),
             weedle!(AttributedType<'a>),
-            weedle!(Identifier<'a>),
+            weedle!(ArgumentName<'a>),
         ))(input)?;
         let (input, default) = nom::combinator::map(
             nom::combinator::cond(optional.is_some(), weedle!(Option<Default<'a>>)),
@@ -51,7 +82,7 @@ pub struct VariadicArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub type_: Type<'a>,
     pub ellipsis: term!(...),
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
 }
 
 /// Parses an argument. Ex: `double v1|double... v1s`
@@ -73,7 +104,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier.0 == "a";
+        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
         default.is_none();
     });
 
@@ -81,7 +112,7 @@ mod test {
         "";
         VariadicArgument;
         attributes.is_none();
-        identifier.0 == "a";
+        identifier.variant.0 == "a";
     });
 
     test!(should_parse_optional_single_argument { "optional short a" =>
@@ -89,7 +120,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier.0 == "a";
+        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
         default.is_none();
     });
 
@@ -98,7 +129,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier.0 == "a";
+        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
         default == Some(Default {
             assign: VariantToken::default(),
             value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),

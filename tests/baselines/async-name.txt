@@ -13,18 +13,24 @@
                         list: [
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Exposed",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "Window",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "Window",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                         ],
@@ -44,9 +50,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Async",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Async",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -85,8 +94,13 @@
                                     ),
                                 ),
                             },
-                            identifier: Identifier(
-                                "async",
+                            identifier: Async(
+                                VariantToken {
+                                    variant: Async(
+                                        "async",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -111,7 +125,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "asyncOp",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "asyncOp",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -145,8 +164,13 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    "async",
+                                                identifier: Async(
+                                                    VariantToken {
+                                                        variant: Async(
+                                                            "async",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                                 default: None,
                                             },

@@ -13,18 +13,24 @@
                         list: [
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Exposed",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "Window",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "Window",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                         ],
@@ -44,9 +50,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Includes",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Includes",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -70,8 +79,13 @@
                                 },
                             ),
                             identifier: Some(
-                                Identifier(
-                                    "includes",
+                                Includes(
+                                    VariantToken {
+                                        variant: Includes(
+                                            "includes",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {

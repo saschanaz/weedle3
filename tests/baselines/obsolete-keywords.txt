@@ -8,9 +8,12 @@
                 ),
                 trivia: "// Keywords that have been removed from the spec\n// can be used as an identifier\n",
             },
-            identifier: Identifier(
-                "Keywords",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Keywords",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -35,7 +38,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "implements",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "implements",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -79,7 +87,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "legacyiterable",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "legacyiterable",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {

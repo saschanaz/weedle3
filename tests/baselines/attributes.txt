@@ -8,9 +8,12 @@
                 ),
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n\n",
             },
-            identifier: Identifier(
-                "Person",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Person",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -62,7 +65,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "age",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "age",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -96,8 +104,13 @@
                                     ),
                                 ),
                             },
-                            identifier: Identifier(
-                                "required",
+                            identifier: Required(
+                                VariantToken {
+                                    variant: Required(
+                                        "required",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(

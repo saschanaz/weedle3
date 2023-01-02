@@ -13,9 +13,12 @@
                         list: [
                             ArgList(
                                 ExtendedAttributeArgList {
-                                    identifier: Identifier(
-                                        "Constructor",
-                                    ),
+                                    identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Constructor",
+                                        ),
+                                        trivia: "",
+                                    },
                                     args: Parenthesized {
                                         open_paren: VariantToken {
                                             variant: OpenParen(
@@ -98,7 +101,12 @@
                                                             ),
                                                         },
                                                         identifier: Identifier(
-                                                            "init",
+                                                            VariantToken {
+                                                                variant: Identifier(
+                                                                    "init",
+                                                                ),
+                                                                trivia: " ",
+                                                            },
                                                         ),
                                                         default: None,
                                                     },
@@ -132,9 +140,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Foo",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Foo",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -159,7 +170,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "foo",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "foo",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -273,7 +289,12 @@
                                                     ),
                                                 },
                                                 identifier: Identifier(
-                                                    "param",
+                                                    VariantToken {
+                                                        variant: Identifier(
+                                                            "param",
+                                                        ),
+                                                        trivia: " ",
+                                                    },
                                                 ),
                                                 default: None,
                                             },
@@ -423,7 +444,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "bar",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "bar",
+                                        ),
+                                        trivia: " ",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -477,9 +503,12 @@
                 ),
                 trivia: "\n\n",
             },
-            identifier: Identifier(
-                "Bar",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Bar",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -541,9 +570,12 @@
                                                                             list: [
                                                                                 NoArgs(
                                                                                     ExtendedAttributeNoArgs(
-                                                                                        Identifier(
-                                                                                            "XAttr",
-                                                                                        ),
+                                                                                        VariantToken {
+                                                                                            variant: Identifier(
+                                                                                                "XAttr",
+                                                                                            ),
+                                                                                            trivia: "",
+                                                                                        },
                                                                                     ),
                                                                                 ),
                                                                             ],
@@ -595,7 +627,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "bar",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "bar",
+                                        ),
+                                        trivia: " ",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {

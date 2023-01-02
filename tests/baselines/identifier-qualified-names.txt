@@ -31,9 +31,12 @@
                     ),
                 ),
             },
-            identifier: Identifier(
-                "number",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "number",
+                ),
+                trivia: "",
+            },
             semi_colon: VariantToken {
                 variant: SemiColon(
                     ";",
@@ -51,9 +54,12 @@
                 ),
                 trivia: "\n\n  // Interface identifier: \"System\"\n  // Qualified name:       \"::framework::System\"\n  ",
             },
-            identifier: Identifier(
-                "System",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "System",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -87,7 +93,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "createObject",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "createObject",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -122,7 +133,12 @@
                                                     ),
                                                 },
                                                 identifier: Identifier(
-                                                    "_interface",
+                                                    VariantToken {
+                                                        variant: Identifier(
+                                                            "_interface",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                                 default: None,
                                             },
@@ -209,7 +225,12 @@
                                                     ),
                                                 },
                                                 identifier: Identifier(
-                                                    "keyName",
+                                                    VariantToken {
+                                                        variant: Identifier(
+                                                            "keyName",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                                 default: None,
                                             },
@@ -257,9 +278,12 @@
                 ),
                 trivia: "\n\n\n    // Interface identifier: \"TextField\"\n    // Qualified name:       \"::framework::gui::TextField\"\n    ",
             },
-            identifier: Identifier(
-                "TextField",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "TextField",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -299,7 +323,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "_const",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "_const",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -346,7 +375,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "_value",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "_value",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -381,9 +415,12 @@
                 ),
                 trivia: "\n\n",
             },
-            identifier: Identifier(
-                "FooEventTarget",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "FooEventTarget",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -408,7 +445,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "addEventListener",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "addEventListener",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -430,9 +472,12 @@
                                                         NonAny(
                                                             Identifier(
                                                                 MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "EventListener",
-                                                                    ),
+                                                                    type_: VariantToken {
+                                                                        variant: Identifier(
+                                                                            "EventListener",
+                                                                        ),
+                                                                        trivia: "",
+                                                                    },
                                                                     q_mark: Some(
                                                                         VariantToken {
                                                                             variant: QuestionMark(
@@ -446,8 +491,13 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    "callback",
+                                                identifier: Callback(
+                                                    VariantToken {
+                                                        variant: Callback(
+                                                            "callback",
+                                                        ),
+                                                        trivia: " ",
+                                                    },
                                                 ),
                                                 default: None,
                                             },

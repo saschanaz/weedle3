@@ -13,9 +13,12 @@
                         list: [
                             Wildcard(
                                 ExtendedAttributeWildcard {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Exposed",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
@@ -47,9 +50,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "X",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "X",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {

@@ -13,34 +13,46 @@
                         list: [
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "NamedConstructor",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "NamedConstructor",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "Audio",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "Audio",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                             NamedArgList(
                                 ExtendedAttributeNamedArgList {
-                                    lhs_identifier: Identifier(
-                                        "NamedConstructor",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "NamedConstructor",
+                                        ),
+                                        trivia: "\n ",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs_identifier: Identifier(
-                                        "Audio",
-                                    ),
+                                    rhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Audio",
+                                        ),
+                                        trivia: "",
+                                    },
                                     args: Parenthesized {
                                         open_paren: VariantToken {
                                             variant: OpenParen(
@@ -73,7 +85,12 @@
                                                             ),
                                                         },
                                                         identifier: Identifier(
-                                                            "src",
+                                                            VariantToken {
+                                                                variant: Identifier(
+                                                                    "src",
+                                                                ),
+                                                                trivia: "",
+                                                            },
                                                         ),
                                                         default: None,
                                                     },
@@ -107,9 +124,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "HTMLAudioElement",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "HTMLAudioElement",
+                ),
+                trivia: "",
+            },
             inheritance: Some(
                 Inheritance {
                     colon: VariantToken {
@@ -118,9 +138,12 @@
                         ),
                         trivia: "",
                     },
-                    identifier: Identifier(
-                        "HTMLMediaElement",
-                    ),
+                    identifier: VariantToken {
+                        variant: Identifier(
+                            "HTMLMediaElement",
+                        ),
+                        trivia: " ",
+                    },
                 },
             ),
             members: Braced {

@@ -18,8 +18,14 @@ fn main() -> std::io::Result<()> {
         let content = std::fs::read_to_string(entry.path()).unwrap();
 
         // XXX: Can't be used without unwrap()?
-        let parsed =
-            weedle::parse(&content).unwrap_or_else(|_| panic!("failed to parse {file_name:?}"));
+        let parsed = weedle::parse(&content).unwrap_or_else(|err| {
+            let remaining = match err {
+                nom::Err::Error(e) => e.input,
+                nom::Err::Failure(e) => e.input,
+                _ => "",
+            };
+            panic!("failed to parse {file_name:?}, remaining: {remaining}");
+        });
         std::fs::write(&out_file_path, format!("{parsed:#?}\n"))
             .unwrap_or_else(|_| panic!("Couldn't write to {out_file_path:?}"))
     }

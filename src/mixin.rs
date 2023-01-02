@@ -4,6 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
 use crate::interface::{ConstMember, StringifierMember};
+use crate::parser::eat::VariantToken;
 use crate::term;
 use crate::types::{AttributedType, ReturnType};
 
@@ -18,7 +19,7 @@ pub struct OperationMixinMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: Option<term!(stringifier)>,
     pub return_type: ReturnType<'a>,
-    pub identifier: Option<Identifier<'a>>,
+    pub identifier: Option<VariantToken<'a, Identifier<'a>>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
@@ -31,7 +32,7 @@ pub struct AttributeMixinMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
+    pub identifier: VariantToken<'a, Identifier<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -55,7 +56,7 @@ mod test {
         attributes.is_none();
         stringifier.is_some();
         readonly.is_some();
-        identifier.0 == "name";
+        identifier.variant.0 == "name";
     });
 
     test!(should_parse_operation_mixin_member { "short fnName(long a);" =>

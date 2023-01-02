@@ -13,9 +13,12 @@
                         list: [
                             NoArgs(
                                 ExtendedAttributeNoArgs(
-                                    Identifier(
-                                        "OverrideBuiltins",
-                                    ),
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "OverrideBuiltins",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                         ],
@@ -35,9 +38,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "StringMap2",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "StringMap2",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -96,7 +102,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "length",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "length",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -139,7 +150,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "lookup",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "lookup",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -174,7 +190,12 @@
                                                     ),
                                                 },
                                                 identifier: Identifier(
-                                                    "key",
+                                                    VariantToken {
+                                                        variant: Identifier(
+                                                            "key",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                                 default: None,
                                             },

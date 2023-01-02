@@ -16,6 +16,7 @@ where
     f
 }
 
+#[macro_export]
 macro_rules! eat {
     ($variant:ident) => {
         $crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {

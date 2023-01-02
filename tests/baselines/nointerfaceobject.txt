@@ -13,9 +13,12 @@
                         list: [
                             NoArgs(
                                 ExtendedAttributeNoArgs(
-                                    Identifier(
-                                        "NoInterfaceObject",
-                                    ),
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "NoInterfaceObject",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                         ],
@@ -35,9 +38,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Query",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Query",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -66,7 +72,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "lookupEntry",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "lookupEntry",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -113,7 +124,12 @@
                                                     ),
                                                 },
                                                 identifier: Identifier(
-                                                    "key",
+                                                    VariantToken {
+                                                        variant: Identifier(
+                                                            "key",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                                 default: None,
                                             },

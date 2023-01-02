@@ -8,9 +8,12 @@
                 ),
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
             },
-            identifier: Identifier(
-                "Counter",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Counter",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -34,9 +37,12 @@
                                         list: [
                                             NoArgs(
                                                 ExtendedAttributeNoArgs(
-                                                    Identifier(
-                                                        "Replaceable",
-                                                    ),
+                                                    VariantToken {
+                                                        variant: Identifier(
+                                                            "Replaceable",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                             ),
                                         ],
@@ -96,7 +102,12 @@
                                 ),
                             },
                             identifier: Identifier(
-                                "value",
+                                VariantToken {
+                                    variant: Identifier(
+                                        "value",
+                                    ),
+                                    trivia: "",
+                                },
                             ),
                             semi_colon: VariantToken {
                                 variant: SemiColon(
@@ -121,7 +132,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "increment",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "increment",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {

@@ -13,18 +13,24 @@
                         list: [
                             Ident(
                                 ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
+                                    lhs_identifier: VariantToken {
+                                        variant: Identifier(
+                                            "Exposed",
+                                        ),
+                                        trivia: "",
+                                    },
                                     assign: VariantToken {
                                         variant: Assign(
                                             "=",
                                         ),
                                         trivia: "",
                                     },
-                                    rhs: Identifier(
-                                        "Window",
-                                    ),
+                                    rhs: VariantToken {
+                                        variant: Identifier(
+                                            "Window",
+                                        ),
+                                        trivia: "",
+                                    },
                                 },
                             ),
                         ],
@@ -44,9 +50,12 @@
                 ),
                 trivia: "\n",
             },
-            identifier: Identifier(
-                "Foo",
-            ),
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Foo",
+                ),
+                trivia: "",
+            },
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
@@ -71,7 +80,12 @@
                             ),
                             identifier: Some(
                                 Identifier(
-                                    "foo",
+                                    VariantToken {
+                                        variant: Identifier(
+                                            "foo",
+                                        ),
+                                        trivia: "",
+                                    },
                                 ),
                             ),
                             args: Parenthesized {
@@ -105,8 +119,13 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    "constructor",
+                                                identifier: Constructor(
+                                                    VariantToken {
+                                                        variant: Constructor(
+                                                            "constructor",
+                                                        ),
+                                                        trivia: "",
+                                                    },
                                                 ),
                                                 default: None,
                                             },
