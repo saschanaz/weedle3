@@ -71,9 +71,9 @@ use crate::parser::Tokens;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse<'a>(
-    input: &'a str,
-) -> Result<(Definitions<'_>, &'a str), nom::Err<nom::error::Error<&'a str>>> {
+pub fn parse(
+    input: &'_ str,
+) -> Result<(Definitions<'_>, &'_ str), nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
 
     let (unread, (defs, eof)) = nom::sequence::tuple((Definitions::parse, eat!(Eof)))(Tokens(

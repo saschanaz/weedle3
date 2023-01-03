@@ -14,6 +14,8 @@ use crate::lexer::Token;
 pub struct Tokens<'slice, 'token>(pub &'slice [Token<'token>]);
 
 impl<'slice, 'token> Tokens<'slice, 'token> {
+    /// # Safety
+    /// Make sure `input` is the source of this token.
     pub unsafe fn remaining(&self, input: &'token str) -> &'token str {
         self.0[0].remaining(input)
     }

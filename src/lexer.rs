@@ -43,6 +43,8 @@ impl Token<'_> {
         Token { tag, trivia }
     }
 
+    /// # Safety
+    /// Make sure `input` is the source of this token.
     pub unsafe fn remaining<'a>(&self, input: &'a str) -> &'a str {
         let position: usize = self
             .trivia
