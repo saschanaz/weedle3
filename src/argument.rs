@@ -104,7 +104,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
+        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: " " });
         default.is_none();
     });
 
@@ -120,7 +120,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
+        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: " " });
         default.is_none();
     });
 
@@ -129,15 +129,15 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: "" });
+        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: " " });
         default == Some(Default {
-            assign: VariantToken::default(),
+            assign: VariantToken { variant: core::default::Default::default(), trivia: " " },
             value: DefaultValue::Integer(VariantToken { variant: IntegerLit::Dec(DecLit("5")), trivia: " " }),
         });
     });
 
     test!(should_not_parse_default_if_not_optional { "short a = 5" =>
-        "= 5";
+        " = 5";
         SingleArgument;
     });
 }

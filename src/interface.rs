@@ -235,7 +235,7 @@ mod test {
         AttributeInterfaceMember;
         attributes.is_none();
         readonly == Some(VariantToken::default());
-        identifier == AttributeName::Identifier(VariantToken { variant: Identifier("width"), trivia: "" });
+        identifier == AttributeName::Identifier(VariantToken { variant: Identifier("width"), trivia: " " });
     });
 
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>

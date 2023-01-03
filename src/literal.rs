@@ -8,11 +8,11 @@ pub struct DecLit<'a>(pub &'a str);
 
 impl<'a> Parse<'a> for DecLit<'a> {
     parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::one_of("123456789"),
             nom::bytes::complete::take_while(nom::AsChar::is_dec_digit)
-        )))),
+        ))),
         DecLit
     ));
 }
@@ -23,12 +23,12 @@ pub struct HexLit<'a>(pub &'a str);
 
 impl<'a> Parse<'a> for HexLit<'a> {
     parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
             nom::character::complete::one_of("xX"),
             nom::bytes::complete::take_while(nom::AsChar::is_hex_digit)
-        )))),
+        ))),
         HexLit
     ));
 }
@@ -39,11 +39,11 @@ pub struct OctLit<'a>(pub &'a str);
 
 impl<'a> Parse<'a> for OctLit<'a> {
     parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
             nom::bytes::complete::take_while(nom::AsChar::is_oct_digit)
-        )))),
+        ))),
         OctLit
     ));
 }
@@ -83,11 +83,11 @@ pub struct StringLit<'a>(pub &'a str);
 impl<'a> StringLit<'a> {
     pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
         nom::combinator::map(
-            crate::whitespace::ws(nom::sequence::delimited(
+            nom::sequence::delimited(
                 nom::character::complete::char('\"'),
                 nom::bytes::complete::take_while(|c| c != '\"'),
                 nom::character::complete::char('\"'),
-            )),
+            ),
             StringLit,
         )(input)
     }
@@ -167,7 +167,7 @@ pub struct FloatValueLit<'a>(pub &'a str);
 impl<'a> FloatValueLit<'a> {
     pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
         nom::combinator::map(
-            crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::recognize(nom::sequence::tuple((
                 nom::combinator::opt(nom::character::complete::char('-')),
                 nom::branch::alt((
                     nom::combinator::value(
@@ -205,7 +205,7 @@ impl<'a> FloatValueLit<'a> {
                         )),
                     ),
                 )),
-            )))),
+            ))),
             FloatValueLit,
         )(input)
     }
@@ -241,7 +241,7 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::lexer::keywords::{Null, Keyword};
+    use crate::lexer::keywords::{Keyword, Null};
     use crate::parser::eat::VariantToken;
     use crate::Parse;
 
@@ -251,12 +251,12 @@ mod test {
     });
 
     test!(should_parse_integer_surrounding_with_spaces { "  123123  " =>
-        "";
-        IntegerLit => IntegerLit::Dec(DecLit("123123"))
+        "  ";
+        VariantToken<IntegerLit> => VariantToken { variant: IntegerLit::Dec(DecLit("123123")), trivia: "  " }
     });
 
     test!(should_parse_integer_preceding_others { "3453 string" =>
-        "string";
+        " string";
         IntegerLit => IntegerLit::Dec(DecLit("3453"))
     });
 
@@ -291,12 +291,12 @@ mod test {
     });
 
     test!(should_parse_float_surrounding_with_spaces { "  2345.2345  " =>
-        "";
+        "  ";
         FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("2345.2345"), trivia: "  " })
     });
 
     test!(should_parse_float_preceding_others { "3453.32334 string" =>
-        "string";
+        " string";
         FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("3453.32334"), trivia: "" })
     });
 
@@ -337,29 +337,29 @@ mod test {
     });
 
     test!(should_parse_string_surround_with_spaces { r#"  "this is a string"  "# =>
-        "";
-        StringLit => StringLit("this is a string")
+        "  ";
+        VariantToken<StringLit> => VariantToken { variant: StringLit("this is a string"), trivia: "  " }
     });
 
     test!(should_parse_string_followed_by_string { r#" "this is first"  "this is second" "# =>
-        r#""this is second" "#;
-        StringLit => StringLit("this is first")
+        r#"  "this is second" "#;
+        VariantToken<StringLit> => VariantToken { variant: StringLit("this is first"), trivia: " " }
     });
 
     test!(should_parse_string_with_spaces { r#"  "  this is a string  "  "# =>
-        "";
-        StringLit => StringLit("  this is a string  ")
+        "  ";
+        VariantToken<StringLit> => VariantToken { variant: StringLit("  this is a string  "), trivia: "  " }
     });
 
     test!(should_parse_string_with_comment { r#"  "// this is still a string"
      "# =>
-        "";
-        StringLit => StringLit("// this is still a string")
+        "\n     ";
+        VariantToken<StringLit> => VariantToken { variant: StringLit("// this is still a string"), trivia: "  " }
     });
 
     test!(should_parse_string_with_multiline_comment { r#"  "/*"  "*/"  "# =>
-        r#""*/"  "#;
-        StringLit => StringLit("/*")
+        r#"  "*/"  "#;
+        VariantToken<StringLit> => VariantToken { variant: StringLit("/*"), trivia: "  " }
     });
 
     test!(should_parse_null { "null" =>

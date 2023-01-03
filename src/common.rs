@@ -128,14 +128,14 @@ pub struct Identifier<'a>(pub &'a str);
 impl<'a> Identifier<'a> {
     pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
         nom::combinator::map(
-            crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::recognize(nom::sequence::tuple((
                 nom::combinator::opt(nom::branch::alt((
                     nom::character::complete::char('_'),
                     nom::character::complete::char('-'),
                 ))),
                 nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
                 nom::bytes::complete::take_while(is_alphanum_underscore_dash),
-            )))),
+            ))),
             Identifier,
         )(input)
     }
@@ -266,13 +266,13 @@ mod test {
     });
 
     test!(should_parse_identifier_surrounding_with_spaces { "  hello  " =>
-        "";
-        Identifier;
-        0 == "hello";
+        "  ";
+        VariantToken<Identifier>;
+        variant.0 == "hello";
     });
 
     test!(should_parse_identifier_preceding_others { "hello  note" =>
-        "note";
+        "  note";
         Identifier;
         0 == "hello";
     });
