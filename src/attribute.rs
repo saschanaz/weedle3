@@ -98,7 +98,7 @@ pub struct ExtendedAttributeFloatList<'a> {
 pub struct ExtendedAttributeInteger<'a> {
     pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub rhs: IntegerLit<'a>,
+    pub rhs: VariantToken<'a, IntegerLit<'a>>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

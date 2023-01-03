@@ -37,19 +37,8 @@ macro_rules! generate_keywords_enum {
             #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
             pub struct $typ<'a>(pub &'a str);
 
-            impl<'a> $crate::Parse<'a> for VariantToken<'a, $typ<'a>> {
-                parser!(|input: &'a str| {
-                    let (i, token) = $crate::lexer::lex_single(input)?;
-                    let array = [token];
-                    let tokens = Tokens(&array);
-                    match $crate::eat_key!($typ)(tokens) {
-                        Ok((_, token)) => Ok((i, token)),
-                        Err(_) => Err(nom::Err::Error(nom::error::Error {
-                            input: i,
-                            code: nom::error::ErrorKind::Char,
-                        }))
-                    }
-                });
+            impl<'slice, 'a> $crate::Parse<'slice, 'a> for VariantToken<'a, $typ<'a>> {
+                parser!($crate::eat_key!($typ));
             }
 
             impl<'a> Default for $typ<'a> {

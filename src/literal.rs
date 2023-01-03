@@ -1,3 +1,4 @@
+use nom::Parser;
 use weedle_derive::Weedle;
 
 use crate::{parser::eat::VariantToken, term, Parse};
@@ -6,72 +7,74 @@ use crate::{parser::eat::VariantToken, term, Parse};
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DecLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for DecLit<'a> {
-    parser!(nom::combinator::map(
-        nom::combinator::recognize(nom::sequence::tuple((
-            nom::combinator::opt(nom::character::complete::char('-')),
-            nom::character::complete::one_of("123456789"),
-            nom::bytes::complete::take_while(nom::AsChar::is_dec_digit)
-        ))),
-        DecLit
-    ));
+impl<'a> DecLit<'a> {
+    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::combinator::map(
+            nom::combinator::recognize(nom::sequence::tuple((
+                nom::combinator::opt(nom::character::complete::char('-')),
+                nom::character::complete::one_of("123456789"),
+                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+            ))),
+            DecLit,
+        )(input)
+    }
 }
 
 /// Parses `-?0[Xx][0-9A-Fa-f]+)`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct HexLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for HexLit<'a> {
-    parser!(nom::combinator::map(
-        nom::combinator::recognize(nom::sequence::tuple((
-            nom::combinator::opt(nom::character::complete::char('-')),
-            nom::character::complete::char('0'),
-            nom::character::complete::one_of("xX"),
-            nom::bytes::complete::take_while(nom::AsChar::is_hex_digit)
-        ))),
-        HexLit
-    ));
+impl<'a> HexLit<'a> {
+    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::combinator::map(
+            nom::combinator::recognize(nom::sequence::tuple((
+                nom::combinator::opt(nom::character::complete::char('-')),
+                nom::character::complete::char('0'),
+                nom::character::complete::one_of("xX"),
+                nom::bytes::complete::take_while(nom::AsChar::is_hex_digit),
+            ))),
+            HexLit,
+        )(input)
+    }
 }
 
 /// Parses `-?0[0-7]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OctLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for OctLit<'a> {
-    parser!(nom::combinator::map(
-        nom::combinator::recognize(nom::sequence::tuple((
-            nom::combinator::opt(nom::character::complete::char('-')),
-            nom::character::complete::char('0'),
-            nom::bytes::complete::take_while(nom::AsChar::is_oct_digit)
-        ))),
-        OctLit
-    ));
+impl<'a> OctLit<'a> {
+    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::combinator::map(
+            nom::combinator::recognize(nom::sequence::tuple((
+                nom::combinator::opt(nom::character::complete::char('-')),
+                nom::character::complete::char('0'),
+                nom::bytes::complete::take_while(nom::AsChar::is_oct_digit),
+            ))),
+            OctLit,
+        )(input)
+    }
 }
 
 /// Represents an integer value
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum IntegerLit<'a> {
     Dec(DecLit<'a>),
     Hex(HexLit<'a>),
     Oct(OctLit<'a>),
 }
 
-impl<'a> Parse<'a> for VariantToken<'a, IntegerLit<'a>> {
-    parser!(|input: &'a str| {
-        use crate::parser::Tokens;
-        use nom::IResult;
+impl<'a> IntegerLit<'a> {
+    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+        nom::branch::alt((
+            DecLit::parse.map(IntegerLit::Dec),
+            HexLit::parse.map(IntegerLit::Hex),
+            OctLit::parse.map(IntegerLit::Oct),
+        ))(input)
+    }
+}
 
-        let (i, token) = crate::lexer::lex_single(input)?;
-        let array = [token];
-        let tokens = Tokens(&array);
-        match crate::eat!(Int)(tokens) {
-            Ok((_, token)) => Ok((i, token)),
-            Err(_) => Err(nom::Err::Error(nom::error::Error {
-                input: i,
-                code: nom::error::ErrorKind::Char,
-            })),
-        }
-    });
+impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, IntegerLit<'a>> {
+    parser!(crate::eat!(Int));
 }
 
 /// Represents a string value
@@ -93,22 +96,8 @@ impl<'a> StringLit<'a> {
     }
 }
 
-impl<'a> Parse<'a> for VariantToken<'a, StringLit<'a>> {
-    parser!(|input: &'a str| {
-        use crate::parser::Tokens;
-        use nom::IResult;
-
-        let (i, token) = crate::lexer::lex_single(input)?;
-        let array = [token];
-        let tokens = Tokens(&array);
-        match crate::eat!(Str)(tokens) {
-            Ok((_, token)) => Ok((i, token)),
-            Err(_) => Err(nom::Err::Error(nom::error::Error {
-                input: i,
-                code: nom::error::ErrorKind::Char,
-            })),
-        }
-    });
+impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, StringLit<'a>> {
+    parser!(crate::eat!(Str));
 }
 
 /// Represents `[ ]`
@@ -150,7 +139,7 @@ pub enum ConstValue<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct BooleanLit(bool);
 
-impl<'a> Parse<'a> for BooleanLit {
+impl<'slice, 'a> Parse<'slice, 'a> for BooleanLit {
     parser!(nom::combinator::map(
         nom::branch::alt((
             nom::combinator::value(true, weedle!(term!(true))),
@@ -211,22 +200,8 @@ impl<'a> FloatValueLit<'a> {
     }
 }
 
-impl<'a> Parse<'a> for VariantToken<'a, FloatValueLit<'a>> {
-    parser!(|input: &'a str| {
-        use crate::parser::Tokens;
-        use nom::IResult;
-
-        let (i, token) = crate::lexer::lex_single(input)?;
-        let array = [token];
-        let tokens = Tokens(&array);
-        match crate::eat!(Dec)(tokens) {
-            Ok((_, token)) => Ok((i, token)),
-            Err(_) => Err(nom::Err::Error(nom::error::Error {
-                input: i,
-                code: nom::error::ErrorKind::Char,
-            })),
-        }
-    });
+impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, FloatValueLit<'a>> {
+    parser!(crate::eat!(Dec));
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
@@ -245,7 +220,7 @@ mod test {
     use crate::parser::eat::VariantToken;
     use crate::Parse;
 
-    test!(should_parse_integer { "45" =>
+    test_match!(should_parse_integer { "45" =>
         "";
         IntegerLit => IntegerLit::Dec(DecLit("45"))
     });
@@ -255,32 +230,32 @@ mod test {
         VariantToken<IntegerLit> => VariantToken { variant: IntegerLit::Dec(DecLit("123123")), trivia: "  " }
     });
 
-    test!(should_parse_integer_preceding_others { "3453 string" =>
+    test_match!(should_parse_integer_preceding_others { "3453 string" =>
         " string";
         IntegerLit => IntegerLit::Dec(DecLit("3453"))
     });
 
-    test!(should_parse_neg_integer { "-435" =>
+    test_match!(should_parse_neg_integer { "-435" =>
         "";
         IntegerLit => IntegerLit::Dec(DecLit("-435"))
     });
 
-    test!(should_parse_hex_number { "0X08" =>
+    test_match!(should_parse_hex_number { "0X08" =>
         "";
         IntegerLit => IntegerLit::Hex(HexLit("0X08"))
     });
 
-    test!(should_parse_hex_large_number { "0xA" =>
+    test_match!(should_parse_hex_large_number { "0xA" =>
         "";
         IntegerLit => IntegerLit::Hex(HexLit("0xA"))
     });
 
-    test!(should_parse_zero { "0" =>
+    test_match!(should_parse_zero { "0" =>
         "";
         IntegerLit => IntegerLit::Oct(OctLit("0"))
     });
 
-    test!(should_parse_oct_number { "-07561" =>
+    test_match!(should_parse_oct_number { "-07561" =>
         "";
         IntegerLit => IntegerLit::Oct(OctLit("-07561"))
     });
@@ -331,7 +306,7 @@ mod test {
         })
     });
 
-    test!(should_parse_string { r#""this is a string""# =>
+    test_match!(should_parse_string { r#""this is a string""# =>
         "";
         StringLit => StringLit("this is a string")
     });
@@ -362,7 +337,7 @@ mod test {
         VariantToken<StringLit> => VariantToken { variant: StringLit("/*"), trivia: "  " }
     });
 
-    test!(should_parse_null { "null" =>
+    test_match!(should_parse_null { "null" =>
         "";
         Keyword => Keyword::Null(Null("null"))
     });

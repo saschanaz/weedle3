@@ -17,7 +17,7 @@ mod interface;
 mod namespace;
 mod typedef;
 
-use nom::{IResult, InputIter, Parser};
+use nom::{InputIter, Parser};
 
 use crate::lexer::{lex, Token};
 

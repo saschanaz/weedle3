@@ -13,6 +13,12 @@ use crate::lexer::Token;
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Tokens<'slice, 'token>(pub &'slice [Token<'token>]);
 
+impl<'slice, 'token> Tokens<'slice, 'token> {
+    pub unsafe fn remaining(&self, input: &'token str) -> &'token str {
+        self.0[0].remaining(input)
+    }
+}
+
 impl<'slice, 'token> InputLength for Tokens<'slice, 'token> {
     #[inline]
     fn input_len(&self) -> usize {

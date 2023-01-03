@@ -3,6 +3,7 @@ use weedle_derive::Weedle;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::parser::eat::VariantToken;
+use crate::parser::Tokens;
 use crate::types::{AttributedType, Type};
 use crate::{term, Parse};
 
@@ -51,8 +52,8 @@ pub struct SingleArgument<'a> {
     pub default: Option<Default<'a>>,
 }
 
-impl<'a> Parse<'a> for SingleArgument<'a> {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+impl<'slice, 'a> Parse<'slice, 'a> for SingleArgument<'a> {
+    fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
         let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),

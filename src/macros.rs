@@ -1,6 +1,8 @@
 macro_rules! parser {
     ($parse:expr) => {
-        fn parse(input: &'a str) -> $crate::IResult<&'a str, Self> {
+        fn parse(
+            input: $crate::parser::Tokens<'slice, 'a>,
+        ) -> $crate::IResult<$crate::parser::Tokens<'slice, 'a>, Self> {
             $parse(input)
         }
     };
@@ -8,7 +10,7 @@ macro_rules! parser {
 
 macro_rules! weedle {
     ($t:ty) => {
-        <$t as $crate::Parse<'a>>::parse
+        <$t as $crate::Parse<'slice, 'a>>::parse
     };
 }
 
@@ -22,6 +24,19 @@ macro_rules! alt {
     };
     ($member0:expr,) => {
         $member0
+    };
+}
+
+#[cfg(test)]
+macro_rules! test_match {
+    ($name:ident { $input:literal => $rem:expr; $typ:ty => $match:pat_param $(if $guard:expr)? }) => {
+        #[test]
+        fn $name() {
+            let (unread, result) = <$typ>::parse($input).unwrap();
+
+            assert_eq!(unread, $rem);
+            assert!(matches!(result, $match $(if $guard )?));
+        }
     };
 }
 
@@ -43,22 +58,25 @@ macro_rules! test {
     (err $name:ident { $raw:expr => $typ:ty }) => {
         #[test]
         fn $name() {
-            <$typ>::parse($raw).unwrap_err();
+            let tokens = $crate::lexer::lex($raw).unwrap();
+            <$typ>::parse($crate::parser::Tokens(&tokens[..])).unwrap_err();
         }
     };
     ($name:ident { $raw:expr => $rem:expr; $typ:ty => $val:expr }) => {
         #[test]
         fn $name() {
-            let (rem, parsed) = <$typ>::parse($raw).unwrap();
-            assert_eq!(rem, $rem);
+            let tokens = $crate::lexer::lex($raw).unwrap();
+            let (rem, parsed) = <$typ>::parse($crate::parser::Tokens(&tokens[..])).unwrap();
+            assert_eq!(unsafe { rem.remaining($raw) }, $rem);
             assert_eq!(parsed, $val);
         }
     };
     ($name:ident { $raw:expr => $rem:expr; $typ:ty; $($body:tt)* }) => {
         #[test]
         fn $name() {
-            let (_rem, _parsed) = <$typ>::parse($raw).unwrap();
-            assert_eq!(_rem, $rem);
+            let tokens = $crate::lexer::lex($raw).unwrap();
+            let (_rem, _parsed) = <$typ>::parse($crate::parser::Tokens(&tokens[..])).unwrap();
+            assert_eq!(unsafe { _rem.remaining($raw) }, $rem);
             test!(@arg _parsed $($body)*);
         }
     };
@@ -74,8 +92,9 @@ macro_rules! test_variants {
                     use $crate::types::*;
                     #[test]
                     fn should_parse() {
-                        let (rem, parsed) = $struct_::parse($value).unwrap();
-                        assert_eq!(rem, "");
+                        let tokens = $crate::lexer::lex($value).unwrap();
+                        let (rem, parsed) = $struct_::parse($crate::parser::Tokens(&tokens[..])).unwrap();
+                        assert_eq!(unsafe { rem.remaining($value) }, "");
                         match parsed {
                             $struct_::$variant(_) => {},
                             _ => { panic!("Failed to parse"); }

@@ -19,22 +19,24 @@ where
 #[macro_export]
 macro_rules! eat {
     ($variant:ident) => {
-        $crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
-            use nom::{InputIter, Slice};
-            match input.iter_elements().next() {
-                Some($crate::lexer::Token {
-                    tag: $crate::lexer::Tag::$variant(variant),
-                    trivia,
-                }) => Ok((
-                    input.slice(1..),
-                    $crate::parser::eat::VariantToken { variant, trivia },
-                )),
-                _ => Err(nom::Err::Error(nom::error::Error {
-                    input,
-                    code: nom::error::ErrorKind::Char,
-                })),
-            }
-        })
+        $crate::parser::eat::annotate(
+            |input: $crate::parser::Tokens| -> nom::IResult<$crate::parser::Tokens, _> {
+                use nom::{InputIter, Slice};
+                match input.iter_elements().next() {
+                    Some($crate::lexer::Token {
+                        tag: $crate::lexer::Tag::$variant(variant),
+                        trivia,
+                    }) => Ok((
+                        input.slice(1..),
+                        $crate::parser::eat::VariantToken { variant, trivia },
+                    )),
+                    _ => Err(nom::Err::Error(nom::error::Error {
+                        input,
+                        code: nom::error::ErrorKind::Char,
+                    })),
+                }
+            },
+        )
     };
 }
 

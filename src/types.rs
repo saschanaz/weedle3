@@ -84,7 +84,7 @@ pub struct ObservableArrayType<'a> {
 ///
 /// `??` means an actual ? not an optional requirement
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'a>")]
+#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct MayBeNull<'a, T> {
     pub type_: T,
     pub q_mark: Option<VariantToken<'a, keywords::QuestionMark<'a>>>,
@@ -377,8 +377,11 @@ mod test {
     #[test]
     fn should_parse_union_member_type_attributed_union() {
         use crate::types::UnionMemberType;
-        let (rem, parsed) = UnionMemberType::parse("([Clamp] byte or [Named] byte)").unwrap();
-        assert_eq!(rem, "");
+
+        let input = "([Clamp] byte or [Named] byte)";
+        let tokens = crate::lexer::lex(input).unwrap();
+        let (rem, parsed) = UnionMemberType::parse(crate::parser::Tokens(&tokens[..])).unwrap();
+        assert_eq!(unsafe { rem.remaining(input) }, "");
         match parsed {
             UnionMemberType::Union(MayBeNull {
                 type_:

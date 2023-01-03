@@ -13,7 +13,7 @@ fn should_parse(resource: &str) {
     let baseline_path = std::path::Path::new("./tests/baselines/").join(format!("{stem}.txt"));
     let baseline = std::fs::read_to_string(baseline_path).unwrap();
 
-    let ast = result.unwrap();
+    let (ast, _eof) = result.unwrap();
     assert_eq!(format!("{ast:#?}\n"), baseline);
 }
 
@@ -22,7 +22,7 @@ pub fn should_parse_dom_webidl() {
     let content = std::fs::read_to_string("./tests/defs/dom.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 62);
+    assert_eq!(parsed.0.len(), 62);
 }
 
 #[test]
@@ -30,7 +30,7 @@ fn should_parse_html_webidl() {
     let content = std::fs::read_to_string("./tests/defs/html.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 325);
+    assert_eq!(parsed.0.len(), 325);
 }
 
 #[test]
@@ -38,7 +38,7 @@ fn should_parse_mediacapture_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/mediacapture-streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 37);
+    assert_eq!(parsed.0.len(), 37);
 }
 
 #[test]
@@ -46,7 +46,7 @@ fn should_parse_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 37);
+    assert_eq!(parsed.0.len(), 37);
 }
 
 #[test]
@@ -56,9 +56,9 @@ fn interface_constructor() {
     let content = std::fs::read_to_string("./tests/defs/interface-constructor.webidl").unwrap();
     let mut parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 1);
+    assert_eq!(parsed.0.len(), 1);
 
-    let definition = parsed.pop().unwrap();
+    let definition = parsed.0.pop().unwrap();
 
     match definition {
         Definition::Interface(mut interface) => {

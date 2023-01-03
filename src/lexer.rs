@@ -3,7 +3,6 @@ use nom::{multi::many0, IResult};
 use crate::common::Identifier;
 use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::whitespace::sp;
-use crate::Parse;
 
 #[macro_use]
 pub mod keywords;
@@ -42,6 +41,16 @@ pub struct Token<'a> {
 impl Token<'_> {
     pub fn new<'a>((trivia, tag): (&'a str, Tag<'a>)) -> Token<'a> {
         Token { tag, trivia }
+    }
+
+    pub unsafe fn remaining<'a>(&self, input: &'a str) -> &'a str {
+        let position: usize = self
+            .trivia
+            .as_ptr()
+            .offset_from(input.as_ptr())
+            .try_into()
+            .expect("offset from input string pointer as usize");
+        &input[position..]
     }
 }
 

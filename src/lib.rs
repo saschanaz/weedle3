@@ -53,6 +53,9 @@ pub mod lexer;
 #[macro_use]
 pub mod parser;
 
+use crate::lexer::lex;
+use crate::parser::Tokens;
+
 /// A convenient parse function
 ///
 /// ### Example
@@ -68,36 +71,37 @@ pub mod parser;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(raw: &str) -> Result<Definitions<'_>, Err<Error<&str>>> {
-    let (remaining, parsed) = Definitions::parse(raw)?;
-    if remaining.is_empty() || crate::whitespace::sp(remaining)?.0.is_empty() {
-        Ok(parsed)
-    } else {
-        Err(nom::Err::Failure(Error {
-            input: remaining,
-            code: nom::error::ErrorKind::Fail,
-        }))
-    }
+pub fn parse<'a>(
+    input: &'a str,
+) -> Result<(Definitions<'_>, &'a str), nom::Err<nom::error::Error<&'a str>>> {
+    let tokens = lex(input)?;
+
+    let (unread, (defs, eof)) = nom::sequence::tuple((Definitions::parse, eat!(Eof)))(Tokens(
+        &tokens[..],
+    ))
+    .map_err(|err| match err {
+        nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
+        nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
+            code: err.code,
+            input: unsafe { err.input.0[0].remaining(input) },
+        }),
+        nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
+            code: err.code,
+            input: unsafe { err.input.0[0].remaining(input) },
+        }),
+    })?;
+
+    // Cannot be empty here since eof would fail then
+    assert!(unread.0.is_empty());
+
+    Ok((defs, eof.trivia))
 }
 
-pub trait Parse<'a>: Sized {
-    fn parse(input: &'a str) -> IResult<&'a str, Self>;
+pub trait Parse<'slice, 'token>: Sized {
+    fn parse(input: Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, Self>;
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.
-///
-/// ### Example
-/// ```
-/// use weedle::{Definitions, Parse};
-///
-/// let (_, parsed) = Definitions::parse("
-///     interface Window {
-///         readonly attribute Storage sessionStorage;
-///     };
-/// ").unwrap();
-///
-/// println!("{:?}", parsed);
-/// ```
 ///
 /// It is recommended to use [`parse`](fn.parse.html) instead.
 pub type Definitions<'a> = Vec<Definition<'a>>;
