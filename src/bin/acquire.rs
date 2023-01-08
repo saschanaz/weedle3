@@ -18,7 +18,7 @@ fn main() -> std::io::Result<()> {
         let content = std::fs::read_to_string(entry.path()).unwrap();
 
         // XXX: Can't be used without unwrap()?
-        let (parsed, _eof) = weedle::parse(&content).unwrap_or_else(|err| {
+        let parsed = weedle::parse(&content).unwrap_or_else(|err| {
             let remaining = match err {
                 nom::Err::Error(e) => e.input,
                 nom::Err::Failure(e) => e.input,

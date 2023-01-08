@@ -2,73 +2,49 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
-                trivia: "",
-            },
-            identifier: VariantToken {
-                variant: Identifier(
-                    "InterfaceWithConstructor",
-                ),
-                trivia: " ",
-            },
+            interface: Interface(
+                "interface",
+            ),
+            identifier: Identifier(
+                "InterfaceWithConstructor",
+            ),
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
-                    trivia: " ",
-                },
+                open_brace: OpenBrace(
+                    "{",
+                ),
                 body: [
                     Constructor(
                         ConstructorInterfaceMember {
                             attributes: Some(
                                 Bracketed {
-                                    open_bracket: VariantToken {
-                                        variant: OpenBracket(
-                                            "[",
-                                        ),
-                                        trivia: "\n  ",
-                                    },
+                                    open_bracket: OpenBracket(
+                                        "[",
+                                    ),
                                     body: Punctuated {
                                         list: [
                                             NoArgs(
                                                 ExtendedAttributeNoArgs(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "Throws",
-                                                        ),
-                                                        trivia: "",
-                                                    },
+                                                    Identifier(
+                                                        "Throws",
+                                                    ),
                                                 ),
                                             ),
                                         ],
-                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                        separator: PhantomData,
                                     },
-                                    close_bracket: VariantToken {
-                                        variant: CloseBracket(
-                                            "]",
-                                        ),
-                                        trivia: "",
-                                    },
+                                    close_bracket: CloseBracket(
+                                        "]",
+                                    ),
                                 },
                             ),
-                            constructor: VariantToken {
-                                variant: Constructor(
-                                    "constructor",
-                                ),
-                                trivia: "\n  ",
-                            },
+                            constructor: Constructor(
+                                "constructor",
+                            ),
                             args: Parenthesized {
-                                open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
-                                    trivia: "",
-                                },
+                                open_paren: OpenParen(
+                                    "(",
+                                ),
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -84,12 +60,9 @@
                                                                     type_: Long(
                                                                         LongType {
                                                                             unsigned: None,
-                                                                            long: VariantToken {
-                                                                                variant: Long(
-                                                                                    "long",
-                                                                                ),
-                                                                                trivia: "",
-                                                                            },
+                                                                            long: Long(
+                                                                                "long",
+                                                                            ),
                                                                         },
                                                                     ),
                                                                     q_mark: None,
@@ -99,48 +72,33 @@
                                                     ),
                                                 },
                                                 identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "a",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
+                                                    Identifier(
+                                                        "a",
+                                                    ),
                                                 ),
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData,
                                 },
-                                close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
-                                    trivia: "",
-                                },
-                            },
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                                close_paren: CloseParen(
+                                    ")",
                                 ),
-                                trivia: "",
                             },
+                            semi_colon: SemiColon(
+                                ";",
+                            ),
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
-                    trivia: "\n",
-                },
-            },
-            semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
+                close_brace: CloseBrace(
+                    "}",
                 ),
-                trivia: "",
             },
+            semi_colon: SemiColon(
+                ";",
+            ),
         },
     ),
 ]

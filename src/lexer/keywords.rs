@@ -25,7 +25,7 @@
  * ```
  */
 
-use crate::parser::{eat::VariantToken, Tokens};
+use crate::parser::Tokens;
 use nom::IResult;
 
 macro_rules! generate_keywords_enum {
@@ -37,22 +37,13 @@ macro_rules! generate_keywords_enum {
             #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
             pub struct $typ<'a>(pub &'a str);
 
-            impl<'slice, 'a> $crate::Parse<'slice, 'a> for VariantToken<'a, $typ<'a>> {
+            impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ<'a> {
                 parser!($crate::eat_key!($typ));
             }
 
             impl<'a> Default for $typ<'a> {
                 fn default() -> Self {
                     crate::lexer::keywords::$typ($tok)
-                }
-            }
-
-            impl<'a> Default for VariantToken<'a, $typ<'a>> {
-                fn default() -> Self {
-                    VariantToken {
-                        variant: crate::lexer::keywords::$typ::default(),
-                        trivia: "",
-                    }
                 }
             }
         )*
@@ -170,255 +161,255 @@ generate_keywords_enum!(
 #[macro_export]
 macro_rules! term {
     (OpenParen) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::OpenParen<'a>>
+        $crate::lexer::keywords::OpenParen<'a>
     };
     (CloseParen) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::CloseParen<'a>>
+        $crate::lexer::keywords::CloseParen<'a>
     };
     (OpenBracket) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::OpenBracket<'a>>
+        $crate::lexer::keywords::OpenBracket<'a>
     };
     (CloseBracket) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::CloseBracket<'a>>
+        $crate::lexer::keywords::CloseBracket<'a>
     };
     (OpenBrace) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::OpenBrace<'a>>
+        $crate::lexer::keywords::OpenBrace<'a>
     };
     (CloseBrace) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::CloseBrace<'a>>
+        $crate::lexer::keywords::CloseBrace<'a>
     };
     (,) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Comma<'a>>
+        $crate::lexer::keywords::Comma<'a>
     };
     (-) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Minus<'a>>
+        $crate::lexer::keywords::Minus<'a>
     };
     (.) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Dot<'a>>
+        $crate::lexer::keywords::Dot<'a>
     };
     (...) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Ellipsis<'a>>
+        $crate::lexer::keywords::Ellipsis<'a>
     };
     (:) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Colon<'a>>
+        $crate::lexer::keywords::Colon<'a>
     };
     (;) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::SemiColon<'a>>
+        $crate::lexer::keywords::SemiColon<'a>
     };
     (<) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::LessThan<'a>>
+        $crate::lexer::keywords::LessThan<'a>
     };
     (=) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Assign<'a>>
+        $crate::lexer::keywords::Assign<'a>
     };
     (>) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::GreaterThan<'a>>
+        $crate::lexer::keywords::GreaterThan<'a>
     };
     (?) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::QMark<'a>>
+        $crate::lexer::keywords::QMark<'a>
     };
     (*) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Wildcard<'a>>
+        $crate::lexer::keywords::Wildcard<'a>
     };
     (or) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Or<'a>>
+        $crate::lexer::keywords::Or<'a>
     };
     (optional) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Optional<'a>>
+        $crate::lexer::keywords::Optional<'a>
     };
     (async) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Async<'a>>
+        $crate::lexer::keywords::Async<'a>
     };
     (attribute) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Attribute<'a>>
+        $crate::lexer::keywords::Attribute<'a>
     };
     (callback) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Callback<'a>>
+        $crate::lexer::keywords::Callback<'a>
     };
     (const) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Const<'a>>
+        $crate::lexer::keywords::Const<'a>
     };
     (deleter) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Deleter<'a>>
+        $crate::lexer::keywords::Deleter<'a>
     };
     (dictionary) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Dictionary<'a>>
+        $crate::lexer::keywords::Dictionary<'a>
     };
     (enum) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Enum<'a>>
+        $crate::lexer::keywords::Enum<'a>
     };
     (getter) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Getter<'a>>
+        $crate::lexer::keywords::Getter<'a>
     };
     (includes) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Includes<'a>>
+        $crate::lexer::keywords::Includes<'a>
     };
     (inherit) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Inherit<'a>>
+        $crate::lexer::keywords::Inherit<'a>
     };
     (interface) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Interface<'a>>
+        $crate::lexer::keywords::Interface<'a>
     };
     (iterable) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Iterable<'a>>
+        $crate::lexer::keywords::Iterable<'a>
     };
     (maplike) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Maplike<'a>>
+        $crate::lexer::keywords::Maplike<'a>
     };
     (namespace) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Namespace<'a>>
+        $crate::lexer::keywords::Namespace<'a>
     };
     (partial) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Partial<'a>>
+        $crate::lexer::keywords::Partial<'a>
     };
     (required) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Required<'a>>
+        $crate::lexer::keywords::Required<'a>
     };
     (setlike) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Setlike<'a>>
+        $crate::lexer::keywords::Setlike<'a>
     };
     (setter) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Setter<'a>>
+        $crate::lexer::keywords::Setter<'a>
     };
     (static) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Static<'a>>
+        $crate::lexer::keywords::Static<'a>
     };
     (stringifier) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Stringifier<'a>>
+        $crate::lexer::keywords::Stringifier<'a>
     };
     (typedef) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Typedef<'a>>
+        $crate::lexer::keywords::Typedef<'a>
     };
     (unrestricted) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Unrestricted<'a>>
+        $crate::lexer::keywords::Unrestricted<'a>
     };
     (symbol) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Symbol<'a>>
+        $crate::lexer::keywords::Symbol<'a>
     };
     (- Infinity) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::NegInfinity<'a>>
+        $crate::lexer::keywords::NegInfinity<'a>
     };
     (ByteString) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::ByteString<'a>>
+        $crate::lexer::keywords::ByteString<'a>
     };
     (DOMString) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::DOMString<'a>>
+        $crate::lexer::keywords::DOMString<'a>
     };
     (FrozenArray) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::FrozenArray<'a>>
+        $crate::lexer::keywords::FrozenArray<'a>
     };
     (Infinity) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Infinity<'a>>
+        $crate::lexer::keywords::Infinity<'a>
     };
     (NaN) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::NaN<'a>>
+        $crate::lexer::keywords::NaN<'a>
     };
     (ObservableArray) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::ObservableArray<'a>>
+        $crate::lexer::keywords::ObservableArray<'a>
     };
     (USVString) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::USVString<'a>>
+        $crate::lexer::keywords::USVString<'a>
     };
     (any) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Any<'a>>
+        $crate::lexer::keywords::Any<'a>
     };
     (boolean) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Boolean<'a>>
+        $crate::lexer::keywords::Boolean<'a>
     };
     (byte) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Byte<'a>>
+        $crate::lexer::keywords::Byte<'a>
     };
     (double) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Double<'a>>
+        $crate::lexer::keywords::Double<'a>
     };
     (false) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::False<'a>>
+        $crate::lexer::keywords::False<'a>
     };
     (float) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Float<'a>>
+        $crate::lexer::keywords::Float<'a>
     };
     (long) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Long<'a>>
+        $crate::lexer::keywords::Long<'a>
     };
     (null) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Null<'a>>
+        $crate::lexer::keywords::Null<'a>
     };
     (object) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Object<'a>>
+        $crate::lexer::keywords::Object<'a>
     };
     (octet) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Octet<'a>>
+        $crate::lexer::keywords::Octet<'a>
     };
     (bigint) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Bigint<'a>>
+        $crate::lexer::keywords::Bigint<'a>
     };
     (sequence) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Sequence<'a>>
+        $crate::lexer::keywords::Sequence<'a>
     };
     (short) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Short<'a>>
+        $crate::lexer::keywords::Short<'a>
     };
     (true) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::True<'a>>
+        $crate::lexer::keywords::True<'a>
     };
     (unsigned) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Unsigned<'a>>
+        $crate::lexer::keywords::Unsigned<'a>
     };
     (undefined) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Undefined<'a>>
+        $crate::lexer::keywords::Undefined<'a>
     };
     (record) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Record<'a>>
+        $crate::lexer::keywords::Record<'a>
     };
     (ArrayBuffer) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::ArrayBuffer<'a>>
+        $crate::lexer::keywords::ArrayBuffer<'a>
     };
     (DataView) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::DataView<'a>>
+        $crate::lexer::keywords::DataView<'a>
     };
     (Int8Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Int8Array<'a>>
+        $crate::lexer::keywords::Int8Array<'a>
     };
     (Int16Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Int16Array<'a>>
+        $crate::lexer::keywords::Int16Array<'a>
     };
     (Int32Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Int32Array<'a>>
+        $crate::lexer::keywords::Int32Array<'a>
     };
     (Uint8Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Uint8Array<'a>>
+        $crate::lexer::keywords::Uint8Array<'a>
     };
     (Uint16Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Uint16Array<'a>>
+        $crate::lexer::keywords::Uint16Array<'a>
     };
     (Uint32Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Uint32Array<'a>>
+        $crate::lexer::keywords::Uint32Array<'a>
     };
     (Uint8ClampedArray) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Uint8ClampedArray<'a>>
+        $crate::lexer::keywords::Uint8ClampedArray<'a>
     };
     (BigInt64Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::BigInt64Array<'a>>
+        $crate::lexer::keywords::BigInt64Array<'a>
     };
     (BigUint64Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::BigUint64Array<'a>>
+        $crate::lexer::keywords::BigUint64Array<'a>
     };
     (Float32Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Float32Array<'a>>
+        $crate::lexer::keywords::Float32Array<'a>
     };
     (Float64Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Float64Array<'a>>
+        $crate::lexer::keywords::Float64Array<'a>
     };
     (Promise) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Promise<'a>>
+        $crate::lexer::keywords::Promise<'a>
     };
     (readonly) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::ReadOnly<'a>>
+        $crate::lexer::keywords::ReadOnly<'a>
     };
     (mixin) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Mixin<'a>>
+        $crate::lexer::keywords::Mixin<'a>
     };
     (constructor) => {
-        $crate::parser::eat::VariantToken<'a, $crate::lexer::keywords::Constructor<'a>>
+        $crate::lexer::keywords::Constructor<'a>
     };
 }

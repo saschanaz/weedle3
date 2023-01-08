@@ -2,23 +2,17 @@
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: VariantToken {
-                variant: Typedef(
-                    "typedef",
-                ),
-                trivia: "  ",
-            },
+            typedef: Typedef(
+                "typedef",
+            ),
             type_: AttributedType {
                 attributes: None,
                 type_: Union(
                     MayBeNull {
                         type_: Parenthesized {
-                            open_paren: VariantToken {
-                                variant: OpenParen(
-                                    "(",
-                                ),
-                                trivia: " ",
-                            },
+                            open_paren: OpenParen(
+                                "(",
+                            ),
                             body: Punctuated {
                                 list: [
                                     Single(
@@ -26,12 +20,9 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
-                                                        variant: Identifier(
-                                                            "ImageData",
-                                                        ),
-                                                        trivia: "",
-                                                    },
+                                                    type_: Identifier(
+                                                        "ImageData",
+                                                    ),
                                                     q_mark: None,
                                                 },
                                             ),
@@ -42,12 +33,9 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
-                                                        variant: Identifier(
-                                                            "HTMLImageElement",
-                                                        ),
-                                                        trivia: "\n           ",
-                                                    },
+                                                    type_: Identifier(
+                                                        "HTMLImageElement",
+                                                    ),
                                                     q_mark: None,
                                                 },
                                             ),
@@ -58,12 +46,9 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
-                                                        variant: Identifier(
-                                                            "HTMLCanvasElement",
-                                                        ),
-                                                        trivia: "\n           ",
-                                                    },
+                                                    type_: Identifier(
+                                                        "HTMLCanvasElement",
+                                                    ),
                                                     q_mark: None,
                                                 },
                                             ),
@@ -74,43 +59,31 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
-                                                        variant: Identifier(
-                                                            "HTMLVideoElement",
-                                                        ),
-                                                        trivia: "\n           ",
-                                                    },
+                                                    type_: Identifier(
+                                                        "HTMLVideoElement",
+                                                    ),
                                                     q_mark: None,
                                                 },
                                             ),
                                         },
                                     ),
                                 ],
-                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Or>>,
+                                separator: PhantomData,
                             },
-                            close_paren: VariantToken {
-                                variant: CloseParen(
-                                    ")",
-                                ),
-                                trivia: "",
-                            },
+                            close_paren: CloseParen(
+                                ")",
+                            ),
                         },
                         q_mark: None,
                     },
                 ),
             },
-            identifier: VariantToken {
-                variant: Identifier(
-                    "TexImageSource",
-                ),
-                trivia: " ",
-            },
-            semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
-                trivia: "",
-            },
+            identifier: Identifier(
+                "TexImageSource",
+            ),
+            semi_colon: SemiColon(
+                ";",
+            ),
         },
     ),
 ]

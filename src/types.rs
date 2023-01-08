@@ -3,7 +3,6 @@ use weedle_derive::Weedle;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
 use crate::lexer::keywords;
-use crate::parser::eat::VariantToken;
 use crate::term;
 use crate::Parse;
 
@@ -55,7 +54,7 @@ pub enum NonAnyType<'a> {
     FrozenArrayType(MayBeNull<'a, FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<'a, ObservableArrayType<'a>>),
     RecordType(MayBeNull<'a, RecordType<'a>>),
-    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
+    Identifier(MayBeNull<'a, Identifier<'a>>),
     Undefined(MayBeNull<'a, term!(undefined)>),
 }
 
@@ -87,7 +86,7 @@ pub struct ObservableArrayType<'a> {
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct MayBeNull<'a, T> {
     pub type_: T,
-    pub q_mark: Option<VariantToken<'a, keywords::QuestionMark<'a>>>,
+    pub q_mark: Option<keywords::QuestionMark<'a>>,
 }
 
 /// Parses a `Promise<Type|undefined>` type
@@ -179,7 +178,7 @@ pub enum ConstType<'a> {
     Byte(MayBeNull<'a, term!(byte)>),
     Octet(MayBeNull<'a, term!(octet)>),
     Bigint(MayBeNull<'a, term!(bigint)>),
-    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
+    Identifier(MayBeNull<'a, Identifier<'a>>),
 }
 
 /// Parses the return type which may be `undefined` or any given Type

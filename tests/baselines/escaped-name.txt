@@ -2,84 +2,51 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
-                trivia: "",
-            },
-            identifier: VariantToken {
-                variant: Identifier(
-                    "_Iroha",
-                ),
-                trivia: " ",
-            },
+            interface: Interface(
+                "interface",
+            ),
+            identifier: Identifier(
+                "_Iroha",
+            ),
             inheritance: Some(
                 Inheritance {
-                    colon: VariantToken {
-                        variant: Colon(
-                            ":",
-                        ),
-                        trivia: " ",
-                    },
-                    identifier: VariantToken {
-                        variant: Identifier(
-                            "_Magic",
-                        ),
-                        trivia: " ",
-                    },
+                    colon: Colon(
+                        ":",
+                    ),
+                    identifier: Identifier(
+                        "_Magic",
+                    ),
                 },
             ),
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
-                    trivia: " ",
-                },
-                body: [],
-                close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
-                    trivia: "",
-                },
-            },
-            semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
+                open_brace: OpenBrace(
+                    "{",
                 ),
-                trivia: "",
+                body: [],
+                close_brace: CloseBrace(
+                    "}",
+                ),
             },
+            semi_colon: SemiColon(
+                ";",
+            ),
         },
     ),
     IncludesStatement(
         IncludesStatementDefinition {
             attributes: None,
-            lhs_identifier: VariantToken {
-                variant: Identifier(
-                    "_Iroha",
-                ),
-                trivia: "\n",
-            },
-            includes: VariantToken {
-                variant: Includes(
-                    "includes",
-                ),
-                trivia: " ",
-            },
-            rhs_identifier: VariantToken {
-                variant: Identifier(
-                    "_Color",
-                ),
-                trivia: " ",
-            },
-            semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
-                trivia: "",
-            },
+            lhs_identifier: Identifier(
+                "_Iroha",
+            ),
+            includes: Includes(
+                "includes",
+            ),
+            rhs_identifier: Identifier(
+                "_Color",
+            ),
+            semi_colon: SemiColon(
+                ";",
+            ),
         },
     ),
 ]

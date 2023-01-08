@@ -2,57 +2,39 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
-                trivia: "",
-            },
-            identifier: VariantToken {
-                variant: Identifier(
-                    "Animal",
-                ),
-                trivia: " ",
-            },
+            interface: Interface(
+                "interface",
+            ),
+            identifier: Identifier(
+                "Animal",
+            ),
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
-                    trivia: " ",
-                },
+                open_brace: OpenBrace(
+                    "{",
+                ),
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                VariantToken {
-                                    variant: ReadOnly(
-                                        "readonly",
-                                    ),
-                                    trivia: "\n\n  // A simple attribute that can be set to any string value.\n  ",
-                                },
-                            ),
-                            attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
+                                ReadOnly(
+                                    "readonly",
                                 ),
-                                trivia: " ",
-                            },
+                            ),
+                            attribute: Attribute(
+                                "attribute",
+                            ),
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
-                                                    trivia: " ",
-                                                },
+                                                type_: DOMString(
+                                                    "DOMString",
+                                                ),
                                                 q_mark: None,
                                             },
                                         ),
@@ -60,94 +42,61 @@
                                 ),
                             },
                             identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "name",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                                Identifier(
+                                    "name",
                                 ),
-                                trivia: "",
-                            },
+                            ),
+                            semi_colon: SemiColon(
+                                ";",
+                            ),
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
-                    trivia: "\n",
-                },
-            },
-            semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
+                close_brace: CloseBrace(
+                    "}",
                 ),
-                trivia: "",
             },
+            semi_colon: SemiColon(
+                ";",
+            ),
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
-                trivia: "\n\n",
-            },
-            identifier: VariantToken {
-                variant: Identifier(
-                    "Person",
-                ),
-                trivia: " ",
-            },
+            interface: Interface(
+                "interface",
+            ),
+            identifier: Identifier(
+                "Person",
+            ),
             inheritance: Some(
                 Inheritance {
-                    colon: VariantToken {
-                        variant: Colon(
-                            ":",
-                        ),
-                        trivia: " ",
-                    },
-                    identifier: VariantToken {
-                        variant: Identifier(
-                            "Animal",
-                        ),
-                        trivia: " ",
-                    },
+                    colon: Colon(
+                        ":",
+                    ),
+                    identifier: Identifier(
+                        "Animal",
+                    ),
                 },
             ),
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
-                    trivia: " ",
-                },
+                open_brace: OpenBrace(
+                    "{",
+                ),
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                VariantToken {
-                                    variant: ReadOnly(
-                                        "readonly",
-                                    ),
-                                    trivia: "\n\n  // An attribute whose value cannot be assigned to.\n  ",
-                                },
-                            ),
-                            attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
+                                ReadOnly(
+                                    "readonly",
                                 ),
-                                trivia: " ",
-                            },
+                            ),
+                            attribute: Attribute(
+                                "attribute",
+                            ),
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -157,19 +106,13 @@
                                                 type_: Short(
                                                     ShortType {
                                                         unsigned: Some(
-                                                            VariantToken {
-                                                                variant: Unsigned(
-                                                                    "unsigned",
-                                                                ),
-                                                                trivia: " ",
-                                                            },
-                                                        ),
-                                                        short: VariantToken {
-                                                            variant: Short(
-                                                                "short",
+                                                            Unsigned(
+                                                                "unsigned",
                                                             ),
-                                                            trivia: " ",
-                                                        },
+                                                        ),
+                                                        short: Short(
+                                                            "short",
+                                                        ),
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -179,19 +122,13 @@
                                 ),
                             },
                             identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "age",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                                Identifier(
+                                    "age",
                                 ),
-                                trivia: "",
-                            },
+                            ),
+                            semi_colon: SemiColon(
+                                ";",
+                            ),
                         },
                     ),
                     Attribute(
@@ -199,33 +136,24 @@
                             attributes: None,
                             modifier: Some(
                                 Inherit(
-                                    VariantToken {
-                                        variant: Inherit(
-                                            "inherit",
-                                        ),
-                                        trivia: "\n\n  // An attribute that can raise an exception if it is set to an invalid value.\n  // Its getter behavior is inherited from Animal, and need not be specified\n  // the description of Person.\n  ",
-                                    },
+                                    Inherit(
+                                        "inherit",
+                                    ),
                                 ),
                             ),
                             readonly: None,
-                            attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
-                                trivia: " ",
-                            },
+                            attribute: Attribute(
+                                "attribute",
+                            ),
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
-                                                    trivia: " ",
-                                                },
+                                                type_: DOMString(
+                                                    "DOMString",
+                                                ),
                                                 q_mark: None,
                                             },
                                         ),
@@ -233,35 +161,23 @@
                                 ),
                             },
                             identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "name",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                                Identifier(
+                                    "name",
                                 ),
-                                trivia: "",
-                            },
+                            ),
+                            semi_colon: SemiColon(
+                                ";",
+                            ),
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
-                    trivia: "\n",
-                },
-            },
-            semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
+                close_brace: CloseBrace(
+                    "}",
                 ),
-                trivia: "",
             },
+            semi_colon: SemiColon(
+                ";",
+            ),
         },
     ),
 ]

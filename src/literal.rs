@@ -1,7 +1,7 @@
 use nom::Parser;
 use weedle_derive::Weedle;
 
-use crate::{parser::eat::VariantToken, term, Parse};
+use crate::{term, Parse};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -73,7 +73,7 @@ impl<'a> IntegerLit<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, IntegerLit<'a>> {
+impl<'slice, 'a> Parse<'slice, 'a> for IntegerLit<'a> {
     parser!(crate::eat!(Int));
 }
 
@@ -96,7 +96,7 @@ impl<'a> StringLit<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, StringLit<'a>> {
+impl<'slice, 'a> Parse<'slice, 'a> for StringLit<'a> {
     parser!(crate::eat!(Str));
 }
 
@@ -121,9 +121,9 @@ pub enum DefaultValue<'a> {
     EmptyArray(EmptyArrayLit<'a>),
     EmptyDictionary(EmptyDictionaryLit<'a>),
     Float(FloatLit<'a>),
-    Integer(VariantToken<'a, IntegerLit<'a>>),
+    Integer(IntegerLit<'a>),
     Null(term!(null)),
-    String(VariantToken<'a, StringLit<'a>>),
+    String(StringLit<'a>),
 }
 
 /// Represents `true`, `false`, `34.23`, `null`, `56`, ...
@@ -131,7 +131,7 @@ pub enum DefaultValue<'a> {
 pub enum ConstValue<'a> {
     Boolean(BooleanLit),
     Float(FloatLit<'a>),
-    Integer(VariantToken<'a, IntegerLit<'a>>),
+    Integer(IntegerLit<'a>),
     Null(term!(null)),
 }
 
@@ -200,14 +200,14 @@ impl<'a> FloatValueLit<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, FloatValueLit<'a>> {
+impl<'slice, 'a> Parse<'slice, 'a> for FloatValueLit<'a> {
     parser!(crate::eat!(Dec));
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FloatLit<'a> {
-    Value(VariantToken<'a, FloatValueLit<'a>>),
+    Value(FloatValueLit<'a>),
     NegInfinity(term!(-Infinity)),
     Infinity(term!(Infinity)),
     NaN(term!(NaN)),
@@ -216,8 +216,7 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::lexer::keywords::{Keyword, Null};
-    use crate::parser::eat::VariantToken;
+    use crate::lexer::keywords::{Keyword, Null, self};
     use crate::Parse;
 
     test_match!(should_parse_integer { "45" =>
@@ -225,9 +224,8 @@ mod test {
         IntegerLit => IntegerLit::Dec(DecLit("45"))
     });
 
-    test!(should_parse_integer_surrounding_with_spaces { "  123123  " =>
-        "  ";
-        VariantToken<IntegerLit> => VariantToken { variant: IntegerLit::Dec(DecLit("123123")), trivia: "  " }
+    test_result_match!(should_not_parse_integer_surrounding_with_spaces { "  123123  ";
+        IntegerLit => Err(nom::Err::Error(_))
     });
 
     test_match!(should_parse_integer_preceding_others { "3453 string" =>
@@ -262,48 +260,42 @@ mod test {
 
     test!(should_parse_float { "45.434" =>
         "";
-        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("45.434"), trivia: "" })
+        FloatLit => FloatLit::Value(FloatValueLit("45.434"))
     });
 
     test!(should_parse_float_surrounding_with_spaces { "  2345.2345  " =>
         "  ";
-        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("2345.2345"), trivia: "  " })
+        FloatLit => FloatLit::Value(FloatValueLit("2345.2345"))
     });
 
     test!(should_parse_float_preceding_others { "3453.32334 string" =>
         " string";
-        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("3453.32334"), trivia: "" })
+        FloatLit => FloatLit::Value(FloatValueLit("3453.32334"))
     });
 
     test!(should_parse_neg_float { "-435.3435" =>
         "";
-        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("-435.3435"), trivia: "" })
+        FloatLit => FloatLit::Value(FloatValueLit("-435.3435"))
     });
 
     test!(should_parse_float_exp { "3e23" =>
         "";
-        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("3e23"), trivia: "" })
+        FloatLit => FloatLit::Value(FloatValueLit("3e23"))
     });
 
     test!(should_parse_float_exp_with_decimal { "5.3434e23" =>
         "";
-        FloatLit => FloatLit::Value(VariantToken { variant: FloatValueLit("5.3434e23"), trivia: "" })
+        FloatLit => FloatLit::Value(FloatValueLit("5.3434e23"))
     });
 
     test!(should_parse_neg_infinity { "-Infinity" =>
         "";
-        FloatLit => FloatLit::NegInfinity(VariantToken {
-            variant: crate::lexer::keywords::NegInfinity("-Infinity"),
-            trivia: "",
-        })
+        FloatLit => FloatLit::NegInfinity(keywords::NegInfinity("-Infinity"))
     });
 
     test!(should_parse_infinity { "Infinity" =>
         "";
-        FloatLit => FloatLit::Infinity(VariantToken {
-            variant: crate::lexer::keywords::Infinity("Infinity"),
-            trivia: "",
-        })
+        FloatLit => FloatLit::Infinity(keywords::Infinity("Infinity"))
     });
 
     test_match!(should_parse_string { r#""this is a string""# =>
@@ -311,30 +303,28 @@ mod test {
         StringLit => StringLit("this is a string")
     });
 
-    test!(should_parse_string_surround_with_spaces { r#"  "this is a string"  "# =>
-        "  ";
-        VariantToken<StringLit> => VariantToken { variant: StringLit("this is a string"), trivia: "  " }
+    test_result_match!(should_not_parse_string_surround_with_spaces { r#"  "this is a string"  "#;
+        StringLit => Err(nom::Err::Error(_))
     });
 
-    test!(should_parse_string_followed_by_string { r#" "this is first"  "this is second" "# =>
+    test_match!(should_parse_string_followed_by_string { r#""this is first"  "this is second" "# =>
         r#"  "this is second" "#;
-        VariantToken<StringLit> => VariantToken { variant: StringLit("this is first"), trivia: " " }
+        StringLit => StringLit("this is first")
     });
 
-    test!(should_parse_string_with_spaces { r#"  "  this is a string  "  "# =>
-        "  ";
-        VariantToken<StringLit> => VariantToken { variant: StringLit("  this is a string  "), trivia: "  " }
+    test_result_match!(should_not_parse_string_with_spaces { r#"  "  this is a string  "  "#;
+        StringLit => Err(nom::Err::Error(_))
     });
 
-    test!(should_parse_string_with_comment { r#"  "// this is still a string"
+    test_match!(should_parse_string_with_comment { r#""// this is still a string"
      "# =>
         "\n     ";
-        VariantToken<StringLit> => VariantToken { variant: StringLit("// this is still a string"), trivia: "  " }
+        StringLit => StringLit("// this is still a string")
     });
 
-    test!(should_parse_string_with_multiline_comment { r#"  "/*"  "*/"  "# =>
+    test_match!(should_parse_string_with_multiline_comment { r#""/*"  "*/"  "# =>
         r#"  "*/"  "#;
-        VariantToken<StringLit> => VariantToken { variant: StringLit("/*"), trivia: "  " }
+        StringLit => StringLit("/*")
     });
 
     test_match!(should_parse_null { "null" =>

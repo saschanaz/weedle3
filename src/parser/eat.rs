@@ -1,11 +1,5 @@
 use super::impl_nom_traits::Tokens;
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct VariantToken<'a, T> {
-    pub variant: T,
-    pub trivia: &'a str,
-}
-
 // XXX: Working around the lambda function limitation about lifetimes
 // https://github.com/rust-lang/rust/issues/58052
 pub fn annotate<'slice, 'token, F, R>(f: F) -> F
@@ -25,10 +19,10 @@ macro_rules! eat {
                 match input.iter_elements().next() {
                     Some($crate::lexer::Token {
                         tag: $crate::lexer::Tag::$variant(variant),
-                        trivia,
+                        trivia: _,
                     }) => Ok((
                         input.slice(1..),
-                        $crate::parser::eat::VariantToken { variant, trivia },
+                        variant,
                     )),
                     _ => Err(nom::Err::Error(nom::error::Error {
                         input,
@@ -49,10 +43,10 @@ macro_rules! eat_key {
             match input.iter_elements().next() {
                 Some($crate::lexer::Token {
                     tag: Tag::Kw(Keyword::$variant(variant)),
-                    trivia,
+                    trivia: _,
                 }) => Ok((
                     input.slice(1..),
-                    $crate::parser::eat::VariantToken { variant, trivia },
+                    variant,
                 )),
                 _ => Err(nom::Err::Error(nom::error::Error {
                     input,

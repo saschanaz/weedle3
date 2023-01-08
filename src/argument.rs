@@ -2,7 +2,6 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
-use crate::parser::eat::VariantToken;
 use crate::parser::Tokens;
 use crate::types::{AttributedType, Type};
 use crate::{term, Parse};
@@ -12,7 +11,7 @@ pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ArgumentName<'a> {
-    Identifier(VariantToken<'a, Identifier<'a>>),
+    Identifier(Identifier<'a>),
     Async(term!(async)),
     Attribute(term!(attribute)),
     Callback(term!(callback)),
@@ -83,7 +82,7 @@ pub struct VariadicArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub type_: Type<'a>,
     pub ellipsis: term!(...),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
 }
 
 /// Parses an argument. Ex: `double v1|double... v1s`
@@ -97,7 +96,6 @@ pub enum Argument<'a> {
 mod test {
     use super::*;
     use crate::literal::{DecLit, DefaultValue, IntegerLit};
-    use crate::parser::eat::VariantToken;
     use crate::Parse;
 
     test!(should_parse_single_argument { "short a" =>
@@ -105,7 +103,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: " " });
+        identifier == ArgumentName::Identifier(Identifier("a"));
         default.is_none();
     });
 
@@ -113,7 +111,7 @@ mod test {
         "";
         VariadicArgument;
         attributes.is_none();
-        identifier.variant.0 == "a";
+        identifier.0 == "a";
     });
 
     test!(should_parse_optional_single_argument { "optional short a" =>
@@ -121,7 +119,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: " " });
+        identifier == ArgumentName::Identifier(Identifier("a"));
         default.is_none();
     });
 
@@ -130,10 +128,10 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == ArgumentName::Identifier(VariantToken { variant: Identifier("a"), trivia: " " });
+        identifier == ArgumentName::Identifier(Identifier("a"));
         default == Some(Default {
-            assign: VariantToken { variant: core::default::Default::default(), trivia: " " },
-            value: DefaultValue::Integer(VariantToken { variant: IntegerLit::Dec(DecLit("5")), trivia: " " }),
+            assign: core::default::Default::default(),
+            value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
         });
     });
 

@@ -31,7 +31,6 @@ use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, ReturnType};
 pub use nom::{error::Error, Err, IResult};
-use parser::eat::VariantToken;
 use weedle_derive::Weedle;
 
 #[macro_use]
@@ -73,10 +72,10 @@ use crate::parser::Tokens;
 /// ```
 pub fn parse(
     input: &'_ str,
-) -> Result<(Definitions<'_>, &'_ str), nom::Err<nom::error::Error<&'_ str>>> {
+) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
 
-    let (unread, (defs, eof)) = nom::sequence::tuple((Definitions::parse, eat!(Eof)))(Tokens(
+    let (unread, (defs, _eof)) = nom::sequence::tuple((Definitions::parse, eat!(Eof)))(Tokens(
         &tokens[..],
     ))
     .map_err(|err| match err {
@@ -94,7 +93,7 @@ pub fn parse(
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
 
-    Ok((defs, eof.trivia))
+    Ok(defs)
 }
 
 pub trait Parse<'slice, 'token>: Sized {
@@ -111,7 +110,7 @@ pub type Definitions<'a> = Vec<Definition<'a>>;
 pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub assign: term!(=),
     pub return_type: ReturnType<'a>,
     pub arguments: Parenthesized<'a, ArgumentList<'a>>,
@@ -124,7 +123,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
     pub interface: term!(interface),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
@@ -135,7 +134,7 @@ pub struct CallbackInterfaceDefinition<'a> {
 pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
@@ -147,7 +146,7 @@ pub struct InterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
     pub mixin: term!(mixin),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub members: Braced<'a, MixinMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -157,7 +156,7 @@ pub struct InterfaceMixinDefinition<'a> {
 pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -167,7 +166,7 @@ pub struct NamespaceDefinition<'a> {
 pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
     pub semi_colon: term!(;),
@@ -179,7 +178,7 @@ pub struct PartialInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub interface: term!(interface),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -191,7 +190,7 @@ pub struct PartialInterfaceMixinDefinition<'a> {
     pub partial: term!(partial),
     pub interface: term!(interface),
     pub mixin: term!(mixin),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub members: Braced<'a, MixinMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -202,7 +201,7 @@ pub struct PartialDictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -213,7 +212,7 @@ pub struct PartialNamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub namespace: term!(namespace),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
@@ -223,7 +222,7 @@ pub struct PartialNamespaceDefinition<'a> {
 pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub values: Braced<'a, EnumValueList<'a>>,
     pub semi_colon: term!(;),
 }
@@ -234,7 +233,7 @@ pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub typedef: term!(typedef),
     pub type_: AttributedType<'a>,
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
 
@@ -242,9 +241,9 @@ pub struct TypedefDefinition<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Identifier<'a>,
     pub includes: term!(includes),
-    pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub rhs_identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
 
@@ -267,7 +266,7 @@ pub enum Definition<'a> {
 }
 
 /// Parses a non-empty enum value list
-pub type EnumValueList<'a> = PunctuatedNonEmpty<VariantToken<'a, StringLit<'a>>, term!(,)>;
+pub type EnumValueList<'a> = PunctuatedNonEmpty<StringLit<'a>, term!(,)>;
 
 #[cfg(test)]
 mod test {
@@ -277,22 +276,22 @@ mod test {
         "";
         IncludesStatementDefinition;
         attributes.is_none();
-        lhs_identifier.variant.0 == "first";
-        rhs_identifier.variant.0 == "second";
+        lhs_identifier.0 == "first";
+        rhs_identifier.0 == "second";
     });
 
     test!(should_parse_typedef { "typedef short Short;" =>
         "";
         TypedefDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Short";
+        identifier.0 == "Short";
     });
 
     test!(should_parse_enum { r#"enum name { "first", "second" };"# =>
         "";
         EnumDefinition;
         attributes.is_none();
-        identifier.variant.0 == "name";
+        identifier.0 == "name";
         values.body.list.len() == 2;
     });
 
@@ -300,7 +299,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.variant.0 == "A";
+        identifier.0 == "A";
         inheritance.is_none();
         members.body.len() == 2;
     });
@@ -309,7 +308,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.variant.0 == "C";
+        identifier.0 == "C";
         inheritance.is_some();
         members.body.len() == 2;
     });
@@ -324,7 +323,7 @@ mod test {
         "\n    ";
         PartialNamespaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "VectorUtils";
+        identifier.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -332,7 +331,7 @@ mod test {
         "";
         PartialDictionaryDefinition;
         attributes.is_none();
-        identifier.variant.0 == "C";
+        identifier.0 == "C";
         members.body.len() == 2;
     });
 
@@ -344,7 +343,7 @@ mod test {
         "\n    ";
         PartialInterfaceMixinDefinition;
         attributes.is_none();
-        identifier.variant.0 == "WindowSessionStorage";
+        identifier.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -356,7 +355,7 @@ mod test {
         "\n    ";
         PartialInterfaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Window";
+        identifier.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -370,7 +369,7 @@ mod test {
         "\n    ";
         NamespaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "VectorUtils";
+        identifier.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -382,7 +381,7 @@ mod test {
         "\n    ";
         InterfaceMixinDefinition;
         attributes.is_none();
-        identifier.variant.0 == "WindowSessionStorage";
+        identifier.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -394,7 +393,7 @@ mod test {
         "\n    ";
         InterfaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Window";
+        identifier.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -408,7 +407,7 @@ mod test {
         "\n    ";
         CallbackInterfaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Options";
+        identifier.0 == "Options";
         members.body.len() == 3;
     });
 
@@ -416,7 +415,7 @@ mod test {
         "";
         CallbackDefinition;
         attributes.is_none();
-        identifier.variant.0 == "AsyncOperationCallback";
+        identifier.0 == "AsyncOperationCallback";
         arguments.body.list.len() == 1;
     });
 

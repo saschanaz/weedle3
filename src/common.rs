@@ -4,7 +4,6 @@ use weedle_derive::Weedle;
 
 use crate::lexer::keywords;
 use crate::literal::DefaultValue;
-use crate::parser::eat::VariantToken;
 use crate::parser::Tokens;
 use crate::{term, Parse};
 
@@ -39,36 +38,36 @@ impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>, V: Parse<'slice, 'a
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Parenthesized<'a, T> {
-    pub open_paren: VariantToken<'a, keywords::OpenParen<'a>>,
+    pub open_paren: keywords::OpenParen<'a>,
     pub body: T,
-    pub close_paren: VariantToken<'a, keywords::CloseParen<'a>>,
+    pub close_paren: keywords::CloseParen<'a>,
 }
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Bracketed<'a, T> {
-    pub open_bracket: VariantToken<'a, keywords::OpenBracket<'a>>,
+    pub open_bracket: keywords::OpenBracket<'a>,
     pub body: T,
-    pub close_bracket: VariantToken<'a, keywords::CloseBracket<'a>>,
+    pub close_bracket: keywords::CloseBracket<'a>,
 }
 
 /// Parses `{ body }`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Braced<'a, T> {
-    pub open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
+    pub open_brace: keywords::OpenBrace<'a>,
     pub body: T,
-    pub close_brace: VariantToken<'a, keywords::CloseBrace<'a>>,
+    pub close_brace: keywords::CloseBrace<'a>,
 }
 
 /// Parses `< body >`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Generics<'a, T> {
-    pub open_angle: VariantToken<'a, keywords::LessThan<'a>>,
+    pub open_angle: keywords::LessThan<'a>,
     pub body: T,
-    pub close_angle: VariantToken<'a, keywords::GreaterThan<'a>>,
+    pub close_angle: keywords::GreaterThan<'a>,
 }
 
 /// Parses `(item1, item2, item3,...)?`
@@ -144,7 +143,7 @@ impl<'a> Identifier<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, Identifier<'a>> {
+impl<'slice, 'a> Parse<'slice, 'a> for Identifier<'a> {
     parser!(crate::eat!(Id));
 }
 
@@ -161,73 +160,73 @@ mod test {
 
     test!(should_parse_optional_present { "one" =>
         "";
-        Option<VariantToken<Identifier>>;
+        Option<Identifier>;
         is_some();
     });
 
     test!(should_parse_optional_not_present { "" =>
         "";
-        Option<VariantToken<Identifier>>;
+        Option<Identifier>;
         is_none();
     });
 
     test!(should_parse_boxed { "one" =>
         "";
-        Box<VariantToken<Identifier>>;
+        Box<Identifier>;
     });
 
     test!(should_parse_vec { "one two three" =>
         "";
-        Vec<VariantToken<Identifier>>;
+        Vec<Identifier>;
         len() == 3;
     });
 
     test!(should_parse_parenthesized { "( one )" =>
         "";
-        Parenthesized<VariantToken<Identifier>>;
-        body.variant.0 == "one";
+        Parenthesized<Identifier>;
+        body.0 == "one";
     });
 
     test!(should_parse_bracketed { "[ one ]" =>
         "";
-        Bracketed<VariantToken<Identifier>>;
-        body.variant.0 == "one";
+        Bracketed<Identifier>;
+        body.0 == "one";
     });
 
     test!(should_parse_braced { "{ one }" =>
         "";
-        Braced<VariantToken<Identifier>>;
-        body.variant.0 == "one";
+        Braced<Identifier>;
+        body.0 == "one";
     });
 
     test!(should_parse_generics { "<one>" =>
         "";
-        Generics<VariantToken<Identifier>>;
-        body.variant.0 == "one";
+        Generics<Identifier>;
+        body.0 == "one";
     });
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(VariantToken<Identifier>, VariantToken<keywords::Comma>, VariantToken<Identifier>)> =>
+        Generics<(Identifier, keywords::Comma, Identifier)> =>
             Generics {
-                open_angle: VariantToken::default(),
+                open_angle: keywords::LessThan::default(),
                 body: (
-                    VariantToken { variant: Identifier("one"), trivia: "" },
-                    VariantToken::default(),
-                    VariantToken { variant: Identifier("two"), trivia: " " },
+                    Identifier("one"),
+                    keywords::Comma::default(),
+                    Identifier("two"),
                 ),
-                close_angle: VariantToken::default(),
+                close_angle: keywords::GreaterThan::default(),
             }
     });
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<VariantToken<Identifier>, VariantToken<keywords::Comma>>;
+        Punctuated<Identifier, keywords::Comma>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<VariantToken<Identifier>, VariantToken<keywords::Comma>>
+        PunctuatedNonEmpty<Identifier, keywords::Comma>
     });
 
     test_match!(should_parse_identifier { "hello" =>
@@ -250,10 +249,8 @@ mod test {
         Identifier => Identifier("-hello")
     });
 
-    test!(should_parse_identifier_surrounding_with_spaces { "  hello  " =>
-        "  ";
-        VariantToken<Identifier>;
-        variant.0 == "hello";
+    test_result_match!(should_not_parse_identifier_surrounding_with_spaces { "  hello  ";
+        Identifier => Err(nom::Err::Error(_))
     });
 
     test_match!(should_parse_identifier_preceding_others { "hello  note" =>

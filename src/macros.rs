@@ -41,6 +41,18 @@ macro_rules! test_match {
 }
 
 #[cfg(test)]
+macro_rules! test_result_match {
+    ($name:ident { $input:literal; $typ:ty => $match:pat_param }) => {
+        #[test]
+        fn $name() {
+            let result = <$typ>::parse($input);
+
+            assert!(matches!(result, $match));
+        }
+    };
+}
+
+#[cfg(test)]
 macro_rules! test {
     (@arg $parsed:ident) => {};
     (@arg $parsed:ident $($lhs:tt).+ == $rhs:expr; $($rest:tt)*) => {
