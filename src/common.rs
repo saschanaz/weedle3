@@ -1,5 +1,3 @@
-use std::marker::PhantomData;
-
 use weedle_derive::Weedle;
 
 use crate::lexer::keywords;
@@ -98,13 +96,13 @@ where
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PunctuatedNonEmpty<T, S> {
     pub list: Vec<T>,
-    pub separator: std::marker::PhantomData<S>,
+    pub separator: S,
 }
 
 impl<'slice, 'a, T, S> Parse<'slice, 'a> for PunctuatedNonEmpty<T, S>
 where
     T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a>,
+    S: Parse<'slice, 'a> + core::default::Default,
 {
     fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(
@@ -115,7 +113,7 @@ where
             input,
             Self {
                 list,
-                separator: PhantomData::default(),
+                separator: S::default(),
             },
         ))
     }
