@@ -86,7 +86,7 @@ pub struct ObservableArrayType<'a> {
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct MayBeNull<T> {
     pub type_: T,
-    pub q_mark: Option<keywords::QuestionMark>,
+    pub q_mark: Option<keywords::QMark>,
 }
 
 /// Parses a `Promise<Type|undefined>` type

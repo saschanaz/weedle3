@@ -148,7 +148,7 @@ generate_keywords_enum!(
     LessThan => "<",
     Assign => "=",
     GreaterThan => ">",
-    QuestionMark => "?",
+    QMark => "?",
     Wildcard => "*",
 );
 
