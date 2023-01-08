@@ -74,13 +74,13 @@ pub struct Generics<T> {
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Punctuated<T, S> {
     pub list: Vec<T>,
-    pub separator: std::marker::PhantomData<S>,
+    pub separator: S,
 }
 
 impl<'slice, 'a, T, S> Parse<'slice, 'a> for Punctuated<T, S>
 where
     T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a>,
+    S: Parse<'slice, 'a> + core::default::Default,
 {
     fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
@@ -88,7 +88,7 @@ where
             input,
             Self {
                 list,
-                separator: PhantomData::default(),
+                separator: S::default(),
             },
         ))
     }
