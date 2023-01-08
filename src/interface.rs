@@ -4,8 +4,8 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
 use crate::literal::ConstValue;
-use crate::term;
 use crate::types::{AttributedType, ConstType, ReturnType};
+use crate::{eat, term};
 
 /// Parses interface members
 pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
@@ -29,11 +29,32 @@ pub struct ConstMember<'a> {
     pub semi_colon: term!(;),
 }
 
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum AttributeName<'a> {
-    Identifier(Identifier<'a>),
-    Async(term!(async)),
-    Required(term!(required)),
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct AttributeName<'a>(&'a str);
+
+macro_rules! try_eat_attr {
+    ($input:ident, $variant:ident) => {
+        if let Ok((tokens, result)) = crate::eat_key!($variant)($input) {
+            return Ok((tokens, AttributeName(result.value())));
+        }
+    };
+}
+
+impl<'slice, 'a> crate::Parse<'slice, 'a> for AttributeName<'a> {
+    fn parse(
+        input: crate::parser::Tokens<'slice, 'a>,
+    ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
+        if let Ok((tokens, result)) = eat!(Id)(input) {
+            return Ok((tokens, AttributeName(result.0)));
+        }
+        try_eat_attr!(input, Async);
+        try_eat_attr!(input, Required);
+
+        Err(nom::Err::Error(nom::error::Error {
+            input,
+            code: nom::error::ErrorKind::Char,
+        }))
+    }
 }
 
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
@@ -59,10 +80,31 @@ pub struct ConstructorInterfaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum OperationName<'a> {
-    Identifier(Identifier<'a>),
-    Includes(term!(includes)),
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct OperationName<'a>(&'a str);
+
+macro_rules! try_eat_op {
+    ($input:ident, $variant:ident) => {
+        if let Ok((tokens, result)) = crate::eat_key!($variant)($input) {
+            return Ok((tokens, OperationName(result.value())));
+        }
+    };
+}
+
+impl<'slice, 'a> crate::Parse<'slice, 'a> for OperationName<'a> {
+    fn parse(
+        input: crate::parser::Tokens<'slice, 'a>,
+    ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
+        if let Ok((tokens, result)) = eat!(Id)(input) {
+            return Ok((tokens, OperationName(result.0)));
+        }
+        try_eat_op!(input, Includes);
+
+        Err(nom::Err::Error(nom::error::Error {
+            input,
+            code: nom::error::ErrorKind::Char,
+        }))
+    }
 }
 
 /// Parses `[attributes]? (stringifier|static)? special? returntype identifier? (( args ));`
@@ -234,7 +276,7 @@ mod test {
         AttributeInterfaceMember;
         attributes.is_none();
         readonly == Some(keywords::ReadOnly);
-        identifier == AttributeName::Identifier(Identifier("width"));
+        identifier == AttributeName("width");
     });
 
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>

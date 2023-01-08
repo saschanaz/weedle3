@@ -34,19 +34,21 @@ macro_rules! eat {
 #[macro_export]
 macro_rules! eat_key {
     ($variant:ident) => {
-        $crate::parser::eat::annotate(|input: Tokens| -> IResult<Tokens, _> {
-            use nom::{InputIter, Slice};
-            use $crate::lexer::{keywords::Keyword, Tag};
-            match input.iter_elements().next() {
-                Some($crate::lexer::Token {
-                    tag: Tag::Kw(Keyword::$variant(variant)),
-                    trivia: _,
-                }) => Ok((input.slice(1..), variant)),
-                _ => Err(nom::Err::Error(nom::error::Error {
-                    input,
-                    code: nom::error::ErrorKind::Char,
-                })),
-            }
-        })
+        $crate::parser::eat::annotate(
+            |input: $crate::parser::Tokens| -> nom::IResult<$crate::parser::Tokens, _> {
+                use nom::{InputIter, Slice};
+                use $crate::lexer::{keywords::Keyword, Tag};
+                match input.iter_elements().next() {
+                    Some($crate::lexer::Token {
+                        tag: Tag::Kw(Keyword::$variant(variant)),
+                        trivia: _,
+                    }) => Ok((input.slice(1..), variant)),
+                    _ => Err(nom::Err::Error(nom::error::Error {
+                        input,
+                        code: nom::error::ErrorKind::Char,
+                    })),
+                }
+            },
+        )
     };
 }

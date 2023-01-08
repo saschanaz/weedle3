@@ -25,9 +25,6 @@
  * ```
  */
 
-use crate::parser::Tokens;
-use nom::IResult;
-
 macro_rules! generate_keywords_enum {
     (
         $($typ:ident => $tok:expr,)*
@@ -36,6 +33,12 @@ macro_rules! generate_keywords_enum {
             #[doc=$tok]
             #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
             pub struct $typ;
+
+            impl $typ {
+                pub fn value(&self) -> &'static str {
+                    return $tok;
+                }
+            }
 
             impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ {
                 parser!($crate::eat_key!($typ));
