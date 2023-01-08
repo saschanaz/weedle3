@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             Ident(
@@ -13,9 +11,7 @@
                                     lhs_identifier: Identifier(
                                         "Exposed",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "Window",
                                     ),
@@ -24,40 +20,30 @@
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Interface",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         Bigint(
                                             MayBeNull {
-                                                type_: Bigint(
-                                                    "bigint",
-                                                ),
+                                                type_: Bigint,
                                                 q_mark: None,
                                             },
                                         ),
@@ -69,9 +55,7 @@
                                     "_bigint",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -84,9 +68,7 @@
                                     NonAny(
                                         Bigint(
                                             MayBeNull {
-                                                type_: Bigint(
-                                                    "bigint",
-                                                ),
+                                                type_: Bigint,
                                                 q_mark: None,
                                             },
                                         ),
@@ -101,20 +83,14 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -144,9 +120,7 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -159,9 +133,7 @@
                                                         NonAny(
                                                             Bigint(
                                                                 MayBeNull {
-                                                                    type_: Bigint(
-                                                                        "bigint",
-                                                                    ),
+                                                                    type_: Bigint,
                                                                     q_mark: None,
                                                                 },
                                                             ),
@@ -179,39 +151,27 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Dictionary(
         DictionaryDefinition {
             attributes: None,
-            dictionary: Dictionary(
-                "dictionary",
-            ),
+            dictionary: Dictionary,
             identifier: Identifier(
                 "Dictionary",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     DictionaryMember {
                         attributes: None,
@@ -220,9 +180,7 @@
                             NonAny(
                                 Bigint(
                                     MayBeNull {
-                                        type_: Bigint(
-                                            "bigint",
-                                        ),
+                                        type_: Bigint,
                                         q_mark: None,
                                     },
                                 ),
@@ -232,24 +190,18 @@
                             "big",
                         ),
                         default: None,
-                        semi_colon: SemiColon(
-                            ";",
-                        ),
+                        semi_colon: SemiColon,
                     },
                     DictionaryMember {
                         attributes: None,
                         required: Some(
-                            Required(
-                                "required",
-                            ),
+                            Required,
                         ),
                         type_: Single(
                             NonAny(
                                 Bigint(
                                     MayBeNull {
-                                        type_: Bigint(
-                                            "bigint",
-                                        ),
+                                        type_: Bigint,
                                         q_mark: None,
                                     },
                                 ),
@@ -259,34 +211,24 @@
                             "another",
                         ),
                         default: None,
-                        semi_colon: SemiColon(
-                            ";",
-                        ),
+                        semi_colon: SemiColon,
                     },
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: Typedef(
-                "typedef",
-            ),
+            typedef: Typedef,
             type_: AttributedType {
                 attributes: None,
                 type_: Union(
                     MayBeNull {
                         type_: Parenthesized {
-                            open_paren: OpenParen(
-                                "(",
-                            ),
+                            open_paren: OpenParen,
                             body: Punctuated {
                                 list: [
                                     Single(
@@ -294,9 +236,7 @@
                                             attributes: None,
                                             type_: Bigint(
                                                 MayBeNull {
-                                                    type_: Bigint(
-                                                        "bigint",
-                                                    ),
+                                                    type_: Bigint,
                                                     q_mark: None,
                                                 },
                                             ),
@@ -310,9 +250,7 @@
                                                     type_: Short(
                                                         ShortType {
                                                             unsigned: None,
-                                                            short: Short(
-                                                                "short",
-                                                            ),
+                                                            short: Short,
                                                         },
                                                     ),
                                                     q_mark: None,
@@ -323,9 +261,7 @@
                                 ],
                                 separator: PhantomData<weedle::lexer::keywords::Or>,
                             },
-                            close_paren: CloseParen(
-                                ")",
-                            ),
+                            close_paren: CloseParen,
                         },
                         q_mark: None,
                     },
@@ -334,9 +270,7 @@
             identifier: Identifier(
                 "allowed",
             ),
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

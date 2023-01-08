@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             ArgList(
@@ -14,9 +12,7 @@
                                         "Constructor",
                                     ),
                                     args: Parenthesized {
-                                        open_paren: OpenParen(
-                                            "(",
-                                        ),
+                                        open_paren: OpenParen,
                                         body: Punctuated {
                                             list: [
                                                 Single(
@@ -30,31 +26,21 @@
                                                                     RecordType(
                                                                         MayBeNull {
                                                                             type_: RecordType {
-                                                                                record: Record(
-                                                                                    "record",
-                                                                                ),
+                                                                                record: Record,
                                                                                 generics: Generics {
-                                                                                    open_angle: LessThan(
-                                                                                        "<",
-                                                                                    ),
+                                                                                    open_angle: LessThan,
                                                                                     body: (
                                                                                         USV(
-                                                                                            USVString(
-                                                                                                "USVString",
-                                                                                            ),
+                                                                                            USVString,
                                                                                         ),
-                                                                                        Comma(
-                                                                                            ",",
-                                                                                        ),
+                                                                                        Comma,
                                                                                         AttributedType {
                                                                                             attributes: None,
                                                                                             type_: Single(
                                                                                                 NonAny(
                                                                                                     USVString(
                                                                                                         MayBeNull {
-                                                                                                            type_: USVString(
-                                                                                                                "USVString",
-                                                                                                            ),
+                                                                                                            type_: USVString,
                                                                                                             q_mark: None,
                                                                                                         },
                                                                                                     ),
@@ -62,9 +48,7 @@
                                                                                             ),
                                                                                         },
                                                                                     ),
-                                                                                    close_angle: GreaterThan(
-                                                                                        ">",
-                                                                                    ),
+                                                                                    close_angle: GreaterThan,
                                                                                 },
                                                                             },
                                                                             q_mark: None,
@@ -84,31 +68,23 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_paren: CloseParen(
-                                            ")",
-                                        ),
+                                        close_paren: CloseParen,
                                     },
                                 },
                             ),
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Foo",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -116,9 +92,7 @@
                             modifier: None,
                             special: None,
                             return_type: Undefined(
-                                Undefined(
-                                    "undefined",
-                                ),
+                                Undefined,
                             ),
                             identifier: Some(
                                 Identifier(
@@ -128,9 +102,7 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -144,13 +116,9 @@
                                                             Sequence(
                                                                 MayBeNull {
                                                                     type_: SequenceType {
-                                                                        sequence: Sequence(
-                                                                            "sequence",
-                                                                        ),
+                                                                        sequence: Sequence,
                                                                         generics: Generics {
-                                                                            open_angle: LessThan(
-                                                                                "<",
-                                                                            ),
+                                                                            open_angle: LessThan,
                                                                             body: AttributedType {
                                                                                 attributes: None,
                                                                                 type_: Single(
@@ -158,36 +126,24 @@
                                                                                         RecordType(
                                                                                             MayBeNull {
                                                                                                 type_: RecordType {
-                                                                                                    record: Record(
-                                                                                                        "record",
-                                                                                                    ),
+                                                                                                    record: Record,
                                                                                                     generics: Generics {
-                                                                                                        open_angle: LessThan(
-                                                                                                            "<",
-                                                                                                        ),
+                                                                                                        open_angle: LessThan,
                                                                                                         body: (
                                                                                                             Byte(
-                                                                                                                ByteString(
-                                                                                                                    "ByteString",
-                                                                                                                ),
+                                                                                                                ByteString,
                                                                                                             ),
-                                                                                                            Comma(
-                                                                                                                ",",
-                                                                                                            ),
+                                                                                                            Comma,
                                                                                                             AttributedType {
                                                                                                                 attributes: None,
                                                                                                                 type_: Single(
                                                                                                                     Any(
-                                                                                                                        Any(
-                                                                                                                            "any",
-                                                                                                                        ),
+                                                                                                                        Any,
                                                                                                                     ),
                                                                                                                 ),
                                                                                                             },
                                                                                                         ),
-                                                                                                        close_angle: GreaterThan(
-                                                                                                            ">",
-                                                                                                        ),
+                                                                                                        close_angle: GreaterThan,
                                                                                                     },
                                                                                                 },
                                                                                                 q_mark: None,
@@ -196,9 +152,7 @@
                                                                                     ),
                                                                                 ),
                                                                             },
-                                                                            close_angle: GreaterThan(
-                                                                                ">",
-                                                                            ),
+                                                                            close_angle: GreaterThan,
                                                                         },
                                                                     },
                                                                     q_mark: None,
@@ -218,13 +172,9 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -238,30 +188,20 @@
                                         RecordType(
                                             MayBeNull {
                                                 type_: RecordType {
-                                                    record: Record(
-                                                        "record",
-                                                    ),
+                                                    record: Record,
                                                     generics: Generics {
-                                                        open_angle: LessThan(
-                                                            "<",
-                                                        ),
+                                                        open_angle: LessThan,
                                                         body: (
                                                             DOM(
-                                                                DOMString(
-                                                                    "DOMString",
-                                                                ),
+                                                                DOMString,
                                                             ),
-                                                            Comma(
-                                                                ",",
-                                                            ),
+                                                            Comma,
                                                             AttributedType {
                                                                 attributes: None,
                                                                 type_: Union(
                                                                     MayBeNull {
                                                                         type_: Parenthesized {
-                                                                            open_paren: OpenParen(
-                                                                                "(",
-                                                                            ),
+                                                                            open_paren: OpenParen,
                                                                             body: Punctuated {
                                                                                 list: [
                                                                                     Single(
@@ -272,9 +212,7 @@
                                                                                                     type_: Float(
                                                                                                         FloatType {
                                                                                                             unrestricted: None,
-                                                                                                            float: Float(
-                                                                                                                "float",
-                                                                                                            ),
+                                                                                                            float: Float,
                                                                                                         },
                                                                                                     ),
                                                                                                     q_mark: None,
@@ -287,9 +225,7 @@
                                                                                             attributes: None,
                                                                                             type_: DOMString(
                                                                                                 MayBeNull {
-                                                                                                    type_: DOMString(
-                                                                                                        "DOMString",
-                                                                                                    ),
+                                                                                                    type_: DOMString,
                                                                                                     q_mark: None,
                                                                                                 },
                                                                                             ),
@@ -298,22 +234,16 @@
                                                                                 ],
                                                                                 separator: PhantomData<weedle::lexer::keywords::Or>,
                                                                             },
-                                                                            close_paren: CloseParen(
-                                                                                ")",
-                                                                            ),
+                                                                            close_paren: CloseParen,
                                                                         },
                                                                         q_mark: Some(
-                                                                            QuestionMark(
-                                                                                "?",
-                                                                            ),
+                                                                            QuestionMark,
                                                                         ),
                                                                     },
                                                                 ),
                                                             },
                                                         ),
-                                                        close_angle: GreaterThan(
-                                                            ">",
-                                                        ),
+                                                        close_angle: GreaterThan,
                                                     },
                                                 },
                                                 q_mark: None,
@@ -330,46 +260,32 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Bar",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -382,28 +298,18 @@
                                         RecordType(
                                             MayBeNull {
                                                 type_: RecordType {
-                                                    record: Record(
-                                                        "record",
-                                                    ),
+                                                    record: Record,
                                                     generics: Generics {
-                                                        open_angle: LessThan(
-                                                            "<",
-                                                        ),
+                                                        open_angle: LessThan,
                                                         body: (
                                                             DOM(
-                                                                DOMString(
-                                                                    "DOMString",
-                                                                ),
+                                                                DOMString,
                                                             ),
-                                                            Comma(
-                                                                ",",
-                                                            ),
+                                                            Comma,
                                                             AttributedType {
                                                                 attributes: Some(
                                                                     Bracketed {
-                                                                        open_bracket: OpenBracket(
-                                                                            "[",
-                                                                        ),
+                                                                        open_bracket: OpenBracket,
                                                                         body: Punctuated {
                                                                             list: [
                                                                                 NoArgs(
@@ -416,9 +322,7 @@
                                                                             ],
                                                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                                                         },
-                                                                        close_bracket: CloseBracket(
-                                                                            "]",
-                                                                        ),
+                                                                        close_bracket: CloseBracket,
                                                                     },
                                                                 ),
                                                                 type_: Single(
@@ -428,9 +332,7 @@
                                                                                 type_: Float(
                                                                                     FloatType {
                                                                                         unrestricted: None,
-                                                                                        float: Float(
-                                                                                            "float",
-                                                                                        ),
+                                                                                        float: Float,
                                                                                     },
                                                                                 ),
                                                                                 q_mark: None,
@@ -440,9 +342,7 @@
                                                                 ),
                                                             },
                                                         ),
-                                                        close_angle: GreaterThan(
-                                                            ">",
-                                                        ),
+                                                        close_angle: GreaterThan,
                                                     },
                                                 },
                                                 q_mark: None,
@@ -459,30 +359,20 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

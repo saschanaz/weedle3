@@ -2,25 +2,19 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Person",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: Some(
                                 Bracketed {
-                                    open_bracket: OpenBracket(
-                                        "[",
-                                    ),
+                                    open_bracket: OpenBracket,
                                     body: Punctuated {
                                         list: [
                                             Ident(
@@ -28,9 +22,7 @@
                                                     lhs_identifier: Identifier(
                                                         "PutForwards",
                                                     ),
-                                                    assign: Assign(
-                                                        "=",
-                                                    ),
+                                                    assign: Assign,
                                                     rhs: Identifier(
                                                         "full",
                                                     ),
@@ -39,20 +31,14 @@
                                         ],
                                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                                     },
-                                    close_bracket: CloseBracket(
-                                        "]",
-                                    ),
+                                    close_bracket: CloseBracket,
                                 },
                             ),
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -73,9 +59,7 @@
                                     "name",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -83,9 +67,7 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -95,13 +77,9 @@
                                                 type_: Short(
                                                     ShortType {
                                                         unsigned: Some(
-                                                            Unsigned(
-                                                                "unsigned",
-                                                            ),
+                                                            Unsigned,
                                                         ),
-                                                        short: Short(
-                                                            "short",
-                                                        ),
+                                                        short: Short,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -115,19 +93,13 @@
                                     "age",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

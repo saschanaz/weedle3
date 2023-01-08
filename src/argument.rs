@@ -130,7 +130,7 @@ mod test {
         optional.is_some();
         identifier == ArgumentName::Identifier(Identifier("a"));
         default == Some(Default {
-            assign: core::default::Default::default(),
+            assign: crate::lexer::keywords::Assign,
             value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
         });
     });

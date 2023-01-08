@@ -34,34 +34,28 @@ macro_rules! generate_keywords_enum {
     ) => {
         $(
             #[doc=$tok]
-            #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-            pub struct $typ<'a>(pub &'a str);
+            #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+            pub struct $typ;
 
-            impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ<'a> {
+            impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ {
                 parser!($crate::eat_key!($typ));
-            }
-
-            impl<'a> Default for $typ<'a> {
-                fn default() -> Self {
-                    crate::lexer::keywords::$typ($tok)
-                }
             }
         )*
 
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-        pub enum Keyword<'a> {
+        pub enum Keyword {
             $(
                 #[doc=$tok]
-                $typ($typ<'a>),
+                $typ($typ),
             )*
         }
 
-        impl<'a> Keyword<'a> {
+        impl Keyword {
             pub fn parse(input: &str) -> nom::IResult<&str, Keyword> {
                 alt!(
                     $(nom::combinator::map(
                         nom::combinator::recognize(nom::bytes::complete::tag($tok)),
-                        |k| Keyword::$typ($typ(k))
+                        |_| Keyword::$typ($typ)
                     ),)*
                 )(input)
             }
@@ -161,255 +155,255 @@ generate_keywords_enum!(
 #[macro_export]
 macro_rules! term {
     (OpenParen) => {
-        $crate::lexer::keywords::OpenParen<'a>
+        $crate::lexer::keywords::OpenParen
     };
     (CloseParen) => {
-        $crate::lexer::keywords::CloseParen<'a>
+        $crate::lexer::keywords::CloseParen
     };
     (OpenBracket) => {
-        $crate::lexer::keywords::OpenBracket<'a>
+        $crate::lexer::keywords::OpenBracket
     };
     (CloseBracket) => {
-        $crate::lexer::keywords::CloseBracket<'a>
+        $crate::lexer::keywords::CloseBracket
     };
     (OpenBrace) => {
-        $crate::lexer::keywords::OpenBrace<'a>
+        $crate::lexer::keywords::OpenBrace
     };
     (CloseBrace) => {
-        $crate::lexer::keywords::CloseBrace<'a>
+        $crate::lexer::keywords::CloseBrace
     };
     (,) => {
-        $crate::lexer::keywords::Comma<'a>
+        $crate::lexer::keywords::Comma
     };
     (-) => {
-        $crate::lexer::keywords::Minus<'a>
+        $crate::lexer::keywords::Minus
     };
     (.) => {
-        $crate::lexer::keywords::Dot<'a>
+        $crate::lexer::keywords::Dot
     };
     (...) => {
-        $crate::lexer::keywords::Ellipsis<'a>
+        $crate::lexer::keywords::Ellipsis
     };
     (:) => {
-        $crate::lexer::keywords::Colon<'a>
+        $crate::lexer::keywords::Colon
     };
     (;) => {
-        $crate::lexer::keywords::SemiColon<'a>
+        $crate::lexer::keywords::SemiColon
     };
     (<) => {
-        $crate::lexer::keywords::LessThan<'a>
+        $crate::lexer::keywords::LessThan
     };
     (=) => {
-        $crate::lexer::keywords::Assign<'a>
+        $crate::lexer::keywords::Assign
     };
     (>) => {
-        $crate::lexer::keywords::GreaterThan<'a>
+        $crate::lexer::keywords::GreaterThan
     };
     (?) => {
-        $crate::lexer::keywords::QMark<'a>
+        $crate::lexer::keywords::QMark
     };
     (*) => {
-        $crate::lexer::keywords::Wildcard<'a>
+        $crate::lexer::keywords::Wildcard
     };
     (or) => {
-        $crate::lexer::keywords::Or<'a>
+        $crate::lexer::keywords::Or
     };
     (optional) => {
-        $crate::lexer::keywords::Optional<'a>
+        $crate::lexer::keywords::Optional
     };
     (async) => {
-        $crate::lexer::keywords::Async<'a>
+        $crate::lexer::keywords::Async
     };
     (attribute) => {
-        $crate::lexer::keywords::Attribute<'a>
+        $crate::lexer::keywords::Attribute
     };
     (callback) => {
-        $crate::lexer::keywords::Callback<'a>
+        $crate::lexer::keywords::Callback
     };
     (const) => {
-        $crate::lexer::keywords::Const<'a>
+        $crate::lexer::keywords::Const
     };
     (deleter) => {
-        $crate::lexer::keywords::Deleter<'a>
+        $crate::lexer::keywords::Deleter
     };
     (dictionary) => {
-        $crate::lexer::keywords::Dictionary<'a>
+        $crate::lexer::keywords::Dictionary
     };
     (enum) => {
-        $crate::lexer::keywords::Enum<'a>
+        $crate::lexer::keywords::Enum
     };
     (getter) => {
-        $crate::lexer::keywords::Getter<'a>
+        $crate::lexer::keywords::Getter
     };
     (includes) => {
-        $crate::lexer::keywords::Includes<'a>
+        $crate::lexer::keywords::Includes
     };
     (inherit) => {
-        $crate::lexer::keywords::Inherit<'a>
+        $crate::lexer::keywords::Inherit
     };
     (interface) => {
-        $crate::lexer::keywords::Interface<'a>
+        $crate::lexer::keywords::Interface
     };
     (iterable) => {
-        $crate::lexer::keywords::Iterable<'a>
+        $crate::lexer::keywords::Iterable
     };
     (maplike) => {
-        $crate::lexer::keywords::Maplike<'a>
+        $crate::lexer::keywords::Maplike
     };
     (namespace) => {
-        $crate::lexer::keywords::Namespace<'a>
+        $crate::lexer::keywords::Namespace
     };
     (partial) => {
-        $crate::lexer::keywords::Partial<'a>
+        $crate::lexer::keywords::Partial
     };
     (required) => {
-        $crate::lexer::keywords::Required<'a>
+        $crate::lexer::keywords::Required
     };
     (setlike) => {
-        $crate::lexer::keywords::Setlike<'a>
+        $crate::lexer::keywords::Setlike
     };
     (setter) => {
-        $crate::lexer::keywords::Setter<'a>
+        $crate::lexer::keywords::Setter
     };
     (static) => {
-        $crate::lexer::keywords::Static<'a>
+        $crate::lexer::keywords::Static
     };
     (stringifier) => {
-        $crate::lexer::keywords::Stringifier<'a>
+        $crate::lexer::keywords::Stringifier
     };
     (typedef) => {
-        $crate::lexer::keywords::Typedef<'a>
+        $crate::lexer::keywords::Typedef
     };
     (unrestricted) => {
-        $crate::lexer::keywords::Unrestricted<'a>
+        $crate::lexer::keywords::Unrestricted
     };
     (symbol) => {
-        $crate::lexer::keywords::Symbol<'a>
+        $crate::lexer::keywords::Symbol
     };
     (- Infinity) => {
-        $crate::lexer::keywords::NegInfinity<'a>
+        $crate::lexer::keywords::NegInfinity
     };
     (ByteString) => {
-        $crate::lexer::keywords::ByteString<'a>
+        $crate::lexer::keywords::ByteString
     };
     (DOMString) => {
-        $crate::lexer::keywords::DOMString<'a>
+        $crate::lexer::keywords::DOMString
     };
     (FrozenArray) => {
-        $crate::lexer::keywords::FrozenArray<'a>
+        $crate::lexer::keywords::FrozenArray
     };
     (Infinity) => {
-        $crate::lexer::keywords::Infinity<'a>
+        $crate::lexer::keywords::Infinity
     };
     (NaN) => {
-        $crate::lexer::keywords::NaN<'a>
+        $crate::lexer::keywords::NaN
     };
     (ObservableArray) => {
-        $crate::lexer::keywords::ObservableArray<'a>
+        $crate::lexer::keywords::ObservableArray
     };
     (USVString) => {
-        $crate::lexer::keywords::USVString<'a>
+        $crate::lexer::keywords::USVString
     };
     (any) => {
-        $crate::lexer::keywords::Any<'a>
+        $crate::lexer::keywords::Any
     };
     (boolean) => {
-        $crate::lexer::keywords::Boolean<'a>
+        $crate::lexer::keywords::Boolean
     };
     (byte) => {
-        $crate::lexer::keywords::Byte<'a>
+        $crate::lexer::keywords::Byte
     };
     (double) => {
-        $crate::lexer::keywords::Double<'a>
+        $crate::lexer::keywords::Double
     };
     (false) => {
-        $crate::lexer::keywords::False<'a>
+        $crate::lexer::keywords::False
     };
     (float) => {
-        $crate::lexer::keywords::Float<'a>
+        $crate::lexer::keywords::Float
     };
     (long) => {
-        $crate::lexer::keywords::Long<'a>
+        $crate::lexer::keywords::Long
     };
     (null) => {
-        $crate::lexer::keywords::Null<'a>
+        $crate::lexer::keywords::Null
     };
     (object) => {
-        $crate::lexer::keywords::Object<'a>
+        $crate::lexer::keywords::Object
     };
     (octet) => {
-        $crate::lexer::keywords::Octet<'a>
+        $crate::lexer::keywords::Octet
     };
     (bigint) => {
-        $crate::lexer::keywords::Bigint<'a>
+        $crate::lexer::keywords::Bigint
     };
     (sequence) => {
-        $crate::lexer::keywords::Sequence<'a>
+        $crate::lexer::keywords::Sequence
     };
     (short) => {
-        $crate::lexer::keywords::Short<'a>
+        $crate::lexer::keywords::Short
     };
     (true) => {
-        $crate::lexer::keywords::True<'a>
+        $crate::lexer::keywords::True
     };
     (unsigned) => {
-        $crate::lexer::keywords::Unsigned<'a>
+        $crate::lexer::keywords::Unsigned
     };
     (undefined) => {
-        $crate::lexer::keywords::Undefined<'a>
+        $crate::lexer::keywords::Undefined
     };
     (record) => {
-        $crate::lexer::keywords::Record<'a>
+        $crate::lexer::keywords::Record
     };
     (ArrayBuffer) => {
-        $crate::lexer::keywords::ArrayBuffer<'a>
+        $crate::lexer::keywords::ArrayBuffer
     };
     (DataView) => {
-        $crate::lexer::keywords::DataView<'a>
+        $crate::lexer::keywords::DataView
     };
     (Int8Array) => {
-        $crate::lexer::keywords::Int8Array<'a>
+        $crate::lexer::keywords::Int8Array
     };
     (Int16Array) => {
-        $crate::lexer::keywords::Int16Array<'a>
+        $crate::lexer::keywords::Int16Array
     };
     (Int32Array) => {
-        $crate::lexer::keywords::Int32Array<'a>
+        $crate::lexer::keywords::Int32Array
     };
     (Uint8Array) => {
-        $crate::lexer::keywords::Uint8Array<'a>
+        $crate::lexer::keywords::Uint8Array
     };
     (Uint16Array) => {
-        $crate::lexer::keywords::Uint16Array<'a>
+        $crate::lexer::keywords::Uint16Array
     };
     (Uint32Array) => {
-        $crate::lexer::keywords::Uint32Array<'a>
+        $crate::lexer::keywords::Uint32Array
     };
     (Uint8ClampedArray) => {
-        $crate::lexer::keywords::Uint8ClampedArray<'a>
+        $crate::lexer::keywords::Uint8ClampedArray
     };
     (BigInt64Array) => {
-        $crate::lexer::keywords::BigInt64Array<'a>
+        $crate::lexer::keywords::BigInt64Array
     };
     (BigUint64Array) => {
-        $crate::lexer::keywords::BigUint64Array<'a>
+        $crate::lexer::keywords::BigUint64Array
     };
     (Float32Array) => {
-        $crate::lexer::keywords::Float32Array<'a>
+        $crate::lexer::keywords::Float32Array
     };
     (Float64Array) => {
-        $crate::lexer::keywords::Float64Array<'a>
+        $crate::lexer::keywords::Float64Array
     };
     (Promise) => {
-        $crate::lexer::keywords::Promise<'a>
+        $crate::lexer::keywords::Promise
     };
     (readonly) => {
-        $crate::lexer::keywords::ReadOnly<'a>
+        $crate::lexer::keywords::ReadOnly
     };
     (mixin) => {
-        $crate::lexer::keywords::Mixin<'a>
+        $crate::lexer::keywords::Mixin
     };
     (constructor) => {
-        $crate::lexer::keywords::Constructor<'a>
+        $crate::lexer::keywords::Constructor
     };
 }

@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             NoArgs(
@@ -18,31 +16,23 @@
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Student",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -52,13 +42,9 @@
                                                 type_: Long(
                                                     LongType {
                                                         unsigned: Some(
-                                                            Unsigned(
-                                                                "unsigned",
-                                                            ),
+                                                            Unsigned,
                                                         ),
-                                                        long: Long(
-                                                            "long",
-                                                        ),
+                                                        long: Long,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -72,9 +58,7 @@
                                     "id",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -82,22 +66,16 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: DOMString(
-                                                    "DOMString",
-                                                ),
+                                                type_: DOMString,
                                                 q_mark: Some(
-                                                    QuestionMark(
-                                                        "?",
-                                                    ),
+                                                    QuestionMark,
                                                 ),
                                             },
                                         ),
@@ -109,9 +87,7 @@
                                     "familyName",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -119,18 +95,14 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: DOMString(
-                                                    "DOMString",
-                                                ),
+                                                type_: DOMString,
                                                 q_mark: None,
                                             },
                                         ),
@@ -142,9 +114,7 @@
                                     "givenName",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -152,9 +122,7 @@
                             attributes: None,
                             modifier: Some(
                                 Stringifier(
-                                    Stringifier(
-                                        "stringifier",
-                                    ),
+                                    Stringifier,
                                 ),
                             ),
                             special: None,
@@ -163,9 +131,7 @@
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: DOMString(
-                                                    "DOMString",
-                                                ),
+                                                type_: DOMString,
                                                 q_mark: None,
                                             },
                                         ),
@@ -174,30 +140,20 @@
                             ),
                             identifier: None,
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

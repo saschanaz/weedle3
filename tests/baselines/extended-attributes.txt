@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             IdentList(
@@ -13,13 +11,9 @@
                                     identifier: Identifier(
                                         "Global",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     list: Parenthesized {
-                                        open_paren: OpenParen(
-                                            "(",
-                                        ),
+                                        open_paren: OpenParen,
                                         body: Punctuated {
                                             list: [
                                                 Identifier(
@@ -31,9 +25,7 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_paren: CloseParen(
-                                            ")",
-                                        ),
+                                        close_paren: CloseParen,
                                     },
                                 },
                             ),
@@ -42,9 +34,7 @@
                                     lhs_identifier: Identifier(
                                         "Exposed",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "ServiceWorker",
                                     ),
@@ -53,48 +43,34 @@
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "ServiceWorkerGlobalScope",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon(
-                        ":",
-                    ),
+                    colon: Colon,
                     identifier: Identifier(
                         "WorkerGlobalScope",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             Integer(
@@ -102,9 +78,7 @@
                                     lhs_identifier: Identifier(
                                         "IntAttr",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Oct(
                                         OctLit(
                                             "0",
@@ -117,9 +91,7 @@
                                     lhs_identifier: Identifier(
                                         "FloatAttr",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Value(
                                         FloatValueLit(
                                             "3.14",
@@ -132,9 +104,7 @@
                                     lhs_identifier: Identifier(
                                         "StringAttr",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: StringLit(
                                         "abc",
                                     ),
@@ -145,9 +115,7 @@
                                     lhs_identifier: Identifier(
                                         "IdentifierAttr",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "_null",
                                     ),
@@ -158,13 +126,9 @@
                                     identifier: Identifier(
                                         "IdentifiersAttr",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     list: Parenthesized {
-                                        open_paren: OpenParen(
-                                            "(",
-                                        ),
+                                        open_paren: OpenParen,
                                         body: Punctuated {
                                             list: [
                                                 Identifier(
@@ -176,9 +140,7 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_paren: CloseParen(
-                                            ")",
-                                        ),
+                                        close_paren: CloseParen,
                                     },
                                 },
                             ),
@@ -187,13 +149,9 @@
                                     identifier: Identifier(
                                         "FloatList",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     list: Parenthesized {
-                                        open_paren: OpenParen(
-                                            "(",
-                                        ),
+                                        open_paren: OpenParen,
                                         body: Punctuated {
                                             list: [
                                                 Value(
@@ -204,48 +162,34 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_paren: CloseParen(
-                                            ")",
-                                        ),
+                                        close_paren: CloseParen,
                                     },
                                 },
                             ),
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "IdInterface",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             NoArgs(
@@ -261,9 +205,7 @@
                                         "Constructor",
                                     ),
                                     args: Parenthesized {
-                                        open_paren: OpenParen(
-                                            "(",
-                                        ),
+                                        open_paren: OpenParen,
                                         body: Punctuated {
                                             list: [
                                                 Single(
@@ -279,9 +221,7 @@
                                                                             type_: Double(
                                                                                 DoubleType {
                                                                                     unrestricted: None,
-                                                                                    double: Double(
-                                                                                        "double",
-                                                                                    ),
+                                                                                    double: Double,
                                                                                 },
                                                                             ),
                                                                             q_mark: None,
@@ -301,40 +241,30 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_paren: CloseParen(
-                                            ")",
-                                        ),
+                                        close_paren: CloseParen,
                                     },
                                 },
                             ),
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Circle",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -344,9 +274,7 @@
                                                 type_: Double(
                                                     DoubleType {
                                                         unrestricted: None,
-                                                        double: Double(
-                                                            "double",
-                                                        ),
+                                                        double: Double,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -360,9 +288,7 @@
                                     "r",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -370,9 +296,7 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -382,9 +306,7 @@
                                                 type_: Double(
                                                     DoubleType {
                                                         unrestricted: None,
-                                                        double: Double(
-                                                            "double",
-                                                        ),
+                                                        double: Double,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -398,9 +320,7 @@
                                     "cx",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -408,9 +328,7 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -420,9 +338,7 @@
                                                 type_: Double(
                                                     DoubleType {
                                                         unrestricted: None,
-                                                        double: Double(
-                                                            "double",
-                                                        ),
+                                                        double: Double,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -436,9 +352,7 @@
                                     "cy",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -446,13 +360,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -462,9 +372,7 @@
                                                 type_: Double(
                                                     DoubleType {
                                                         unrestricted: None,
-                                                        double: Double(
-                                                            "double",
-                                                        ),
+                                                        double: Double,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -478,28 +386,20 @@
                                     "circumference",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             Ident(
@@ -507,9 +407,7 @@
                                     lhs_identifier: Identifier(
                                         "Exposed",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "Window",
                                     ),
@@ -518,37 +416,27 @@
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "I",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: Some(
                                     Bracketed {
-                                        open_bracket: OpenBracket(
-                                            "[",
-                                        ),
+                                        open_bracket: OpenBracket,
                                         body: Punctuated {
                                             list: [
                                                 NoArgs(
@@ -561,17 +449,13 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_bracket: CloseBracket(
-                                            "]",
-                                        ),
+                                        close_bracket: CloseBracket,
                                     },
                                 ),
                                 type_: Union(
                                     MayBeNull {
                                         type_: Parenthesized {
-                                            open_paren: OpenParen(
-                                                "(",
-                                            ),
+                                            open_paren: OpenParen,
                                             body: Punctuated {
                                                 list: [
                                                     Single(
@@ -582,9 +466,7 @@
                                                                     type_: Long(
                                                                         LongType {
                                                                             unsigned: None,
-                                                                            long: Long(
-                                                                                "long",
-                                                                            ),
+                                                                            long: Long,
                                                                         },
                                                                     ),
                                                                     q_mark: None,
@@ -608,9 +490,7 @@
                                                 ],
                                                 separator: PhantomData<weedle::lexer::keywords::Or>,
                                             },
-                                            close_paren: CloseParen(
-                                                ")",
-                                            ),
+                                            close_paren: CloseParen,
                                         },
                                         q_mark: None,
                                     },
@@ -621,19 +501,13 @@
                                     "attrib",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

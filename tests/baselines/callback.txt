@@ -2,24 +2,16 @@
     Callback(
         CallbackDefinition {
             attributes: None,
-            callback: Callback(
-                "callback",
-            ),
+            callback: Callback,
             identifier: Identifier(
                 "AsyncOperationCallback",
             ),
-            assign: Assign(
-                "=",
-            ),
+            assign: Assign,
             return_type: Undefined(
-                Undefined(
-                    "undefined",
-                ),
+                Undefined,
             ),
             arguments: Parenthesized {
-                open_paren: OpenParen(
-                    "(",
-                ),
+                open_paren: OpenParen,
                 body: Punctuated {
                     list: [
                         Single(
@@ -32,9 +24,7 @@
                                         NonAny(
                                             DOMString(
                                                 MayBeNull {
-                                                    type_: DOMString(
-                                                        "DOMString",
-                                                    ),
+                                                    type_: DOMString,
                                                     q_mark: None,
                                                 },
                                             ),
@@ -52,32 +42,22 @@
                     ],
                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                 },
-                close_paren: CloseParen(
-                    ")",
-                ),
+                close_paren: CloseParen,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     CallbackInterface(
         CallbackInterfaceDefinition {
             attributes: None,
-            callback: Callback(
-                "callback",
-            ),
-            interface: Interface(
-                "interface",
-            ),
+            callback: Callback,
+            interface: Interface,
             identifier: Identifier(
                 "EventHandler",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -85,9 +65,7 @@
                             modifier: None,
                             special: None,
                             return_type: Undefined(
-                                Undefined(
-                                    "undefined",
-                                ),
+                                Undefined,
                             ),
                             identifier: Some(
                                 Identifier(
@@ -97,9 +75,7 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -112,9 +88,7 @@
                                                         NonAny(
                                                             DOMString(
                                                                 MayBeNull {
-                                                                    type_: DOMString(
-                                                                        "DOMString",
-                                                                    ),
+                                                                    type_: DOMString,
                                                                     q_mark: None,
                                                                 },
                                                             ),
@@ -132,45 +106,31 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Callback(
         CallbackDefinition {
             attributes: None,
-            callback: Callback(
-                "callback",
-            ),
+            callback: Callback,
             identifier: Identifier(
                 "SortCallback",
             ),
-            assign: Assign(
-                "=",
-            ),
+            assign: Assign,
             return_type: Type(
                 Single(
                     NonAny(
                         Boolean(
                             MayBeNull {
-                                type_: Boolean(
-                                    "boolean",
-                                ),
+                                type_: Boolean,
                                 q_mark: None,
                             },
                         ),
@@ -178,9 +138,7 @@
                 ),
             ),
             arguments: Parenthesized {
-                open_paren: OpenParen(
-                    "(",
-                ),
+                open_paren: OpenParen,
                 body: Punctuated {
                     list: [
                         Single(
@@ -191,9 +149,7 @@
                                     attributes: None,
                                     type_: Single(
                                         Any(
-                                            Any(
-                                                "any",
-                                            ),
+                                            Any,
                                         ),
                                     ),
                                 },
@@ -213,9 +169,7 @@
                                     attributes: None,
                                     type_: Single(
                                         Any(
-                                            Any(
-                                                "any",
-                                            ),
+                                            Any,
                                         ),
                                     ),
                                 },
@@ -230,13 +184,9 @@
                     ],
                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                 },
-                close_paren: CloseParen(
-                    ")",
-                ),
+                close_paren: CloseParen,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

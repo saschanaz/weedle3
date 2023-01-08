@@ -2,17 +2,13 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Suffixes",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -20,9 +16,7 @@
                             modifier: None,
                             special: None,
                             return_type: Undefined(
-                                Undefined(
-                                    "undefined",
-                                ),
+                                Undefined,
                             ),
                             identifier: Some(
                                 Identifier(
@@ -32,9 +26,7 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -48,41 +40,29 @@
                                                             Sequence(
                                                                 MayBeNull {
                                                                     type_: SequenceType {
-                                                                        sequence: Sequence(
-                                                                            "sequence",
-                                                                        ),
+                                                                        sequence: Sequence,
                                                                         generics: Generics {
-                                                                            open_angle: LessThan(
-                                                                                "<",
-                                                                            ),
+                                                                            open_angle: LessThan,
                                                                             body: AttributedType {
                                                                                 attributes: None,
                                                                                 type_: Single(
                                                                                     NonAny(
                                                                                         DOMString(
                                                                                             MayBeNull {
-                                                                                                type_: DOMString(
-                                                                                                    "DOMString",
-                                                                                                ),
+                                                                                                type_: DOMString,
                                                                                                 q_mark: Some(
-                                                                                                    QuestionMark(
-                                                                                                        "?",
-                                                                                                    ),
+                                                                                                    QuestionMark,
                                                                                                 ),
                                                                                             },
                                                                                         ),
                                                                                     ),
                                                                                 ),
                                                                             },
-                                                                            close_angle: GreaterThan(
-                                                                                ">",
-                                                                            ),
+                                                                            close_angle: GreaterThan,
                                                                         },
                                                                     },
                                                                     q_mark: Some(
-                                                                        QuestionMark(
-                                                                            "?",
-                                                                        ),
+                                                                        QuestionMark,
                                                                     ),
                                                                 },
                                                             ),
@@ -100,23 +80,15 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

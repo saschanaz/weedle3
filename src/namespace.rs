@@ -18,7 +18,7 @@ pub struct OperationNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: ReturnType<'a>,
     pub identifier: Option<Identifier<'a>>,
-    pub args: Parenthesized<'a, ArgumentList<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
 

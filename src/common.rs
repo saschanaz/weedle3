@@ -37,37 +37,37 @@ impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>, V: Parse<'slice, 'a
 /// Parses `( body )`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
-pub struct Parenthesized<'a, T> {
-    pub open_paren: keywords::OpenParen<'a>,
+pub struct Parenthesized<T> {
+    pub open_paren: keywords::OpenParen,
     pub body: T,
-    pub close_paren: keywords::CloseParen<'a>,
+    pub close_paren: keywords::CloseParen,
 }
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
-pub struct Bracketed<'a, T> {
-    pub open_bracket: keywords::OpenBracket<'a>,
+pub struct Bracketed<T> {
+    pub open_bracket: keywords::OpenBracket,
     pub body: T,
-    pub close_bracket: keywords::CloseBracket<'a>,
+    pub close_bracket: keywords::CloseBracket,
 }
 
 /// Parses `{ body }`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
-pub struct Braced<'a, T> {
-    pub open_brace: keywords::OpenBrace<'a>,
+pub struct Braced<T> {
+    pub open_brace: keywords::OpenBrace,
     pub body: T,
-    pub close_brace: keywords::CloseBrace<'a>,
+    pub close_brace: keywords::CloseBrace,
 }
 
 /// Parses `< body >`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
-pub struct Generics<'a, T> {
-    pub open_angle: keywords::LessThan<'a>,
+pub struct Generics<T> {
+    pub open_angle: keywords::LessThan,
     pub body: T,
-    pub close_angle: keywords::GreaterThan<'a>,
+    pub close_angle: keywords::GreaterThan,
 }
 
 /// Parses `(item1, item2, item3,...)?`
@@ -209,13 +209,13 @@ mod test {
         "";
         Generics<(Identifier, keywords::Comma, Identifier)> =>
             Generics {
-                open_angle: keywords::LessThan::default(),
+                open_angle: keywords::LessThan,
                 body: (
                     Identifier("one"),
-                    keywords::Comma::default(),
+                    keywords::Comma,
                     Identifier("two"),
                 ),
-                close_angle: keywords::GreaterThan::default(),
+                close_angle: keywords::GreaterThan,
             }
     });
 

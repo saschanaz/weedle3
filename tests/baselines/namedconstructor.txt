@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             Ident(
@@ -13,9 +11,7 @@
                                     lhs_identifier: Identifier(
                                         "NamedConstructor",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "Audio",
                                     ),
@@ -26,16 +22,12 @@
                                     lhs_identifier: Identifier(
                                         "NamedConstructor",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs_identifier: Identifier(
                                         "Audio",
                                     ),
                                     args: Parenthesized {
-                                        open_paren: OpenParen(
-                                            "(",
-                                        ),
+                                        open_paren: OpenParen,
                                         body: Punctuated {
                                             list: [
                                                 Single(
@@ -48,9 +40,7 @@
                                                                 NonAny(
                                                                     DOMString(
                                                                         MayBeNull {
-                                                                            type_: DOMString(
-                                                                                "DOMString",
-                                                                            ),
+                                                                            type_: DOMString,
                                                                             q_mark: None,
                                                                         },
                                                                     ),
@@ -68,48 +58,34 @@
                                             ],
                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                         },
-                                        close_paren: CloseParen(
-                                            ")",
-                                        ),
+                                        close_paren: CloseParen,
                                     },
                                 },
                             ),
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "HTMLAudioElement",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon(
-                        ":",
-                    ),
+                    colon: Colon,
                     identifier: Identifier(
                         "HTMLMediaElement",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

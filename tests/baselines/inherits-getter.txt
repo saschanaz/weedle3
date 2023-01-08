@@ -2,39 +2,29 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Animal",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: DOMString(
-                                                    "DOMString",
-                                                ),
+                                                type_: DOMString,
                                                 q_mark: None,
                                             },
                                         ),
@@ -46,57 +36,41 @@
                                     "name",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Person",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon(
-                        ":",
-                    ),
+                    colon: Colon,
                     identifier: Identifier(
                         "Animal",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -106,13 +80,9 @@
                                                 type_: Short(
                                                     ShortType {
                                                         unsigned: Some(
-                                                            Unsigned(
-                                                                "unsigned",
-                                                            ),
+                                                            Unsigned,
                                                         ),
-                                                        short: Short(
-                                                            "short",
-                                                        ),
+                                                        short: Short,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -126,9 +96,7 @@
                                     "age",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -136,24 +104,18 @@
                             attributes: None,
                             modifier: Some(
                                 Inherit(
-                                    Inherit(
-                                        "inherit",
-                                    ),
+                                    Inherit,
                                 ),
                             ),
                             readonly: None,
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: DOMString(
-                                                    "DOMString",
-                                                ),
+                                                type_: DOMString,
                                                 q_mark: None,
                                             },
                                         ),
@@ -165,19 +127,13 @@
                                     "name",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

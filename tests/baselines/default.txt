@@ -2,17 +2,13 @@
     Dictionary(
         DictionaryDefinition {
             attributes: None,
-            dictionary: Dictionary(
-                "dictionary",
-            ),
+            dictionary: Dictionary,
             identifier: Identifier(
                 "LookupOptions",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     DictionaryMember {
                         attributes: None,
@@ -21,9 +17,7 @@
                             NonAny(
                                 Boolean(
                                     MayBeNull {
-                                        type_: Boolean(
-                                            "boolean",
-                                        ),
+                                        type_: Boolean,
                                         q_mark: None,
                                     },
                                 ),
@@ -34,9 +28,7 @@
                         ),
                         default: Some(
                             Default {
-                                assign: Assign(
-                                    "=",
-                                ),
+                                assign: Assign,
                                 value: Boolean(
                                     BooleanLit(
                                         false,
@@ -44,27 +36,19 @@
                                 ),
                             },
                         ),
-                        semi_colon: SemiColon(
-                            ";",
-                        ),
+                        semi_colon: SemiColon,
                     },
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             Ident(
@@ -72,9 +56,7 @@
                                     lhs_identifier: Identifier(
                                         "Exposed",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "Window",
                                     ),
@@ -83,22 +65,16 @@
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "AddressBook",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -110,9 +86,7 @@
                                     NonAny(
                                         Boolean(
                                             MayBeNull {
-                                                type_: Boolean(
-                                                    "boolean",
-                                                ),
+                                                type_: Boolean,
                                                 q_mark: None,
                                             },
                                         ),
@@ -127,9 +101,7 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -142,9 +114,7 @@
                                                         NonAny(
                                                             USVString(
                                                                 MayBeNull {
-                                                                    type_: USVString(
-                                                                        "USVString",
-                                                                    ),
+                                                                    type_: USVString,
                                                                     q_mark: None,
                                                                 },
                                                             ),
@@ -163,9 +133,7 @@
                                             SingleArgument {
                                                 attributes: None,
                                                 optional: Some(
-                                                    Optional(
-                                                        "optional",
-                                                    ),
+                                                    Optional,
                                                 ),
                                                 type_: AttributedType {
                                                     attributes: None,
@@ -189,17 +157,11 @@
                                                 ),
                                                 default: Some(
                                                     Default {
-                                                        assign: Assign(
-                                                            "=",
-                                                        ),
+                                                        assign: Assign,
                                                         value: EmptyDictionary(
                                                             EmptyDictionaryLit {
-                                                                open_brace: OpenBrace(
-                                                                    "{",
-                                                                ),
-                                                                close_brace: CloseBrace(
-                                                                    "}",
-                                                                ),
+                                                                open_brace: OpenBrace,
+                                                                close_brace: CloseBrace,
                                                             },
                                                         ),
                                                     },
@@ -209,23 +171,15 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

@@ -2,9 +2,7 @@
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: Typedef(
-                "typedef",
-            ),
+            typedef: Typedef,
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
@@ -23,17 +21,13 @@
             identifier: Identifier(
                 "EscapedType",
             ),
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: Typedef(
-                "typedef",
-            ),
+            typedef: Typedef,
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
@@ -41,13 +35,9 @@
                         Sequence(
                             MayBeNull {
                                 type_: SequenceType {
-                                    sequence: Sequence(
-                                        "sequence",
-                                    ),
+                                    sequence: Sequence,
                                     generics: Generics {
-                                        open_angle: LessThan(
-                                            "<",
-                                        ),
+                                        open_angle: LessThan,
                                         body: AttributedType {
                                             attributes: None,
                                             type_: Single(
@@ -63,9 +53,7 @@
                                                 ),
                                             ),
                                         },
-                                        close_angle: GreaterThan(
-                                            ">",
-                                        ),
+                                        close_angle: GreaterThan,
                                     },
                                 },
                                 q_mark: None,
@@ -77,9 +65,7 @@
             identifier: Identifier(
                 "EscapedSequence",
             ),
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

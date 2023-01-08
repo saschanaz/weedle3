@@ -2,17 +2,13 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Foo",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -20,9 +16,7 @@
                             modifier: None,
                             special: None,
                             return_type: Undefined(
-                                Undefined(
-                                    "undefined",
-                                ),
+                                Undefined,
                             ),
                             identifier: Some(
                                 Identifier(
@@ -32,18 +26,14 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
                                             SingleArgument {
                                                 attributes: Some(
                                                     Bracketed {
-                                                        open_bracket: OpenBracket(
-                                                            "[",
-                                                        ),
+                                                        open_bracket: OpenBracket,
                                                         body: Punctuated {
                                                             list: [
                                                                 NoArgs(
@@ -56,22 +46,16 @@
                                                             ],
                                                             separator: PhantomData<weedle::lexer::keywords::Comma>,
                                                         },
-                                                        close_bracket: CloseBracket(
-                                                            "]",
-                                                        ),
+                                                        close_bracket: CloseBracket,
                                                     },
                                                 ),
                                                 optional: Some(
-                                                    Optional(
-                                                        "optional",
-                                                    ),
+                                                    Optional,
                                                 ),
                                                 type_: AttributedType {
                                                     attributes: Some(
                                                         Bracketed {
-                                                            open_bracket: OpenBracket(
-                                                                "[",
-                                                            ),
+                                                            open_bracket: OpenBracket,
                                                             body: Punctuated {
                                                                 list: [
                                                                     NoArgs(
@@ -84,9 +68,7 @@
                                                                 ],
                                                                 separator: PhantomData<weedle::lexer::keywords::Comma>,
                                                             },
-                                                            close_bracket: CloseBracket(
-                                                                "]",
-                                                            ),
+                                                            close_bracket: CloseBracket,
                                                         },
                                                     ),
                                                     type_: Single(
@@ -96,9 +78,7 @@
                                                                     type_: Short(
                                                                         ShortType {
                                                                             unsigned: None,
-                                                                            short: Short(
-                                                                                "short",
-                                                                            ),
+                                                                            short: Short,
                                                                         },
                                                                     ),
                                                                     q_mark: None,
@@ -118,23 +98,15 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

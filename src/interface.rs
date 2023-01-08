@@ -40,7 +40,7 @@ pub enum AttributeName<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub modifier: Option<StringifierOrInheritOrStatic<'a>>,
+    pub modifier: Option<StringifierOrInheritOrStatic>,
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
@@ -55,7 +55,7 @@ pub struct AttributeInterfaceMember<'a> {
 pub struct ConstructorInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub constructor: term!(constructor),
-    pub args: Parenthesized<'a, ArgumentList<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -71,11 +71,11 @@ pub enum OperationName<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub modifier: Option<StringifierOrStatic<'a>>,
-    pub special: Option<Special<'a>>,
+    pub modifier: Option<StringifierOrStatic>,
+    pub special: Option<Special>,
     pub return_type: ReturnType<'a>,
     pub identifier: Option<OperationName<'a>>,
-    pub args: Parenthesized<'a, ArgumentList<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -84,7 +84,7 @@ pub struct OperationInterfaceMember<'a> {
 pub struct SingleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub iterable: term!(iterable),
-    pub generics: Generics<'a, AttributedType<'a>>,
+    pub generics: Generics<AttributedType<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -93,7 +93,7 @@ pub struct SingleTypedIterable<'a> {
 pub struct DoubleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub iterable: term!(iterable),
-    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
     pub semi_colon: term!(;),
 }
 
@@ -109,8 +109,8 @@ pub enum IterableInterfaceMember<'a> {
 pub struct SingleTypedAsyncIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub async_iterable: (term!(async), term!(iterable)),
-    pub generics: Generics<'a, AttributedType<'a>>,
-    pub args: Option<Parenthesized<'a, ArgumentList<'a>>>,
+    pub generics: Generics<AttributedType<'a>>,
+    pub args: Option<Parenthesized<ArgumentList<'a>>>,
     pub semi_colon: term!(;),
 }
 
@@ -119,8 +119,8 @@ pub struct SingleTypedAsyncIterable<'a> {
 pub struct DoubleTypedAsyncIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub async_iterable: (term!(async), term!(iterable)),
-    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
-    pub args: Option<Parenthesized<'a, ArgumentList<'a>>>,
+    pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub args: Option<Parenthesized<ArgumentList<'a>>>,
     pub semi_colon: term!(;),
 }
 
@@ -137,7 +137,7 @@ pub struct MaplikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: Option<term!(readonly)>,
     pub maplike: term!(maplike),
-    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
     pub semi_colon: term!(;),
 }
 
@@ -146,7 +146,7 @@ pub struct SetlikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: Option<term!(readonly)>,
     pub setlike: term!(setlike),
-    pub generics: Generics<'a, AttributedType<'a>>,
+    pub generics: Generics<AttributedType<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -174,7 +174,7 @@ pub enum InterfaceMember<'a> {
 
 /// Parses one of the special keyword `getter|setter|deleter`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Special<'a> {
+pub enum Special {
     Getter(term!(getter)),
     Setter(term!(setter)),
     Deleter(term!(deleter)),
@@ -182,7 +182,7 @@ pub enum Special<'a> {
 
 /// Parses `stringifier|inherit|static`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum StringifierOrInheritOrStatic<'a> {
+pub enum StringifierOrInheritOrStatic {
     Stringifier(term!(stringifier)),
     Inherit(term!(inherit)),
     Static(term!(static)),
@@ -190,7 +190,7 @@ pub enum StringifierOrInheritOrStatic<'a> {
 
 /// Parses `stringifier|static`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum StringifierOrStatic<'a> {
+pub enum StringifierOrStatic {
     Stringifier(term!(stringifier)),
     Static(term!(static)),
 }
@@ -219,21 +219,21 @@ mod test {
         "";
         SetlikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(keywords::ReadOnly::default());
+        readonly == Some(keywords::ReadOnly);
     });
 
     test!(should_parse_maplike_interface_member { "readonly maplike<long, short>;" =>
         "";
         MaplikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(keywords::ReadOnly::default());
+        readonly == Some(keywords::ReadOnly);
     });
 
     test!(should_parse_attribute_interface_member { "readonly attribute unsigned long width;" =>
         "";
         AttributeInterfaceMember;
         attributes.is_none();
-        readonly == Some(keywords::ReadOnly::default());
+        readonly == Some(keywords::ReadOnly);
         identifier == AttributeName::Identifier(Identifier("width"));
     });
 

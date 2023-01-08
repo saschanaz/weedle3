@@ -6,7 +6,7 @@ use crate::literal::{FloatLit, IntegerLit, StringLit};
 use crate::term;
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
-pub type ExtendedAttributeList<'a> = Bracketed<'a, Punctuated<ExtendedAttribute<'a>, term!(,)>>;
+pub type ExtendedAttributeList<'a> = Bracketed<Punctuated<ExtendedAttribute<'a>, term!(,)>>;
 
 /// Matches comma separated identifier list
 pub type IdentifierList<'a> = Punctuated<Identifier<'a>, term!(,)>;
@@ -20,7 +20,7 @@ pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeArgList<'a> {
     pub identifier: Identifier<'a>,
-    pub args: Parenthesized<'a, ArgumentList<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
 }
 
 /// Parses a named argument list. Ex: `NamedConstructor=Image((DOMString src))`
@@ -31,7 +31,7 @@ pub struct ExtendedAttributeNamedArgList<'a> {
     pub lhs_identifier: Identifier<'a>,
     pub assign: term!(=),
     pub rhs_identifier: Identifier<'a>,
-    pub args: Parenthesized<'a, ArgumentList<'a>>,
+    pub args: Parenthesized<ArgumentList<'a>>,
 }
 
 /// Parses an identifier list. Ex: `Exposed=((Window,Worker))`
@@ -41,7 +41,7 @@ pub struct ExtendedAttributeNamedArgList<'a> {
 pub struct ExtendedAttributeIdentList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
-    pub list: Parenthesized<'a, IdentifierList<'a>>,
+    pub list: Parenthesized<IdentifierList<'a>>,
 }
 
 /// Parses an attribute with an identifier. Ex: `PutForwards=name`
@@ -77,7 +77,7 @@ pub struct ExtendedAttributeString<'a> {
 pub struct ExtendedAttributeStringList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
-    pub list: Parenthesized<'a, StringList<'a>>,
+    pub list: Parenthesized<StringList<'a>>,
 }
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeFloat<'a> {
@@ -90,7 +90,7 @@ pub struct ExtendedAttributeFloat<'a> {
 pub struct ExtendedAttributeFloatList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
-    pub list: Parenthesized<'a, FloatList<'a>>,
+    pub list: Parenthesized<FloatList<'a>>,
 }
 
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -104,7 +104,7 @@ pub struct ExtendedAttributeInteger<'a> {
 pub struct ExtendedAttributeIntegerList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
-    pub list: Parenthesized<'a, IntegerList<'a>>,
+    pub list: Parenthesized<IntegerList<'a>>,
 }
 
 /// Parses a plain attribute. Ex: `Replaceable`

@@ -2,26 +2,20 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "A",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
                             attributes: None,
                             modifier: Some(
                                 Stringifier(
-                                    Stringifier(
-                                        "stringifier",
-                                    ),
+                                    Stringifier,
                                 ),
                             ),
                             special: None,
@@ -30,9 +24,7 @@
                                     NonAny(
                                         DOMString(
                                             MayBeNull {
-                                                type_: DOMString(
-                                                    "DOMString",
-                                                ),
+                                                type_: DOMString,
                                                 q_mark: None,
                                             },
                                         ),
@@ -41,66 +33,44 @@
                             ),
                             identifier: None,
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "B",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Stringifier(
                         StringifierMember {
                             attributes: None,
-                            stringifier: Stringifier(
-                                "stringifier",
-                            ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            stringifier: Stringifier,
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

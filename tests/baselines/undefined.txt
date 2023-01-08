@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: OpenBracket(
-                        "[",
-                    ),
+                    open_bracket: OpenBracket,
                     body: Punctuated {
                         list: [
                             Ident(
@@ -13,9 +11,7 @@
                                     lhs_identifier: Identifier(
                                         "Exposed",
                                     ),
-                                    assign: Assign(
-                                        "=",
-                                    ),
+                                    assign: Assign,
                                     rhs: Identifier(
                                         "Window",
                                     ),
@@ -24,22 +20,16 @@
                         ],
                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                     },
-                    close_bracket: CloseBracket(
-                        "]",
-                    ),
+                    close_bracket: CloseBracket,
                 },
             ),
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Foo",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -47,9 +37,7 @@
                             modifier: None,
                             special: None,
                             return_type: Undefined(
-                                Undefined(
-                                    "undefined",
-                                ),
+                                Undefined,
                             ),
                             identifier: Some(
                                 Identifier(
@@ -59,20 +47,14 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -84,20 +66,14 @@
                                 Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise(
-                                                "Promise",
-                                            ),
+                                            promise: Promise,
                                             generics: Generics {
-                                                open_angle: LessThan(
-                                                    "<",
-                                                ),
+                                                open_angle: LessThan,
                                                 body: Type(
                                                     Union(
                                                         MayBeNull {
                                                             type_: Parenthesized {
-                                                                open_paren: OpenParen(
-                                                                    "(",
-                                                                ),
+                                                                open_paren: OpenParen,
                                                                 body: Punctuated {
                                                                     list: [
                                                                         Single(
@@ -105,9 +81,7 @@
                                                                                 attributes: None,
                                                                                 type_: DOMString(
                                                                                     MayBeNull {
-                                                                                        type_: DOMString(
-                                                                                            "DOMString",
-                                                                                        ),
+                                                                                        type_: DOMString,
                                                                                         q_mark: None,
                                                                                     },
                                                                                 ),
@@ -118,9 +92,7 @@
                                                                                 attributes: None,
                                                                                 type_: Undefined(
                                                                                     MayBeNull {
-                                                                                        type_: Undefined(
-                                                                                            "undefined",
-                                                                                        ),
+                                                                                        type_: Undefined,
                                                                                         q_mark: None,
                                                                                     },
                                                                                 ),
@@ -129,17 +101,13 @@
                                                                     ],
                                                                     separator: PhantomData<weedle::lexer::keywords::Or>,
                                                                 },
-                                                                close_paren: CloseParen(
-                                                                    ")",
-                                                                ),
+                                                                close_paren: CloseParen,
                                                             },
                                                             q_mark: None,
                                                         },
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan(
-                                                    ">",
-                                                ),
+                                                close_angle: GreaterThan,
                                             },
                                         },
                                     ),
@@ -153,20 +121,14 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -182,9 +144,7 @@
                                                 type_: Float(
                                                     FloatType {
                                                         unrestricted: None,
-                                                        float: Float(
-                                                            "float",
-                                                        ),
+                                                        float: Float,
                                                     },
                                                 ),
                                                 q_mark: None,
@@ -201,9 +161,7 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [
                                         Single(
@@ -216,9 +174,7 @@
                                                         NonAny(
                                                             Undefined(
                                                                 MayBeNull {
-                                                                    type_: Undefined(
-                                                                        "undefined",
-                                                                    ),
+                                                                    type_: Undefined,
                                                                     q_mark: None,
                                                                 },
                                                             ),
@@ -236,23 +192,15 @@
                                     ],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

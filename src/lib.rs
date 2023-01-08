@@ -111,7 +111,7 @@ pub struct CallbackDefinition<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
     pub return_type: ReturnType<'a>,
-    pub arguments: Parenthesized<'a, ArgumentList<'a>>,
+    pub arguments: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -123,7 +123,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub interface: term!(interface),
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<'a, InterfaceMembers<'a>>,
+    pub members: Braced<InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -134,7 +134,7 @@ pub struct InterfaceDefinition<'a> {
     pub interface: term!(interface),
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<'a, InterfaceMembers<'a>>,
+    pub members: Braced<InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -145,7 +145,7 @@ pub struct InterfaceMixinDefinition<'a> {
     pub interface: term!(interface),
     pub mixin: term!(mixin),
     pub identifier: Identifier<'a>,
-    pub members: Braced<'a, MixinMembers<'a>>,
+    pub members: Braced<MixinMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -155,7 +155,7 @@ pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
     pub identifier: Identifier<'a>,
-    pub members: Braced<'a, NamespaceMembers<'a>>,
+    pub members: Braced<NamespaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -166,7 +166,7 @@ pub struct DictionaryDefinition<'a> {
     pub dictionary: term!(dictionary),
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<'a, DictionaryMembers<'a>>,
+    pub members: Braced<DictionaryMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -177,7 +177,7 @@ pub struct PartialInterfaceDefinition<'a> {
     pub partial: term!(partial),
     pub interface: term!(interface),
     pub identifier: Identifier<'a>,
-    pub members: Braced<'a, InterfaceMembers<'a>>,
+    pub members: Braced<InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -189,7 +189,7 @@ pub struct PartialInterfaceMixinDefinition<'a> {
     pub interface: term!(interface),
     pub mixin: term!(mixin),
     pub identifier: Identifier<'a>,
-    pub members: Braced<'a, MixinMembers<'a>>,
+    pub members: Braced<MixinMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -200,7 +200,7 @@ pub struct PartialDictionaryDefinition<'a> {
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
     pub identifier: Identifier<'a>,
-    pub members: Braced<'a, DictionaryMembers<'a>>,
+    pub members: Braced<DictionaryMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -211,7 +211,7 @@ pub struct PartialNamespaceDefinition<'a> {
     pub partial: term!(partial),
     pub namespace: term!(namespace),
     pub identifier: Identifier<'a>,
-    pub members: Braced<'a, NamespaceMembers<'a>>,
+    pub members: Braced<NamespaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -221,7 +221,7 @@ pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
     pub identifier: Identifier<'a>,
-    pub values: Braced<'a, EnumValueList<'a>>,
+    pub values: Braced<EnumValueList<'a>>,
     pub semi_colon: term!(;),
 }
 

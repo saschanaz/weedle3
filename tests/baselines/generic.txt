@@ -2,17 +2,13 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "Foo",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -23,59 +19,41 @@
                                 Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise(
-                                                "Promise",
-                                            ),
+                                            promise: Promise,
                                             generics: Generics {
-                                                open_angle: LessThan(
-                                                    "<",
-                                                ),
+                                                open_angle: LessThan,
                                                 body: Type(
                                                     Single(
                                                         Promise(
                                                             PromiseType {
-                                                                promise: Promise(
-                                                                    "Promise",
-                                                                ),
+                                                                promise: Promise,
                                                                 generics: Generics {
-                                                                    open_angle: LessThan(
-                                                                        "<",
-                                                                    ),
+                                                                    open_angle: LessThan,
                                                                     body: Type(
                                                                         Single(
                                                                             NonAny(
                                                                                 Sequence(
                                                                                     MayBeNull {
                                                                                         type_: SequenceType {
-                                                                                            sequence: Sequence(
-                                                                                                "sequence",
-                                                                                            ),
+                                                                                            sequence: Sequence,
                                                                                             generics: Generics {
-                                                                                                open_angle: LessThan(
-                                                                                                    "<",
-                                                                                                ),
+                                                                                                open_angle: LessThan,
                                                                                                 body: AttributedType {
                                                                                                     attributes: None,
                                                                                                     type_: Single(
                                                                                                         NonAny(
                                                                                                             DOMString(
                                                                                                                 MayBeNull {
-                                                                                                                    type_: DOMString(
-                                                                                                                        "DOMString",
-                                                                                                                    ),
+                                                                                                                    type_: DOMString,
                                                                                                                     q_mark: Some(
-                                                                                                                        QuestionMark(
-                                                                                                                            "?",
-                                                                                                                        ),
+                                                                                                                        QuestionMark,
                                                                                                                     ),
                                                                                                                 },
                                                                                                             ),
                                                                                                         ),
                                                                                                     ),
                                                                                                 },
-                                                                                                close_angle: GreaterThan(
-                                                                                                    ">",
-                                                                                                ),
+                                                                                                close_angle: GreaterThan,
                                                                                             },
                                                                                         },
                                                                                         q_mark: None,
@@ -84,17 +62,13 @@
                                                                             ),
                                                                         ),
                                                                     ),
-                                                                    close_angle: GreaterThan(
-                                                                        ">",
-                                                                    ),
+                                                                    close_angle: GreaterThan,
                                                                 },
                                                             },
                                                         ),
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan(
-                                                    ">",
-                                                ),
+                                                close_angle: GreaterThan,
                                             },
                                         },
                                     ),
@@ -108,20 +82,14 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -129,42 +97,30 @@
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise(
-                                                "Promise",
-                                            ),
+                                            promise: Promise,
                                             generics: Generics {
-                                                open_angle: LessThan(
-                                                    "<",
-                                                ),
+                                                open_angle: LessThan,
                                                 body: Type(
                                                     Single(
                                                         NonAny(
                                                             DOMString(
                                                                 MayBeNull {
-                                                                    type_: DOMString(
-                                                                        "DOMString",
-                                                                    ),
+                                                                    type_: DOMString,
                                                                     q_mark: None,
                                                                 },
                                                             ),
                                                         ),
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan(
-                                                    ">",
-                                                ),
+                                                close_angle: GreaterThan,
                                             },
                                         },
                                     ),
@@ -175,9 +131,7 @@
                                     "baz",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -185,13 +139,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -199,31 +149,23 @@
                                         FrozenArrayType(
                                             MayBeNull {
                                                 type_: FrozenArrayType {
-                                                    frozen_array: FrozenArray(
-                                                        "FrozenArray",
-                                                    ),
+                                                    frozen_array: FrozenArray,
                                                     generics: Generics {
-                                                        open_angle: LessThan(
-                                                            "<",
-                                                        ),
+                                                        open_angle: LessThan,
                                                         body: AttributedType {
                                                             attributes: None,
                                                             type_: Single(
                                                                 NonAny(
                                                                     DOMString(
                                                                         MayBeNull {
-                                                                            type_: DOMString(
-                                                                                "DOMString",
-                                                                            ),
+                                                                            type_: DOMString,
                                                                             q_mark: None,
                                                                         },
                                                                     ),
                                                                 ),
                                                             ),
                                                         },
-                                                        close_angle: GreaterThan(
-                                                            ">",
-                                                        ),
+                                                        close_angle: GreaterThan,
                                                     },
                                                 },
                                                 q_mark: None,
@@ -237,9 +179,7 @@
                                     "frozen",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -247,13 +187,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -261,31 +197,23 @@
                                         ObservableArrayType(
                                             MayBeNull {
                                                 type_: ObservableArrayType {
-                                                    observable_array: ObservableArray(
-                                                        "ObservableArray",
-                                                    ),
+                                                    observable_array: ObservableArray,
                                                     generics: Generics {
-                                                        open_angle: LessThan(
-                                                            "<",
-                                                        ),
+                                                        open_angle: LessThan,
                                                         body: AttributedType {
                                                             attributes: None,
                                                             type_: Single(
                                                                 NonAny(
                                                                     DOMString(
                                                                         MayBeNull {
-                                                                            type_: DOMString(
-                                                                                "DOMString",
-                                                                            ),
+                                                                            type_: DOMString,
                                                                             q_mark: None,
                                                                         },
                                                                     ),
                                                                 ),
                                                             ),
                                                         },
-                                                        close_angle: GreaterThan(
-                                                            ">",
-                                                        ),
+                                                        close_angle: GreaterThan,
                                                     },
                                                 },
                                                 q_mark: None,
@@ -299,48 +227,34 @@
                                     "observable",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "ExtendedFoo",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Attribute(
                         AttributeInterfaceMember {
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -348,19 +262,13 @@
                                         FrozenArrayType(
                                             MayBeNull {
                                                 type_: FrozenArrayType {
-                                                    frozen_array: FrozenArray(
-                                                        "FrozenArray",
-                                                    ),
+                                                    frozen_array: FrozenArray,
                                                     generics: Generics {
-                                                        open_angle: LessThan(
-                                                            "<",
-                                                        ),
+                                                        open_angle: LessThan,
                                                         body: AttributedType {
                                                             attributes: Some(
                                                                 Bracketed {
-                                                                    open_bracket: OpenBracket(
-                                                                        "[",
-                                                                    ),
+                                                                    open_bracket: OpenBracket,
                                                                     body: Punctuated {
                                                                         list: [
                                                                             NoArgs(
@@ -373,27 +281,21 @@
                                                                         ],
                                                                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                                                                     },
-                                                                    close_bracket: CloseBracket(
-                                                                        "]",
-                                                                    ),
+                                                                    close_bracket: CloseBracket,
                                                                 },
                                                             ),
                                                             type_: Single(
                                                                 NonAny(
                                                                     DOMString(
                                                                         MayBeNull {
-                                                                            type_: DOMString(
-                                                                                "DOMString",
-                                                                            ),
+                                                                            type_: DOMString,
                                                                             q_mark: None,
                                                                         },
                                                                     ),
                                                                 ),
                                                             ),
                                                         },
-                                                        close_angle: GreaterThan(
-                                                            ">",
-                                                        ),
+                                                        close_angle: GreaterThan,
                                                     },
                                                 },
                                                 q_mark: None,
@@ -407,9 +309,7 @@
                                     "frozen",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Attribute(
@@ -417,13 +317,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                ReadOnly(
-                                    "readonly",
-                                ),
+                                ReadOnly,
                             ),
-                            attribute: Attribute(
-                                "attribute",
-                            ),
+                            attribute: Attribute,
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
@@ -431,19 +327,13 @@
                                         ObservableArrayType(
                                             MayBeNull {
                                                 type_: ObservableArrayType {
-                                                    observable_array: ObservableArray(
-                                                        "ObservableArray",
-                                                    ),
+                                                    observable_array: ObservableArray,
                                                     generics: Generics {
-                                                        open_angle: LessThan(
-                                                            "<",
-                                                        ),
+                                                        open_angle: LessThan,
                                                         body: AttributedType {
                                                             attributes: Some(
                                                                 Bracketed {
-                                                                    open_bracket: OpenBracket(
-                                                                        "[",
-                                                                    ),
+                                                                    open_bracket: OpenBracket,
                                                                     body: Punctuated {
                                                                         list: [
                                                                             NoArgs(
@@ -456,27 +346,21 @@
                                                                         ],
                                                                         separator: PhantomData<weedle::lexer::keywords::Comma>,
                                                                     },
-                                                                    close_bracket: CloseBracket(
-                                                                        "]",
-                                                                    ),
+                                                                    close_bracket: CloseBracket,
                                                                 },
                                                             ),
                                                             type_: Single(
                                                                 NonAny(
                                                                     DOMString(
                                                                         MayBeNull {
-                                                                            type_: DOMString(
-                                                                                "DOMString",
-                                                                            ),
+                                                                            type_: DOMString,
                                                                             q_mark: None,
                                                                         },
                                                                     ),
                                                                 ),
                                                             ),
                                                         },
-                                                        close_angle: GreaterThan(
-                                                            ">",
-                                                        ),
+                                                        close_angle: GreaterThan,
                                                     },
                                                 },
                                                 q_mark: None,
@@ -490,35 +374,25 @@
                                     "observable",
                                 ),
                             ),
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "ServiceWorkerClients",
             ),
             inheritance: None,
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -529,13 +403,9 @@
                                 Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise(
-                                                "Promise",
-                                            ),
+                                            promise: Promise,
                                             generics: Generics {
-                                                open_angle: LessThan(
-                                                    "<",
-                                                ),
+                                                open_angle: LessThan,
                                                 body: Type(
                                                     Single(
                                                         NonAny(
@@ -545,18 +415,14 @@
                                                                         "Client",
                                                                     ),
                                                                     q_mark: Some(
-                                                                        QuestionMark(
-                                                                            "?",
-                                                                        ),
+                                                                        QuestionMark,
                                                                     ),
                                                                 },
                                                             ),
                                                         ),
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan(
-                                                    ">",
-                                                ),
+                                                close_angle: GreaterThan,
                                             },
                                         },
                                     ),
@@ -570,20 +436,14 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                     Operation(
@@ -595,25 +455,17 @@
                                 Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise(
-                                                "Promise",
-                                            ),
+                                            promise: Promise,
                                             generics: Generics {
-                                                open_angle: LessThan(
-                                                    "<",
-                                                ),
+                                                open_angle: LessThan,
                                                 body: Type(
                                                     Single(
                                                         Any(
-                                                            Any(
-                                                                "any",
-                                                            ),
+                                                            Any,
                                                         ),
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan(
-                                                    ">",
-                                                ),
+                                                close_angle: GreaterThan,
                                             },
                                         },
                                     ),
@@ -627,55 +479,39 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: Interface(
-                "interface",
-            ),
+            interface: Interface,
             identifier: Identifier(
                 "FetchEvent",
             ),
             inheritance: Some(
                 Inheritance {
-                    colon: Colon(
-                        ":",
-                    ),
+                    colon: Colon,
                     identifier: Identifier(
                         "Event",
                     ),
                 },
             ),
             members: Braced {
-                open_brace: OpenBrace(
-                    "{",
-                ),
+                open_brace: OpenBrace,
                 body: [
                     Operation(
                         OperationInterfaceMember {
@@ -686,25 +522,17 @@
                                 Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise(
-                                                "Promise",
-                                            ),
+                                            promise: Promise,
                                             generics: Generics {
-                                                open_angle: LessThan(
-                                                    "<",
-                                                ),
+                                                open_angle: LessThan,
                                                 body: Type(
                                                     Single(
                                                         Any(
-                                                            Any(
-                                                                "any",
-                                                            ),
+                                                            Any,
                                                         ),
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan(
-                                                    ">",
-                                                ),
+                                                close_angle: GreaterThan,
                                             },
                                         },
                                     ),
@@ -718,30 +546,20 @@
                                 ),
                             ),
                             args: Parenthesized {
-                                open_paren: OpenParen(
-                                    "(",
-                                ),
+                                open_paren: OpenParen,
                                 body: Punctuated {
                                     list: [],
                                     separator: PhantomData<weedle::lexer::keywords::Comma>,
                                 },
-                                close_paren: CloseParen(
-                                    ")",
-                                ),
+                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon(
-                                ";",
-                            ),
+                            semi_colon: SemiColon,
                         },
                     ),
                 ],
-                close_brace: CloseBrace(
-                    "}",
-                ),
+                close_brace: CloseBrace,
             },
-            semi_colon: SemiColon(
-                ";",
-            ),
+            semi_colon: SemiColon,
         },
     ),
 ]

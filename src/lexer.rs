@@ -12,7 +12,7 @@ pub type NomResult<'a, O> = IResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Tag<'a> {
-    Kw(Keyword<'a>),
+    Kw(Keyword),
     Int(IntegerLit<'a>),
     Dec(FloatValueLit<'a>),
     Id(Identifier<'a>),

@@ -102,14 +102,14 @@ impl<'slice, 'a> Parse<'slice, 'a> for StringLit<'a> {
 
 /// Represents `[ ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct EmptyArrayLit<'a> {
+pub struct EmptyArrayLit {
     pub open_bracket: term!(OpenBracket),
     pub close_bracket: term!(CloseBracket),
 }
 
 /// Represents `{ }`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct EmptyDictionaryLit<'a> {
+pub struct EmptyDictionaryLit {
     pub open_brace: term!(OpenBrace),
     pub close_brace: term!(CloseBrace),
 }
@@ -118,8 +118,8 @@ pub struct EmptyDictionaryLit<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum DefaultValue<'a> {
     Boolean(BooleanLit),
-    EmptyArray(EmptyArrayLit<'a>),
-    EmptyDictionary(EmptyDictionaryLit<'a>),
+    EmptyArray(EmptyArrayLit),
+    EmptyDictionary(EmptyDictionaryLit),
     Float(FloatLit<'a>),
     Integer(IntegerLit<'a>),
     Null(term!(null)),
@@ -290,12 +290,12 @@ mod test {
 
     test!(should_parse_neg_infinity { "-Infinity" =>
         "";
-        FloatLit => FloatLit::NegInfinity(keywords::NegInfinity("-Infinity"))
+        FloatLit => FloatLit::NegInfinity(keywords::NegInfinity)
     });
 
     test!(should_parse_infinity { "Infinity" =>
         "";
-        FloatLit => FloatLit::Infinity(keywords::Infinity("Infinity"))
+        FloatLit => FloatLit::Infinity(keywords::Infinity)
     });
 
     test_match!(should_parse_string { r#""this is a string""# =>
@@ -329,7 +329,7 @@ mod test {
 
     test_match!(should_parse_null { "null" =>
         "";
-        Keyword => Keyword::Null(Null("null"))
+        Keyword => Keyword::Null(Null)
     });
 
     test!(should_parse_empty_array { "[]" =>
