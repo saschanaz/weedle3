@@ -20,10 +20,7 @@ macro_rules! eat {
                     Some($crate::lexer::Token {
                         tag: $crate::lexer::Tag::$variant(variant),
                         trivia: _,
-                    }) => Ok((
-                        input.slice(1..),
-                        variant,
-                    )),
+                    }) => Ok((input.slice(1..), variant)),
                     _ => Err(nom::Err::Error(nom::error::Error {
                         input,
                         code: nom::error::ErrorKind::Char,
@@ -44,10 +41,7 @@ macro_rules! eat_key {
                 Some($crate::lexer::Token {
                     tag: Tag::Kw(Keyword::$variant(variant)),
                     trivia: _,
-                }) => Ok((
-                    input.slice(1..),
-                    variant,
-                )),
+                }) => Ok((input.slice(1..), variant)),
                 _ => Err(nom::Err::Error(nom::error::Error {
                     input,
                     code: nom::error::ErrorKind::Char,

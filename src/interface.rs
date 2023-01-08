@@ -198,7 +198,7 @@ pub enum StringifierOrStatic<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::{Parse, lexer::keywords};
+    use crate::{lexer::keywords, Parse};
 
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";

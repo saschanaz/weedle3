@@ -216,7 +216,7 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::lexer::keywords::{Keyword, Null, self};
+    use crate::lexer::keywords::{self, Keyword, Null};
     use crate::Parse;
 
     test_match!(should_parse_integer { "45" =>

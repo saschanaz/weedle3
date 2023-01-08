@@ -104,10 +104,7 @@ fn interface_constructor() {
                         _ => unreachable!(),
                     };
 
-                    assert_eq!(
-                        constructor.constructor,
-                        Default::default()
-                    );
+                    assert_eq!(constructor.constructor, Default::default());
                 }
                 _ => unreachable!(),
             }
