@@ -8,6 +8,13 @@ pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
 }
 
+fn marker<'slice, 'a, S>(i: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, S>
+where
+    S: ::std::default::Default,
+{
+    Ok((i, S::default()))
+}
+
 impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Option<T> {
     parser!(nom::combinator::opt(weedle!(T)));
 }
@@ -77,17 +84,14 @@ pub struct Punctuated<T, S> {
 impl<'slice, 'a, T, S> Parse<'slice, 'a> for Punctuated<T, S>
 where
     T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a> + core::default::Default,
+    S: Parse<'slice, 'a> + ::std::default::Default,
 {
     fn parse(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
-        let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
-        Ok((
-            input,
-            Self {
-                list,
-                separator: S::default(),
-            },
-        ))
+        let (input, (list, separator)) = nom::sequence::tuple((
+            nom::multi::separated_list0(weedle!(S), weedle!(T)),
+            marker,
+        ))(input)?;
+        Ok((input, Self { list, separator }))
     }
 }
 
@@ -101,7 +105,7 @@ pub struct PunctuatedNonEmpty<T, S> {
 impl<'slice, 'a, T, S> Parse<'slice, 'a> for PunctuatedNonEmpty<T, S>
 where
     T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a> + core::default::Default,
+    S: Parse<'slice, 'a> + ::std::default::Default,
 {
     fn parse(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(

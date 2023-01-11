@@ -4,7 +4,7 @@ use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::parser::Tokens;
 use crate::types::{AttributedType, Type};
-use crate::{eat, term, Parse};
+use crate::{eat, Parse};
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
@@ -124,7 +124,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier == ArgumentName("a");
+        identifier.0 == "a";
         default.is_none();
     });
 
@@ -140,7 +140,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == ArgumentName("a");
+        identifier.0 == "a";
         default.is_none();
     });
 
@@ -149,9 +149,9 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == ArgumentName("a");
+        identifier.0 == "a";
         default == Some(Default {
-            assign: crate::term::Assign,
+            assign: term!(=),
             value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
         });
     });

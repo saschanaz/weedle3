@@ -3,9 +3,9 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
+use crate::eat;
 use crate::literal::ConstValue;
 use crate::types::{AttributedType, ConstType, ReturnType};
-use crate::{eat, term};
 
 /// Parses interface members
 pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
@@ -261,22 +261,22 @@ mod test {
         "";
         SetlikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(term::ReadOnly);
+        readonly == Some(term!(readonly));
     });
 
     test!(should_parse_maplike_interface_member { "readonly maplike<long, short>;" =>
         "";
         MaplikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(term::ReadOnly);
+        readonly == Some(term!(readonly));
     });
 
     test!(should_parse_attribute_interface_member { "readonly attribute unsigned long width;" =>
         "";
         AttributeInterfaceMember;
         attributes.is_none();
-        readonly == Some(term::ReadOnly);
-        identifier == AttributeName("width");
+        readonly == Some(term!(readonly));
+        identifier.0 == "width";
     });
 
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>
