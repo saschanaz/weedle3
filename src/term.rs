@@ -158,255 +158,255 @@ generate_keywords_enum!(
 #[macro_export]
 macro_rules! term {
     (OpenParen) => {
-        $crate::lexer::keywords::OpenParen
+        $crate::term::OpenParen
     };
     (CloseParen) => {
-        $crate::lexer::keywords::CloseParen
+        $crate::term::CloseParen
     };
     (OpenBracket) => {
-        $crate::lexer::keywords::OpenBracket
+        $crate::term::OpenBracket
     };
     (CloseBracket) => {
-        $crate::lexer::keywords::CloseBracket
+        $crate::term::CloseBracket
     };
     (OpenBrace) => {
-        $crate::lexer::keywords::OpenBrace
+        $crate::term::OpenBrace
     };
     (CloseBrace) => {
-        $crate::lexer::keywords::CloseBrace
+        $crate::term::CloseBrace
     };
     (,) => {
-        $crate::lexer::keywords::Comma
+        $crate::term::Comma
     };
     (-) => {
-        $crate::lexer::keywords::Minus
+        $crate::term::Minus
     };
     (.) => {
-        $crate::lexer::keywords::Dot
+        $crate::term::Dot
     };
     (...) => {
-        $crate::lexer::keywords::Ellipsis
+        $crate::term::Ellipsis
     };
     (:) => {
-        $crate::lexer::keywords::Colon
+        $crate::term::Colon
     };
     (;) => {
-        $crate::lexer::keywords::SemiColon
+        $crate::term::SemiColon
     };
     (<) => {
-        $crate::lexer::keywords::LessThan
+        $crate::term::LessThan
     };
     (=) => {
-        $crate::lexer::keywords::Assign
+        $crate::term::Assign
     };
     (>) => {
-        $crate::lexer::keywords::GreaterThan
+        $crate::term::GreaterThan
     };
     (?) => {
-        $crate::lexer::keywords::QMark
+        $crate::term::QMark
     };
     (*) => {
-        $crate::lexer::keywords::Wildcard
+        $crate::term::Wildcard
     };
     (or) => {
-        $crate::lexer::keywords::Or
+        $crate::term::Or
     };
     (optional) => {
-        $crate::lexer::keywords::Optional
+        $crate::term::Optional
     };
     (async) => {
-        $crate::lexer::keywords::Async
+        $crate::term::Async
     };
     (attribute) => {
-        $crate::lexer::keywords::Attribute
+        $crate::term::Attribute
     };
     (callback) => {
-        $crate::lexer::keywords::Callback
+        $crate::term::Callback
     };
     (const) => {
-        $crate::lexer::keywords::Const
+        $crate::term::Const
     };
     (deleter) => {
-        $crate::lexer::keywords::Deleter
+        $crate::term::Deleter
     };
     (dictionary) => {
-        $crate::lexer::keywords::Dictionary
+        $crate::term::Dictionary
     };
     (enum) => {
-        $crate::lexer::keywords::Enum
+        $crate::term::Enum
     };
     (getter) => {
-        $crate::lexer::keywords::Getter
+        $crate::term::Getter
     };
     (includes) => {
-        $crate::lexer::keywords::Includes
+        $crate::term::Includes
     };
     (inherit) => {
-        $crate::lexer::keywords::Inherit
+        $crate::term::Inherit
     };
     (interface) => {
-        $crate::lexer::keywords::Interface
+        $crate::term::Interface
     };
     (iterable) => {
-        $crate::lexer::keywords::Iterable
+        $crate::term::Iterable
     };
     (maplike) => {
-        $crate::lexer::keywords::Maplike
+        $crate::term::Maplike
     };
     (namespace) => {
-        $crate::lexer::keywords::Namespace
+        $crate::term::Namespace
     };
     (partial) => {
-        $crate::lexer::keywords::Partial
+        $crate::term::Partial
     };
     (required) => {
-        $crate::lexer::keywords::Required
+        $crate::term::Required
     };
     (setlike) => {
-        $crate::lexer::keywords::Setlike
+        $crate::term::Setlike
     };
     (setter) => {
-        $crate::lexer::keywords::Setter
+        $crate::term::Setter
     };
     (static) => {
-        $crate::lexer::keywords::Static
+        $crate::term::Static
     };
     (stringifier) => {
-        $crate::lexer::keywords::Stringifier
+        $crate::term::Stringifier
     };
     (typedef) => {
-        $crate::lexer::keywords::Typedef
+        $crate::term::Typedef
     };
     (unrestricted) => {
-        $crate::lexer::keywords::Unrestricted
+        $crate::term::Unrestricted
     };
     (symbol) => {
-        $crate::lexer::keywords::Symbol
+        $crate::term::Symbol
     };
     (- Infinity) => {
-        $crate::lexer::keywords::NegInfinity
+        $crate::term::NegInfinity
     };
     (ByteString) => {
-        $crate::lexer::keywords::ByteString
+        $crate::term::ByteString
     };
     (DOMString) => {
-        $crate::lexer::keywords::DOMString
+        $crate::term::DOMString
     };
     (FrozenArray) => {
-        $crate::lexer::keywords::FrozenArray
+        $crate::term::FrozenArray
     };
     (Infinity) => {
-        $crate::lexer::keywords::Infinity
+        $crate::term::Infinity
     };
     (NaN) => {
-        $crate::lexer::keywords::NaN
+        $crate::term::NaN
     };
     (ObservableArray) => {
-        $crate::lexer::keywords::ObservableArray
+        $crate::term::ObservableArray
     };
     (USVString) => {
-        $crate::lexer::keywords::USVString
+        $crate::term::USVString
     };
     (any) => {
-        $crate::lexer::keywords::Any
+        $crate::term::Any
     };
     (boolean) => {
-        $crate::lexer::keywords::Boolean
+        $crate::term::Boolean
     };
     (byte) => {
-        $crate::lexer::keywords::Byte
+        $crate::term::Byte
     };
     (double) => {
-        $crate::lexer::keywords::Double
+        $crate::term::Double
     };
     (false) => {
-        $crate::lexer::keywords::False
+        $crate::term::False
     };
     (float) => {
-        $crate::lexer::keywords::Float
+        $crate::term::Float
     };
     (long) => {
-        $crate::lexer::keywords::Long
+        $crate::term::Long
     };
     (null) => {
-        $crate::lexer::keywords::Null
+        $crate::term::Null
     };
     (object) => {
-        $crate::lexer::keywords::Object
+        $crate::term::Object
     };
     (octet) => {
-        $crate::lexer::keywords::Octet
+        $crate::term::Octet
     };
     (bigint) => {
-        $crate::lexer::keywords::Bigint
+        $crate::term::Bigint
     };
     (sequence) => {
-        $crate::lexer::keywords::Sequence
+        $crate::term::Sequence
     };
     (short) => {
-        $crate::lexer::keywords::Short
+        $crate::term::Short
     };
     (true) => {
-        $crate::lexer::keywords::True
+        $crate::term::True
     };
     (unsigned) => {
-        $crate::lexer::keywords::Unsigned
+        $crate::term::Unsigned
     };
     (undefined) => {
-        $crate::lexer::keywords::Undefined
+        $crate::term::Undefined
     };
     (record) => {
-        $crate::lexer::keywords::Record
+        $crate::term::Record
     };
     (ArrayBuffer) => {
-        $crate::lexer::keywords::ArrayBuffer
+        $crate::term::ArrayBuffer
     };
     (DataView) => {
-        $crate::lexer::keywords::DataView
+        $crate::term::DataView
     };
     (Int8Array) => {
-        $crate::lexer::keywords::Int8Array
+        $crate::term::Int8Array
     };
     (Int16Array) => {
-        $crate::lexer::keywords::Int16Array
+        $crate::term::Int16Array
     };
     (Int32Array) => {
-        $crate::lexer::keywords::Int32Array
+        $crate::term::Int32Array
     };
     (Uint8Array) => {
-        $crate::lexer::keywords::Uint8Array
+        $crate::term::Uint8Array
     };
     (Uint16Array) => {
-        $crate::lexer::keywords::Uint16Array
+        $crate::term::Uint16Array
     };
     (Uint32Array) => {
-        $crate::lexer::keywords::Uint32Array
+        $crate::term::Uint32Array
     };
     (Uint8ClampedArray) => {
-        $crate::lexer::keywords::Uint8ClampedArray
+        $crate::term::Uint8ClampedArray
     };
     (BigInt64Array) => {
-        $crate::lexer::keywords::BigInt64Array
+        $crate::term::BigInt64Array
     };
     (BigUint64Array) => {
-        $crate::lexer::keywords::BigUint64Array
+        $crate::term::BigUint64Array
     };
     (Float32Array) => {
-        $crate::lexer::keywords::Float32Array
+        $crate::term::Float32Array
     };
     (Float64Array) => {
-        $crate::lexer::keywords::Float64Array
+        $crate::term::Float64Array
     };
     (Promise) => {
-        $crate::lexer::keywords::Promise
+        $crate::term::Promise
     };
     (readonly) => {
-        $crate::lexer::keywords::ReadOnly
+        $crate::term::ReadOnly
     };
     (mixin) => {
-        $crate::lexer::keywords::Mixin
+        $crate::term::Mixin
     };
     (constructor) => {
-        $crate::lexer::keywords::Constructor
+        $crate::term::Constructor
     };
 }

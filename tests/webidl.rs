@@ -1,5 +1,4 @@
 use test_generator::test_resources;
-use weedle::lexer::keywords;
 
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
@@ -63,7 +62,7 @@ fn interface_constructor() {
     match definition {
         Definition::Interface(mut interface) => {
             assert!(interface.attributes.is_none());
-            assert_eq!(interface.interface, keywords::Interface::default());
+            assert_eq!(interface.interface, term::Interface::default());
             assert_eq!(interface.identifier.0, "InterfaceWithConstructor");
             assert_eq!(interface.inheritance, None);
 

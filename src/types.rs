@@ -2,7 +2,6 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
-use crate::lexer::keywords;
 use crate::term;
 use crate::Parse;
 
@@ -86,7 +85,7 @@ pub struct ObservableArrayType<'a> {
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct MayBeNull<T> {
     pub type_: T,
-    pub q_mark: Option<keywords::QMark>,
+    pub q_mark: Option<term::QMark>,
 }
 
 /// Parses a `Promise<Type|undefined>` type

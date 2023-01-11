@@ -240,7 +240,7 @@ pub enum StringifierOrStatic {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::{lexer::keywords, Parse};
+    use crate::{term, Parse};
 
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";
@@ -261,21 +261,21 @@ mod test {
         "";
         SetlikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(keywords::ReadOnly);
+        readonly == Some(term::ReadOnly);
     });
 
     test!(should_parse_maplike_interface_member { "readonly maplike<long, short>;" =>
         "";
         MaplikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(keywords::ReadOnly);
+        readonly == Some(term::ReadOnly);
     });
 
     test!(should_parse_attribute_interface_member { "readonly attribute unsigned long width;" =>
         "";
         AttributeInterfaceMember;
         attributes.is_none();
-        readonly == Some(keywords::ReadOnly);
+        readonly == Some(term::ReadOnly);
         identifier == AttributeName("width");
     });
 

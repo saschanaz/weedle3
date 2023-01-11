@@ -4,7 +4,6 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
 use crate::interface::{ConstMember, StringifierMember};
-use crate::term;
 use crate::types::{AttributedType, ReturnType};
 
 /// Parses the members declarations of a mixin

@@ -4,7 +4,6 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
 use crate::literal::ConstValue;
-use crate::term;
 use crate::types::{AttributedType, ConstType, ReturnType};
 
 /// Parses namespace members declaration

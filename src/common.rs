@@ -1,9 +1,8 @@
 use weedle_derive::Weedle;
 
-use crate::lexer::keywords;
 use crate::literal::DefaultValue;
 use crate::parser::Tokens;
-use crate::{term, Parse};
+use crate::{term, IResult, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
@@ -36,36 +35,36 @@ impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>, V: Parse<'slice, 'a
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Parenthesized<T> {
-    pub open_paren: keywords::OpenParen,
+    pub open_paren: term::OpenParen,
     pub body: T,
-    pub close_paren: keywords::CloseParen,
+    pub close_paren: term::CloseParen,
 }
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Bracketed<T> {
-    pub open_bracket: keywords::OpenBracket,
+    pub open_bracket: term::OpenBracket,
     pub body: T,
-    pub close_bracket: keywords::CloseBracket,
+    pub close_bracket: term::CloseBracket,
 }
 
 /// Parses `{ body }`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Braced<T> {
-    pub open_brace: keywords::OpenBrace,
+    pub open_brace: term::OpenBrace,
     pub body: T,
-    pub close_brace: keywords::CloseBrace,
+    pub close_brace: term::CloseBrace,
 }
 
 /// Parses `< body >`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Generics<T> {
-    pub open_angle: keywords::LessThan,
+    pub open_angle: term::LessThan,
     pub body: T,
-    pub close_angle: keywords::GreaterThan,
+    pub close_angle: term::GreaterThan,
 }
 
 /// Parses `(item1, item2, item3,...)?`
@@ -80,7 +79,7 @@ where
     T: Parse<'slice, 'a>,
     S: Parse<'slice, 'a> + core::default::Default,
 {
-    fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
+    fn parse(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
         Ok((
             input,
@@ -104,7 +103,7 @@ where
     T: Parse<'slice, 'a>,
     S: Parse<'slice, 'a> + core::default::Default,
 {
-    fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
+    fn parse(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(
             nom::multi::separated_list1(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S)),
@@ -126,7 +125,7 @@ where
 pub struct Identifier<'a>(pub &'a str);
 
 impl<'a> Identifier<'a> {
-    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+    pub fn parse(input: &'a str) -> IResult<&'a str, Self> {
         nom::combinator::map(
             nom::combinator::recognize(nom::sequence::tuple((
                 nom::combinator::opt(nom::branch::alt((
@@ -205,26 +204,26 @@ mod test {
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(Identifier, keywords::Comma, Identifier)> =>
+        Generics<(Identifier, term::Comma, Identifier)> =>
             Generics {
-                open_angle: keywords::LessThan,
+                open_angle: term::LessThan,
                 body: (
                     Identifier("one"),
-                    keywords::Comma,
+                    term::Comma,
                     Identifier("two"),
                 ),
-                close_angle: keywords::GreaterThan,
+                close_angle: term::GreaterThan,
             }
     });
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<Identifier, keywords::Comma>;
+        Punctuated<Identifier, term::Comma>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<Identifier, keywords::Comma>
+        PunctuatedNonEmpty<Identifier, term::Comma>
     });
 
     test_match!(should_parse_identifier { "hello" =>

@@ -37,6 +37,8 @@ use weedle_derive::Weedle;
 mod macros;
 #[macro_use]
 mod whitespace;
+#[macro_use]
+pub mod term;
 pub mod argument;
 pub mod attribute;
 pub mod common;

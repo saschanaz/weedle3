@@ -3,7 +3,6 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated};
 use crate::literal::{FloatLit, IntegerLit, StringLit};
-use crate::term;
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
 pub type ExtendedAttributeList<'a> = Bracketed<Punctuated<ExtendedAttribute<'a>, term!(,)>>;

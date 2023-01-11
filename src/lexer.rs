@@ -4,9 +4,7 @@ use crate::common::Identifier;
 use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::whitespace::sp;
 
-#[macro_use]
-pub mod keywords;
-use keywords::Keyword;
+use crate::term::Keyword;
 
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 

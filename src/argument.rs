@@ -151,7 +151,7 @@ mod test {
         optional.is_some();
         identifier == ArgumentName("a");
         default == Some(Default {
-            assign: crate::lexer::keywords::Assign,
+            assign: crate::term::Assign,
             value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
         });
     });

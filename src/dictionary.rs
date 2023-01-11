@@ -2,7 +2,6 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier};
-use crate::term;
 use crate::types::Type;
 
 /// Parses dictionary members

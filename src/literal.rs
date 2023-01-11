@@ -1,7 +1,7 @@
 use nom::Parser;
 use weedle_derive::Weedle;
 
-use crate::{term, Parse};
+use crate::Parse;
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -216,7 +216,7 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::lexer::keywords::{self, Keyword, Null};
+    use crate::term::{self, Keyword, Null};
     use crate::Parse;
 
     test_match!(should_parse_integer { "45" =>
@@ -290,12 +290,12 @@ mod test {
 
     test!(should_parse_neg_infinity { "-Infinity" =>
         "";
-        FloatLit => FloatLit::NegInfinity(keywords::NegInfinity)
+        FloatLit => FloatLit::NegInfinity(term::NegInfinity)
     });
 
     test!(should_parse_infinity { "Infinity" =>
         "";
-        FloatLit => FloatLit::Infinity(keywords::Infinity)
+        FloatLit => FloatLit::Infinity(term::Infinity)
     });
 
     test_match!(should_parse_string { r#""this is a string""# =>
