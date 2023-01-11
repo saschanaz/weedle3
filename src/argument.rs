@@ -21,9 +21,7 @@ macro_rules! try_eat_arg {
 }
 
 impl<'slice, 'a> Parse<'slice, 'a> for ArgumentName<'a> {
-    fn parse(
-        input: crate::parser::Tokens<'slice, 'a>,
-    ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
+    fn parse(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
             return Ok((tokens, ArgumentName(result.0)));
         }

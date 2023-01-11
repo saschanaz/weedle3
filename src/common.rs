@@ -39,7 +39,7 @@ impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>, V: Parse<'slice, 'a
 }
 
 /// Parses `( body )`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Parenthesized<T> {
     pub open_paren: term::OpenParen,
@@ -48,7 +48,7 @@ pub struct Parenthesized<T> {
 }
 
 /// Parses `[ body ]`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Bracketed<T> {
     pub open_bracket: term::OpenBracket,
@@ -57,7 +57,7 @@ pub struct Bracketed<T> {
 }
 
 /// Parses `{ body }`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Braced<T> {
     pub open_brace: term::OpenBrace,
@@ -66,7 +66,7 @@ pub struct Braced<T> {
 }
 
 /// Parses `< body >`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
 pub struct Generics<T> {
     pub open_angle: term::LessThan,
@@ -208,12 +208,12 @@ mod test {
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(Identifier, term::Comma, Identifier)> =>
+        Generics<(Identifier, term!(,), Identifier)> =>
             Generics {
                 open_angle: term::LessThan,
                 body: (
                     Identifier("one"),
-                    term::Comma,
+                    term!(,),
                     Identifier("two"),
                 ),
                 close_angle: term::GreaterThan,
@@ -222,12 +222,12 @@ mod test {
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<Identifier, term::Comma>;
+        Punctuated<Identifier, term!(,)>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<Identifier, term::Comma>
+        PunctuatedNonEmpty<Identifier, term!(,)>
     });
 
     test_match!(should_parse_identifier { "hello" =>

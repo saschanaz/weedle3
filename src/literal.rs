@@ -216,7 +216,7 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::term::{self, Keyword, Null};
+    use crate::term::*;
     use crate::Parse;
 
     test_match!(should_parse_integer { "45" =>
@@ -290,12 +290,12 @@ mod test {
 
     test!(should_parse_neg_infinity { "-Infinity" =>
         "";
-        FloatLit => FloatLit::NegInfinity(term::NegInfinity)
+        FloatLit => FloatLit::NegInfinity(term!(-Infinity))
     });
 
     test!(should_parse_infinity { "Infinity" =>
         "";
-        FloatLit => FloatLit::Infinity(term::Infinity)
+        FloatLit => FloatLit::Infinity(term!(Infinity))
     });
 
     test_match!(should_parse_string { r#""this is a string""# =>

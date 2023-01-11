@@ -193,7 +193,7 @@ pub struct SetlikeInterfaceMember<'a> {
 }
 
 /// Parses `stringifier;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct StringifierMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: term!(stringifier),
@@ -240,7 +240,7 @@ pub enum StringifierOrStatic {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::{term, Parse};
+    use crate::Parse;
 
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";
