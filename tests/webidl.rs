@@ -62,7 +62,7 @@ fn interface_constructor() {
     match definition {
         Definition::Interface(mut interface) => {
             assert!(interface.attributes.is_none());
-            assert_eq!(interface.interface, term::Interface::default());
+            assert_eq!(interface.interface, term!(interface));
             assert_eq!(interface.identifier.0, "InterfaceWithConstructor");
             assert_eq!(interface.inheritance, None);
 
@@ -103,7 +103,7 @@ fn interface_constructor() {
                         _ => unreachable!(),
                     };
 
-                    assert_eq!(constructor.constructor, Default::default());
+                    assert_eq!(constructor.constructor, term::Constructor);
                 }
                 _ => unreachable!(),
             }
