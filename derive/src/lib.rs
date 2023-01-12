@@ -96,11 +96,7 @@ fn generate_named_struct(
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let type_param_ids = generics
-        .type_params()
-        .into_iter()
-        .map(|p| &p.ident)
-        .collect::<Vec<_>>();
+    let type_param_ids = generics.type_params().map(|p| &p.ident).collect::<Vec<_>>();
 
     let result = quote! {
         impl<'a,'slice,#(#type_param_ids),*> crate::Parse<'slice, 'a> for #id #generics #impl_bound {
