@@ -15,8 +15,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(
@@ -34,7 +41,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Sequence(
                                                                 MayBeNull {
                                                                     type_: SequenceType {
@@ -44,7 +51,7 @@
                                                                             body: AttributedType {
                                                                                 attributes: None,
                                                                                 type_: Single(
-                                                                                    NonAny(
+                                                                                    Distinguishable(
                                                                                         FloatingPoint(
                                                                                             MayBeNull {
                                                                                                 type_: Float(
@@ -87,39 +94,37 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        Sequence(
-                                            MayBeNull {
-                                                type_: SequenceType {
-                                                    sequence: Sequence,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: AttributedType {
-                                                            attributes: None,
-                                                            type_: Single(
-                                                                NonAny(
-                                                                    FloatingPoint(
-                                                                        MayBeNull {
-                                                                            type_: Float(
-                                                                                FloatType {
-                                                                                    unrestricted: None,
-                                                                                    float: Float,
-                                                                                },
-                                                                            ),
-                                                                            q_mark: None,
-                                                                        },
-                                                                    ),
+                            return_type: Single(
+                                Distinguishable(
+                                    Sequence(
+                                        MayBeNull {
+                                            type_: SequenceType {
+                                                sequence: Sequence,
+                                                generics: Generics {
+                                                    open_angle: LessThan,
+                                                    body: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                FloatingPoint(
+                                                                    MayBeNull {
+                                                                        type_: Float(
+                                                                            FloatType {
+                                                                                unrestricted: None,
+                                                                                float: Float,
+                                                                            },
+                                                                        ),
+                                                                        q_mark: None,
+                                                                    },
                                                                 ),
                                                             ),
-                                                        },
-                                                        close_angle: GreaterThan,
+                                                        ),
                                                     },
+                                                    close_angle: GreaterThan,
                                                 },
-                                                q_mark: None,
                                             },
-                                        ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -161,8 +166,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(
@@ -180,7 +192,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Sequence(
                                                                 MayBeNull {
                                                                     type_: SequenceType {
@@ -207,7 +219,7 @@
                                                                                     },
                                                                                 ),
                                                                                 type_: Single(
-                                                                                    NonAny(
+                                                                                    Distinguishable(
                                                                                         Integer(
                                                                                             MayBeNull {
                                                                                                 type_: Long(

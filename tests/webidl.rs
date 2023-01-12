@@ -94,8 +94,8 @@ fn interface_constructor() {
                             assert!(arg.type_.attributes.is_none());
 
                             match arg.type_.type_ {
-                                types::Type::Single(types::SingleType::NonAny(
-                                    types::NonAnyType::Integer(_),
+                                types::Type::Single(types::SingleType::Distinguishable(
+                                    types::DistinguishableType::Integer(_),
                                 )) => {}
                                 _ => unreachable!(),
                             }

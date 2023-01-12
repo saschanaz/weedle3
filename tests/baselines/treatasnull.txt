@@ -19,7 +19,7 @@
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: DOMString,
@@ -44,7 +44,7 @@
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: DOMString,
@@ -65,15 +65,13 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        Boolean(
-                                            MayBeNull {
-                                                type_: Boolean,
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    Boolean(
+                                        MayBeNull {
+                                            type_: Boolean,
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -114,7 +112,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             DOMString(
                                                                 MayBeNull {
                                                                     type_: DOMString,

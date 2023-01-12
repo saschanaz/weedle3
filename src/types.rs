@@ -11,8 +11,8 @@ pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
     Any(term!(any)),
-    NonAny(NonAnyType<'a>),
     Promise(PromiseType<'a>),
+    Distinguishable(DistinguishableType<'a>),
 }
 
 /// Parses either single type or a union type
@@ -24,7 +24,7 @@ pub enum Type<'a> {
 
 // Parses any single non-any type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum NonAnyType<'a> {
+pub enum DistinguishableType<'a> {
     Integer(MayBeNull<IntegerType>),
     FloatingPoint(MayBeNull<FloatingPointType>),
     Boolean(MayBeNull<term!(boolean)>),
@@ -53,8 +53,8 @@ pub enum NonAnyType<'a> {
     FrozenArrayType(MayBeNull<FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<ObservableArrayType<'a>>),
     RecordType(MayBeNull<RecordType<'a>>),
-    Identifier(MayBeNull<Identifier<'a>>),
     Undefined(MayBeNull<term!(undefined)>),
+    Identifier(MayBeNull<Identifier<'a>>),
 }
 
 /// Parses `sequence<Type>`
@@ -92,7 +92,7 @@ pub struct MayBeNull<T> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PromiseType<'a> {
     pub promise: term!(Promise),
-    pub generics: Generics<Box<ReturnType<'a>>>,
+    pub generics: Generics<Box<Type<'a>>>,
 }
 
 /// Parses `unsigned? long long`
@@ -158,7 +158,7 @@ pub enum RecordKeyType<'a> {
     Byte(term!(ByteString)),
     DOM(term!(DOMString)),
     USV(term!(USVString)),
-    NonAny(NonAnyType<'a>),
+    NonAny(DistinguishableType<'a>),
 }
 
 /// Parses one of the member of a union type
@@ -180,13 +180,6 @@ pub enum ConstType<'a> {
     Identifier(MayBeNull<Identifier<'a>>),
 }
 
-/// Parses the return type which may be `undefined` or any given Type
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum ReturnType<'a> {
-    Undefined(term!(undefined)),
-    Type(Type<'a>),
-}
-
 /// Parses `[attributes]? type`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributedType<'a> {
@@ -198,7 +191,7 @@ pub struct AttributedType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributedNonAnyType<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub type_: NonAnyType<'a>,
+    pub type_: DistinguishableType<'a>,
 }
 
 #[cfg(test)]
@@ -218,13 +211,6 @@ mod test {
     });
 
     test_variants!(
-        ReturnType {
-            Undefined == "undefined",
-            Type == "any",
-        }
-    );
-
-    test_variants!(
         ConstType {
             Integer == "short",
             FloatingPoint == "float",
@@ -236,7 +222,7 @@ mod test {
     );
 
     test_variants!(
-        NonAnyType {
+        DistinguishableType {
             Integer == "long",
             FloatingPoint == "float",
             Boolean == "boolean",
@@ -261,6 +247,7 @@ mod test {
             Float64Array == "Float64Array",
             FrozenArrayType == "FrozenArray<short>",
             RecordType == "record<DOMString, short>",
+            Undefined == "undefined",
             Identifier == "mango"
         }
     );
@@ -348,8 +335,8 @@ mod test {
     test_variants!(
         SingleType {
             Any == "any",
-            NonAny == "record<DOMString, short>",
             Promise == "Promise<long>",
+            Distinguishable == "record<DOMString, short>",
         }
     );
 

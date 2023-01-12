@@ -38,7 +38,7 @@
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Integer(
                                             MayBeNull {
                                                 type_: Long(
@@ -66,8 +66,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(

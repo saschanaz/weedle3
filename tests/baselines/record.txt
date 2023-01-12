@@ -22,7 +22,7 @@
                                                         type_: AttributedType {
                                                             attributes: None,
                                                             type_: Single(
-                                                                NonAny(
+                                                                Distinguishable(
                                                                     RecordType(
                                                                         MayBeNull {
                                                                             type_: RecordType {
@@ -37,7 +37,7 @@
                                                                                         AttributedType {
                                                                                             attributes: None,
                                                                                             type_: Single(
-                                                                                                NonAny(
+                                                                                                Distinguishable(
                                                                                                     USVString(
                                                                                                         MayBeNull {
                                                                                                             type_: USVString,
@@ -89,8 +89,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(
@@ -108,7 +115,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Sequence(
                                                                 MayBeNull {
                                                                     type_: SequenceType {
@@ -118,7 +125,7 @@
                                                                             body: AttributedType {
                                                                                 attributes: None,
                                                                                 type_: Single(
-                                                                                    NonAny(
+                                                                                    Distinguishable(
                                                                                         RecordType(
                                                                                             MayBeNull {
                                                                                                 type_: RecordType {
@@ -176,73 +183,71 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        RecordType(
-                                            MayBeNull {
-                                                type_: RecordType {
-                                                    record: Record,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: (
-                                                            DOM(
-                                                                DOMString,
-                                                            ),
-                                                            Comma,
-                                                            AttributedType {
-                                                                attributes: None,
-                                                                type_: Union(
-                                                                    MayBeNull {
-                                                                        type_: Parenthesized {
-                                                                            open_paren: OpenParen,
-                                                                            body: Punctuated {
-                                                                                list: [
-                                                                                    Single(
-                                                                                        AttributedNonAnyType {
-                                                                                            attributes: None,
-                                                                                            type_: FloatingPoint(
-                                                                                                MayBeNull {
-                                                                                                    type_: Float(
-                                                                                                        FloatType {
-                                                                                                            unrestricted: None,
-                                                                                                            float: Float,
-                                                                                                        },
-                                                                                                    ),
-                                                                                                    q_mark: None,
-                                                                                                },
-                                                                                            ),
-                                                                                        },
-                                                                                    ),
-                                                                                    Single(
-                                                                                        AttributedNonAnyType {
-                                                                                            attributes: None,
-                                                                                            type_: DOMString(
-                                                                                                MayBeNull {
-                                                                                                    type_: DOMString,
-                                                                                                    q_mark: None,
-                                                                                                },
-                                                                                            ),
-                                                                                        },
-                                                                                    ),
-                                                                                ],
-                                                                                separator: Or,
-                                                                            },
-                                                                            close_paren: CloseParen,
-                                                                        },
-                                                                        q_mark: Some(
-                                                                            QMark,
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            },
+                            return_type: Single(
+                                Distinguishable(
+                                    RecordType(
+                                        MayBeNull {
+                                            type_: RecordType {
+                                                record: Record,
+                                                generics: Generics {
+                                                    open_angle: LessThan,
+                                                    body: (
+                                                        DOM(
+                                                            DOMString,
                                                         ),
-                                                        close_angle: GreaterThan,
-                                                    },
+                                                        Comma,
+                                                        AttributedType {
+                                                            attributes: None,
+                                                            type_: Union(
+                                                                MayBeNull {
+                                                                    type_: Parenthesized {
+                                                                        open_paren: OpenParen,
+                                                                        body: Punctuated {
+                                                                            list: [
+                                                                                Single(
+                                                                                    AttributedNonAnyType {
+                                                                                        attributes: None,
+                                                                                        type_: FloatingPoint(
+                                                                                            MayBeNull {
+                                                                                                type_: Float(
+                                                                                                    FloatType {
+                                                                                                        unrestricted: None,
+                                                                                                        float: Float,
+                                                                                                    },
+                                                                                                ),
+                                                                                                q_mark: None,
+                                                                                            },
+                                                                                        ),
+                                                                                    },
+                                                                                ),
+                                                                                Single(
+                                                                                    AttributedNonAnyType {
+                                                                                        attributes: None,
+                                                                                        type_: DOMString(
+                                                                                            MayBeNull {
+                                                                                                type_: DOMString,
+                                                                                                q_mark: None,
+                                                                                            },
+                                                                                        ),
+                                                                                    },
+                                                                                ),
+                                                                            ],
+                                                                            separator: Or,
+                                                                        },
+                                                                        close_paren: CloseParen,
+                                                                    },
+                                                                    q_mark: Some(
+                                                                        QMark,
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        },
+                                                    ),
+                                                    close_angle: GreaterThan,
                                                 },
-                                                q_mark: None,
                                             },
-                                        ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -284,62 +289,60 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        RecordType(
-                                            MayBeNull {
-                                                type_: RecordType {
-                                                    record: Record,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: (
-                                                            DOM(
-                                                                DOMString,
-                                                            ),
-                                                            Comma,
-                                                            AttributedType {
-                                                                attributes: Some(
-                                                                    Bracketed {
-                                                                        open_bracket: OpenBracket,
-                                                                        body: Punctuated {
-                                                                            list: [
-                                                                                NoArgs(
-                                                                                    ExtendedAttributeNoArgs(
-                                                                                        Identifier(
-                                                                                            "XAttr",
-                                                                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    RecordType(
+                                        MayBeNull {
+                                            type_: RecordType {
+                                                record: Record,
+                                                generics: Generics {
+                                                    open_angle: LessThan,
+                                                    body: (
+                                                        DOM(
+                                                            DOMString,
+                                                        ),
+                                                        Comma,
+                                                        AttributedType {
+                                                            attributes: Some(
+                                                                Bracketed {
+                                                                    open_bracket: OpenBracket,
+                                                                    body: Punctuated {
+                                                                        list: [
+                                                                            NoArgs(
+                                                                                ExtendedAttributeNoArgs(
+                                                                                    Identifier(
+                                                                                        "XAttr",
                                                                                     ),
                                                                                 ),
-                                                                            ],
-                                                                            separator: Comma,
-                                                                        },
-                                                                        close_bracket: CloseBracket,
+                                                                            ),
+                                                                        ],
+                                                                        separator: Comma,
                                                                     },
-                                                                ),
-                                                                type_: Single(
-                                                                    NonAny(
-                                                                        FloatingPoint(
-                                                                            MayBeNull {
-                                                                                type_: Float(
-                                                                                    FloatType {
-                                                                                        unrestricted: None,
-                                                                                        float: Float,
-                                                                                    },
-                                                                                ),
-                                                                                q_mark: None,
-                                                                            },
-                                                                        ),
+                                                                    close_bracket: CloseBracket,
+                                                                },
+                                                            ),
+                                                            type_: Single(
+                                                                Distinguishable(
+                                                                    FloatingPoint(
+                                                                        MayBeNull {
+                                                                            type_: Float(
+                                                                                FloatType {
+                                                                                    unrestricted: None,
+                                                                                    float: Float,
+                                                                                },
+                                                                            ),
+                                                                            q_mark: None,
+                                                                        },
                                                                     ),
                                                                 ),
-                                                            },
-                                                        ),
-                                                        close_angle: GreaterThan,
-                                                    },
+                                                            ),
+                                                        },
+                                                    ),
+                                                    close_angle: GreaterThan,
                                                 },
-                                                q_mark: None,
                                             },
-                                        ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),

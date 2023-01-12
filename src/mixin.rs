@@ -4,7 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
 use crate::interface::{ConstMember, StringifierMember};
-use crate::types::{AttributedType, ReturnType};
+use crate::types::{AttributedType, Type};
 
 /// Parses the members declarations of a mixin
 pub type MixinMembers<'a> = Vec<MixinMember<'a>>;
@@ -16,7 +16,7 @@ pub type MixinMembers<'a> = Vec<MixinMember<'a>>;
 pub struct OperationMixinMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: Option<term!(stringifier)>,
-    pub return_type: ReturnType<'a>,
+    pub return_type: Type<'a>,
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),

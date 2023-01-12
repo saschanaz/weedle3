@@ -40,7 +40,7 @@
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Bigint(
                                             MayBeNull {
                                                 type_: Bigint,
@@ -61,15 +61,13 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        Bigint(
-                                            MayBeNull {
-                                                type_: Bigint,
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    Bigint(
+                                        MayBeNull {
+                                            type_: Bigint,
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -94,17 +92,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        Identifier(
-                                            MayBeNull {
-                                                type_: Identifier(
-                                                    "void",
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    Identifier(
+                                        MayBeNull {
+                                            type_: Identifier(
+                                                "void",
+                                            ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -124,7 +120,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Bigint(
                                                                 MayBeNull {
                                                                     type_: Bigint,
@@ -169,7 +165,7 @@
                         attributes: None,
                         required: None,
                         type_: Single(
-                            NonAny(
+                            Distinguishable(
                                 Bigint(
                                     MayBeNull {
                                         type_: Bigint,
@@ -190,7 +186,7 @@
                             Required,
                         ),
                         type_: Single(
-                            NonAny(
+                            Distinguishable(
                                 Bigint(
                                     MayBeNull {
                                         type_: Bigint,

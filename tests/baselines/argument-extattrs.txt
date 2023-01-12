@@ -15,8 +15,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(
@@ -70,7 +77,7 @@
                                                         },
                                                     ),
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Integer(
                                                                 MayBeNull {
                                                                     type_: Short(

@@ -6,7 +6,7 @@
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
-                    NonAny(
+                    Distinguishable(
                         FloatingPoint(
                             MayBeNull {
                                 type_: Float(
@@ -43,15 +43,13 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        Object(
-                                            MayBeNull {
-                                                type_: Object,
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    Object(
+                                        MayBeNull {
+                                            type_: Object,
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -71,7 +69,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             DOMString(
                                                                 MayBeNull {
                                                                     type_: DOMString,
@@ -104,15 +102,13 @@
                                     Getter,
                                 ),
                             ),
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: DOMString,
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    DOMString(
+                                        MayBeNull {
+                                            type_: DOMString,
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -128,7 +124,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             DOMString(
                                                                 MayBeNull {
                                                                     type_: DOMString,
@@ -178,7 +174,7 @@
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Boolean(
                                             MayBeNull {
                                                 type_: Boolean,
@@ -203,7 +199,7 @@
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: DOMString,
@@ -243,8 +239,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(
@@ -262,7 +265,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
                                                                     type_: Identifier(

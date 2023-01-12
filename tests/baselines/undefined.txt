@@ -36,8 +36,15 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: Undefined,
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 OperationName(
@@ -60,55 +67,51 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    Promise(
-                                        PromiseType {
-                                            promise: Promise,
-                                            generics: Generics {
-                                                open_angle: LessThan,
-                                                body: Type(
-                                                    Union(
-                                                        MayBeNull {
-                                                            type_: Parenthesized {
-                                                                open_paren: OpenParen,
-                                                                body: Punctuated {
-                                                                    list: [
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: DOMString(
-                                                                                    MayBeNull {
-                                                                                        type_: DOMString,
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
+                            return_type: Single(
+                                Promise(
+                                    PromiseType {
+                                        promise: Promise,
+                                        generics: Generics {
+                                            open_angle: LessThan,
+                                            body: Union(
+                                                MayBeNull {
+                                                    type_: Parenthesized {
+                                                        open_paren: OpenParen,
+                                                        body: Punctuated {
+                                                            list: [
+                                                                Single(
+                                                                    AttributedNonAnyType {
+                                                                        attributes: None,
+                                                                        type_: DOMString(
+                                                                            MayBeNull {
+                                                                                type_: DOMString,
+                                                                                q_mark: None,
                                                                             },
                                                                         ),
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: Undefined(
-                                                                                    MayBeNull {
-                                                                                        type_: Undefined,
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
+                                                                    },
+                                                                ),
+                                                                Single(
+                                                                    AttributedNonAnyType {
+                                                                        attributes: None,
+                                                                        type_: Undefined(
+                                                                            MayBeNull {
+                                                                                type_: Undefined,
+                                                                                q_mark: None,
                                                                             },
                                                                         ),
-                                                                    ],
-                                                                    separator: Or,
-                                                                },
-                                                                close_paren: CloseParen,
-                                                            },
-                                                            q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ],
+                                                            separator: Or,
                                                         },
-                                                    ),
-                                                ),
-                                                close_angle: GreaterThan,
-                                            },
+                                                        close_paren: CloseParen,
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                            close_angle: GreaterThan,
                                         },
-                                    ),
+                                    },
                                 ),
                             ),
                             identifier: Some(
@@ -132,20 +135,18 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        FloatingPoint(
-                                            MayBeNull {
-                                                type_: Float(
-                                                    FloatType {
-                                                        unrestricted: None,
-                                                        float: Float,
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    FloatingPoint(
+                                        MayBeNull {
+                                            type_: Float(
+                                                FloatType {
+                                                    unrestricted: None,
+                                                    float: Float,
+                                                },
+                                            ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -165,7 +166,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Undefined(
                                                                 MayBeNull {
                                                                     type_: Undefined,
