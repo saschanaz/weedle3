@@ -209,6 +209,9 @@ generate_terms_for_names! {
     /// Represents the terminal symbol `any`
     Any => "any",
 
+    /// Represents the terminal symbol `bigint`
+    Bigint => "bigint",
+
     /// Represents the terminal symbol `boolean`
     Boolean => "boolean",
 
@@ -280,6 +283,12 @@ generate_terms_for_names! {
 
     /// Represents the terminal symbol `Uint8ClampedArray`
     Uint8ClampedArray => "Uint8ClampedArray",
+
+    /// Represents the terminal symbol `BigInt64Array`
+    BigInt64Array => "BigInt64Array",
+
+    /// Represents the terminal symbol `BigUint64Array`
+    BigUint64Array => "BigUint64Array",
 
     /// Represents the terminal symbol `Float32Array`
     Float32Array => "Float32Array",
@@ -476,6 +485,9 @@ macro_rules! term {
     (byte) => {
         $crate::term::Byte
     };
+    (bigint) => {
+        $crate::term::Bigint
+    };
     (double) => {
         $crate::term::Double
     };
@@ -541,6 +553,12 @@ macro_rules! term {
     };
     (Uint8ClampedArray) => {
         $crate::term::Uint8ClampedArray
+    };
+    (BigInt64Array) => {
+        $crate::term::BigInt64Array
+    };
+    (BigUint64Array) => {
+        $crate::term::BigUint64Array
     };
     (Float32Array) => {
         $crate::term::Float32Array
@@ -676,6 +694,7 @@ mod test {
         observablearray, ObservableArray, "ObservableArray";
         usvstring, USVString, "USVString";
         any, Any, "any";
+        bigint, Bigint, "bigint";
         boolean, Boolean, "boolean";
         byte, Byte, "byte";
         double, Double, "double";
