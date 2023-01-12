@@ -36,8 +36,12 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                Undefined,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        Undefined,
+                                    ),
+                                ),
                             ),
                             identifier: Some(
                                 Identifier(
@@ -60,57 +64,48 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    Promise(
-                                        PromiseType {
-                                            promise: Promise,
-                                            generics: Generics {
-                                                open_angle: LessThan,
-                                                body: Type(
-                                                    Union(
-                                                        MayBeNull {
-                                                            type_: Parenthesized {
-                                                                open_paren: OpenParen,
-                                                                body: Punctuated {
-                                                                    list: [
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: DOMString(
-                                                                                    MayBeNull {
-                                                                                        type_: DOMString,
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
+                            return_type: Single(
+                                Promise(
+                                    PromiseType {
+                                        promise: Promise,
+                                        generics: Generics {
+                                            open_angle: LessThan,
+                                            body: Union(
+                                                MayBeNull {
+                                                    type_: Parenthesized {
+                                                        open_paren: OpenParen,
+                                                        body: Punctuated {
+                                                            list: [
+                                                                Single(
+                                                                    AttributedNonAnyType {
+                                                                        attributes: None,
+                                                                        type_: DOMString(
+                                                                            MayBeNull {
+                                                                                type_: DOMString,
+                                                                                q_mark: None,
                                                                             },
                                                                         ),
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: Identifier(
-                                                                                    MayBeNull {
-                                                                                        type_: Identifier(
-                                                                                            "undefined",
-                                                                                        ),
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
-                                                                            },
+                                                                    },
+                                                                ),
+                                                                Single(
+                                                                    AttributedNonAnyType {
+                                                                        attributes: None,
+                                                                        type_: Undefined(
+                                                                            Undefined,
                                                                         ),
-                                                                    ],
-                                                                    separator: Or,
-                                                                },
-                                                                close_paren: CloseParen,
-                                                            },
-                                                            q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ],
+                                                            separator: Or,
                                                         },
-                                                    ),
-                                                ),
-                                                close_angle: GreaterThan,
-                                            },
+                                                        close_paren: CloseParen,
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                            close_angle: GreaterThan,
                                         },
-                                    ),
+                                    },
                                 ),
                             ),
                             identifier: Some(
@@ -134,20 +129,18 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    Distinguishable(
-                                        FloatingPoint(
-                                            MayBeNull {
-                                                type_: Float(
-                                                    FloatType {
-                                                        unrestricted: None,
-                                                        float: Float,
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
+                            return_type: Single(
+                                Distinguishable(
+                                    FloatingPoint(
+                                        MayBeNull {
+                                            type_: Float(
+                                                FloatType {
+                                                    unrestricted: None,
+                                                    float: Float,
+                                                },
+                                            ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
@@ -168,13 +161,8 @@
                                                     attributes: None,
                                                     type_: Single(
                                                         Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "undefined",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
+                                                            Undefined(
+                                                                Undefined,
                                                             ),
                                                         ),
                                                     ),

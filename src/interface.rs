@@ -4,7 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
 use crate::literal::ConstValue;
-use crate::types::{AttributedType, ConstType, ReturnType};
+use crate::types::{AttributedType, ConstType, Type};
 
 /// Parses interface members
 pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
@@ -59,7 +59,7 @@ pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub modifier: Option<StringifierOrStatic>,
     pub special: Option<Special>,
-    pub return_type: ReturnType<'a>,
+    pub return_type: Type<'a>,
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),

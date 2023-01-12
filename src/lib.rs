@@ -29,7 +29,7 @@ use self::interface::{Inheritance, InterfaceMembers};
 use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
-use self::types::{AttributedType, ReturnType};
+use self::types::{AttributedType, Type};
 pub use nom::{error::Error, Err, IResult};
 use weedle_derive::Weedle;
 
@@ -105,7 +105,7 @@ pub struct CallbackDefinition<'a> {
     pub callback: term!(callback),
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
-    pub return_type: ReturnType<'a>,
+    pub return_type: Type<'a>,
     pub arguments: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }

@@ -56,6 +56,7 @@ pub enum DistinguishableType<'a> {
     FrozenArrayType(MayBeNull<FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<ObservableArrayType<'a>>),
     RecordType(MayBeNull<RecordType<'a>>),
+    Undefined(term!(undefined)),
     Identifier(MayBeNull<Identifier<'a>>),
 }
 
@@ -94,7 +95,7 @@ pub struct MayBeNull<T> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PromiseType<'a> {
     pub promise: term!(Promise),
-    pub generics: Generics<Box<ReturnType<'a>>>,
+    pub generics: Generics<Box<Type<'a>>>,
 }
 
 /// Parses `unsigned? long long`
@@ -181,13 +182,6 @@ pub enum ConstType<'a> {
     Identifier(MayBeNull<Identifier<'a>>),
 }
 
-/// Parses the return type which may be `undefined` or any given Type
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum ReturnType<'a> {
-    Undefined(term!(undefined)),
-    Type(Type<'a>),
-}
-
 /// Parses `[attributes]? type`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributedType<'a> {
@@ -217,13 +211,6 @@ mod test {
         MayBeNull<crate::types::IntegerType>;
         q_mark.is_some();
     });
-
-    test_variants!(
-        ReturnType {
-            Undefined == "undefined",
-            Type == "any",
-        }
-    );
 
     test_variants!(
         ConstType {
@@ -265,6 +252,7 @@ mod test {
             BufferSource == "BufferSource",
             FrozenArrayType == "FrozenArray<short>",
             RecordType == "record<DOMString, short>",
+            Undefined == "undefined",
             Identifier == "mango"
         }
     );

@@ -4,7 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
 use crate::literal::ConstValue;
-use crate::types::{AttributedType, ConstType, ReturnType};
+use crate::types::{AttributedType, ConstType, Type};
 
 /// Parses namespace members declaration
 pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
@@ -15,7 +15,7 @@ pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub return_type: ReturnType<'a>,
+    pub return_type: Type<'a>,
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
