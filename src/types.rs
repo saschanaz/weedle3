@@ -11,6 +11,7 @@ pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
     Any(term!(any)),
+    Promise(PromiseType<'a>),
     NonAny(NonAnyType<'a>),
 }
 
@@ -24,7 +25,6 @@ pub enum Type<'a> {
 // Parses any single non-any type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum NonAnyType<'a> {
-    Promise(PromiseType<'a>),
     Integer(MayBeNull<IntegerType>),
     FloatingPoint(MayBeNull<FloatingPointType>),
     Boolean(MayBeNull<term!(boolean)>),
@@ -235,7 +235,6 @@ mod test {
 
     test_variants!(
         NonAnyType {
-            Promise == "Promise<long>",
             Integer == "long",
             FloatingPoint == "float",
             Boolean == "boolean",
@@ -350,7 +349,8 @@ mod test {
     test_variants!(
         SingleType {
             Any == "any",
-            NonAny == "Promise<short>",
+            Promise == "Promise<long>",
+            NonAny == "record<DOMString, short>",
         }
     );
 

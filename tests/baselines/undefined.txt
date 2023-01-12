@@ -62,56 +62,54 @@
                             special: None,
                             return_type: Type(
                                 Single(
-                                    NonAny(
-                                        Promise(
-                                            PromiseType {
-                                                promise: Promise,
-                                                generics: Generics {
-                                                    open_angle: LessThan,
-                                                    body: Type(
-                                                        Union(
-                                                            MayBeNull {
-                                                                type_: Parenthesized {
-                                                                    open_paren: OpenParen,
-                                                                    body: Punctuated {
-                                                                        list: [
-                                                                            Single(
-                                                                                AttributedNonAnyType {
-                                                                                    attributes: None,
-                                                                                    type_: DOMString(
-                                                                                        MayBeNull {
-                                                                                            type_: DOMString,
-                                                                                            q_mark: None,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                            Single(
-                                                                                AttributedNonAnyType {
-                                                                                    attributes: None,
-                                                                                    type_: Identifier(
-                                                                                        MayBeNull {
-                                                                                            type_: Identifier(
-                                                                                                "undefined",
-                                                                                            ),
-                                                                                            q_mark: None,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ],
-                                                                        separator: Or,
-                                                                    },
-                                                                    close_paren: CloseParen,
+                                    Promise(
+                                        PromiseType {
+                                            promise: Promise,
+                                            generics: Generics {
+                                                open_angle: LessThan,
+                                                body: Type(
+                                                    Union(
+                                                        MayBeNull {
+                                                            type_: Parenthesized {
+                                                                open_paren: OpenParen,
+                                                                body: Punctuated {
+                                                                    list: [
+                                                                        Single(
+                                                                            AttributedNonAnyType {
+                                                                                attributes: None,
+                                                                                type_: DOMString(
+                                                                                    MayBeNull {
+                                                                                        type_: DOMString,
+                                                                                        q_mark: None,
+                                                                                    },
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                        Single(
+                                                                            AttributedNonAnyType {
+                                                                                attributes: None,
+                                                                                type_: Identifier(
+                                                                                    MayBeNull {
+                                                                                        type_: Identifier(
+                                                                                            "undefined",
+                                                                                        ),
+                                                                                        q_mark: None,
+                                                                                    },
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    ],
+                                                                    separator: Or,
                                                                 },
-                                                                q_mark: None,
+                                                                close_paren: CloseParen,
                                                             },
-                                                        ),
+                                                            q_mark: None,
+                                                        },
                                                     ),
-                                                    close_angle: GreaterThan,
-                                                },
+                                                ),
+                                                close_angle: GreaterThan,
                                             },
-                                        ),
+                                        },
                                     ),
                                 ),
                             ),
