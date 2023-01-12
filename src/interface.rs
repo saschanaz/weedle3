@@ -164,7 +164,6 @@ pub enum Special {
     Getter(term!(getter)),
     Setter(term!(setter)),
     Deleter(term!(deleter)),
-    LegacyCaller(term!(legacycaller)),
 }
 
 /// Parses `stringifier|inherit|static`

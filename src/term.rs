@@ -299,20 +299,11 @@ generate_terms_for_names! {
     /// Represents the terminal symbol `Promise`
     Promise => "Promise",
 
-    /// Represents the terminal symbol `Error`
-    Error => "Error",
-
     /// Represents the terminal symbol `readonly`
     ReadOnly => "readonly",
 
     /// Represents the terminal symbol `mixin`
     Mixin => "mixin",
-
-    /// Represents the terminal symbol `implements`
-    Implements => "implements",
-
-    /// Represents the terminal symbol `legacycaller`
-    LegacyCaller => "legacycaller",
 
     /// Represents the terminal symbol `constructor`
     Constructor => "constructor",
@@ -563,20 +554,11 @@ macro_rules! term {
     (Promise) => {
         $crate::term::Promise
     };
-    (Error) => {
-        $crate::term::Error
-    };
     (readonly) => {
         $crate::term::ReadOnly
     };
     (mixin) => {
         $crate::term::Mixin
-    };
-    (implements) => {
-        $crate::term::Implements
-    };
-    (legacycaller) => {
-        $crate::term::LegacyCaller
     };
     (constructor) => {
         $crate::term::Constructor
@@ -710,9 +692,6 @@ mod test {
         float32array, Float32Array, "Float32Array";
         float64array, Float64Array, "Float64Array";
         promise, Promise, "Promise";
-        error, Error, "Error";
-        implements, Implements, "implements";
-        legacycaller, LegacyCaller, "legacycaller";
         constructor, Constructor, "constructor";
     ];
 }

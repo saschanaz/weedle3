@@ -240,16 +240,6 @@ pub struct IncludesStatementDefinition<'a> {
     pub semi_colon: term!(;),
 }
 
-/// Parses `[attributes]? identifier implements identifier;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ImplementsDefinition<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub lhs_identifier: Identifier<'a>,
-    pub includes: term!(implements),
-    pub rhs_identifier: Identifier<'a>,
-    pub semi_colon: term!(;),
-}
-
 /// Parses a definition
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
@@ -266,7 +256,6 @@ pub enum Definition<'a> {
     Enum(EnumDefinition<'a>),
     Typedef(TypedefDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),
-    Implements(ImplementsDefinition<'a>),
 }
 
 /// Parses a non-empty enum value list
