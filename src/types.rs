@@ -53,7 +53,7 @@ pub enum DistinguishableType<'a> {
     FrozenArrayType(MayBeNull<FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<ObservableArrayType<'a>>),
     RecordType(MayBeNull<RecordType<'a>>),
-    Undefined(term!(undefined)),
+    Undefined(MayBeNull<term!(undefined)>),
     Identifier(MayBeNull<Identifier<'a>>),
 }
 
