@@ -25,40 +25,56 @@
  * ```
  */
 
+macro_rules! generate_keyword_struct {
+    ($typ:ident => $tok:expr) => {
+        #[doc=$tok]
+        #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+        pub struct $typ;
+
+        impl $typ {
+            pub fn value(&self) -> &'static str {
+                return $tok;
+            }
+        }
+
+        impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ {
+            parser!($crate::eat_key!($typ));
+        }
+    };
+}
+
 macro_rules! generate_keywords_enum {
     (
-        $($typ:ident => $tok:expr,)*
+        $($typ_punc:ident => $tok_punc:expr,)* === $($typ_word:ident => $tok_word:expr,)*
     ) => {
-        $(
-            #[doc=$tok]
-            #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-            pub struct $typ;
-
-            impl $typ {
-                pub fn value(&self) -> &'static str {
-                    return $tok;
-                }
-            }
-
-            impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ {
-                parser!($crate::eat_key!($typ));
-            }
-        )*
+        $(generate_keyword_struct!($typ_punc => $tok_punc);)*
+        $(generate_keyword_struct!($typ_word => $tok_word);)*
 
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub enum Keyword {
             $(
-                #[doc=$tok]
-                $typ($typ),
+                #[doc=$tok_punc]
+                $typ_punc($typ_punc),
+            )*
+            $(
+                #[doc=$tok_word]
+                $typ_word($typ_word),
             )*
         }
 
         impl Keyword {
-            pub fn parse(input: &str) -> nom::IResult<&str, Keyword> {
+            pub fn match_word(input: &str) -> Option<Keyword> {
+                match input {
+                    $($tok_word => Some(Keyword::$typ_word($typ_word)),)*
+                    _ => None
+                }
+            }
+
+            pub fn parse_punc(input: &str) -> nom::IResult<&str, Keyword> {
                 alt!(
                     $(nom::combinator::map(
-                        nom::combinator::recognize(nom::bytes::complete::tag($tok)),
-                        |_| Keyword::$typ($typ)
+                        nom::combinator::recognize(nom::bytes::complete::tag($tok_punc)),
+                        |_| Keyword::$typ_punc($typ_punc)
                     ),)*
                 )(input)
             }
@@ -67,12 +83,29 @@ macro_rules! generate_keywords_enum {
 }
 
 generate_keywords_enum!(
+    OpenParen => "(",
+    CloseParen => ")",
+    OpenBracket => "[",
+    CloseBracket => "]",
+    OpenBrace => "{",
+    CloseBrace => "}",
+    Comma => ",",
+    Minus => "-",
+    Ellipsis => "...",
+    Dot => ".",
+    Colon => ":",
+    SemiColon => ";",
+    LessThan => "<",
+    Assign => "=",
+    GreaterThan => ">",
+    QMark => "?",
+    Wildcard => "*",
+    ===
     Or => "or",
     Optional => "optional",
     Async => "async",
     Attribute => "attribute",
     Callback => "callback",
-    Constructor => "constructor",
     Const => "const",
     Deleter => "deleter",
     Dictionary => "dictionary",
@@ -134,23 +167,7 @@ generate_keywords_enum!(
     Promise => "Promise",
     ReadOnly => "readonly",
     Mixin => "mixin",
-    OpenParen => "(",
-    CloseParen => ")",
-    OpenBracket => "[",
-    CloseBracket => "]",
-    OpenBrace => "{",
-    CloseBrace => "}",
-    Comma => ",",
-    Minus => "-",
-    Ellipsis => "...",
-    Dot => ".",
-    Colon => ":",
-    SemiColon => ";",
-    LessThan => "<",
-    Assign => "=",
-    GreaterThan => ">",
-    QMark => "?",
-    Wildcard => "*",
+    Constructor => "constructor",
 );
 
 #[macro_export]

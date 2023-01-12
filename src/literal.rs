@@ -216,7 +216,6 @@ pub enum FloatLit<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::term::*;
     use crate::Parse;
 
     test_match!(should_parse_integer { "45" =>
@@ -325,11 +324,6 @@ mod test {
     test_match!(should_parse_string_with_multiline_comment { r#""/*"  "*/"  "# =>
         r#"  "*/"  "#;
         StringLit => StringLit("/*")
-    });
-
-    test_match!(should_parse_null { "null" =>
-        "";
-        Keyword => Keyword::Null(Null)
     });
 
     test!(should_parse_empty_array { "[]" =>

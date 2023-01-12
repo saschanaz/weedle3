@@ -60,8 +60,8 @@ fn other(input: &str) -> NomResult<char> {
 
 fn id_or_keyword(input: &str) -> NomResult<Tag> {
     let (input, id) = Identifier::parse(input)?;
-    match Keyword::parse(id.0) {
-        Ok(("", keyword)) => Ok((input, Tag::Kw(keyword))),
+    match Keyword::match_word(id.0) {
+        Some(keyword) => Ok((input, Tag::Kw(keyword))),
         _ => Ok((input, Tag::Id(id))),
     }
 }
@@ -72,7 +72,7 @@ fn tag(input: &str) -> NomResult<Tag> {
         nom::combinator::map(IntegerLit::parse, Tag::Int),
         nom::combinator::map(StringLit::parse, Tag::Str),
         id_or_keyword,
-        nom::combinator::map(Keyword::parse, Tag::Kw),
+        nom::combinator::map(Keyword::parse_punc, Tag::Kw),
         nom::combinator::map(other, Tag::Other),
     ))(input)
 }
