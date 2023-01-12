@@ -12,7 +12,7 @@ pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)
 pub enum SingleType<'a> {
     Any(term!(any)),
     Promise(PromiseType<'a>),
-    NonAny(NonAnyType<'a>),
+    Distinguishable(DistinguishableType<'a>),
 }
 
 /// Parses either single type or a union type
@@ -24,7 +24,7 @@ pub enum Type<'a> {
 
 // Parses any single non-any type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum NonAnyType<'a> {
+pub enum DistinguishableType<'a> {
     Integer(MayBeNull<IntegerType>),
     FloatingPoint(MayBeNull<FloatingPointType>),
     Boolean(MayBeNull<term!(boolean)>),
@@ -157,7 +157,7 @@ pub enum RecordKeyType<'a> {
     Byte(term!(ByteString)),
     DOM(term!(DOMString)),
     USV(term!(USVString)),
-    NonAny(NonAnyType<'a>),
+    NonAny(DistinguishableType<'a>),
 }
 
 /// Parses one of the member of a union type
@@ -196,7 +196,7 @@ pub struct AttributedType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributedNonAnyType<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub type_: NonAnyType<'a>,
+    pub type_: DistinguishableType<'a>,
 }
 
 #[cfg(test)]
@@ -234,7 +234,7 @@ mod test {
     );
 
     test_variants!(
-        NonAnyType {
+        DistinguishableType {
             Integer == "long",
             FloatingPoint == "float",
             Boolean == "boolean",
@@ -350,7 +350,7 @@ mod test {
         SingleType {
             Any == "any",
             Promise == "Promise<long>",
-            NonAny == "record<DOMString, short>",
+            Distinguishable == "record<DOMString, short>",
         }
     );
 
