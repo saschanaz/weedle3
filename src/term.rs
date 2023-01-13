@@ -1,3 +1,50 @@
+macro_rules! generate_tests {
+    ($typ:ident, $tok:expr) => {
+        paste::paste! {
+            #[cfg(test)]
+            mod [<test_ $typ:lower>] {
+                use super::$typ;
+                use crate::Parse;
+
+                #[test]
+                fn should_parse() {
+                    let (rem, parsed) = $typ::parse(concat!($tok)).unwrap();
+                    assert_eq!(rem, "");
+                    assert_eq!(parsed, $typ);
+                }
+
+                #[test]
+                fn should_parse_with_preceding_spaces() {
+                    let (rem, parsed) = $typ::parse(concat!("  ", $tok)).unwrap();
+                    assert_eq!(rem, "");
+                    assert_eq!(parsed, $typ);
+                }
+
+                #[test]
+                fn should_parse_with_succeeding_spaces() {
+                    let (rem, parsed) = $typ::parse(concat!($tok, "  ")).unwrap();
+                    assert_eq!(rem, "");
+                    assert_eq!(parsed, $typ);
+                }
+
+                #[test]
+                fn should_parse_with_surrounding_spaces() {
+                    let (rem, parsed) = $typ::parse(concat!("  ", $tok, "  ")).unwrap();
+                    assert_eq!(rem, "");
+                    assert_eq!(parsed, $typ);
+                }
+
+                #[test]
+                fn should_parse_if_anything_next() {
+                    let (rem, parsed) = $typ::parse(concat!($tok, "  anything")).unwrap();
+                    assert_eq!(rem, "anything");
+                    assert_eq!(parsed, $typ);
+                }
+            }
+        }
+    };
+}
+
 macro_rules! generate_terms {
     ($( $(#[$attr:meta])* $typ:ident => $tok:expr, )*) => {
         $(
@@ -13,6 +60,8 @@ macro_rules! generate_terms {
                     )
                 ));
             }
+
+            generate_tests!($typ, $tok);
         )*
     };
 }
@@ -52,6 +101,8 @@ macro_rules! generate_terms_for_names {
                     $crate::whitespace::ws($crate::term::ident_tag($tok))
                 ));
             }
+
+            generate_tests!($typ, $tok);
         )*
     };
 }
@@ -433,135 +484,4 @@ macro_rules! term {
     (constructor) => {
         $crate::term::Constructor
     };
-}
-
-#[cfg(test)]
-mod test {
-    macro_rules! generate_tests {
-        ($($m:ident, $typ:ident, $string:expr;)*) => {
-            $(
-                mod $m {
-                    use super::super::$typ;
-                    use crate::Parse;
-
-                    #[test]
-                    fn should_parse() {
-                        let (rem, parsed) = $typ::parse(concat!($string)).unwrap();
-                        assert_eq!(rem, "");
-                        assert_eq!(parsed, $typ);
-                    }
-
-                    #[test]
-                    fn should_parse_with_preceding_spaces() {
-                        let (rem, parsed) = $typ::parse(concat!("  ", $string)).unwrap();
-                        assert_eq!(rem, "");
-                        assert_eq!(parsed, $typ);
-                    }
-
-                    #[test]
-                    fn should_parse_with_succeeding_spaces() {
-                        let (rem, parsed) = $typ::parse(concat!($string, "  ")).unwrap();
-                        assert_eq!(rem, "");
-                        assert_eq!(parsed, $typ);
-                    }
-
-                    #[test]
-                    fn should_parse_with_surrounding_spaces() {
-                        let (rem, parsed) = $typ::parse(concat!("  ", $string, "  ")).unwrap();
-                        assert_eq!(rem, "");
-                        assert_eq!(parsed, $typ);
-                    }
-
-                    #[test]
-                    fn should_parse_if_anything_next() {
-                        let (rem, parsed) = $typ::parse(concat!($string, "  anything")).unwrap();
-                        assert_eq!(rem, "anything");
-                        assert_eq!(parsed, $typ);
-                    }
-                }
-            )*
-        };
-    }
-
-    generate_tests![
-        openparen, OpenParen, "(";
-        closeparen, CloseParen, ")";
-        openbracket, OpenBracket, "[";
-        closebracket, CloseBracket, "]";
-        openbrace, OpenBrace, "{";
-        closebrace, CloseBrace, "}";
-        comma, Comma, ",";
-        minus, Minus, "-";
-        dot, Dot, ".";
-        ellipsis, Ellipsis, "...";
-        colon, Colon, ":";
-        semicolon, SemiColon, ";";
-        lessthan, LessThan, "<";
-        assign, Assign, "=";
-        greaterthan, GreaterThan, ">";
-        qmark, QMark, "?";
-        or, Or, "or";
-        optional, Optional, "optional";
-        async_, Async, "async";
-        attribute, Attribute, "attribute";
-        callback, Callback, "callback";
-        const_, Const, "const";
-        deleter, Deleter, "deleter";
-        dictionary, Dictionary, "dictionary";
-        enum_, Enum, "enum";
-        getter, Getter, "getter";
-        includes, Includes, "includes";
-        inherit, Inherit, "inherit";
-        interface, Interface, "interface";
-        iterable, Iterable, "iterable";
-        maplike, Maplike, "maplike";
-        namespace, Namespace, "namespace";
-        partial, Partial, "partial";
-        required, Required, "required";
-        setlike, Setlike, "setlike";
-        setter, Setter, "setter";
-        static_, Static, "static";
-        stringifier, Stringifier, "stringifier";
-        typedef, Typedef, "typedef";
-        unrestricted, Unrestricted, "unrestricted";
-        symbol, Symbol, "symbol";
-        neginfinity, NegInfinity, "-Infinity";
-        bytestring, ByteString, "ByteString";
-        domstring, DOMString, "DOMString";
-        frozenarray, FrozenArray, "FrozenArray";
-        infinity, Infinity, "Infinity";
-        nan, NaN, "NaN";
-        observablearray, ObservableArray, "ObservableArray";
-        usvstring, USVString, "USVString";
-        any, Any, "any";
-        bigint, Bigint, "bigint";
-        boolean, Boolean, "boolean";
-        byte, Byte, "byte";
-        double, Double, "double";
-        false_, False, "false";
-        float, Float, "float";
-        long, Long, "long";
-        null, Null, "null";
-        object, Object, "object";
-        octet, Octet, "octet";
-        sequence, Sequence, "sequence";
-        short, Short, "short";
-        true_, True, "true";
-        unsigned, Unsigned, "unsigned";
-        undefined, Undefined, "undefined";
-        record, Record, "record";
-        arraybuffer, ArrayBuffer, "ArrayBuffer";
-        dataview, DataView, "DataView";
-        int8array, Int8Array, "Int8Array";
-        int16array, Int16Array, "Int16Array";
-        int32array, Int32Array, "Int32Array";
-        uint8array, Uint8Array, "Uint8Array";
-        uint16array, Uint16Array, "Uint16Array";
-        uint32array, Uint32Array, "Uint32Array";
-        uint8clampedarray, Uint8ClampedArray, "Uint8ClampedArray";
-        float32array, Float32Array, "Float32Array";
-        float64array, Float64Array, "Float64Array";
-        promise, Promise, "Promise";
-        constructor, Constructor, "constructor";
-    ];
 }
