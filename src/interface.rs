@@ -57,6 +57,15 @@ impl<'slice, 'a> crate::Parse<'slice, 'a> for AttributeName<'a> {
     }
 }
 
+impl<'slice, 'a> AttributeName<'a> {
+    fn parse_to_id(
+        input: crate::parser::Tokens<'slice, 'a>,
+    ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Identifier<'a>> {
+        let (input, name) = weedle!(AttributeName)(input)?;
+        Ok((input, Identifier(name.0)))
+    }
+}
+
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributeInterfaceMember<'a> {
@@ -65,7 +74,8 @@ pub struct AttributeInterfaceMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    pub identifier: AttributeName<'a>,
+    #[weedle(parser = "AttributeName::parse_to_id")]
+    pub identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
 
@@ -107,6 +117,15 @@ impl<'slice, 'a> crate::Parse<'slice, 'a> for OperationName<'a> {
     }
 }
 
+impl<'slice, 'a> OperationName<'a> {
+    fn parse_to_id_opt(
+        input: crate::parser::Tokens<'slice, 'a>,
+    ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Option<Identifier<'a>>> {
+        let (input, name) = weedle!(Option<OperationName>)(input)?;
+        Ok((input, name.map(|n| Identifier(n.0))))
+    }
+}
+
 /// Parses `[attributes]? (stringifier|static)? special? returntype identifier? (( args ));`
 ///
 /// (( )) means ( ) chars
@@ -116,7 +135,8 @@ pub struct OperationInterfaceMember<'a> {
     pub modifier: Option<StringifierOrStatic>,
     pub special: Option<Special>,
     pub return_type: Type<'a>,
-    pub identifier: Option<OperationName<'a>>,
+    #[weedle(parser = "OperationName::parse_to_id_opt")]
+    pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }

@@ -58,6 +58,12 @@ impl<'slice, 'a> Parse<'slice, 'a> for ArgumentName<'a> {
     }
 }
 
+impl<'a> From<ArgumentName<'a>> for Identifier<'a> {
+    fn from(value: ArgumentName<'a>) -> Self {
+        Self(value.0)
+    }
+}
+
 /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
 ///
 /// Note: `= default` is only allowed if `optional` is present
@@ -66,7 +72,7 @@ pub struct SingleArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub optional: Option<term!(optional)>,
     pub type_: AttributedType<'a>,
-    pub identifier: ArgumentName<'a>,
+    pub identifier: Identifier<'a>,
     pub default: Option<Default<'a>>,
 }
 
@@ -76,7 +82,7 @@ impl<'slice, 'a> Parse<'slice, 'a> for SingleArgument<'a> {
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),
             weedle!(AttributedType<'a>),
-            weedle!(ArgumentName<'a>),
+            nom::combinator::into(weedle!(ArgumentName<'a>)),
         ))(input)?;
         let (input, default) = nom::combinator::map(
             nom::combinator::cond(optional.is_some(), weedle!(Option<Default<'a>>)),
