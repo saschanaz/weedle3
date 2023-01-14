@@ -296,7 +296,7 @@ mod test {
         identifier.0 == "Short";
     });
 
-    test!(should_parse_enum { r#"enum name { "first", "second" };"# =>
+    test!(should_parse_enum { r#"enum name { "first", "second" }; "# =>
         "";
         EnumDefinition;
         attributes.is_none();
