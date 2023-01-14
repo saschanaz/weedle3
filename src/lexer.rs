@@ -1,3 +1,4 @@
+use nom::Parser;
 use nom::{multi::many0, IResult};
 
 use crate::common::Identifier;
@@ -46,30 +47,22 @@ fn id_or_keyword(input: &str) -> NomResult<Tag> {
 
 fn tag(input: &str) -> NomResult<Tag> {
     nom::branch::alt((
-        nom::combinator::map(FloatValueLit::parse, Tag::Dec),
-        nom::combinator::map(IntegerLit::parse, Tag::Int),
-        nom::combinator::map(StringLit::parse, Tag::Str),
+        FloatValueLit::parse.map(Tag::Dec),
+        IntegerLit::parse.map(Tag::Int),
+        StringLit::parse.map(Tag::Str),
         id_or_keyword,
-        nom::combinator::map(Keyword::parse_punc, Tag::Kw),
-        nom::combinator::map(other, Tag::Other),
+        Keyword::parse_punc.map(Tag::Kw),
+        other.map(Tag::Other),
     ))(input)
 }
 
 pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
-    // A little bit of hack with tuple since many0 is not compatible with eof
-    // (It requires consuming at least one character)
     let (unread, (mut tokens, eof)) = nom::sequence::tuple((
-        many0(nom::combinator::map(
-            nom::sequence::tuple((sp, tag)),
-            Token::new,
-        )),
-        nom::combinator::map(
-            nom::sequence::tuple((sp, nom::combinator::eof)),
-            |(trivia, _)| Token {
-                tag: Tag::Eof(()),
-                trivia,
-            },
-        ),
+        many0(nom::sequence::tuple((sp, tag)).map(Token::new)),
+        nom::sequence::tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {
+            tag: Tag::Eof(()),
+            trivia,
+        }),
     ))(input)?;
 
     // Cannot be empty here since eof would fail then
