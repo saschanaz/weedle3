@@ -140,13 +140,13 @@ macro_rules! generate_keywords_enum {
 
         #[cfg(test)]
         mod test {
-            $(generate_tests!($typ_punc, $tok_punc);)*
-            $(generate_tests!($typ_word, $tok_word);)*
+            $( generate_tests!($typ_punc, $tok_punc); )*
+            $( generate_tests!($typ_word, $tok_word); )*
         }
     };
 }
 
-generate_keywords_enum!(
+generate_keywords_enum! {
     /// Represents the terminal symbol `(`
     OpenParen => "(",
 
@@ -267,7 +267,7 @@ generate_keywords_enum!(
     ReadOnly => "readonly",
     Mixin => "mixin",
     Constructor => "constructor",
-);
+}
 
 #[macro_export]
 macro_rules! term {
@@ -427,6 +427,9 @@ macro_rules! term {
     (boolean) => {
         $crate::term::Boolean
     };
+    (bigint) => {
+        $crate::term::Bigint
+    };
     (byte) => {
         $crate::term::Byte
     };
@@ -450,9 +453,6 @@ macro_rules! term {
     };
     (octet) => {
         $crate::term::Octet
-    };
-    (bigint) => {
-        $crate::term::Bigint
     };
     (sequence) => {
         $crate::term::Sequence
