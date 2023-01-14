@@ -247,7 +247,7 @@ mod test {
         0 == "-hello";
     });
 
-    test!(err should_parse_identifier_surrounding_with_spaces { "  hello  " =>
+    test!(err should_not_parse_identifier_surrounding_with_spaces { "  hello  " =>
         Identifier
     });
 
