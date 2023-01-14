@@ -10,7 +10,7 @@ use crate::Parse;
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ArgumentName<'a>(&'a str);
+struct ArgumentName<'a>(&'a str);
 
 impl<'a> Parse<'a> for ArgumentName<'a> {
     fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {

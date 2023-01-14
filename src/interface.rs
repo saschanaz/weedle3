@@ -29,7 +29,7 @@ pub struct ConstMember<'a> {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct AttributeName<'a>(&'a str);
+struct AttributeName<'a>(&'a str);
 
 impl<'a> crate::Parse<'a> for AttributeName<'a> {
     fn parse_tokens<'slice>(
@@ -77,7 +77,7 @@ pub struct ConstructorInterfaceMember<'a> {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct OperationName<'a>(&'a str);
+struct OperationName<'a>(&'a str);
 
 impl<'a> crate::Parse<'a> for OperationName<'a> {
     fn parse_tokens<'slice>(
