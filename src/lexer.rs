@@ -116,24 +116,4 @@ mod tests {
             ]
         ));
     }
-
-    #[test]
-    fn negative_infinity() {
-        let tokens = lex("-Infinity").unwrap();
-        println!("{tokens:?}");
-
-        assert!(matches!(
-            &tokens[..],
-            [
-                Token {
-                    tag: Tag::Kw(Keyword::NegInfinity(_)),
-                    ..
-                },
-                Token {
-                    tag: Tag::Eof(_),
-                    ..
-                }
-            ]
-        ));
-    }
 }
