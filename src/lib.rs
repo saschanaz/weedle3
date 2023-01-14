@@ -48,7 +48,6 @@ pub mod mixin;
 pub mod namespace;
 pub mod types;
 
-#[macro_use]
 mod lexer;
 mod tokens;
 
