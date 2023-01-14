@@ -25,17 +25,15 @@ impl<'a> DecLit<'a> {
 pub struct HexLit<'a>(pub &'a str);
 
 impl<'a> HexLit<'a> {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::character::complete::char('-')),
-                nom::character::complete::char('0'),
-                nom::character::complete::one_of("xX"),
-                nom::bytes::complete::take_while(nom::AsChar::is_hex_digit),
-            ))),
-            HexLit,
-        )(input)
-    }
+    parser_lit!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::character::complete::char('-')),
+            nom::character::complete::char('0'),
+            nom::character::complete::one_of("xX"),
+            nom::bytes::complete::take_while(nom::AsChar::is_hex_digit),
+        ))),
+        HexLit,
+    ));
 }
 
 /// Parses `-?0[0-7]*`
@@ -43,16 +41,14 @@ impl<'a> HexLit<'a> {
 pub struct OctLit<'a>(pub &'a str);
 
 impl<'a> OctLit<'a> {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::character::complete::char('-')),
-                nom::character::complete::char('0'),
-                nom::bytes::complete::take_while(nom::AsChar::is_oct_digit),
-            ))),
-            OctLit,
-        )(input)
-    }
+    parser_lit!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::character::complete::char('-')),
+            nom::character::complete::char('0'),
+            nom::bytes::complete::take_while(nom::AsChar::is_oct_digit),
+        ))),
+        OctLit,
+    ));
 }
 
 /// Represents an integer value
@@ -64,13 +60,11 @@ pub enum IntegerLit<'a> {
 }
 
 impl<'a> IntegerLit<'a> {
-    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::branch::alt((
-            DecLit::parse.map(IntegerLit::Dec),
-            HexLit::parse.map(IntegerLit::Hex),
-            OctLit::parse.map(IntegerLit::Oct),
-        ))(input)
-    }
+    parser_lit!(nom::branch::alt((
+        DecLit::parse.map(IntegerLit::Dec),
+        HexLit::parse.map(IntegerLit::Hex),
+        OctLit::parse.map(IntegerLit::Oct),
+    )));
 }
 
 impl<'a> Parse<'a> for IntegerLit<'a> {
@@ -84,16 +78,14 @@ impl<'a> Parse<'a> for IntegerLit<'a> {
 pub struct StringLit<'a>(pub &'a str);
 
 impl<'a> StringLit<'a> {
-    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::sequence::delimited(
-                nom::character::complete::char('\"'),
-                nom::bytes::complete::take_while(|c| c != '\"'),
-                nom::character::complete::char('\"'),
-            ),
-            StringLit,
-        )(input)
-    }
+    parser_lit!(nom::combinator::map(
+        nom::sequence::delimited(
+            nom::character::complete::char('\"'),
+            nom::bytes::complete::take_while(|c| c != '\"'),
+            nom::character::complete::char('\"'),
+        ),
+        StringLit,
+    ));
 }
 
 impl<'a> Parse<'a> for StringLit<'a> {
@@ -154,50 +146,48 @@ impl<'a> Parse<'a> for BooleanLit {
 pub struct FloatValueLit<'a>(pub &'a str);
 
 impl<'a> FloatValueLit<'a> {
-    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::character::complete::char('-')),
-                nom::branch::alt((
-                    nom::combinator::value(
-                        (),
-                        nom::sequence::tuple((
-                            // (?:[0-9]+\.[0-9]*|[0-9]*\.[0-9]+)
-                            nom::branch::alt((
-                                nom::sequence::tuple((
-                                    nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                                    nom::character::complete::char('.'),
-                                    nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
-                                )),
-                                nom::sequence::tuple((
-                                    nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
-                                    nom::character::complete::char('.'),
-                                    nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                                )),
-                            )),
-                            // (?:[Ee][+-]?[0-9]+)?
-                            nom::combinator::opt(nom::sequence::tuple((
-                                nom::character::complete::one_of("eE"),
-                                nom::combinator::opt(nom::character::complete::one_of("+-")),
+    parser_lit!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::character::complete::char('-')),
+            nom::branch::alt((
+                nom::combinator::value(
+                    (),
+                    nom::sequence::tuple((
+                        // (?:[0-9]+\.[0-9]*|[0-9]*\.[0-9]+)
+                        nom::branch::alt((
+                            nom::sequence::tuple((
                                 nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                            ))),
+                                nom::character::complete::char('.'),
+                                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                            )),
+                            nom::sequence::tuple((
+                                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+                                nom::character::complete::char('.'),
+                                nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                            )),
                         )),
-                    ),
-                    // [0-9]+[Ee][+-]?[0-9]+
-                    nom::combinator::value(
-                        (),
-                        nom::sequence::tuple((
-                            nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                        // (?:[Ee][+-]?[0-9]+)?
+                        nom::combinator::opt(nom::sequence::tuple((
                             nom::character::complete::one_of("eE"),
                             nom::combinator::opt(nom::character::complete::one_of("+-")),
                             nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                        )),
-                    ),
-                )),
-            ))),
-            FloatValueLit,
-        )(input)
-    }
+                        ))),
+                    )),
+                ),
+                // [0-9]+[Ee][+-]?[0-9]+
+                nom::combinator::value(
+                    (),
+                    nom::sequence::tuple((
+                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                        nom::character::complete::one_of("eE"),
+                        nom::combinator::opt(nom::character::complete::one_of("+-")),
+                        nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
+                    )),
+                ),
+            )),
+        ))),
+        FloatValueLit,
+    ));
 }
 
 impl<'a> Parse<'a> for FloatValueLit<'a> {

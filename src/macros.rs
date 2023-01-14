@@ -8,6 +8,14 @@ macro_rules! parser {
     };
 }
 
+macro_rules! parser_lit {
+    ($parse:expr) => {
+        pub fn parse(input: &'a str) -> $crate::IResult<&'a str, Self> {
+            $parse(input)
+        }
+    };
+}
+
 macro_rules! weedle {
     ($t:ty) => {
         <$t as $crate::Parse<'a>>::parse_tokens

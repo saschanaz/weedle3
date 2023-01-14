@@ -131,19 +131,17 @@ where
 pub struct Identifier<'a>(pub &'a str);
 
 impl<'a> Identifier<'a> {
-    pub fn parse(input: &'a str) -> IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::branch::alt((
-                    nom::character::complete::char('_'),
-                    nom::character::complete::char('-'),
-                ))),
-                nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
-                nom::bytes::complete::take_while(is_alphanum_underscore_dash),
+    parser_lit!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::branch::alt((
+                nom::character::complete::char('_'),
+                nom::character::complete::char('-'),
             ))),
-            Identifier,
-        )(input)
-    }
+            nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
+            nom::bytes::complete::take_while(is_alphanum_underscore_dash),
+        ))),
+        Identifier,
+    ));
 }
 
 impl<'a> Parse<'a> for Identifier<'a> {
