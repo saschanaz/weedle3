@@ -71,7 +71,6 @@ use tokens::Tokens;
 /// ```
 pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
-
     let (unread, (defs, _eof)) =
         nom::sequence::tuple((Definitions::parse_tokens, eat!(Eof)))(Tokens(&tokens[..]))
             .map_err(tokens::nom_error_into)?;
@@ -88,10 +87,8 @@ pub trait Parse<'token>: Sized {
 
     fn parse(input: &'token str) -> IResult<&'token str, Self> {
         let tokens = lex(input)?;
-
         let (unread, def) =
             Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
-
         Ok((unread.into(), def))
     }
 }
