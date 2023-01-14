@@ -1,3 +1,4 @@
+use nom::Parser;
 use weedle_derive::Weedle;
 
 use crate::Parse;
@@ -6,14 +7,14 @@ use crate::Parse;
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct DecLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for DecLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+impl<'a> DecLit<'a> {
+    lexer!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::one_of("123456789"),
-            nom::bytes::complete::take_while(nom::AsChar::is_dec_digit)
-        )))),
-        DecLit
+            nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+        ))),
+        DecLit,
     ));
 }
 
@@ -21,15 +22,15 @@ impl<'a> Parse<'a> for DecLit<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct HexLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for HexLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+impl<'a> HexLit<'a> {
+    lexer!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
             nom::character::complete::one_of("xX"),
-            nom::bytes::complete::take_while(nom::AsChar::is_hex_digit)
-        )))),
-        HexLit
+            nom::bytes::complete::take_while(nom::AsChar::is_hex_digit),
+        ))),
+        HexLit,
     ));
 }
 
@@ -37,23 +38,35 @@ impl<'a> Parse<'a> for HexLit<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OctLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for OctLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+impl<'a> OctLit<'a> {
+    lexer!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
-            nom::bytes::complete::take_while(nom::AsChar::is_oct_digit)
-        )))),
-        OctLit
+            nom::bytes::complete::take_while(nom::AsChar::is_oct_digit),
+        ))),
+        OctLit,
     ));
 }
 
 /// Represents an integer value
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum IntegerLit<'a> {
     Dec(DecLit<'a>),
     Hex(HexLit<'a>),
     Oct(OctLit<'a>),
+}
+
+impl<'a> IntegerLit<'a> {
+    lexer!(nom::branch::alt((
+        DecLit::lex.map(IntegerLit::Dec),
+        HexLit::lex.map(IntegerLit::Hex),
+        OctLit::lex.map(IntegerLit::Oct),
+    )));
+}
+
+impl<'a> Parse<'a> for IntegerLit<'a> {
+    parser!(eat!(Integer));
 }
 
 /// Represents a string value
@@ -62,15 +75,19 @@ pub enum IntegerLit<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct StringLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for StringLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::sequence::delimited(
+impl<'a> StringLit<'a> {
+    lexer!(nom::combinator::map(
+        nom::sequence::delimited(
             nom::character::complete::char('\"'),
             nom::bytes::complete::take_while(|c| c != '\"'),
             nom::character::complete::char('\"'),
-        )),
-        StringLit
+        ),
+        StringLit,
     ));
+}
+
+impl<'a> Parse<'a> for StringLit<'a> {
+    parser!(eat!(String));
 }
 
 /// Represents `[ ]`
@@ -126,9 +143,9 @@ impl<'a> Parse<'a> for BooleanLit {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct FloatValueLit<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for FloatValueLit<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+impl<'a> FloatValueLit<'a> {
+    lexer!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::branch::alt((
                 nom::combinator::value(
@@ -153,7 +170,7 @@ impl<'a> Parse<'a> for FloatValueLit<'a> {
                             nom::combinator::opt(nom::character::complete::one_of("+-")),
                             nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
                         ))),
-                    ))
+                    )),
                 ),
                 // [0-9]+[Ee][+-]?[0-9]+
                 nom::combinator::value(
@@ -163,12 +180,16 @@ impl<'a> Parse<'a> for FloatValueLit<'a> {
                         nom::character::complete::one_of("eE"),
                         nom::combinator::opt(nom::character::complete::one_of("+-")),
                         nom::bytes::complete::take_while1(nom::AsChar::is_dec_digit),
-                    ))
+                    )),
                 ),
             )),
-        )))),
-        FloatValueLit
+        ))),
+        FloatValueLit,
     ));
+}
+
+impl<'a> Parse<'a> for FloatValueLit<'a> {
+    parser!(eat!(Decimal));
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`

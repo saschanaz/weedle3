@@ -1,13 +1,14 @@
 use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
+use crate::tokens::Tokens;
 use crate::{term, IResult, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
 }
 
-fn marker<S>(i: &str) -> IResult<&str, S>
+fn marker<'slice, 'a, S>(i: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, S>
 where
     S: ::std::default::Default,
 {
@@ -24,15 +25,19 @@ impl<'a, T: Parse<'a>> Parse<'a> for Box<T> {
 
 /// Parses `item1 item2 item3...`
 impl<'a, T: Parse<'a>> Parse<'a> for Vec<T> {
-    parser!(nom::multi::many0(T::parse));
+    parser!(nom::multi::many0(T::parse_tokens));
 }
 
 impl<'a, T: Parse<'a>, U: Parse<'a>> Parse<'a> for (T, U) {
-    parser!(nom::sequence::tuple((T::parse, U::parse)));
+    parser!(nom::sequence::tuple((T::parse_tokens, U::parse_tokens)));
 }
 
 impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
-    parser!(nom::sequence::tuple((T::parse, U::parse, V::parse)));
+    parser!(nom::sequence::tuple((
+        T::parse_tokens,
+        U::parse_tokens,
+        V::parse_tokens
+    )));
 }
 
 /// Parses `( body )`
@@ -83,7 +88,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::multi::separated_list0(weedle!(S), weedle!(T)),
             marker,
@@ -104,7 +109,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::sequence::terminated(
                 nom::multi::separated_list1(weedle!(S), weedle!(T)),
@@ -122,18 +127,22 @@ where
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Identifier<'a>(pub &'a str);
 
-impl<'a> Parse<'a> for Identifier<'a> {
-    parser!(nom::combinator::map(
-        crate::whitespace::ws(nom::combinator::recognize(nom::sequence::tuple((
+impl<'a> Identifier<'a> {
+    lexer!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::branch::alt((
                 nom::character::complete::char('_'),
-                nom::character::complete::char('-')
+                nom::character::complete::char('-'),
             ))),
             nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
             nom::bytes::complete::take_while(is_alphanum_underscore_dash),
-        )))),
-        Identifier
+        ))),
+        Identifier,
     ));
+}
+
+impl<'a> Parse<'a> for Identifier<'a> {
+    parser!(eat!(Identifier));
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`

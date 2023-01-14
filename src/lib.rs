@@ -35,7 +35,6 @@ use weedle_derive::Weedle;
 
 #[macro_use]
 mod macros;
-#[macro_use]
 mod whitespace;
 #[macro_use]
 pub mod term;
@@ -48,6 +47,12 @@ pub mod literal;
 pub mod mixin;
 pub mod namespace;
 pub mod types;
+
+mod lexer;
+mod tokens;
+
+use lexer::lex;
+use tokens::Tokens;
 
 /// A convenient parse function
 ///
@@ -64,20 +69,32 @@ pub mod types;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(raw: &str) -> Result<Definitions<'_>, Err<Error<&str>>> {
-    let (remaining, parsed) = Definitions::parse(raw)?;
-    if remaining.is_empty() || crate::whitespace::sp(remaining).is_ok() {
-        Ok(parsed)
-    } else {
-        Err(nom::Err::Failure(Error {
-            input: remaining,
-            code: nom::error::ErrorKind::Fail,
-        }))
-    }
+pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
+    let tokens = lex(input)?;
+    let (unread, (defs, _eof)) = nom::sequence::tuple((
+        Definitions::parse_tokens,
+        nom::combinator::cut(eat!(Eof)),
+    ))(Tokens(&tokens[..]))
+    .map_err(tokens::nom_error_into)?;
+
+    // Cannot be empty here since eof would fail then
+    assert!(unread.0.is_empty());
+
+    Ok(defs)
 }
 
-pub trait Parse<'a>: Sized {
-    fn parse(input: &'a str) -> IResult<&'a str, Self>;
+pub trait Parse<'token>: Sized {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'token>)
+        -> IResult<Tokens<'slice, 'token>, Self>;
+
+    fn parse(input: &'token str) -> IResult<&'token str, Self> {
+        let (input, _) = whitespace::sp(input)?;
+        let tokens = lex(input)?;
+        let (unread, def) =
+            Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
+        let (unread, _) = whitespace::sp(unread.into())?;
+        Ok((unread, def))
+    }
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.

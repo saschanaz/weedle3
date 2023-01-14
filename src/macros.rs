@@ -1,27 +1,95 @@
 macro_rules! parser {
     ($parse:expr) => {
-        fn parse(input: &'a str) -> $crate::IResult<&'a str, Self> {
+        fn parse_tokens<'slice>(
+            input: $crate::tokens::Tokens<'slice, 'a>,
+        ) -> $crate::IResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
             $parse(input)
+        }
+    };
+}
+
+macro_rules! lexer {
+    ($lex:expr) => {
+        pub fn lex(input: &'a str) -> $crate::IResult<&'a str, Self> {
+            $lex(input)
         }
     };
 }
 
 macro_rules! weedle {
     ($t:ty) => {
-        <$t as $crate::Parse<'a>>::parse
+        <$t as $crate::Parse<'a>>::parse_tokens
     };
 }
 
-// nom::branch::alt supports at-most 21 parsers, increasing to 42 ones.
+// nom::branch::alt supports at-most 21 parsers, increasing to infinity ones.
 macro_rules! alt {
-    ($member0:expr, $($member1:expr, $member2:expr,)*) => {
-       alt!(@as_expr $member0, $(nom::branch::alt(($member1, $member2)),)+)
+    ($member0:expr, $member1:expr, $($member2:expr,)+) => {
+        nom::branch::alt(($member0, $member1, alt!($($member2,)+)))
     };
-    ($($member0:expr, $member1:expr,)*) => {
-       alt!(@as_expr $(nom::branch::alt(($member0, $member1)),)+)
+    ($member0:expr, $($member1:expr,)+) => {
+        nom::branch::alt(($member0, alt!($($member1,)+)))
     };
-    (@as_expr $($member:expr,)*) => {
-        nom::branch::alt(($($member,)+))
+    ($member0:expr,) => {
+        $member0
+    };
+}
+
+// XXX: Working around the lambda function limitation about lifetimes
+// https://github.com/rust-lang/rust/issues/58052
+pub fn annotate<'slice, 'token, F, R>(f: F) -> F
+where
+    F: Fn(
+        crate::tokens::Tokens<'slice, 'token>,
+    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'token>, R>,
+    'token: 'slice,
+{
+    f
+}
+
+macro_rules! eat {
+    ($variant:ident) => {
+        $crate::macros::annotate(
+            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
+                use nom::{InputIter, Slice};
+                match input.iter_elements().next() {
+                    Some($crate::lexer::Token {
+                        value: $crate::lexer::Terminal::$variant(variant),
+                        trivia: _,
+                    }) => Ok((input.slice(1..), variant)),
+                    _ => nom::combinator::fail(input),
+                }
+            },
+        )
+    };
+}
+
+macro_rules! eat_key {
+    ($variant:ident) => {
+        $crate::macros::annotate(
+            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
+                use nom::{InputIter, Slice};
+                use $crate::lexer::Terminal;
+                use $crate::term::Keyword;
+                match input.iter_elements().next() {
+                    Some($crate::lexer::Token {
+                        value: Terminal::Keyword(Keyword::$variant(variant)),
+                        trivia: _,
+                    }) => Ok((input.slice(1..), variant)),
+                    _ => nom::combinator::fail(input),
+                }
+            },
+        )
+    };
+}
+
+macro_rules! try_eat_keys {
+    ($typ:ident, $input:ident, $($variant:ident),+) => {
+        $(
+            if let Ok((tokens, result)) = eat_key!($variant)($input) {
+                return Ok((tokens, $typ(result.value())));
+            }
+        )+
     };
 }
 

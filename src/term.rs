@@ -1,112 +1,170 @@
+/*
+ * The following will ultimate generate:
+ *
+ * ```rust
+ * #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+ * pub struct OpenParen;
+ *
+ * impl OpenParen {
+ *     pub fn value(&self) -> &'static str {
+ *         return "(";
+ *     }
+ * }
+ *
+ * impl<'a> $crate::Parse<'a> for OpenParen {
+ *     parser!(eat_key!(OpenParen));
+ * }
+ *
+ * /* ... */
+ *
+ * enum Keyword<'a> {
+ *     OpenParen(OpenParen),
+ *     CloseParen(CloseParen),
+ *     Or(Or),
+ *     Optional(Optional),
+ *     /* ... */
+ * }
+ *
+ * impl<'a> Keyword<'a> {
+ *     pub fn parse_punc(input: &str) -> nom::IResult<&str, &str> {
+ *         nom::branch::alt((
+ *             nom::combinator::map(
+ *                 nom::combinator::recognize(nom::bytes::complete::tag("(")),
+ *                 Keyword::OpenParen,
+ *             ),
+ *             nom::combinator::map(
+ *                 nom::combinator::recognize(nom::bytes::complete::tag(")")),
+ *                 Keyword::CloseParen,
+ *             ),
+ *             /* ... */
+ *         ))(input)
+ *     }
+ *     pub fn match_word(input: &str) -> Option<Keyword> {
+ *         match input {
+ *             "or" => Some(Keyword::Or(Or)),
+ *             "optional" => Some(Keyword::Optional(Optional)),
+ *             /* ... */
+ *             _ => None
+ *         }
+ *     }
+ * }
+ * ```
+ *
+ * Use `cargo-expand` to see the full macro expansion.
+ */
+
 #[cfg(test)]
 macro_rules! generate_tests {
     ($typ:ident, $tok:expr) => {
         #[allow(non_snake_case)]
         #[cfg(test)]
         mod $typ {
-            use super::super::$typ;
-            use crate::Parse;
+            use super::super::{$typ, Keyword};
+            use $crate::lexer::{lex, Terminal};
 
             #[test]
             fn should_parse() {
-                let (rem, parsed) = $typ::parse(concat!($tok)).unwrap();
-                assert_eq!(rem, "");
-                assert_eq!(parsed, $typ);
+                let tokens = lex($tok).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_preceding_spaces() {
-                let (rem, parsed) = $typ::parse(concat!("  ", $tok)).unwrap();
-                assert_eq!(rem, "");
-                assert_eq!(parsed, $typ);
+                let tokens = lex(concat!("  ", $tok)).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_succeeding_spaces() {
-                let (rem, parsed) = $typ::parse(concat!($tok, "  ")).unwrap();
-                assert_eq!(rem, "");
-                assert_eq!(parsed, $typ);
+                let tokens = lex(concat!($tok, "  ")).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_surrounding_spaces() {
-                let (rem, parsed) = $typ::parse(concat!("  ", $tok, "  ")).unwrap();
-                assert_eq!(rem, "");
-                assert_eq!(parsed, $typ);
+                let tokens = lex(concat!("  ", $tok, "  ")).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_if_anything_next() {
-                let (rem, parsed) = $typ::parse(concat!($tok, "  anything")).unwrap();
-                assert_eq!(rem, "anything");
-                assert_eq!(parsed, $typ);
+                let tokens = lex(concat!($tok, "  anything")).unwrap();
+                assert_eq!(tokens.len(), 3);
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
         }
     };
 }
 
-macro_rules! generate_terms_for_punctuations {
-    ($( $(#[$attr:meta])* $typ:ident => $tok:expr, )*) => {
-        $(
-            $(#[$attr])*
-            #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-            pub struct $typ;
+macro_rules! generate_keyword_struct {
+    ($(#[$attr:meta])* $typ:ident => $tok:expr) => {
+        $(#[$attr])*
+        #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+        pub struct $typ;
 
-            impl<'a> $crate::Parse<'a> for $typ {
-                parser!(nom::combinator::value(
-                    $typ,
-                    crate::whitespace::ws(
-                        nom::bytes::complete::tag($tok)
-                    )
-                ));
+        impl $typ {
+            pub fn value(&self) -> &'static str {
+                return $tok;
             }
-        )*
+        }
+
+        impl<'a> $crate::Parse<'a> for $typ {
+            parser!(eat_key!($typ));
+        }
     };
 }
 
-struct AlphaNumUnderscoreDash;
+macro_rules! generate_keywords_enum {
+    (
+        $( #[$attr:meta] $typ_punc:ident => $tok_punc:expr, )* === $( $typ_word:ident => $tok_word:expr, )*
+    ) => {
+        $(generate_keyword_struct!(
+            #[$attr]
+            $typ_punc => $tok_punc
+        );)*
 
-impl nom::FindToken<char> for AlphaNumUnderscoreDash {
-    fn find_token(&self, token: char) -> bool {
-        crate::common::is_alphanum_underscore_dash(token)
-    }
-}
-
-pub(crate) fn ident_tag(tag: &'static str) -> impl FnMut(&str) -> nom::IResult<&str, &str> {
-    move |input| {
-        nom::sequence::terminated(
-            nom::bytes::complete::tag(tag),
-            nom::combinator::not(nom::combinator::map_parser(
-                nom::bytes::complete::take(1usize),
-                nom::bytes::complete::is_a(AlphaNumUnderscoreDash),
-            )),
-        )(input)
-    }
-}
-
-macro_rules! generate_terms_for_names {
-    ($($typ:ident => $tok:expr,)*) => {
-        $(
+        $(generate_keyword_struct!(
             #[doc = "Represents the terminal symbol `"]
-            #[doc = $tok]
+            #[doc = $tok_word]
             #[doc = "`"]
-            #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-            pub struct $typ;
+            $typ_word => $tok_word
+        );)*
 
-            impl<'a> $crate::Parse<'a> for $typ {
-                parser!(nom::combinator::value(
-                    $typ,
-                    $crate::whitespace::ws($crate::term::ident_tag($tok))
-                ));
+        #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+        pub enum Keyword {
+            $(
+                #[$attr]
+                $typ_punc($typ_punc),
+            )*
+            $(
+                #[doc = "Represents the terminal symbol `"]
+                #[doc = $tok_word]
+                #[doc = "`"]
+                $typ_word($typ_word),
+            )*
+        }
+
+        impl Keyword {
+            pub fn parse_punc(input: &str) -> nom::IResult<&str, Keyword> {
+                alt!(
+                    $(nom::combinator::map(
+                        nom::combinator::recognize(nom::bytes::complete::tag($tok_punc)),
+                        |_| Keyword::$typ_punc($typ_punc)
+                    ),)*
+                )(input)
             }
-        )*
-    };
-}
 
-macro_rules! generate_terms {
-    ($( $(#[$attr:meta])* $typ_punc:ident => $tok_punc:expr, )* === $( $typ_word:ident => $tok_word:expr,)* ) => {
-        generate_terms_for_punctuations!($( $typ_punc => $tok_punc, )*);
-        generate_terms_for_names!($( $typ_word => $tok_word, )*);
+            pub fn match_word(input: &str) -> Option<Keyword> {
+                match input {
+                    $($tok_word => Some(Keyword::$typ_word($typ_word)),)*
+                    _ => None,
+                }
+            }
+        }
 
         #[cfg(test)]
         mod test {
@@ -116,7 +174,7 @@ macro_rules! generate_terms {
     }
 }
 
-generate_terms! {
+generate_keywords_enum! {
     /// Represents the terminal symbol `(`
     OpenParen => "(",
 
@@ -141,11 +199,11 @@ generate_terms! {
     /// Represents the terminal symbol `-`
     Minus => "-",
 
-    /// Represents the terminal symbol `.`
-    Dot => ".",
-
     /// Represents the terminal symbol `...`
     Ellipsis => "...",
+
+    /// Represents the terminal symbol `.`
+    Dot => ".",
 
     /// Represents the terminal symbol `:`
     Colon => ":",
@@ -394,14 +452,14 @@ macro_rules! term {
     (any) => {
         $crate::term::Any
     };
+    (bigint) => {
+        $crate::term::Bigint
+    };
     (boolean) => {
         $crate::term::Boolean
     };
     (byte) => {
         $crate::term::Byte
-    };
-    (bigint) => {
-        $crate::term::Bigint
     };
     (double) => {
         $crate::term::Double

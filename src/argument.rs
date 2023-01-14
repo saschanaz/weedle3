@@ -2,11 +2,59 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
+use crate::tokens::Tokens;
 use crate::types::{AttributedType, Type};
 use crate::Parse;
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
+
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+struct ArgumentName<'a>(&'a str);
+
+impl<'a> Parse<'a> for ArgumentName<'a> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
+        if let Ok((tokens, result)) = eat!(Identifier)(input) {
+            return Ok((tokens, ArgumentName(result.0)));
+        }
+        try_eat_keys!(
+            ArgumentName,
+            input,
+            Async,
+            Attribute,
+            Callback,
+            Const,
+            Constructor,
+            Deleter,
+            Dictionary,
+            Enum,
+            Getter,
+            Includes,
+            Inherit,
+            Interface,
+            Iterable,
+            Maplike,
+            Mixin,
+            Namespace,
+            Partial,
+            ReadOnly,
+            Required,
+            Setlike,
+            Setter,
+            Static,
+            Stringifier,
+            Typedef,
+            Unrestricted
+        );
+        nom::combinator::fail(input)
+    }
+}
+
+impl<'a> From<ArgumentName<'a>> for Identifier<'a> {
+    fn from(value: ArgumentName<'a>) -> Self {
+        Self(value.0)
+    }
+}
 
 /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
 ///
@@ -21,12 +69,12 @@ pub struct SingleArgument<'a> {
 }
 
 impl<'a> Parse<'a> for SingleArgument<'a> {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
         let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),
             weedle!(AttributedType<'a>),
-            weedle!(Identifier<'a>),
+            nom::combinator::into(weedle!(ArgumentName<'a>)),
         ))(input)?;
         let (input, default) = nom::combinator::map(
             nom::combinator::cond(optional.is_some(), weedle!(Option<Default<'a>>)),
