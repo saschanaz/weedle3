@@ -1,5 +1,4 @@
-use nom::Parser;
-use nom::{multi::many0, IResult};
+use nom::{multi::many0, sequence::tuple, IResult, Parser};
 
 use crate::common::Identifier;
 use crate::literal::{FloatValueLit, IntegerLit, StringLit};
@@ -57,9 +56,9 @@ fn tag(input: &str) -> NomResult<Tag> {
 }
 
 pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
-    let (unread, (mut tokens, eof)) = nom::sequence::tuple((
-        many0(nom::sequence::tuple((sp, tag)).map(Token::new)),
-        nom::sequence::tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {
+    let (unread, (mut tokens, eof)) = tuple((
+        many0(tuple((sp, tag)).map(Token::new)),
+        tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {
             tag: Tag::Eof(()),
             trivia,
         }),
