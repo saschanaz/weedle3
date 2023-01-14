@@ -9,26 +9,26 @@ use crate::term::Keyword;
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Tag<'a> {
-    Kw(Keyword),
-    Int(IntegerLit<'a>),
-    Dec(FloatValueLit<'a>),
-    Id(Identifier<'a>),
-    Str(StringLit<'a>),
+pub enum Terminal<'a> {
+    Keyword(Keyword),
+    Integer(IntegerLit<'a>),
+    Decimal(FloatValueLit<'a>),
+    Identifier(Identifier<'a>),
+    String(StringLit<'a>),
     Other(char),
     Eof(()),
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Token<'a> {
-    pub tag: Tag<'a>,
+    pub value: Terminal<'a>,
     pub trivia: &'a str,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
 }
 
 impl Token<'_> {
-    pub fn new<'a>((trivia, tag): (&'a str, Tag<'a>)) -> Token<'a> {
-        Token { tag, trivia }
+    pub fn new<'a>((trivia, tag): (&'a str, Terminal<'a>)) -> Token<'a> {
+        Token { value: tag, trivia }
     }
 }
 
@@ -36,22 +36,22 @@ fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-fn id_or_keyword(input: &str) -> NomResult<Tag> {
+fn id_or_keyword(input: &str) -> NomResult<Terminal> {
     let (input, id) = Identifier::lex(input)?;
     match Keyword::match_word(id.0) {
-        Some(keyword) => Ok((input, Tag::Kw(keyword))),
-        _ => Ok((input, Tag::Id(id))),
+        Some(keyword) => Ok((input, Terminal::Keyword(keyword))),
+        _ => Ok((input, Terminal::Identifier(id))),
     }
 }
 
-fn tag(input: &str) -> NomResult<Tag> {
+fn tag(input: &str) -> NomResult<Terminal> {
     nom::branch::alt((
-        FloatValueLit::lex.map(Tag::Dec),
-        IntegerLit::lex.map(Tag::Int),
-        StringLit::lex.map(Tag::Str),
+        FloatValueLit::lex.map(Terminal::Decimal),
+        IntegerLit::lex.map(Terminal::Integer),
+        StringLit::lex.map(Terminal::String),
         id_or_keyword,
-        Keyword::parse_punc.map(Tag::Kw),
-        other.map(Tag::Other),
+        Keyword::parse_punc.map(Terminal::Keyword),
+        other.map(Terminal::Other),
     ))(input)
 }
 
@@ -59,7 +59,7 @@ pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>>
     let (unread, (mut tokens, eof)) = tuple((
         many0(tuple((sp, tag)).map(Token::new)),
         tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {
-            tag: Tag::Eof(()),
+            value: Terminal::Eof(()),
             trivia,
         }),
     ))(input)?;
@@ -86,31 +86,31 @@ mod tests {
             &tokens[..],
             [
                 Token {
-                    tag: Tag::Kw(Keyword::Interface(_)),
+                    value: Terminal::Keyword(Keyword::Interface(_)),
                     ..
                 },
                 Token {
-                    tag: Tag::Kw(Keyword::Mixin(_)),
+                    value: Terminal::Keyword(Keyword::Mixin(_)),
                     ..
                 },
                 Token {
-                    tag: Tag::Id(_),
+                    value: Terminal::Identifier(_),
                     ..
                 },
                 Token {
-                    tag: Tag::Kw(Keyword::OpenBrace(_)),
+                    value: Terminal::Keyword(Keyword::OpenBrace(_)),
                     ..
                 },
                 Token {
-                    tag: Tag::Kw(Keyword::CloseBrace(_)),
+                    value: Terminal::Keyword(Keyword::CloseBrace(_)),
                     ..
                 },
                 Token {
-                    tag: Tag::Kw(Keyword::SemiColon(_)),
+                    value: Terminal::Keyword(Keyword::SemiColon(_)),
                     ..
                 },
                 Token {
-                    tag: Tag::Eof(_),
+                    value: Terminal::Eof(_),
                     ..
                 }
             ]
@@ -123,7 +123,7 @@ mod tests {
         let tokens = lex(&content).unwrap();
 
         assert!(
-            matches!(tokens.last().unwrap().tag, Tag::Eof(_)),
+            matches!(tokens.last().unwrap().value, Terminal::Eof(_)),
             "Last token should be EOF"
         );
 

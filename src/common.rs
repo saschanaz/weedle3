@@ -142,7 +142,7 @@ impl<'a> Identifier<'a> {
 }
 
 impl<'a> Parse<'a> for Identifier<'a> {
-    parser!(eat!(Id));
+    parser!(eat!(Identifier));
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`

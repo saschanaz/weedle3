@@ -14,7 +14,7 @@ struct ArgumentName<'a>(&'a str);
 
 impl<'a> Parse<'a> for ArgumentName<'a> {
     fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
-        if let Ok((tokens, result)) = eat!(Id)(input) {
+        if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, ArgumentName(result.0)));
         }
         try_eat_keys!(

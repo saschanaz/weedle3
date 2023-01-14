@@ -35,7 +35,7 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
     fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
     ) -> nom::IResult<crate::tokens::Tokens<'slice, 'a>, Self> {
-        if let Ok((tokens, result)) = eat!(Id)(input) {
+        if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, AttributeName(result.0)));
         }
         try_eat_keys!(AttributeName, input, Async, Required);
@@ -83,7 +83,7 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
     fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
     ) -> nom::IResult<crate::tokens::Tokens<'slice, 'a>, Self> {
-        if let Ok((tokens, result)) = eat!(Id)(input) {
+        if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, OperationName(result.0)));
         }
         try_eat_keys!(OperationName, input, Includes);

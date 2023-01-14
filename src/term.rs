@@ -45,41 +45,41 @@ macro_rules! generate_tests {
         #[cfg(test)]
         mod $typ {
             use super::super::{$typ, Keyword};
-            use $crate::lexer::{lex, Tag};
+            use $crate::lexer::{lex, Terminal};
 
             #[test]
             fn should_parse() {
                 let tokens = lex($tok).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_preceding_spaces() {
                 let tokens = lex(concat!("  ", $tok)).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_succeeding_spaces() {
                 let tokens = lex(concat!($tok, "  ")).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_surrounding_spaces() {
                 let tokens = lex(concat!("  ", $tok, "  ")).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_if_anything_next() {
                 let tokens = lex(concat!($tok, "  anything")).unwrap();
                 assert_eq!(tokens.len(), 3);
-                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
+                assert_eq!(tokens[0].value, Terminal::Keyword(Keyword::$typ($typ)));
             }
         }
     };

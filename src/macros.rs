@@ -54,7 +54,7 @@ macro_rules! eat {
                 use nom::{InputIter, Slice};
                 match input.iter_elements().next() {
                     Some($crate::lexer::Token {
-                        tag: $crate::lexer::Tag::$variant(variant),
+                        value: $crate::lexer::Terminal::$variant(variant),
                         trivia: _,
                     }) => Ok((input.slice(1..), variant)),
                     _ => nom::combinator::fail(input),
@@ -69,11 +69,11 @@ macro_rules! eat_key {
         $crate::macros::annotate(
             |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
                 use nom::{InputIter, Slice};
-                use $crate::lexer::Tag;
+                use $crate::lexer::Terminal;
                 use $crate::term::Keyword;
                 match input.iter_elements().next() {
                     Some($crate::lexer::Token {
-                        tag: Tag::Kw(Keyword::$variant(variant)),
+                        value: Terminal::Keyword(Keyword::$variant(variant)),
                         trivia: _,
                     }) => Ok((input.slice(1..), variant)),
                     _ => nom::combinator::fail(input),

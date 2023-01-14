@@ -66,7 +66,7 @@ impl<'a> IntegerLit<'a> {
 }
 
 impl<'a> Parse<'a> for IntegerLit<'a> {
-    parser!(eat!(Int));
+    parser!(eat!(Integer));
 }
 
 /// Represents a string value
@@ -87,7 +87,7 @@ impl<'a> StringLit<'a> {
 }
 
 impl<'a> Parse<'a> for StringLit<'a> {
-    parser!(eat!(Str));
+    parser!(eat!(String));
 }
 
 /// Represents `[ ]`
@@ -189,7 +189,7 @@ impl<'a> FloatValueLit<'a> {
 }
 
 impl<'a> Parse<'a> for FloatValueLit<'a> {
-    parser!(eat!(Dec));
+    parser!(eat!(Decimal));
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
