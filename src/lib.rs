@@ -49,7 +49,7 @@ pub mod namespace;
 pub mod types;
 
 #[macro_use]
-pub mod lexer;
+mod lexer;
 mod tokens;
 
 use lexer::lex;

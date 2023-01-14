@@ -75,6 +75,7 @@ pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>>
 #[cfg(test)]
 mod tests {
     use super::*;
+    use test_generator::test_resources;
 
     #[test]
     fn test() {
@@ -114,5 +115,18 @@ mod tests {
                 }
             ]
         ));
+    }
+
+    #[test_resources("tests/defs/*.webidl")]
+    fn should_lex(resource: &str) {
+        let content = std::fs::read_to_string(resource).unwrap();
+        let tokens = lex(&content).unwrap();
+
+        assert!(
+            matches!(tokens.last().unwrap().tag, Tag::Eof(_)),
+            "Last token should be EOF"
+        );
+
+        // TODO: source file reconstruction test
     }
 }
