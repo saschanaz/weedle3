@@ -156,7 +156,7 @@ macro_rules! generate_keywords_enum {
             $( generate_tests!($typ_punc, $tok_punc); )*
             $( generate_tests!($typ_word, $tok_word); )*
         }
-    };
+    }
 }
 
 generate_keywords_enum! {
