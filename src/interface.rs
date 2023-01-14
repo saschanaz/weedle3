@@ -39,7 +39,6 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
             return Ok((tokens, AttributeName(result.0)));
         }
         try_eat_keys!(AttributeName, input, Async, Required);
-
         nom::combinator::fail(input)
     }
 }
@@ -88,7 +87,6 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
             return Ok((tokens, OperationName(result.0)));
         }
         try_eat_keys!(OperationName, input, Includes);
-
         nom::combinator::fail(input)
     }
 }

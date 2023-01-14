@@ -46,7 +46,6 @@ impl<'a> Parse<'a> for ArgumentName<'a> {
             Typedef,
             Unrestricted
         );
-
         nom::combinator::fail(input)
     }
 }
