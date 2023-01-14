@@ -8,16 +8,14 @@ use crate::Parse;
 pub struct DecLit<'a>(pub &'a str);
 
 impl<'a> DecLit<'a> {
-    fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::character::complete::char('-')),
-                nom::character::complete::one_of("123456789"),
-                nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
-            ))),
-            DecLit,
-        )(input)
-    }
+    parser_lit!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::character::complete::char('-')),
+            nom::character::complete::one_of("123456789"),
+            nom::bytes::complete::take_while(nom::AsChar::is_dec_digit),
+        ))),
+        DecLit,
+    ));
 }
 
 /// Parses `-?0[Xx][0-9A-Fa-f]+)`
