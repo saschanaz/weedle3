@@ -31,14 +31,6 @@ pub struct ConstMember<'a> {
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributeName<'a>(&'a str);
 
-macro_rules! try_eat_attr {
-    ($input:ident, $variant:ident) => {
-        if let Ok((tokens, result)) = eat_key!($variant)($input) {
-            return Ok((tokens, AttributeName(result.value())));
-        }
-    };
-}
-
 impl<'a> crate::Parse<'a> for AttributeName<'a> {
     fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
@@ -46,8 +38,7 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
             return Ok((tokens, AttributeName(result.0)));
         }
-        try_eat_attr!(input, Async);
-        try_eat_attr!(input, Required);
+        try_eat_keys!(AttributeName, input, Async, Required);
 
         Err(nom::Err::Error(nom::error::Error {
             input,
@@ -92,14 +83,6 @@ pub struct ConstructorInterfaceMember<'a> {
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationName<'a>(&'a str);
 
-macro_rules! try_eat_op {
-    ($input:ident, $variant:ident) => {
-        if let Ok((tokens, result)) = eat_key!($variant)($input) {
-            return Ok((tokens, OperationName(result.value())));
-        }
-    };
-}
-
 impl<'a> crate::Parse<'a> for OperationName<'a> {
     fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
@@ -107,7 +90,7 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
             return Ok((tokens, OperationName(result.0)));
         }
-        try_eat_op!(input, Includes);
+        try_eat_keys!(OperationName, input, Includes);
 
         Err(nom::Err::Error(nom::error::Error {
             input,

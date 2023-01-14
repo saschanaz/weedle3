@@ -47,7 +47,6 @@ where
     f
 }
 
-#[macro_export]
 macro_rules! eat {
     ($variant:ident) => {
         $crate::macros::annotate(
@@ -68,7 +67,6 @@ macro_rules! eat {
     };
 }
 
-#[macro_export]
 macro_rules! eat_key {
     ($variant:ident) => {
         $crate::macros::annotate(
@@ -88,6 +86,16 @@ macro_rules! eat_key {
                 }
             },
         )
+    };
+}
+
+macro_rules! try_eat_keys {
+    ($typ:ident, $input:ident, $($variant:ident),+) => {
+        $(
+            if let Ok((tokens, result)) = eat_key!($variant)($input) {
+                return Ok((tokens, $typ(result.value())));
+            }
+        )+
     };
 }
 

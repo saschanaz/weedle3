@@ -12,44 +12,40 @@ pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ArgumentName<'a>(&'a str);
 
-macro_rules! try_eat_arg {
-    ($input:ident, $variant:ident) => {
-        if let Ok((tokens, result)) = eat_key!($variant)($input) {
-            return Ok((tokens, ArgumentName(result.value())));
-        }
-    };
-}
-
 impl<'a> Parse<'a> for ArgumentName<'a> {
     fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
             return Ok((tokens, ArgumentName(result.0)));
         }
-        try_eat_arg!(input, Async);
-        try_eat_arg!(input, Attribute);
-        try_eat_arg!(input, Callback);
-        try_eat_arg!(input, Const);
-        try_eat_arg!(input, Constructor);
-        try_eat_arg!(input, Deleter);
-        try_eat_arg!(input, Dictionary);
-        try_eat_arg!(input, Enum);
-        try_eat_arg!(input, Getter);
-        try_eat_arg!(input, Includes);
-        try_eat_arg!(input, Inherit);
-        try_eat_arg!(input, Interface);
-        try_eat_arg!(input, Iterable);
-        try_eat_arg!(input, Maplike);
-        try_eat_arg!(input, Mixin);
-        try_eat_arg!(input, Namespace);
-        try_eat_arg!(input, Partial);
-        try_eat_arg!(input, ReadOnly);
-        try_eat_arg!(input, Required);
-        try_eat_arg!(input, Setlike);
-        try_eat_arg!(input, Setter);
-        try_eat_arg!(input, Static);
-        try_eat_arg!(input, Stringifier);
-        try_eat_arg!(input, Typedef);
-        try_eat_arg!(input, Unrestricted);
+        try_eat_keys!(
+            ArgumentName,
+            input,
+            Async,
+            Attribute,
+            Callback,
+            Const,
+            Constructor,
+            Deleter,
+            Dictionary,
+            Enum,
+            Getter,
+            Includes,
+            Inherit,
+            Interface,
+            Iterable,
+            Maplike,
+            Mixin,
+            Namespace,
+            Partial,
+            ReadOnly,
+            Required,
+            Setlike,
+            Setter,
+            Static,
+            Stringifier,
+            Typedef,
+            Unrestricted
+        );
 
         Err(nom::Err::Error(nom::error::Error {
             input,
