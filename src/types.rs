@@ -362,12 +362,8 @@ mod test {
     #[test]
     fn should_parse_union_member_type_attributed_union() {
         use crate::types::UnionMemberType;
-
-        let input = "([Clamp] byte or [Named] byte)";
-        let tokens = crate::lexer::lex(input).unwrap();
-        let (rem, parsed) =
-            UnionMemberType::parse_tokens(crate::parser::Tokens(&tokens[..])).unwrap();
-        assert_eq!(unsafe { rem.remaining(input) }, "");
+        let (rem, parsed) = UnionMemberType::parse("([Clamp] byte or [Named] byte)").unwrap();
+        assert_eq!(rem, "");
         match parsed {
             UnionMemberType::Union(MayBeNull {
                 type_:
