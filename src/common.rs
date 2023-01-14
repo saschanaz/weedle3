@@ -131,7 +131,7 @@ where
 pub struct Identifier<'a>(pub &'a str);
 
 impl<'a> Identifier<'a> {
-    parser_lit!(nom::combinator::map(
+    lexer!(nom::combinator::map(
         nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::branch::alt((
                 nom::character::complete::char('_'),

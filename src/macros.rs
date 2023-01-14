@@ -8,7 +8,7 @@ macro_rules! parser {
     };
 }
 
-macro_rules! parser_lit {
+macro_rules! lexer {
     ($parse:expr) => {
         pub fn parse(input: &'a str) -> $crate::IResult<&'a str, Self> {
             $parse(input)

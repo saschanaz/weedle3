@@ -8,7 +8,7 @@ use crate::Parse;
 pub struct DecLit<'a>(pub &'a str);
 
 impl<'a> DecLit<'a> {
-    parser_lit!(nom::combinator::map(
+    lexer!(nom::combinator::map(
         nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::one_of("123456789"),
@@ -23,7 +23,7 @@ impl<'a> DecLit<'a> {
 pub struct HexLit<'a>(pub &'a str);
 
 impl<'a> HexLit<'a> {
-    parser_lit!(nom::combinator::map(
+    lexer!(nom::combinator::map(
         nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
@@ -39,7 +39,7 @@ impl<'a> HexLit<'a> {
 pub struct OctLit<'a>(pub &'a str);
 
 impl<'a> OctLit<'a> {
-    parser_lit!(nom::combinator::map(
+    lexer!(nom::combinator::map(
         nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::character::complete::char('0'),
@@ -58,7 +58,7 @@ pub enum IntegerLit<'a> {
 }
 
 impl<'a> IntegerLit<'a> {
-    parser_lit!(nom::branch::alt((
+    lexer!(nom::branch::alt((
         DecLit::parse.map(IntegerLit::Dec),
         HexLit::parse.map(IntegerLit::Hex),
         OctLit::parse.map(IntegerLit::Oct),
@@ -76,7 +76,7 @@ impl<'a> Parse<'a> for IntegerLit<'a> {
 pub struct StringLit<'a>(pub &'a str);
 
 impl<'a> StringLit<'a> {
-    parser_lit!(nom::combinator::map(
+    lexer!(nom::combinator::map(
         nom::sequence::delimited(
             nom::character::complete::char('\"'),
             nom::bytes::complete::take_while(|c| c != '\"'),
@@ -144,7 +144,7 @@ impl<'a> Parse<'a> for BooleanLit {
 pub struct FloatValueLit<'a>(pub &'a str);
 
 impl<'a> FloatValueLit<'a> {
-    parser_lit!(nom::combinator::map(
+    lexer!(nom::combinator::map(
         nom::combinator::recognize(nom::sequence::tuple((
             nom::combinator::opt(nom::character::complete::char('-')),
             nom::branch::alt((
