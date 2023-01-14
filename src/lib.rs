@@ -51,11 +51,10 @@ pub mod types;
 
 #[macro_use]
 pub mod lexer;
-#[macro_use]
-pub mod parser;
+mod tokens;
 
-use crate::lexer::lex;
-use crate::parser::Tokens;
+use lexer::lex;
+use tokens::Tokens;
 
 /// A convenient parse function
 ///

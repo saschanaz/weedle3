@@ -1,7 +1,7 @@
 use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
-use crate::parser::Tokens;
+use crate::tokens::Tokens;
 use crate::{term, IResult, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {

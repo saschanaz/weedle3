@@ -2,7 +2,7 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
-use crate::parser::Tokens;
+use crate::tokens::Tokens;
 use crate::types::{AttributedType, Type};
 use crate::{eat, Parse};
 
