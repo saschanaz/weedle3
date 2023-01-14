@@ -4,7 +4,7 @@ use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::tokens::Tokens;
 use crate::types::{AttributedType, Type};
-use crate::{eat, Parse};
+use crate::Parse;
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
@@ -14,7 +14,7 @@ pub struct ArgumentName<'a>(&'a str);
 
 macro_rules! try_eat_arg {
     ($input:ident, $variant:ident) => {
-        if let Ok((tokens, result)) = crate::eat_key!($variant)($input) {
+        if let Ok((tokens, result)) = eat_key!($variant)($input) {
             return Ok((tokens, ArgumentName(result.value())));
         }
     };

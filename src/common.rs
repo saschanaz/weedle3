@@ -145,7 +145,7 @@ impl<'a> Identifier<'a> {
 }
 
 impl<'a> Parse<'a> for Identifier<'a> {
-    parser!(crate::eat!(Id));
+    parser!(eat!(Id));
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`

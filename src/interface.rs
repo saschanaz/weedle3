@@ -3,7 +3,6 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
-use crate::eat;
 use crate::literal::ConstValue;
 use crate::types::{AttributedType, ConstType, Type};
 
@@ -34,7 +33,7 @@ pub struct AttributeName<'a>(&'a str);
 
 macro_rules! try_eat_attr {
     ($input:ident, $variant:ident) => {
-        if let Ok((tokens, result)) = crate::eat_key!($variant)($input) {
+        if let Ok((tokens, result)) = eat_key!($variant)($input) {
             return Ok((tokens, AttributeName(result.value())));
         }
     };
@@ -95,7 +94,7 @@ pub struct OperationName<'a>(&'a str);
 
 macro_rules! try_eat_op {
     ($input:ident, $variant:ident) => {
-        if let Ok((tokens, result)) = crate::eat_key!($variant)($input) {
+        if let Ok((tokens, result)) = eat_key!($variant)($input) {
             return Ok((tokens, OperationName(result.value())));
         }
     };

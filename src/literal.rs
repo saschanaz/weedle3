@@ -66,7 +66,7 @@ impl<'a> IntegerLit<'a> {
 }
 
 impl<'a> Parse<'a> for IntegerLit<'a> {
-    parser!(crate::eat!(Int));
+    parser!(eat!(Int));
 }
 
 /// Represents a string value
@@ -87,7 +87,7 @@ impl<'a> StringLit<'a> {
 }
 
 impl<'a> Parse<'a> for StringLit<'a> {
-    parser!(crate::eat!(Str));
+    parser!(eat!(Str));
 }
 
 /// Represents `[ ]`
@@ -189,7 +189,7 @@ impl<'a> FloatValueLit<'a> {
 }
 
 impl<'a> Parse<'a> for FloatValueLit<'a> {
-    parser!(crate::eat!(Dec));
+    parser!(eat!(Dec));
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
