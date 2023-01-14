@@ -2,6 +2,21 @@
  * The following will ultimate generate:
  *
  * ```rust
+ * #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+ * pub struct OpenParen;
+ *
+ * impl OpenParen {
+ *     pub fn value(&self) -> &'static str {
+ *         return "(";
+ *     }
+ * }
+ *
+ * impl<'a> $crate::Parse<'a> for OpenParen {
+ *     parser!(eat_key!(OpenParen));
+ * }
+ *
+ * /* ... */
+ *
  * enum Keyword<'a> {
  *     OpenParen(OpenParen),
  *     CloseParen(CloseParen),
