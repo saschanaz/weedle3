@@ -59,9 +59,9 @@ pub enum IntegerLit<'a> {
 
 impl<'a> IntegerLit<'a> {
     lexer!(nom::branch::alt((
-        DecLit::parse.map(IntegerLit::Dec),
-        HexLit::parse.map(IntegerLit::Hex),
-        OctLit::parse.map(IntegerLit::Oct),
+        DecLit::lex.map(IntegerLit::Dec),
+        HexLit::lex.map(IntegerLit::Hex),
+        OctLit::lex.map(IntegerLit::Oct),
     )));
 }
 
@@ -212,12 +212,13 @@ mod test {
         IntegerLit => IntegerLit::Dec(DecLit("45"))
     });
 
-    test!(err should_not_parse_integer_surrounding_with_spaces { "  123123  " =>
-        IntegerLit
+    test!(should_parse_integer_surrounding_with_spaces { "  123123  " =>
+        "";
+        IntegerLit => IntegerLit::Dec(DecLit("123123"))
     });
 
     test!(should_parse_integer_preceding_others { "3453 string" =>
-        " string";
+        "string";
         IntegerLit => IntegerLit::Dec(DecLit("3453"))
     });
 
@@ -291,28 +292,29 @@ mod test {
         StringLit => StringLit("this is a string")
     });
 
-    test!(err should_not_parse_string_surround_with_spaces { r#"  "this is a string"  "# =>
-        StringLit
+    test!(should_parse_string_surround_with_spaces { r#"  "this is a string"  "# =>
+        "";
+        StringLit => StringLit("this is a string")
     });
 
-    test!(should_parse_string_followed_by_string { r#""this is first"  "this is second" "# =>
-        r#"  "this is second" "#;
+    test!(should_parse_string_followed_by_string { r#" "this is first"  "this is second" "# =>
+        r#""this is second" "#;
         StringLit => StringLit("this is first")
     });
 
-    test!(should_parse_string_with_spaces { r#""  this is a string  ""# =>
+    test!(should_parse_string_with_spaces { r#"  "  this is a string  "  "# =>
         "";
         StringLit => StringLit("  this is a string  ")
     });
 
-    test!(should_parse_string_with_comment { r#""// this is still a string"
+    test!(should_parse_string_with_comment { r#"  "// this is still a string"
      "# =>
-        "\n     ";
+        "";
         StringLit => StringLit("// this is still a string")
     });
 
-    test!(should_parse_string_with_multiline_comment { r#""/*"  "*/"  "# =>
-        r#"  "*/"  "#;
+    test!(should_parse_string_with_multiline_comment { r#"  "/*"  "*/"  "# =>
+        r#""*/"  "#;
         StringLit => StringLit("/*")
     });
 

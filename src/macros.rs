@@ -9,9 +9,9 @@ macro_rules! parser {
 }
 
 macro_rules! lexer {
-    ($parse:expr) => {
-        pub fn parse(input: &'a str) -> $crate::IResult<&'a str, Self> {
-            $parse(input)
+    ($lex:expr) => {
+        pub fn lex(input: &'a str) -> $crate::IResult<&'a str, Self> {
+            $lex(input)
         }
     };
 }

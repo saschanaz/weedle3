@@ -88,6 +88,7 @@ pub trait Parse<'token>: Sized {
         -> IResult<Tokens<'slice, 'token>, Self>;
 
     fn parse(input: &'token str) -> IResult<&'token str, Self> {
+        let (input, _) = whitespace::sp(input)?;
         let tokens = lex(input)?;
         let (unread, def) =
             Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;

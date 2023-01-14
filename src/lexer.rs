@@ -37,7 +37,7 @@ fn other(input: &str) -> NomResult<char> {
 }
 
 fn id_or_keyword(input: &str) -> NomResult<Tag> {
-    let (input, id) = Identifier::parse(input)?;
+    let (input, id) = Identifier::lex(input)?;
     match Keyword::match_word(id.0) {
         Some(keyword) => Ok((input, Tag::Kw(keyword))),
         _ => Ok((input, Tag::Id(id))),
@@ -46,9 +46,9 @@ fn id_or_keyword(input: &str) -> NomResult<Tag> {
 
 fn tag(input: &str) -> NomResult<Tag> {
     nom::branch::alt((
-        FloatValueLit::parse.map(Tag::Dec),
-        IntegerLit::parse.map(Tag::Int),
-        StringLit::parse.map(Tag::Str),
+        FloatValueLit::lex.map(Tag::Dec),
+        IntegerLit::lex.map(Tag::Int),
+        StringLit::lex.map(Tag::Str),
         id_or_keyword,
         Keyword::parse_punc.map(Tag::Kw),
         other.map(Tag::Other),
