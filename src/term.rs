@@ -73,8 +73,8 @@ macro_rules! generate_tests {
 }
 
 macro_rules! generate_keyword_struct {
-    ($typ:ident => $tok:expr) => {
-        #[doc=$tok]
+    ($(#[$attr:meta])* $typ:ident => $tok:expr) => {
+        $(#[$attr])*
         #[derive(Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub struct $typ;
 
@@ -92,19 +92,30 @@ macro_rules! generate_keyword_struct {
 
 macro_rules! generate_keywords_enum {
     (
-        $($typ_punc:ident => $tok_punc:expr,)* === $($typ_word:ident => $tok_word:expr,)*
+        $( #[$attr:meta] $typ_punc:ident => $tok_punc:expr, )* === $( $typ_word:ident => $tok_word:expr, )*
     ) => {
-        $(generate_keyword_struct!($typ_punc => $tok_punc);)*
-        $(generate_keyword_struct!($typ_word => $tok_word);)*
+        $(generate_keyword_struct!(
+            #[$attr]
+            $typ_punc => $tok_punc
+        );)*
+
+        $(generate_keyword_struct!(
+            #[doc = "Represents the terminal symbol `"]
+            #[doc = $tok_word]
+            #[doc = "`"]
+            $typ_word => $tok_word
+        );)*
 
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub enum Keyword {
             $(
-                #[doc=$tok_punc]
+                #[$attr]
                 $typ_punc($typ_punc),
             )*
             $(
-                #[doc=$tok_word]
+                #[doc = "Represents the terminal symbol `"]
+                #[doc = $tok_word]
+                #[doc = "`"]
                 $typ_word($typ_word),
             )*
         }
@@ -136,24 +147,59 @@ macro_rules! generate_keywords_enum {
 }
 
 generate_keywords_enum!(
+    /// Represents the terminal symbol `(`
     OpenParen => "(",
+
+    /// Represents the terminal symbol `)`
     CloseParen => ")",
+
+    /// Represents the terminal symbol `[`
     OpenBracket => "[",
+
+    /// Represents the terminal symbol `]`
     CloseBracket => "]",
+
+    /// Represents the terminal symbol `{`
     OpenBrace => "{",
+
+    /// Represents the terminal symbol `}`
     CloseBrace => "}",
+
+    /// Represents the terminal symbol `,`
     Comma => ",",
+
+    /// Represents the terminal symbol `-`
     Minus => "-",
+
+    /// Represents the terminal symbol `...`
     Ellipsis => "...",
+
+    /// Represents the terminal symbol `.`
     Dot => ".",
+
+    /// Represents the terminal symbol `:`
     Colon => ":",
+
+    /// Represents the terminal symbol `;`
     SemiColon => ";",
+
+    /// Represents the terminal symbol `<`
     LessThan => "<",
+
+    /// Represents the terminal symbol `=`
     Assign => "=",
+
+    /// Represents the terminal symbol `>`
     GreaterThan => ">",
+
+    /// Represents the terminal symbol `?`
     QMark => "?",
+
+    /// Represents the terminal symbol `*`
     Wildcard => "*",
+
     ===
+
     Or => "or",
     Optional => "optional",
     Async => "async",
