@@ -130,7 +130,8 @@ macro_rules! test {
     (@arg $parsed:ident $($lhs:tt).+() == $rhs:expr; $($rest:tt)*) => {
         assert_eq!($parsed.$($lhs).+(), $rhs);
         test!(@arg $parsed $($rest)*);
-    };    (err $name:ident { $raw:expr => $typ:ty }) => {
+    };
+    (err $name:ident { $raw:expr => $typ:ty }) => {
         #[test]
         fn $name() {
             <$typ>::parse($raw).unwrap_err();
