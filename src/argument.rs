@@ -153,7 +153,7 @@ mod test {
     });
 
     test!(should_not_parse_default_if_not_optional { "short a = 5" =>
-        " = 5";
+        "= 5";
         SingleArgument;
     });
 }

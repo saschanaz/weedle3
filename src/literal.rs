@@ -251,12 +251,12 @@ mod test {
     });
 
     test!(should_parse_float_surrounding_with_spaces { "  2345.2345  " =>
-        "  ";
+        "";
         FloatLit => FloatLit::Value(FloatValueLit("2345.2345"))
     });
 
     test!(should_parse_float_preceding_others { "3453.32334 string" =>
-        " string";
+        "string";
         FloatLit => FloatLit::Value(FloatValueLit("3453.32334"))
     });
 

@@ -89,7 +89,8 @@ pub trait Parse<'token>: Sized {
         let tokens = lex(input)?;
         let (unread, def) =
             Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
-        Ok((unread.into(), def))
+        let (unread, _) = whitespace::sp(unread.into())?;
+        Ok((unread, def))
     }
 }
 
@@ -326,7 +327,7 @@ mod test {
             Vector crossProduct(Vector x, Vector y);
         };
     " =>
-        "\n    ";
+        "";
         PartialNamespaceDefinition;
         attributes.is_none();
         identifier.0 == "VectorUtils";
@@ -346,7 +347,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         PartialInterfaceMixinDefinition;
         attributes.is_none();
         identifier.0 == "WindowSessionStorage";
@@ -358,7 +359,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         PartialInterfaceDefinition;
         attributes.is_none();
         identifier.0 == "Window";
@@ -372,7 +373,7 @@ mod test {
           Vector crossProduct(Vector x, Vector y);
         };
     " =>
-        "\n    ";
+        "";
         NamespaceDefinition;
         attributes.is_none();
         identifier.0 == "VectorUtils";
@@ -384,7 +385,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         InterfaceMixinDefinition;
         attributes.is_none();
         identifier.0 == "WindowSessionStorage";
@@ -396,7 +397,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         InterfaceDefinition;
         attributes.is_none();
         identifier.0 == "Window";
@@ -410,7 +411,7 @@ mod test {
           attribute long? option3;
         };
     " =>
-        "\n    ";
+        "";
         CallbackInterfaceDefinition;
         attributes.is_none();
         identifier.0 == "Options";
@@ -429,7 +430,7 @@ mod test {
         // This is a comment
         callback AsyncOperationCallback = undefined (DOMString status);
     " =>
-        "\n    ";
+        "";
         CallbackDefinition;
     });
 
@@ -437,7 +438,7 @@ mod test {
         /* This is a comment */
         callback AsyncOperationCallback = undefined (DOMString status);
     " =>
-        "\n    ";
+        "";
         CallbackDefinition;
     });
 
@@ -449,7 +450,7 @@ mod test {
         // This is a comment
         callback AsyncOperationCallback = undefined (DOMString status);
     " =>
-        "\n    ";
+        "";
         CallbackDefinition;
     });
 }
