@@ -74,20 +74,9 @@ use tokens::Tokens;
 pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
 
-    let (unread, (defs, _eof)) = nom::sequence::tuple((Definitions::parse_tokens, eat!(Eof)))(
-        Tokens(&tokens[..]),
-    )
-    .map_err(|err| match err {
-        nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
-        nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
-            code: err.code,
-            input: unsafe { err.input.0[0].remaining(input) },
-        }),
-        nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
-            code: err.code,
-            input: unsafe { err.input.0[0].remaining(input) },
-        }),
-    })?;
+    let (unread, (defs, _eof)) =
+        nom::sequence::tuple((Definitions::parse_tokens, eat!(Eof)))(Tokens(&tokens[..]))
+            .map_err(tokens::nom_error_into)?;
 
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
@@ -102,19 +91,10 @@ pub trait Parse<'token>: Sized {
     fn parse(input: &'token str) -> IResult<&'token str, Self> {
         let tokens = lex(input)?;
 
-        let (unread, def) = Self::parse_tokens(Tokens(&tokens[..])).map_err(|err| match err {
-            nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
-            nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
-                code: err.code,
-                input: unsafe { err.input.0[0].remaining(input) },
-            }),
-            nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
-                code: err.code,
-                input: unsafe { err.input.0[0].remaining(input) },
-            }),
-        })?;
+        let (unread, def) =
+            Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
 
-        Ok((unsafe { unread.0[0].remaining(input) }, def))
+        Ok((unread.into(), def))
     }
 }
 

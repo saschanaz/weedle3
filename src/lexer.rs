@@ -22,35 +22,13 @@ pub enum Tag<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Token<'a> {
     pub tag: Tag<'a>,
-    // value: &'a str,
     pub trivia: &'a str,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
-    // line: u32,
-
-    // nom::traits::Offset should do the work
-    // except this is a token index instead of the string offset,
-    // but the purpose can be fulfilled:
-    // 1. way to sort the tokens
-    // 2. rewind (no need to do this manually with nom)
-    //
-    // index: u32,
 }
 
 impl Token<'_> {
     pub fn new<'a>((trivia, tag): (&'a str, Tag<'a>)) -> Token<'a> {
         Token { tag, trivia }
-    }
-
-    /// # Safety
-    /// Make sure `input` is the source of this token.
-    pub unsafe fn remaining<'a>(&self, input: &'a str) -> &'a str {
-        let position: usize = self
-            .trivia
-            .as_ptr()
-            .offset_from(input.as_ptr())
-            .try_into()
-            .expect("offset from input string pointer as usize");
-        &input[position..]
     }
 }
 

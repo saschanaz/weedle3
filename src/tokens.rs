@@ -13,11 +13,24 @@ use crate::lexer::Token;
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Tokens<'slice, 'token>(pub &'slice [Token<'token>]);
 
-impl<'slice, 'token> Tokens<'slice, 'token> {
-    /// # Safety
-    /// Make sure `input` is the source of this token.
-    pub unsafe fn remaining(&self, input: &'token str) -> &'token str {
-        self.0[0].remaining(input)
+impl<'slice, 'token> From<Tokens<'slice, 'token>> for &'token str {
+    fn from(value: Tokens<'slice, 'token>) -> Self {
+        if value.0.is_empty() {
+            return "";
+        }
+        let start_ptr = value.0[0].trivia.as_ptr();
+        let end = value.0.last().unwrap().trivia;
+
+        // Assumes all tokens are from the same string slice and are serially ordered
+        // which must be true as this struct is only produced from the lexer module.
+        unsafe {
+            let end_ptr = end.as_ptr().add(end.len());
+
+            std::str::from_utf8_unchecked(std::slice::from_raw_parts(
+                start_ptr,
+                end_ptr.offset_from(start_ptr) as usize,
+            ))
+        }
     }
 }
 
@@ -103,5 +116,22 @@ impl<'slice, 'token> InputIter for Tokens<'slice, 'token> {
         } else {
             Err(Needed::new(count - self.0.len()))
         }
+    }
+}
+
+// This exists because nom::error::Error doesn't have a From/Into implementation and nom::combinator::into requires it.
+pub fn nom_error_into<T, U: From<T>>(
+    err: nom::Err<nom::error::Error<T>>,
+) -> nom::Err<nom::error::Error<U>> {
+    match err {
+        nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
+        nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
+            code: err.code,
+            input: err.input.into(),
+        }),
+        nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
+            code: err.code,
+            input: err.input.into(),
+        }),
     }
 }
