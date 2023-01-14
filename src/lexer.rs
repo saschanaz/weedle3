@@ -2,9 +2,8 @@ use nom::{multi::many0, sequence::tuple, IResult, Parser};
 
 use crate::common::Identifier;
 use crate::literal::{FloatValueLit, IntegerLit, StringLit};
-use crate::whitespace::sp;
-
 use crate::term::Keyword;
+use crate::whitespace::sp;
 
 pub type NomResult<'a, O> = IResult<&'a str, O>;
 
