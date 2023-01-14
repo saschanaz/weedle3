@@ -210,13 +210,9 @@ mod test {
         "";
         Generics<(Identifier, term!(,), Identifier)> =>
             Generics {
-                open_angle: term::LessThan,
-                body: (
-                    Identifier("one"),
-                    term!(,),
-                    Identifier("two"),
-                ),
-                close_angle: term::GreaterThan,
+                open_angle: term!(<),
+                body: (Identifier("one"), term!(,), Identifier("two")),
+                close_angle: term!(>),
             }
     });
 
