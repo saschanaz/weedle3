@@ -217,6 +217,7 @@ mod test {
             Boolean == "boolean",
             Byte == "byte",
             Octet == "octet",
+            Bigint == "bigint",
             Identifier == "name",
         }
     );
