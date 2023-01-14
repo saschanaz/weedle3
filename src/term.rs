@@ -1,14 +1,17 @@
 /*
  * The following will ultimate generate:
  *
- * ```
+ * ```rust
  * enum Keyword<'a> {
- *     OpenParen(&'a str),
- *     CloseParen(&'a str),
+ *     OpenParen(OpenParen),
+ *     CloseParen(CloseParen),
+ *     Or(Or),
+ *     Optional(Optional),
  *     /* ... */
  * }
+ *
  * impl<'a> Keyword<'a> {
- *     pub fn parse(input: &str) -> nom::IResult<&str, &str> {
+ *     pub fn parse_punc(input: &str) -> nom::IResult<&str, &str> {
  *         nom::branch::alt((
  *             nom::combinator::map(
  *                 nom::combinator::recognize(nom::bytes::complete::tag("(")),
@@ -21,8 +24,18 @@
  *             /* ... */
  *         ))(input)
  *     }
+ *     pub fn match_word(input: &str) -> Option<Keyword> {
+ *         match input {
+ *             "or" => Some(Keyword::Or(Or)),
+ *             "optional" => Some(Keyword::Optional(Optional)),
+ *             /* ... */
+ *             _ => None
+ *         }
+ *     }
  * }
  * ```
+ *
+ * Use `cargo-expand` to see the full macro expansion.
  */
 
 #[cfg(test)]
@@ -121,13 +134,6 @@ macro_rules! generate_keywords_enum {
         }
 
         impl Keyword {
-            pub fn match_word(input: &str) -> Option<Keyword> {
-                match input {
-                    $($tok_word => Some(Keyword::$typ_word($typ_word)),)*
-                    _ => None
-                }
-            }
-
             pub fn parse_punc(input: &str) -> nom::IResult<&str, Keyword> {
                 alt!(
                     $(nom::combinator::map(
@@ -135,6 +141,13 @@ macro_rules! generate_keywords_enum {
                         |_| Keyword::$typ_punc($typ_punc)
                     ),)*
                 )(input)
+            }
+
+            pub fn match_word(input: &str) -> Option<Keyword> {
+                match input {
+                    $($tok_word => Some(Keyword::$typ_word($typ_word)),)*
+                    _ => None,
+                }
             }
         }
 
