@@ -424,11 +424,11 @@ macro_rules! term {
     (any) => {
         $crate::term::Any
     };
-    (boolean) => {
-        $crate::term::Boolean
-    };
     (bigint) => {
         $crate::term::Bigint
+    };
+    (boolean) => {
+        $crate::term::Boolean
     };
     (byte) => {
         $crate::term::Byte
