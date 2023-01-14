@@ -20,8 +20,8 @@ macro_rules! try_eat_arg {
     };
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for ArgumentName<'a> {
-    fn parse(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
+impl<'a> Parse<'a> for ArgumentName<'a> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
             return Ok((tokens, ArgumentName(result.0)));
         }
@@ -76,8 +76,8 @@ pub struct SingleArgument<'a> {
     pub default: Option<Default<'a>>,
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for SingleArgument<'a> {
-    fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
+impl<'a> Parse<'a> for SingleArgument<'a> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
         let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),

@@ -70,8 +70,8 @@ fn generate_tuple_struct(
         .collect::<Result<Vec<_>>>()?;
 
     let result = quote! {
-        impl<'slice, 'a> crate::Parse<'slice, 'a> for #id #generics {
-            fn parse(input: crate::parser::Tokens<'slice, 'a>) -> crate::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
+        impl<'a> crate::Parse<'a> for #id #generics {
+            fn parse_tokens<'slice>(input: crate::parser::Tokens<'slice, 'a>) -> crate::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
                 use nom::lib::std::result::Result::Ok;
                 let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
                     #(#field_parsers,)*
@@ -114,8 +114,8 @@ fn generate_named_struct(
     let type_param_ids = generics.type_params().map(|p| &p.ident).collect::<Vec<_>>();
 
     let result = quote! {
-        impl<'a,'slice,#(#type_param_ids),*> crate::Parse<'slice, 'a> for #id #generics #impl_bound {
-            fn parse(input: crate::parser::Tokens<'slice, 'a>) -> crate::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
+        impl<'a,#(#type_param_ids),*> crate::Parse<'a> for #id #generics #impl_bound {
+            fn parse_tokens<'slice>(input: crate::parser::Tokens<'slice, 'a>) -> crate::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
                 use nom::lib::std::result::Result::Ok;
                 #(#field_parsers)*
 
@@ -162,8 +162,8 @@ fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Resul
     });
 
     let result = quote! {
-        impl<'slice, 'a> crate::Parse<'slice, 'a> for #id #generics {
-            fn parse(input: crate::parser::Tokens<'slice, 'a>) -> crate::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
+        impl<'a> crate::Parse<'a> for #id #generics {
+            fn parse_tokens<'slice>(input: crate::parser::Tokens<'slice, 'a>) -> crate::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
                 use nom::Parser;
                 alt!(
                     #(#field_parsers,)*

@@ -82,7 +82,7 @@ pub struct ObservableArrayType<'a> {
 ///
 /// `??` means an actual ? not an optional requirement
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct MayBeNull<T> {
     pub type_: T,
     pub q_mark: Option<term::QMark>,
@@ -365,7 +365,8 @@ mod test {
 
         let input = "([Clamp] byte or [Named] byte)";
         let tokens = crate::lexer::lex(input).unwrap();
-        let (rem, parsed) = UnionMemberType::parse(crate::parser::Tokens(&tokens[..])).unwrap();
+        let (rem, parsed) =
+            UnionMemberType::parse_tokens(crate::parser::Tokens(&tokens[..])).unwrap();
         assert_eq!(unsafe { rem.remaining(input) }, "");
         match parsed {
             UnionMemberType::Union(MayBeNull {

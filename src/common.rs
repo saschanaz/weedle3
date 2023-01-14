@@ -15,32 +15,34 @@ where
     Ok((i, S::default()))
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Option<T> {
+impl<'a, T: Parse<'a>> Parse<'a> for Option<T> {
     parser!(nom::combinator::opt(weedle!(T)));
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Box<T> {
+impl<'a, T: Parse<'a>> Parse<'a> for Box<T> {
     parser!(nom::combinator::map(weedle!(T), Box::new));
 }
 
 /// Parses `item1 item2 item3...`
-impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Vec<T> {
-    parser!(nom::multi::many0(T::parse));
+impl<'a, T: Parse<'a>> Parse<'a> for Vec<T> {
+    parser!(nom::multi::many0(T::parse_tokens));
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>> Parse<'slice, 'a> for (T, U) {
-    parser!(nom::sequence::tuple((T::parse, U::parse)));
+impl<'a, T: Parse<'a>, U: Parse<'a>> Parse<'a> for (T, U) {
+    parser!(nom::sequence::tuple((T::parse_tokens, U::parse_tokens)));
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>, V: Parse<'slice, 'a>> Parse<'slice, 'a>
-    for (T, U, V)
-{
-    parser!(nom::sequence::tuple((T::parse, U::parse, V::parse)));
+impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
+    parser!(nom::sequence::tuple((
+        T::parse_tokens,
+        U::parse_tokens,
+        V::parse_tokens
+    )));
 }
 
 /// Parses `( body )`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Parenthesized<T> {
     pub open_paren: term::OpenParen,
     pub body: T,
@@ -49,7 +51,7 @@ pub struct Parenthesized<T> {
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<T> {
     pub open_bracket: term::OpenBracket,
     pub body: T,
@@ -58,7 +60,7 @@ pub struct Bracketed<T> {
 
 /// Parses `{ body }`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Braced<T> {
     pub open_brace: term::OpenBrace,
     pub body: T,
@@ -67,7 +69,7 @@ pub struct Braced<T> {
 
 /// Parses `< body >`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Generics<T> {
     pub open_angle: term::LessThan,
     pub body: T,
@@ -81,12 +83,12 @@ pub struct Punctuated<T, S> {
     pub separator: S,
 }
 
-impl<'slice, 'a, T, S> Parse<'slice, 'a> for Punctuated<T, S>
+impl<'a, T, S> Parse<'a> for Punctuated<T, S>
 where
-    T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a> + ::std::default::Default,
+    T: Parse<'a>,
+    S: Parse<'a> + ::std::default::Default,
 {
-    fn parse(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::multi::separated_list0(weedle!(S), weedle!(T)),
             marker,
@@ -102,12 +104,12 @@ pub struct PunctuatedNonEmpty<T, S> {
     pub separator: S,
 }
 
-impl<'slice, 'a, T, S> Parse<'slice, 'a> for PunctuatedNonEmpty<T, S>
+impl<'a, T, S> Parse<'a> for PunctuatedNonEmpty<T, S>
 where
-    T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a> + ::std::default::Default,
+    T: Parse<'a>,
+    S: Parse<'a> + ::std::default::Default,
 {
-    fn parse(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(
             nom::multi::separated_list1(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S)),
@@ -144,7 +146,7 @@ impl<'a> Identifier<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for Identifier<'a> {
+impl<'a> Parse<'a> for Identifier<'a> {
     parser!(crate::eat!(Id));
 }
 

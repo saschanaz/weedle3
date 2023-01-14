@@ -40,8 +40,8 @@ macro_rules! try_eat_attr {
     };
 }
 
-impl<'slice, 'a> crate::Parse<'slice, 'a> for AttributeName<'a> {
-    fn parse(
+impl<'a> crate::Parse<'a> for AttributeName<'a> {
+    fn parse_tokens<'slice>(
         input: crate::parser::Tokens<'slice, 'a>,
     ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
@@ -57,8 +57,8 @@ impl<'slice, 'a> crate::Parse<'slice, 'a> for AttributeName<'a> {
     }
 }
 
-impl<'slice, 'a> AttributeName<'a> {
-    fn parse_to_id(
+impl<'a> AttributeName<'a> {
+    fn parse_to_id<'slice>(
         input: crate::parser::Tokens<'slice, 'a>,
     ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Identifier<'a>> {
         let (input, name) = weedle!(AttributeName)(input)?;
@@ -101,8 +101,8 @@ macro_rules! try_eat_op {
     };
 }
 
-impl<'slice, 'a> crate::Parse<'slice, 'a> for OperationName<'a> {
-    fn parse(
+impl<'a> crate::Parse<'a> for OperationName<'a> {
+    fn parse_tokens<'slice>(
         input: crate::parser::Tokens<'slice, 'a>,
     ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Id)(input) {
@@ -117,8 +117,8 @@ impl<'slice, 'a> crate::Parse<'slice, 'a> for OperationName<'a> {
     }
 }
 
-impl<'slice, 'a> OperationName<'a> {
-    fn parse_to_id_opt(
+impl<'a> OperationName<'a> {
+    fn parse_to_id_opt<'slice>(
         input: crate::parser::Tokens<'slice, 'a>,
     ) -> nom::IResult<crate::parser::Tokens<'slice, 'a>, Option<Identifier<'a>>> {
         let (input, name) = weedle!(Option<OperationName>)(input)?;

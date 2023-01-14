@@ -97,7 +97,7 @@ macro_rules! generate_keyword_struct {
             }
         }
 
-        impl<'slice, 'a> $crate::Parse<'slice, 'a> for $typ {
+        impl<'a> $crate::Parse<'a> for $typ {
             parser!($crate::eat_key!($typ));
         }
     };

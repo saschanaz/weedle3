@@ -75,9 +75,9 @@ use crate::parser::Tokens;
 pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
 
-    let (unread, (defs, _eof)) = nom::sequence::tuple((Definitions::parse, eat!(Eof)))(Tokens(
-        &tokens[..],
-    ))
+    let (unread, (defs, _eof)) = nom::sequence::tuple((Definitions::parse_tokens, eat!(Eof)))(
+        Tokens(&tokens[..]),
+    )
     .map_err(|err| match err {
         nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
         nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
@@ -96,8 +96,27 @@ pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Err
     Ok(defs)
 }
 
-pub trait Parse<'slice, 'token>: Sized {
-    fn parse(input: Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, Self>;
+pub trait Parse<'token>: Sized {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'token>)
+        -> IResult<Tokens<'slice, 'token>, Self>;
+
+    fn parse(input: &'token str) -> IResult<&'token str, Self> {
+        let tokens = lex(input)?;
+
+        let (unread, def) = Self::parse_tokens(Tokens(&tokens[..])).map_err(|err| match err {
+            nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
+            nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
+                code: err.code,
+                input: unsafe { err.input.0[0].remaining(input) },
+            }),
+            nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
+                code: err.code,
+                input: unsafe { err.input.0[0].remaining(input) },
+            }),
+        })?;
+
+        Ok((unsafe { unread.0[0].remaining(input) }, def))
+    }
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.

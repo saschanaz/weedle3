@@ -73,7 +73,7 @@ impl<'a> IntegerLit<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for IntegerLit<'a> {
+impl<'a> Parse<'a> for IntegerLit<'a> {
     parser!(crate::eat!(Int));
 }
 
@@ -96,7 +96,7 @@ impl<'a> StringLit<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for StringLit<'a> {
+impl<'a> Parse<'a> for StringLit<'a> {
     parser!(crate::eat!(Str));
 }
 
@@ -139,7 +139,7 @@ pub enum ConstValue<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct BooleanLit(bool);
 
-impl<'slice, 'a> Parse<'slice, 'a> for BooleanLit {
+impl<'a> Parse<'a> for BooleanLit {
     parser!(nom::combinator::map(
         nom::branch::alt((
             nom::combinator::value(true, weedle!(term!(true))),
@@ -200,7 +200,7 @@ impl<'a> FloatValueLit<'a> {
     }
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for FloatValueLit<'a> {
+impl<'a> Parse<'a> for FloatValueLit<'a> {
     parser!(crate::eat!(Dec));
 }
 
