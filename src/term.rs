@@ -1,51 +1,51 @@
+#[cfg(test)]
 macro_rules! generate_tests {
     ($typ:ident, $tok:expr) => {
-        paste::paste! {
-            #[cfg(test)]
-            mod [<test_ $typ:lower>] {
-                use super::$typ;
-                use crate::Parse;
+        #[allow(non_snake_case)]
+        #[cfg(test)]
+        mod $typ {
+            use super::super::$typ;
+            use crate::Parse;
 
-                #[test]
-                fn should_parse() {
-                    let (rem, parsed) = $typ::parse(concat!($tok)).unwrap();
-                    assert_eq!(rem, "");
-                    assert_eq!(parsed, $typ);
-                }
+            #[test]
+            fn should_parse() {
+                let (rem, parsed) = $typ::parse(concat!($tok)).unwrap();
+                assert_eq!(rem, "");
+                assert_eq!(parsed, $typ);
+            }
 
-                #[test]
-                fn should_parse_with_preceding_spaces() {
-                    let (rem, parsed) = $typ::parse(concat!("  ", $tok)).unwrap();
-                    assert_eq!(rem, "");
-                    assert_eq!(parsed, $typ);
-                }
+            #[test]
+            fn should_parse_with_preceding_spaces() {
+                let (rem, parsed) = $typ::parse(concat!("  ", $tok)).unwrap();
+                assert_eq!(rem, "");
+                assert_eq!(parsed, $typ);
+            }
 
-                #[test]
-                fn should_parse_with_succeeding_spaces() {
-                    let (rem, parsed) = $typ::parse(concat!($tok, "  ")).unwrap();
-                    assert_eq!(rem, "");
-                    assert_eq!(parsed, $typ);
-                }
+            #[test]
+            fn should_parse_with_succeeding_spaces() {
+                let (rem, parsed) = $typ::parse(concat!($tok, "  ")).unwrap();
+                assert_eq!(rem, "");
+                assert_eq!(parsed, $typ);
+            }
 
-                #[test]
-                fn should_parse_with_surrounding_spaces() {
-                    let (rem, parsed) = $typ::parse(concat!("  ", $tok, "  ")).unwrap();
-                    assert_eq!(rem, "");
-                    assert_eq!(parsed, $typ);
-                }
+            #[test]
+            fn should_parse_with_surrounding_spaces() {
+                let (rem, parsed) = $typ::parse(concat!("  ", $tok, "  ")).unwrap();
+                assert_eq!(rem, "");
+                assert_eq!(parsed, $typ);
+            }
 
-                #[test]
-                fn should_parse_if_anything_next() {
-                    let (rem, parsed) = $typ::parse(concat!($tok, "  anything")).unwrap();
-                    assert_eq!(rem, "anything");
-                    assert_eq!(parsed, $typ);
-                }
+            #[test]
+            fn should_parse_if_anything_next() {
+                let (rem, parsed) = $typ::parse(concat!($tok, "  anything")).unwrap();
+                assert_eq!(rem, "anything");
+                assert_eq!(parsed, $typ);
             }
         }
     };
 }
 
-macro_rules! generate_terms {
+macro_rules! generate_terms_for_punctuations {
     ($( $(#[$attr:meta])* $typ:ident => $tok:expr, )*) => {
         $(
             $(#[$attr])*
@@ -60,8 +60,6 @@ macro_rules! generate_terms {
                     )
                 ));
             }
-
-            generate_tests!($typ, $tok);
         )*
     };
 }
@@ -101,10 +99,21 @@ macro_rules! generate_terms_for_names {
                     $crate::whitespace::ws($crate::term::ident_tag($tok))
                 ));
             }
-
-            generate_tests!($typ, $tok);
         )*
     };
+}
+
+macro_rules! generate_terms {
+    ($( $(#[$attr:meta])* $typ_punc:ident => $tok_punc:expr, )* === $( $typ_word:ident => $tok_word:expr,)* ) => {
+        generate_terms_for_punctuations!($( $typ_punc => $tok_punc, )*);
+        generate_terms_for_names!($( $typ_word => $tok_word, )*);
+
+        #[cfg(test)]
+        mod test {
+            $( generate_tests!($typ_punc, $tok_punc); )*
+            $( generate_tests!($typ_word, $tok_word); )*
+        }
+    }
 }
 
 generate_terms! {
@@ -158,9 +167,9 @@ generate_terms! {
 
     /// Represents the terminal symbol `*`
     Wildcard => "*",
-}
 
-generate_terms_for_names! {
+    ===
+
     Or => "or",
     Optional => "optional",
     Async => "async",
