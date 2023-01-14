@@ -25,6 +25,53 @@
  * ```
  */
 
+#[cfg(test)]
+macro_rules! generate_tests {
+    ($typ:ident, $tok:expr) => {
+        #[allow(non_snake_case)]
+        #[cfg(test)]
+        mod $typ {
+            use super::super::{Keyword, $typ};
+            use $crate::lexer::{lex, Tag, Token};
+
+            #[test]
+            fn should_parse() {
+                let tokens = lex($tok).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+            }
+
+            #[test]
+            fn should_parse_with_preceding_spaces() {
+                let tokens = lex(concat!("  ", $tok)).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+            }
+
+            #[test]
+            fn should_parse_with_succeeding_spaces() {
+                let tokens = lex(concat!($tok, "  ")).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+            }
+
+            #[test]
+            fn should_parse_with_surrounding_spaces() {
+                let tokens = lex(concat!("  ", $tok, "  ")).unwrap();
+                assert_eq!(tokens.len(), 2);
+                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+            }
+
+            #[test]
+            fn should_parse_if_anything_next() {
+                let tokens = lex(concat!($tok, "  anything")).unwrap();
+                assert_eq!(tokens.len(), 3);
+                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+            }
+        }
+    };
+}
+
 macro_rules! generate_keyword_struct {
     ($typ:ident => $tok:expr) => {
         #[doc=$tok]
@@ -78,6 +125,12 @@ macro_rules! generate_keywords_enum {
                     ),)*
                 )(input)
             }
+        }
+
+        #[cfg(test)]
+        mod test {
+            $(generate_tests!($typ_punc, $tok_punc);)*
+            $(generate_tests!($typ_word, $tok_word);)*
         }
     };
 }

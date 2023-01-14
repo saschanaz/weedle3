@@ -77,10 +77,6 @@ fn tag(input: &str) -> NomResult<Tag> {
     ))(input)
 }
 
-pub fn lex_single(input: &str) -> NomResult<Token> {
-    nom::combinator::map(nom::sequence::tuple((sp, tag)), Token::new)(input)
-}
-
 pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
     // A little bit of hack with tuple since many0 is not compatible with eof
     // (It requires consuming at least one character)
