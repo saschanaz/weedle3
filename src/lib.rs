@@ -71,9 +71,11 @@ use tokens::Tokens;
 /// ```
 pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
-    let (unread, (defs, _eof)) =
-        nom::sequence::tuple((Definitions::parse_tokens, eat!(Eof)))(Tokens(&tokens[..]))
-            .map_err(tokens::nom_error_into)?;
+    let (unread, (defs, _eof)) = nom::sequence::tuple((
+        Definitions::parse_tokens,
+        nom::combinator::cut(eat!(Eof)),
+    ))(Tokens(&tokens[..]))
+    .map_err(tokens::nom_error_into)?;
 
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
