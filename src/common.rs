@@ -223,37 +223,43 @@ mod test {
         PunctuatedNonEmpty<Identifier, term!(,)>
     });
 
-    test_match!(should_parse_identifier { "hello" =>
+    test!(should_parse_identifier { "hello" =>
         "";
-        Identifier => Identifier("hello")
+        Identifier;
+        0 == "hello";
     });
 
-    test_match!(should_parse_numbered_identifier { "hello5" =>
+    test!(should_parse_numbered_identifier { "hello5" =>
         "";
-        Identifier => Identifier("hello5")
+        Identifier;
+        0 == "hello5";
     });
 
-    test_match!(should_parse_underscored_identifier { "_hello_" =>
+    test!(should_parse_underscored_identifier { "_hello_" =>
         "";
-        Identifier => Identifier("_hello_")
+        Identifier;
+        0 == "_hello_";
     });
 
-    test_match!(should_parse_hyphened_identifier { "-hello" =>
+    test!(should_parse_hyphened_identifier { "-hello" =>
         "";
-        Identifier => Identifier("-hello")
+        Identifier;
+        0 == "-hello";
     });
 
-    test_result_match!(should_not_parse_identifier_surrounding_with_spaces { "  hello  ";
-        Identifier => Err(nom::Err::Error(_))
+    test!(err should_parse_identifier_surrounding_with_spaces { "  hello  " =>
+        Identifier
     });
 
-    test_match!(should_parse_identifier_preceding_others { "hello  note" =>
+    test!(should_parse_identifier_preceding_others { "hello  note" =>
         "  note";
-        Identifier => Identifier("hello")
+        Identifier;
+        0 == "hello";
     });
 
-    test_match!(should_parse_identifier_attached_to_symbol { "hello=" =>
+    test!(should_parse_identifier_attached_to_symbol { "hello=" =>
         "=";
-        Identifier => Identifier("hello")
+        Identifier;
+        0 == "hello";
     });
 }

@@ -94,31 +94,6 @@ macro_rules! try_eat_keys {
 }
 
 #[cfg(test)]
-macro_rules! test_match {
-    ($name:ident { $input:literal => $rem:expr; $typ:ty => $match:pat_param $(if $guard:expr)? }) => {
-        #[test]
-        fn $name() {
-            let (unread, result) = <$typ>::parse($input).unwrap();
-
-            assert_eq!(unread, $rem);
-            assert!(matches!(result, $match $(if $guard )?));
-        }
-    };
-}
-
-#[cfg(test)]
-macro_rules! test_result_match {
-    ($name:ident { $input:literal; $typ:ty => $match:pat_param }) => {
-        #[test]
-        fn $name() {
-            let result = <$typ>::parse($input);
-
-            assert!(matches!(result, $match));
-        }
-    };
-}
-
-#[cfg(test)]
 macro_rules! test {
     (@arg $parsed:ident) => {};
     (@arg $parsed:ident $($lhs:tt).+ == $rhs:expr; $($rest:tt)*) => {
