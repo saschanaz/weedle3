@@ -176,6 +176,7 @@ pub enum ConstType<'a> {
     Boolean(MayBeNull<term!(boolean)>),
     Byte(MayBeNull<term!(byte)>),
     Octet(MayBeNull<term!(octet)>),
+    Bigint(MayBeNull<term!(bigint)>),
     Identifier(MayBeNull<Identifier<'a>>),
 }
 
@@ -216,6 +217,7 @@ mod test {
             Boolean == "boolean",
             Byte == "byte",
             Octet == "octet",
+            Bigint == "bigint",
             Identifier == "name",
         }
     );
