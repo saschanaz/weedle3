@@ -40,10 +40,7 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
         }
         try_eat_keys!(AttributeName, input, Async, Required);
 
-        Err(nom::Err::Error(nom::error::Error {
-            input,
-            code: nom::error::ErrorKind::Char,
-        }))
+        nom::combinator::fail(input)
     }
 }
 
@@ -92,10 +89,7 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
         }
         try_eat_keys!(OperationName, input, Includes);
 
-        Err(nom::Err::Error(nom::error::Error {
-            input,
-            code: nom::error::ErrorKind::Char,
-        }))
+        nom::combinator::fail(input)
     }
 }
 

@@ -57,10 +57,7 @@ macro_rules! eat {
                         tag: $crate::lexer::Tag::$variant(variant),
                         trivia: _,
                     }) => Ok((input.slice(1..), variant)),
-                    _ => Err(nom::Err::Error(nom::error::Error {
-                        input,
-                        code: nom::error::ErrorKind::Char,
-                    })),
+                    _ => nom::combinator::fail(input),
                 }
             },
         )
@@ -79,10 +76,7 @@ macro_rules! eat_key {
                         tag: Tag::Kw(Keyword::$variant(variant)),
                         trivia: _,
                     }) => Ok((input.slice(1..), variant)),
-                    _ => Err(nom::Err::Error(nom::error::Error {
-                        input,
-                        code: nom::error::ErrorKind::Char,
-                    })),
+                    _ => nom::combinator::fail(input),
                 }
             },
         )

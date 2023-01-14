@@ -47,10 +47,7 @@ impl<'a> Parse<'a> for ArgumentName<'a> {
             Unrestricted
         );
 
-        Err(nom::Err::Error(nom::error::Error {
-            input,
-            code: nom::error::ErrorKind::Char,
-        }))
+        nom::combinator::fail(input)
     }
 }
 
