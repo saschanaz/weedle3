@@ -121,6 +121,19 @@ pub trait Parse<'token>: Sized {
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.
 ///
+/// ### Example
+/// ```
+/// use weedle::{Definitions, Parse};
+///
+/// let (_, parsed) = Definitions::parse("
+///     interface Window {
+///         readonly attribute Storage sessionStorage;
+///     };
+/// ").unwrap();
+///
+/// println!("{:?}", parsed);
+/// ```
+///
 /// It is recommended to use [`parse`](fn.parse.html) instead.
 pub type Definitions<'a> = Vec<Definition<'a>>;
 
