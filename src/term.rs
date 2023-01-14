@@ -31,42 +31,42 @@ macro_rules! generate_tests {
         #[allow(non_snake_case)]
         #[cfg(test)]
         mod $typ {
-            use super::super::{Keyword, $typ};
-            use $crate::lexer::{lex, Tag, Token};
+            use super::super::{$typ, Keyword};
+            use $crate::lexer::{lex, Tag};
 
             #[test]
             fn should_parse() {
                 let tokens = lex($tok).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_preceding_spaces() {
                 let tokens = lex(concat!("  ", $tok)).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_succeeding_spaces() {
                 let tokens = lex(concat!($tok, "  ")).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_with_surrounding_spaces() {
                 let tokens = lex(concat!("  ", $tok, "  ")).unwrap();
                 assert_eq!(tokens.len(), 2);
-                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
             }
 
             #[test]
             fn should_parse_if_anything_next() {
                 let tokens = lex(concat!($tok, "  anything")).unwrap();
                 assert_eq!(tokens.len(), 3);
-                assert!(matches!(tokens[0], Token { tag: Tag::Kw(Keyword::$typ($typ)), .. }));
+                assert_eq!(tokens[0].tag, Tag::Kw(Keyword::$typ($typ)));
             }
         }
     };
