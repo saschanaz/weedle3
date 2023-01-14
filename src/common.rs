@@ -110,17 +110,14 @@ where
     S: Parse<'a> + ::std::default::Default,
 {
     fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
-        let (input, list) = nom::sequence::terminated(
-            nom::multi::separated_list1(weedle!(S), weedle!(T)),
-            nom::combinator::opt(weedle!(S)),
-        )(input)?;
-        Ok((
-            input,
-            Self {
-                list,
-                separator: S::default(),
-            },
-        ))
+        let (input, (list, separator)) = nom::sequence::tuple((
+            nom::sequence::terminated(
+                nom::multi::separated_list1(weedle!(S), weedle!(T)),
+                nom::combinator::opt(weedle!(S)),
+            ),
+            marker,
+        ))(input)?;
+        Ok((input, Self { list, separator }))
     }
 }
 
