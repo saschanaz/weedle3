@@ -156,6 +156,13 @@ mod test {
     use super::*;
     use crate::Parse;
 
+    test!(should_parse_const_member { "const long name = 5;" =>
+        "";
+        ConstMember;
+        attributes.is_none();
+        identifier.0 == "name";
+    });
+
     test!(should_parse_modifier { "static" =>
         "";
         Modifier;
@@ -164,6 +171,14 @@ mod test {
     test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
         "";
         StringifierOrInheritOrStatic;
+    });
+
+    test!(should_parse_attribute_interface_member { "static attribute unsigned long width;" =>
+        "";
+        AttributeInterfaceMember;
+        attributes.is_none();
+        modifier == Some(StringifierOrInheritOrStatic::Static(term!(static)));
+        identifier.0 == "width";
     });
 
     test!(should_parse_attribute_mixin_member { "stringifier readonly attribute short name;" =>
@@ -187,5 +202,13 @@ mod test {
         RegularOperationMember;
         attributes.is_none();
         identifier.is_none();
+    });
+
+    test!(should_parse_operation_interface_member { "undefined readString(long a, long b);" =>
+        "";
+        OperationInterfaceMember;
+        attributes.is_none();
+        modifier.is_none();
+        identifier.is_some();
     });
 }

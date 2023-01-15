@@ -154,14 +154,6 @@ mod test {
         readonly == Some(term!(readonly));
     });
 
-    test!(should_parse_attribute_interface_member { "readonly attribute unsigned long width;" =>
-        "";
-        AttributeInterfaceMember;
-        attributes.is_none();
-        readonly == Some(term!(readonly));
-        identifier.0 == "width";
-    });
-
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>
         "";
         DoubleTypedIterable;
@@ -206,20 +198,5 @@ mod test {
         "";
         ConstructorInterfaceMember;
         attributes.is_none();
-    });
-
-    test!(should_parse_operation_interface_member { "undefined readString(long a, long b);" =>
-        "";
-        OperationInterfaceMember;
-        attributes.is_none();
-        modifier.is_none();
-        identifier.is_some();
-    });
-
-    test!(should_parse_const_member { "const long name = 5;" =>
-        "";
-        ConstMember;
-        attributes.is_none();
-        identifier.0 == "name";
     });
 }
