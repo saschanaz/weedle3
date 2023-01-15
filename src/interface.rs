@@ -60,9 +60,11 @@ pub struct AttributeInterfaceMember<'a> {
     pub modifier: Option<StringifierOrInheritOrStatic>,
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
+    #[weedle(cut)]
     pub type_: AttributedType<'a>,
-    #[weedle(parser = "AttributeName::parse_to_id")]
+    #[weedle(cut, parser = "AttributeName::parse_to_id")]
     pub identifier: Identifier<'a>,
+    #[weedle(cut)]
     pub semi_colon: term!(;),
 }
 

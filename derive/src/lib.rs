@@ -15,6 +15,8 @@ struct MacroTopArgs {
 #[darling(attributes(weedle))]
 struct MacroArgs {
     parser: Option<String>,
+    #[darling(default)]
+    cut: bool,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -32,10 +34,13 @@ fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
 fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
     let ty = &field.ty;
-    let parser = match args.parser {
+    let mut parser = match args.parser {
         Some(p) => string_to_tokens::<Path>(p)?,
         _ => quote! { weedle!(#ty) },
     };
+    if args.cut {
+        parser = quote! { nom::combinator::cut(#parser) }
+    }
     Ok(parser)
 }
 
@@ -74,9 +79,10 @@ fn generate_tuple_struct(
             fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self>
             {
                 use nom::lib::std::result::Result::Ok;
-                let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
-                    #(#field_parsers,)*
-                ))(input)?;
+                let (input, (#(#field_ids,)*)) = nom::error::context(
+                    stringify!(#id),
+                    nom::sequence::tuple((#(#field_parsers,)*))
+                )(input)?;
 
                 Ok((input, Self(#(#field_ids,)*)))
             }
@@ -105,11 +111,7 @@ fn generate_named_struct(
     let field_parsers = data_struct
         .fields
         .iter()
-        .map(|field| -> Result<proc_macro2::TokenStream> {
-            let id = field.ident.as_ref().expect("How did we get unnamed field?");
-            let parser = get_parser_from_field(field)?;
-            Ok(quote! { let (input, #id) = #parser(input)?; })
-        })
+        .map(get_parser_from_field)
         .collect::<Result<Vec<_>>>()?;
 
     let type_param_ids = generics.type_params().map(|p| &p.ident).collect::<Vec<_>>();
@@ -119,7 +121,10 @@ fn generate_named_struct(
             fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self>
             {
                 use nom::lib::std::result::Result::Ok;
-                #(#field_parsers)*
+                let (input, (#(#field_ids),*)) = nom::error::context(
+                    stringify!(#id),
+                    nom::sequence::tuple((#(#field_parsers,)*))
+                )(input)?;
 
                 Ok((input, Self {
                     #(#field_ids),*

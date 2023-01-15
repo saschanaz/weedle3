@@ -128,6 +128,7 @@ pub struct CallbackDefinition<'a> {
     pub assign: term!(=),
     pub return_type: Type<'a>,
     pub arguments: Parenthesized<ArgumentList<'a>>,
+    #[weedle(cut)]
     pub semi_colon: term!(;),
 }
 
