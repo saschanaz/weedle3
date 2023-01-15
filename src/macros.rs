@@ -2,7 +2,7 @@ macro_rules! parser {
     ($parse:expr) => {
         fn parse_tokens<'slice>(
             input: $crate::tokens::Tokens<'slice, 'a>,
-        ) -> crate::WeedleResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
+        ) -> $crate::WeedleResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
             $parse(input)
         }
     };
