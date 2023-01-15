@@ -21,17 +21,6 @@ pub struct ConstMember<'a> {
     pub semi_colon: term!(;),
 }
 
-/// Parses `[attributes]? constructor(( args ));`
-///
-/// (( )) means ( ) chars
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ConstructorInterfaceMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub constructor: term!(constructor),
-    pub args: Parenthesized<ArgumentList<'a>>,
-    pub semi_colon: term!(;),
-}
-
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 struct AttributeName<'a>(&'a str);
 

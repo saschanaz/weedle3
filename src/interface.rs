@@ -4,8 +4,7 @@ use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
 use crate::members::{
-    AttributeInterfaceMember, ConstMember, ConstructorInterfaceMember, OperationInterfaceMember,
-    RegularOperationMember,
+    AttributeInterfaceMember, ConstMember, OperationInterfaceMember, RegularOperationMember,
 };
 use crate::types::AttributedType;
 
@@ -18,6 +17,17 @@ pub type CallbackInterfaceMembers<'a> = Vec<CallbackInterfaceMember<'a>>;
 pub struct Inheritance<'a> {
     pub colon: term!(:),
     pub identifier: Identifier<'a>,
+}
+
+/// Parses `[attributes]? constructor(( args ));`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ConstructorInterfaceMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub constructor: term!(constructor),
+    pub args: Parenthesized<ArgumentList<'a>>,
+    pub semi_colon: term!(;),
 }
 
 /// Parses an iterable declaration `[attributes]? iterable<attributedtype>;`
