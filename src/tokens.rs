@@ -121,17 +121,14 @@ impl<'slice, 'token> InputIter for Tokens<'slice, 'token> {
 
 // This exists because nom::error::Error doesn't have a From/Into implementation and nom::combinator::into requires it.
 pub fn nom_error_into<T, U: From<T>>(
-    err: nom::Err<nom::error::Error<T>>,
-) -> nom::Err<nom::error::Error<U>> {
+    err: nom::Err<nom::error::VerboseError<T>>,
+) -> nom::Err<nom::error::VerboseError<U>> {
     match err {
         nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
-        nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
-            code: err.code,
-            input: err.input.into(),
-        }),
-        nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
-            code: err.code,
-            input: err.input.into(),
-        }),
+        nom::Err::Error(err) | nom::Err::Failure(err) => {
+            nom::Err::Error(nom::error::VerboseError {
+                errors: err.errors.into_iter().map(|(i, e)| (i.into(), e)).collect(),
+            })
+        }
     }
 }

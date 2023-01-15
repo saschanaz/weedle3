@@ -1,6 +1,4 @@
-use nom::IResult;
-
-pub(crate) fn sp(input: &str) -> IResult<&str, &str> {
+pub(crate) fn sp(input: &str) -> crate::VerboseResult<&str, &str> {
     nom::combinator::recognize(nom::multi::many0(nom::branch::alt((
         // ignores line comments
         nom::combinator::value(

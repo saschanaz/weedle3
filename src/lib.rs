@@ -30,7 +30,6 @@ use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, Type};
-pub use nom::{error::Error, Err, IResult};
 use weedle_derive::Weedle;
 
 #[macro_use]
@@ -54,6 +53,8 @@ mod tokens;
 use lexer::lex;
 use tokens::Tokens;
 
+type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
+
 /// A convenient parse function
 ///
 /// ### Example
@@ -69,7 +70,9 @@ use tokens::Tokens;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
+pub fn parse(
+    input: &'_ str,
+) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
     let tokens = lex(input)?;
     let (unread, (defs, _eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
@@ -84,10 +87,11 @@ pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Err
 }
 
 pub trait Parse<'token>: Sized {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'token>)
-        -> IResult<Tokens<'slice, 'token>, Self>;
+    fn parse_tokens<'slice>(
+        input: Tokens<'slice, 'token>,
+    ) -> VerboseResult<Tokens<'slice, 'token>, Self>;
 
-    fn parse(input: &'token str) -> IResult<&'token str, Self> {
+    fn parse(input: &'token str) -> VerboseResult<&'token str, Self> {
         let (input, _) = whitespace::sp(input)?;
         let tokens = lex(input)?;
         let (unread, def) =
