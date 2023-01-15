@@ -1,6 +1,12 @@
-use nom::IResult;
+use nom::{
+    error::{ContextError, ParseError},
+    IResult,
+};
 
-pub(crate) fn sp(input: &str) -> IResult<&str, &str> {
+pub(crate) fn sp<'a, E>(input: &'a str) -> IResult<&'a str, &'a str, E>
+where
+    E: ParseError<&'a str> + ContextError<&'a str>,
+{
     nom::combinator::recognize(nom::multi::many0(nom::branch::alt((
         // ignores line comments
         nom::combinator::value(

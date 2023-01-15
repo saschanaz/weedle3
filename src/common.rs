@@ -8,9 +8,11 @@ pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
 }
 
-fn marker<'slice, 'a, S>(i: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, S>
+fn marker<'slice, 'a, S, E>(i: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, S, E>
 where
     S: ::std::default::Default,
+    E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
+        + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
 {
     Ok((i, S::default()))
 }
@@ -88,7 +90,11 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice, E>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self, E>
+    where
+        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
+            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+    {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::multi::separated_list0(weedle!(S), weedle!(T)),
             marker,
@@ -109,7 +115,11 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice, E>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self, E>
+    where
+        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
+            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+    {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::sequence::terminated(
                 nom::multi::separated_list1(weedle!(S), weedle!(T)),

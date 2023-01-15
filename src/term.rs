@@ -149,7 +149,10 @@ macro_rules! generate_keywords_enum {
         }
 
         impl Keyword {
-            pub fn parse_punc(input: &str) -> nom::IResult<&str, Keyword> {
+            pub fn parse_punc<'a, E>(input: &'a str) -> nom::IResult<&'a str, Keyword, E>
+            where
+                E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
+            {
                 alt!(
                     $(nom::combinator::map(
                         nom::combinator::recognize(nom::bytes::complete::tag($tok_punc)),

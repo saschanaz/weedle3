@@ -13,7 +13,13 @@ pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 struct ArgumentName<'a>(&'a str);
 
 impl<'a> Parse<'a> for ArgumentName<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> nom::IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice, E>(
+        input: Tokens<'slice, 'a>,
+    ) -> nom::IResult<Tokens<'slice, 'a>, Self, E>
+    where
+        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
+            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+    {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, ArgumentName(result.0)));
         }
@@ -69,7 +75,13 @@ pub struct SingleArgument<'a> {
 }
 
 impl<'a> Parse<'a> for SingleArgument<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice, E>(
+        input: Tokens<'slice, 'a>,
+    ) -> crate::IResult<Tokens<'slice, 'a>, Self, E>
+    where
+        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
+            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+    {
         let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),

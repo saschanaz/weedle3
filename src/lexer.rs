@@ -5,7 +5,7 @@ use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::term::Keyword;
 use crate::whitespace::sp;
 
-pub type NomResult<'a, O> = IResult<&'a str, O>;
+pub type NomResult<'a, O, E> = IResult<&'a str, O, E>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Terminal<'a> {
@@ -31,11 +31,17 @@ impl Token<'_> {
     }
 }
 
-fn other(input: &str) -> NomResult<char> {
+fn other<'a, E>(input: &'a str) -> NomResult<char, E>
+where
+    E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
+{
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-fn id_or_keyword(input: &str) -> NomResult<Terminal> {
+fn id_or_keyword<'a, E>(input: &'a str) -> NomResult<Terminal, E>
+where
+    E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
+{
     let (input, id) = Identifier::lex(input)?;
     match Keyword::match_word(id.0) {
         Some(keyword) => Ok((input, Terminal::Keyword(keyword))),
@@ -43,7 +49,10 @@ fn id_or_keyword(input: &str) -> NomResult<Terminal> {
     }
 }
 
-fn tag(input: &str) -> NomResult<Terminal> {
+fn tag<'a, E>(input: &'a str) -> NomResult<Terminal, E>
+where
+    E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
+{
     nom::branch::alt((
         FloatValueLit::lex.map(Terminal::Decimal),
         IntegerLit::lex.map(Terminal::Integer),
@@ -54,7 +63,7 @@ fn tag(input: &str) -> NomResult<Terminal> {
     ))(input)
 }
 
-pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
+pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::VerboseError<&str>>> {
     let (unread, (mut tokens, eof)) = tuple((
         many0(tuple((sp, tag)).map(Token::new)),
         tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {
