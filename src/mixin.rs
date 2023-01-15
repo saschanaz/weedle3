@@ -15,7 +15,6 @@ pub type MixinMembers<'a> = Vec<MixinMember<'a>>;
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationMixinMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub stringifier: Option<term!(stringifier)>,
     pub return_type: Type<'a>,
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
@@ -61,7 +60,6 @@ mod test {
         "";
         OperationMixinMember;
         attributes.is_none();
-        stringifier.is_none();
         identifier.is_some();
     });
 }

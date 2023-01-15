@@ -107,8 +107,7 @@ impl<'a> OperationName<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub modifier: Option<StringifierOrStatic>,
-    pub special: Option<Special>,
+    pub modifier: Option<Modifier>,
     pub return_type: Type<'a>,
     #[weedle(parser = "OperationName::parse_to_id_opt")]
     pub identifier: Option<Identifier<'a>>,
@@ -209,12 +208,13 @@ pub enum InterfaceMember<'a> {
     Stringifier(StringifierMember<'a>),
 }
 
-/// Parses one of the special keyword `getter|setter|deleter`
+/// Parses one of the special keyword `getter|setter|deleter` or `static`.
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Special {
+pub enum Modifier {
     Getter(term!(getter)),
     Setter(term!(setter)),
     Deleter(term!(deleter)),
+    Static(term!(static)),
 }
 
 /// Parses `stringifier|inherit|static`
@@ -222,13 +222,6 @@ pub enum Special {
 pub enum StringifierOrInheritOrStatic {
     Stringifier(term!(stringifier)),
     Inherit(term!(inherit)),
-    Static(term!(static)),
-}
-
-/// Parses `stringifier|static`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum StringifierOrStatic {
-    Stringifier(term!(stringifier)),
     Static(term!(static)),
 }
 
@@ -242,9 +235,9 @@ mod test {
         StringifierMember;
     });
 
-    test!(should_parse_stringifier_or_static { "static" =>
+    test!(should_parse_modifier { "static" =>
         "";
-        StringifierOrStatic;
+        Modifier;
     });
 
     test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
@@ -325,7 +318,6 @@ mod test {
         OperationInterfaceMember;
         attributes.is_none();
         modifier.is_none();
-        special.is_none();
         identifier.is_some();
     });
 
