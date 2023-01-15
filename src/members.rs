@@ -9,18 +9,6 @@ use crate::{
     VerboseResult,
 };
 
-/// Parses a const interface member `[attributes]? const type identifier = value;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ConstMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub const_: term!(const),
-    pub const_type: ConstType<'a>,
-    pub identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub const_value: ConstValue<'a>,
-    pub semi_colon: term!(;),
-}
-
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 struct AttributeName<'a>(&'a str);
 
@@ -151,17 +139,22 @@ pub struct RegularOperationMember<'a> {
     pub semi_colon: term!(;),
 }
 
+/// Parses a const interface member `[attributes]? const type identifier = value;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ConstMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub const_: term!(const),
+    pub const_type: ConstType<'a>,
+    pub identifier: Identifier<'a>,
+    pub assign: term!(=),
+    pub const_value: ConstValue<'a>,
+    pub semi_colon: term!(;),
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
     use crate::Parse;
-
-    test!(should_parse_const_member { "const long name = 5;" =>
-        "";
-        ConstMember;
-        attributes.is_none();
-        identifier.0 == "name";
-    });
 
     test!(should_parse_modifier { "static" =>
         "";
@@ -210,5 +203,12 @@ mod test {
         attributes.is_none();
         modifier.is_none();
         identifier.is_some();
+    });
+
+    test!(should_parse_const_member { "const long name = 5;" =>
+        "";
+        ConstMember;
+        attributes.is_none();
+        identifier.0 == "name";
     });
 }
