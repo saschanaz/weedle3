@@ -5,7 +5,7 @@ use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::term::Keyword;
 use crate::whitespace::sp;
 
-pub type NomResult<'a, O> = crate::WeedleResult<&'a str, O>;
+pub type NomResult<'a, O> = crate::VerboseResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Terminal<'a> {

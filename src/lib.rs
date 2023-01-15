@@ -53,7 +53,7 @@ mod tokens;
 use lexer::lex;
 use tokens::Tokens;
 
-type WeedleResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
+type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
 
 /// A convenient parse function
 ///
@@ -89,9 +89,9 @@ pub fn parse(
 pub trait Parse<'token>: Sized {
     fn parse_tokens<'slice>(
         input: Tokens<'slice, 'token>,
-    ) -> WeedleResult<Tokens<'slice, 'token>, Self>;
+    ) -> VerboseResult<Tokens<'slice, 'token>, Self>;
 
-    fn parse(input: &'token str) -> WeedleResult<&'token str, Self> {
+    fn parse(input: &'token str) -> VerboseResult<&'token str, Self> {
         let (input, _) = whitespace::sp(input)?;
         let tokens = lex(input)?;
         let (unread, def) =

@@ -2,13 +2,13 @@ use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
 use crate::tokens::Tokens;
-use crate::{term, Parse, WeedleResult};
+use crate::{term, Parse, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
 }
 
-fn marker<'slice, 'a, S>(i: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, S>
+fn marker<'slice, 'a, S>(i: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, S>
 where
     S: ::std::default::Default,
 {
@@ -88,7 +88,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::multi::separated_list0(weedle!(S), weedle!(T)),
             marker,
@@ -109,7 +109,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::sequence::terminated(
                 nom::multi::separated_list1(weedle!(S), weedle!(T)),

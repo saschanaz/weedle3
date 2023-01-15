@@ -1,4 +1,4 @@
-pub(crate) fn sp(input: &str) -> crate::WeedleResult<&str, &str> {
+pub(crate) fn sp(input: &str) -> crate::VerboseResult<&str, &str> {
     nom::combinator::recognize(nom::multi::many0(nom::branch::alt((
         // ignores line comments
         nom::combinator::value(

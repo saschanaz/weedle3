@@ -4,7 +4,7 @@ use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
 use crate::tokens::Tokens;
 use crate::types::{AttributedType, Type};
-use crate::{Parse, WeedleResult};
+use crate::{Parse, VerboseResult};
 
 /// Parses a list of argument. Ex: `double v1, double v2, double v3, optional double alpha`
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
@@ -13,7 +13,7 @@ pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 struct ArgumentName<'a>(&'a str);
 
 impl<'a> Parse<'a> for ArgumentName<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, ArgumentName(result.0)));
         }
@@ -69,7 +69,7 @@ pub struct SingleArgument<'a> {
 }
 
 impl<'a> Parse<'a> for SingleArgument<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
             weedle!(Option<ExtendedAttributeList<'a>>),
             weedle!(Option<term!(optional)>),
