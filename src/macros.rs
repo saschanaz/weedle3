@@ -1,12 +1,8 @@
 macro_rules! parser {
     ($parse:expr) => {
-        fn parse_tokens<'slice, E>(
+        fn parse_tokens<'slice>(
             input: $crate::tokens::Tokens<'slice, 'a>,
-        ) -> crate::IResult<$crate::tokens::Tokens<'slice, 'a>, Self, E>
-        where
-            E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-                + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-        {
+        ) -> crate::WeedleResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
             $parse(input)
         }
     };
@@ -14,10 +10,7 @@ macro_rules! parser {
 
 macro_rules! lexer {
     ($lex:expr) => {
-        pub fn lex<E>(input: &'a str) -> $crate::IResult<&'a str, Self, E>
-        where
-            E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
-        {
+        pub fn lex(input: &'a str) -> $crate::WeedleResult<&'a str, Self> {
             $lex(input)
         }
     };
@@ -25,7 +18,7 @@ macro_rules! lexer {
 
 macro_rules! weedle {
     ($t:ty) => {
-        <$t as $crate::Parse<'a>>::parse_tokens::<E>
+        <$t as $crate::Parse<'a>>::parse_tokens
     };
 }
 
@@ -44,13 +37,11 @@ macro_rules! alt {
 
 // XXX: Working around the lambda function limitation about lifetimes
 // https://github.com/rust-lang/rust/issues/58052
-pub fn annotate<'slice, 'token, F, R, E>(f: F) -> F
+pub fn annotate<'slice, 'token, F, R>(f: F) -> F
 where
     F: Fn(
         crate::tokens::Tokens<'slice, 'token>,
-    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'token>, R, E>,
-    E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'token>>
-        + nom::error::ContextError<crate::tokens::Tokens<'slice, 'token>>,
+    ) -> crate::WeedleResult<crate::tokens::Tokens<'slice, 'token>, R>,
     'token: 'slice,
 {
     f
@@ -58,8 +49,8 @@ where
 
 macro_rules! eat {
     ($variant:ident) => {
-        $crate::macros::annotate::<_, _, E>(
-            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _, _> {
+        $crate::macros::annotate(
+            |input: $crate::tokens::Tokens| -> $crate::WeedleResult<$crate::tokens::Tokens, _> {
                 use nom::{InputIter, Slice};
                 match input.iter_elements().next() {
                     Some($crate::lexer::Token {
@@ -75,8 +66,8 @@ macro_rules! eat {
 
 macro_rules! eat_key {
     ($variant:ident) => {
-        $crate::macros::annotate::<_, _, E>(
-            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _, _> {
+        $crate::macros::annotate(
+            |input: $crate::tokens::Tokens| -> $crate::WeedleResult<$crate::tokens::Tokens, _> {
                 use nom::{InputIter, Slice};
                 use $crate::lexer::Terminal;
                 use $crate::term::Keyword;

@@ -71,9 +71,7 @@ fn generate_tuple_struct(
 
     let result = quote! {
         impl<'a> crate::Parse<'a> for #id #generics {
-            fn parse_tokens<'slice, E>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::IResult<crate::tokens::Tokens<'slice, 'a>, Self, E>
-            where
-                E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>> + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::WeedleResult<crate::tokens::Tokens<'slice, 'a>, Self>
             {
                 use nom::lib::std::result::Result::Ok;
                 let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
@@ -118,9 +116,7 @@ fn generate_named_struct(
 
     let result = quote! {
         impl<'a,#(#type_param_ids),*> crate::Parse<'a> for #id #generics #impl_bound {
-            fn parse_tokens<'slice, E>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::IResult<crate::tokens::Tokens<'slice, 'a>, Self, E>
-            where
-                E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>> + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::WeedleResult<crate::tokens::Tokens<'slice, 'a>, Self>
             {
                 use nom::lib::std::result::Result::Ok;
                 #(#field_parsers)*
@@ -169,9 +165,7 @@ fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Resul
 
     let result = quote! {
         impl<'a> crate::Parse<'a> for #id #generics {
-            fn parse_tokens<'slice, E>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::IResult<crate::tokens::Tokens<'slice, 'a>, Self, E>
-            where
-                E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>> + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
+            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::WeedleResult<crate::tokens::Tokens<'slice, 'a>, Self>
             {
                 use nom::Parser;
                 alt!(

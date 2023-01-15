@@ -2,17 +2,15 @@ use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
 use crate::tokens::Tokens;
-use crate::{term, IResult, Parse};
+use crate::{term, Parse, WeedleResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
 }
 
-fn marker<'slice, 'a, S, E>(i: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, S, E>
+fn marker<'slice, 'a, S>(i: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, S>
 where
     S: ::std::default::Default,
-    E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-        + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
 {
     Ok((i, S::default()))
 }
@@ -90,11 +88,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_tokens<'slice, E>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self, E>
-    where
-        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-    {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::multi::separated_list0(weedle!(S), weedle!(T)),
             marker,
@@ -115,11 +109,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_tokens<'slice, E>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self, E>
-    where
-        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-    {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> WeedleResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::sequence::terminated(
                 nom::multi::separated_list1(weedle!(S), weedle!(T)),

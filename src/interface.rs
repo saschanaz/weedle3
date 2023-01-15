@@ -5,6 +5,7 @@ use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
 use crate::literal::ConstValue;
 use crate::types::{AttributedType, ConstType, Type};
+use crate::WeedleResult;
 
 /// Parses interface members
 pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
@@ -32,13 +33,9 @@ pub struct ConstMember<'a> {
 struct AttributeName<'a>(&'a str);
 
 impl<'a> crate::Parse<'a> for AttributeName<'a> {
-    fn parse_tokens<'slice, E>(
+    fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'a>, Self, E>
-    where
-        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-    {
+    ) -> WeedleResult<crate::tokens::Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, AttributeName(result.0)));
         }
@@ -48,13 +45,9 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
 }
 
 impl<'a> AttributeName<'a> {
-    fn parse_to_id<'slice, E>(
+    fn parse_to_id<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'a>, Identifier<'a>, E>
-    where
-        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-    {
+    ) -> WeedleResult<crate::tokens::Tokens<'slice, 'a>, Identifier<'a>> {
         let (input, name) = weedle!(AttributeName)(input)?;
         Ok((input, Identifier(name.0)))
     }
@@ -88,13 +81,9 @@ pub struct ConstructorInterfaceMember<'a> {
 struct OperationName<'a>(&'a str);
 
 impl<'a> crate::Parse<'a> for OperationName<'a> {
-    fn parse_tokens<'slice, E>(
+    fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'a>, Self, E>
-    where
-        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-    {
+    ) -> WeedleResult<crate::tokens::Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, OperationName(result.0)));
         }
@@ -104,13 +93,9 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
 }
 
 impl<'a> OperationName<'a> {
-    fn parse_to_id_opt<'slice, E>(
+    fn parse_to_id_opt<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'a>, Option<Identifier<'a>>, E>
-    where
-        E: nom::error::ParseError<crate::tokens::Tokens<'slice, 'a>>
-            + nom::error::ContextError<crate::tokens::Tokens<'slice, 'a>>,
-    {
+    ) -> WeedleResult<crate::tokens::Tokens<'slice, 'a>, Option<Identifier<'a>>> {
         let (input, name) = weedle!(Option<OperationName>)(input)?;
         Ok((input, name.map(|n| Identifier(n.0))))
     }

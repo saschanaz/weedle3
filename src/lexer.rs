@@ -1,11 +1,11 @@
-use nom::{multi::many0, sequence::tuple, IResult, Parser};
+use nom::{multi::many0, sequence::tuple, Parser};
 
 use crate::common::Identifier;
 use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::term::Keyword;
 use crate::whitespace::sp;
 
-pub type NomResult<'a, O, E> = IResult<&'a str, O, E>;
+pub type NomResult<'a, O> = crate::WeedleResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Terminal<'a> {
@@ -31,17 +31,11 @@ impl Token<'_> {
     }
 }
 
-fn other<'a, E>(input: &'a str) -> NomResult<char, E>
-where
-    E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
-{
+fn other(input: &str) -> NomResult<char> {
     nom::character::complete::satisfy(|c| !"\t\n\r ".contains(c) && !c.is_alphanumeric())(input)
 }
 
-fn id_or_keyword<'a, E>(input: &'a str) -> NomResult<Terminal, E>
-where
-    E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
-{
+fn id_or_keyword(input: &str) -> NomResult<Terminal> {
     let (input, id) = Identifier::lex(input)?;
     match Keyword::match_word(id.0) {
         Some(keyword) => Ok((input, Terminal::Keyword(keyword))),
@@ -49,10 +43,7 @@ where
     }
 }
 
-fn tag<'a, E>(input: &'a str) -> NomResult<Terminal, E>
-where
-    E: nom::error::ParseError<&'a str> + nom::error::ContextError<&'a str>,
-{
+fn tag(input: &str) -> NomResult<Terminal> {
     nom::branch::alt((
         FloatValueLit::lex.map(Terminal::Decimal),
         IntegerLit::lex.map(Terminal::Integer),
