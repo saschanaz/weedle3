@@ -25,7 +25,7 @@ use self::argument::ArgumentList;
 use self::attribute::ExtendedAttributeList;
 use self::common::{Braced, Identifier, Parenthesized, PunctuatedNonEmpty};
 use self::dictionary::DictionaryMembers;
-use self::interface::{Inheritance, InterfaceMembers};
+use self::interface::{CallbackInterfaceMembers, Inheritance, InterfaceMembers};
 use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
@@ -43,6 +43,7 @@ pub mod common;
 pub mod dictionary;
 pub mod interface;
 pub mod literal;
+pub mod members;
 pub mod mixin;
 pub mod namespace;
 pub mod types;
@@ -138,8 +139,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub callback: term!(callback),
     pub interface: term!(interface),
     pub identifier: Identifier<'a>,
-    pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<InterfaceMembers<'a>>,
+    pub members: Braced<CallbackInterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -413,9 +413,9 @@ mod test {
 
     test!(should_parse_callback_interface {"
         callback interface Options {
-          attribute DOMString? option1;
-          attribute DOMString? option2;
-          attribute long? option3;
+          const int CONST = 3;
+          undefined foo();
+          undefined bar();
         };
     " =>
         "";
@@ -423,6 +423,12 @@ mod test {
         attributes.is_none();
         identifier.0 == "Options";
         members.body.len() == 3;
+    });
+
+    test!(err should_not_parse_callback_interface_inheritance { "
+        callback interface Options : Parent {};
+    " =>
+        CallbackInterfaceDefinition
     });
 
     test!(should_parse_callback { "callback AsyncOperationCallback = undefined (DOMString status);" =>

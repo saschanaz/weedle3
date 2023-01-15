@@ -57,7 +57,7 @@ fn main() -> std::io::Result<()> {
         let err = match result {
             Ok(_) => {
                 let path = entry.path();
-                panic!("{path:?} unexpected got no error");
+                panic!("{path:?} unexpectedly got no error");
             }
             Err(err) => err,
         };
