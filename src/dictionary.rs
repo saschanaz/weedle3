@@ -14,6 +14,7 @@ pub struct DictionaryMember<'a> {
     pub required: Option<term!(required)>,
     pub type_: Type<'a>,
     pub identifier: Identifier<'a>,
+    #[weedle(cond = "required.is_none()")]
     pub default: Option<Default<'a>>,
     pub semi_colon: term!(;),
 }
@@ -23,11 +24,20 @@ mod test {
     use super::*;
     use crate::Parse;
 
-    test!(should_parse_dictionary_member { "required long num = 5;" =>
+    test!(should_parse_dictionary_member { "required long num;" =>
         "";
         DictionaryMember;
         attributes.is_none();
         required.is_some();
+        identifier.0 == "num";
+        default.is_none();
+    });
+
+    test!(should_parse_required_dictionary_member { "long num = 5;" =>
+        "";
+        DictionaryMember;
+        attributes.is_none();
+        required.is_none();
         identifier.0 == "num";
         default.is_some();
     });
