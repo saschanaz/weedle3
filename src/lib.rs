@@ -139,7 +139,6 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub callback: term!(callback),
     pub interface: term!(interface),
     pub identifier: Identifier<'a>,
-    pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<InterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }

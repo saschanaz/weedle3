@@ -9,29 +9,6 @@ use crate::types::{AttributedType, Type};
 /// Parses namespace members declaration
 pub type NamespaceMembers<'a> = Vec<NamespaceMember<'a>>;
 
-/// Parses `[attributes]? returntype identifier? (( args ));`
-///
-/// (( )) means ( ) chars
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct OperationNamespaceMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub return_type: Type<'a>,
-    pub identifier: Option<Identifier<'a>>,
-    pub args: Parenthesized<ArgumentList<'a>>,
-    pub semi_colon: term!(;),
-}
-
-/// Parses `[attribute]? readonly attributetype type identifier;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct AttributeNamespaceMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub readonly: term!(readonly),
-    pub attribute: term!(attribute),
-    pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
-    pub semi_colon: term!(;),
-}
-
 /// Parses namespace member declaration
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum NamespaceMember<'a> {
