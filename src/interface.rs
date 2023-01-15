@@ -3,8 +3,8 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
-use crate::literal::ConstValue;
-use crate::types::{AttributedType, ConstType, Type};
+use crate::members::ConstMember;
+use crate::types::{AttributedType, Type};
 use crate::VerboseResult;
 
 /// Parses interface members
@@ -15,18 +15,6 @@ pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
 pub struct Inheritance<'a> {
     pub colon: term!(:),
     pub identifier: Identifier<'a>,
-}
-
-/// Parses a const interface member `[attributes]? const type identifier = value;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ConstMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub const_: term!(const),
-    pub const_type: ConstType<'a>,
-    pub identifier: Identifier<'a>,
-    pub assign: term!(=),
-    pub const_value: ConstValue<'a>,
-    pub semi_colon: term!(;),
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

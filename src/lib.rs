@@ -43,6 +43,7 @@ pub mod common;
 pub mod dictionary;
 pub mod interface;
 pub mod literal;
+pub mod members;
 pub mod mixin;
 pub mod namespace;
 pub mod types;

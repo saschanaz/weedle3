@@ -3,7 +3,8 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Identifier, Parenthesized};
-use crate::interface::{ConstMember, StringifierMember};
+use crate::interface::StringifierMember;
+use crate::members::ConstMember;
 use crate::types::{AttributedType, Type};
 
 /// Parses the members declarations of a mixin
