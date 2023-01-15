@@ -125,11 +125,10 @@ pub fn nom_error_into<T, U: From<T>>(
 ) -> nom::Err<nom::error::VerboseError<U>> {
     match err {
         nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
-        nom::Err::Error(err) => nom::Err::Error(nom::error::VerboseError {
-            errors: err.errors.into_iter().map(|(i, e)| (i.into(), e)).collect(),
-        }),
-        nom::Err::Failure(err) => nom::Err::Failure(nom::error::VerboseError {
-            errors: err.errors.into_iter().map(|(i, e)| (i.into(), e)).collect(),
-        }),
+        nom::Err::Error(err) | nom::Err::Failure(err) => {
+            nom::Err::Error(nom::error::VerboseError {
+                errors: err.errors.into_iter().map(|(i, e)| (i.into(), e)).collect(),
+            })
+        }
     }
 }
