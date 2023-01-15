@@ -21,6 +21,14 @@ pub struct ConstMember<'a> {
     pub semi_colon: term!(;),
 }
 
+/// Parses `stringifier|inherit|static`
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum StringifierOrInheritOrStatic {
+    Stringifier(term!(stringifier)),
+    Inherit(term!(inherit)),
+    Static(term!(static)),
+}
+
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 struct AttributeName<'a>(&'a str);
 
@@ -43,14 +51,6 @@ impl<'a> AttributeName<'a> {
         let (input, name) = weedle!(AttributeName)(input)?;
         Ok((input, Identifier(name.0)))
     }
-}
-
-/// Parses `stringifier|inherit|static`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum StringifierOrInheritOrStatic {
-    Stringifier(term!(stringifier)),
-    Inherit(term!(inherit)),
-    Static(term!(static)),
 }
 
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
@@ -91,6 +91,15 @@ pub struct AttributeNamespaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
+/// Parses one of the special keyword `getter|setter|deleter` or `static`.
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Modifier {
+    Getter(term!(getter)),
+    Setter(term!(setter)),
+    Deleter(term!(deleter)),
+    Static(term!(static)),
+}
+
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 struct OperationName<'a>(&'a str);
 
@@ -113,15 +122,6 @@ impl<'a> OperationName<'a> {
         let (input, name) = weedle!(Option<OperationName>)(input)?;
         Ok((input, name.map(|n| Identifier(n.0))))
     }
-}
-
-/// Parses one of the special keyword `getter|setter|deleter` or `static`.
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Modifier {
-    Getter(term!(getter)),
-    Setter(term!(setter)),
-    Deleter(term!(deleter)),
-    Static(term!(static)),
 }
 
 /// Parses `[attributes]? (stringifier|static)? special? returntype identifier? (( args ));`
@@ -163,11 +163,6 @@ mod test {
         identifier.0 == "name";
     });
 
-    test!(should_parse_modifier { "static" =>
-        "";
-        Modifier;
-    });
-
     test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
         "";
         StringifierOrInheritOrStatic;
@@ -195,6 +190,11 @@ mod test {
         AttributeNamespaceMember;
         attributes.is_none();
         identifier.0 == "name";
+    });
+
+    test!(should_parse_modifier { "static" =>
+        "";
+        Modifier;
     });
 
     test!(should_parse_regular_operation_member { "short (long a, long b);" =>
