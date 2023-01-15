@@ -1,7 +1,12 @@
 use weedle_derive::Weedle;
 
 use crate::{
-    attribute::ExtendedAttributeList, common::Identifier, literal::ConstValue, types::ConstType,
+    argument::ArgumentList,
+    attribute::ExtendedAttributeList,
+    common::{Identifier, Parenthesized},
+    literal::ConstValue,
+    types::{AttributedType, ConstType, Type},
+    VerboseResult,
 };
 
 /// Parses a const interface member `[attributes]? const type identifier = value;`
@@ -13,6 +18,17 @@ pub struct ConstMember<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
     pub const_value: ConstValue<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attributes]? constructor(( args ));`
+///
+/// (( )) means ( ) chars
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct ConstructorInterfaceMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub constructor: term!(constructor),
+    pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
 
@@ -40,6 +56,14 @@ impl<'a> AttributeName<'a> {
     }
 }
 
+/// Parses `stringifier|inherit|static`
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum StringifierOrInheritOrStatic {
+    Stringifier(term!(stringifier)),
+    Inherit(term!(inherit)),
+    Static(term!(static)),
+}
+
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributeInterfaceMember<'a> {
@@ -53,14 +77,28 @@ pub struct AttributeInterfaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
-/// Parses `[attributes]? constructor(( args ));`
-///
-/// (( )) means ( ) chars
+/// Parses `[attributes]? stringifier? readonly? attribute attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ConstructorInterfaceMember<'a> {
+pub struct AttributeMixinMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub constructor: term!(constructor),
-    pub args: Parenthesized<ArgumentList<'a>>,
+    pub stringifier: Option<term!(stringifier)>,
+    pub readonly: Option<term!(readonly)>,
+    pub attribute: term!(attribute),
+    pub type_: AttributedType<'a>,
+    #[weedle(parser = "AttributeName::parse_to_id")]
+    pub identifier: Identifier<'a>,
+    pub semi_colon: term!(;),
+}
+
+/// Parses `[attribute]? readonly attributetype type identifier;`
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct AttributeNamespaceMember<'a> {
+    pub attributes: Option<ExtendedAttributeList<'a>>,
+    pub readonly: term!(readonly),
+    pub attribute: term!(attribute),
+    pub type_: AttributedType<'a>,
+    #[weedle(parser = "AttributeName::parse_to_id")]
+    pub identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
 
@@ -88,14 +126,22 @@ impl<'a> OperationName<'a> {
     }
 }
 
+/// Parses one of the special keyword `getter|setter|deleter` or `static`.
+#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Modifier {
+    Getter(term!(getter)),
+    Setter(term!(setter)),
+    Deleter(term!(deleter)),
+    Static(term!(static)),
+}
+
 /// Parses `[attributes]? (stringifier|static)? special? returntype identifier? (( args ));`
 ///
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub modifier: Option<StringifierOrStatic>,
-    pub special: Option<Special>,
+    pub modifier: Option<Modifier>,
     pub return_type: Type<'a>,
     #[weedle(parser = "OperationName::parse_to_id_opt")]
     pub identifier: Option<Identifier<'a>>,
@@ -103,50 +149,54 @@ pub struct OperationInterfaceMember<'a> {
     pub semi_colon: term!(;),
 }
 
-/// Parses `[attributes]? stringifier? returntype identifier? (( args ));`
-///
-/// (( )) means ( ) chars
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct OperationMixinMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub stringifier: Option<term!(stringifier)>,
-    pub return_type: Type<'a>,
-    pub identifier: Option<Identifier<'a>>,
-    pub args: Parenthesized<ArgumentList<'a>>,
-    pub semi_colon: term!(;),
-}
-
-/// Parses `[attributes]? stringifier? readonly? attribute attributedtype identifier;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct AttributeMixinMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub stringifier: Option<term!(stringifier)>,
-    pub readonly: Option<term!(readonly)>,
-    pub attribute: term!(attribute),
-    pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
-    pub semi_colon: term!(;),
-}
-
 /// Parses `[attributes]? returntype identifier? (( args ));`
 ///
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct OperationNamespaceMember<'a> {
+pub struct RegularOperationMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: Type<'a>,
+    #[weedle(parser = "OperationName::parse_to_id_opt")]
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
 
-/// Parses `[attribute]? readonly attributetype type identifier;`
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct AttributeNamespaceMember<'a> {
-    pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub readonly: term!(readonly),
-    pub attribute: term!(attribute),
-    pub type_: AttributedType<'a>,
-    pub identifier: Identifier<'a>,
-    pub semi_colon: term!(;),
+#[cfg(test)]
+mod test {
+    use super::*;
+    use crate::Parse;
+
+    test!(should_parse_modifier { "static" =>
+        "";
+        Modifier;
+    });
+
+    test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
+        "";
+        StringifierOrInheritOrStatic;
+    });
+
+    test!(should_parse_attribute_mixin_member { "stringifier readonly attribute short name;" =>
+        "";
+        AttributeMixinMember;
+        attributes.is_none();
+        stringifier.is_some();
+        readonly.is_some();
+        identifier.0 == "name";
+    });
+
+    test!(should_parse_attribute_namespace_member { "readonly attribute short name;" =>
+        "";
+        AttributeNamespaceMember;
+        attributes.is_none();
+        identifier.0 == "name";
+    });
+
+    test!(should_parse_regular_operation_member { "short (long a, long b);" =>
+        "";
+        RegularOperationMember;
+        attributes.is_none();
+        identifier.is_none();
+    });
 }

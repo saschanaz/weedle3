@@ -3,12 +3,15 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized};
-use crate::members::ConstMember;
-use crate::types::{AttributedType, Type};
-use crate::VerboseResult;
+use crate::members::{
+    AttributeInterfaceMember, ConstMember, ConstructorInterfaceMember, OperationInterfaceMember,
+    RegularOperationMember,
+};
+use crate::types::AttributedType;
 
 /// Parses interface members
 pub type InterfaceMembers<'a> = Vec<InterfaceMember<'a>>;
+pub type CallbackInterfaceMembers<'a> = Vec<CallbackInterfaceMember<'a>>;
 
 /// Parses inheritance clause `: identifier`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -110,21 +113,11 @@ pub enum InterfaceMember<'a> {
     Stringifier(StringifierMember<'a>),
 }
 
-/// Parses one of the special keyword `getter|setter|deleter` or `static`.
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Modifier {
-    Getter(term!(getter)),
-    Setter(term!(setter)),
-    Deleter(term!(deleter)),
-    Static(term!(static)),
-}
-
-/// Parses `stringifier|inherit|static`
-#[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum StringifierOrInheritOrStatic {
-    Stringifier(term!(stringifier)),
-    Inherit(term!(inherit)),
-    Static(term!(static)),
+/// Parses one of the interface member variants
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum CallbackInterfaceMember<'a> {
+    Const(ConstMember<'a>),
+    Operation(RegularOperationMember<'a>),
 }
 
 #[cfg(test)]
@@ -135,16 +128,6 @@ mod test {
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";
         StringifierMember;
-    });
-
-    test!(should_parse_modifier { "static" =>
-        "";
-        Modifier;
-    });
-
-    test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
-        "";
-        StringifierOrInheritOrStatic;
     });
 
     test!(should_parse_setlike_interface_member { "readonly setlike<long>;" =>

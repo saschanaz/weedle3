@@ -30,6 +30,7 @@ use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, Type};
+use interface::CallbackInterfaceMembers;
 use weedle_derive::Weedle;
 
 #[macro_use]
@@ -139,7 +140,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub callback: term!(callback),
     pub interface: term!(interface),
     pub identifier: Identifier<'a>,
-    pub members: Braced<InterfaceMembers<'a>>,
+    pub members: Braced<CallbackInterfaceMembers<'a>>,
     pub semi_colon: term!(;),
 }
 
