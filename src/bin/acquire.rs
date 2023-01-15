@@ -22,9 +22,7 @@ fn main() -> std::io::Result<()> {
         // XXX: Can't be used without unwrap()?
         let parsed = weedle::parse(&content).unwrap_or_else(|err| {
             let message = match err {
-                nom::Err::Error(e) | nom::Err::Failure(e) => {
-                    convert_error(&content[..], e)
-                }
+                nom::Err::Error(e) | nom::Err::Failure(e) => convert_error(&content[..], e),
                 _ => "Unknown failure".to_owned(),
             };
             panic!("Failed to parse {file_name:?}: {message}");

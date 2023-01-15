@@ -69,7 +69,9 @@ use tokens::Tokens;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
+pub fn parse(
+    input: &'_ str,
+) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
     type E<'slice, 'token> = nom::error::VerboseError<Tokens<'slice, 'token>>;
 
     let tokens = lex(input)?;
@@ -90,9 +92,12 @@ pub trait Parse<'token>: Sized {
         input: Tokens<'slice, 'token>,
     ) -> IResult<Tokens<'slice, 'token>, Self, E>
     where
-        E: nom::error::ParseError<Tokens<'slice, 'token>> + nom::error::ContextError<Tokens<'slice, 'token>>;
+        E: nom::error::ParseError<Tokens<'slice, 'token>>
+            + nom::error::ContextError<Tokens<'slice, 'token>>;
 
-    fn parse(input: &'token str) -> IResult<&'token str, Self, nom::error::VerboseError<&'token str>> {
+    fn parse(
+        input: &'token str,
+    ) -> IResult<&'token str, Self, nom::error::VerboseError<&'token str>> {
         let (input, _) = whitespace::sp(input)?;
         let tokens = lex(input)?;
         let (unread, def) =
