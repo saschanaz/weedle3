@@ -171,13 +171,13 @@ pub enum UnionMemberType<'a> {
 /// Parses a const type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ConstType<'a> {
-    Integer(MayBeNull<IntegerType>),
-    FloatingPoint(MayBeNull<FloatingPointType>),
-    Boolean(MayBeNull<term!(boolean)>),
-    Byte(MayBeNull<term!(byte)>),
-    Octet(MayBeNull<term!(octet)>),
-    Bigint(MayBeNull<term!(bigint)>),
-    Identifier(MayBeNull<Identifier<'a>>),
+    Integer(IntegerType),
+    FloatingPoint(FloatingPointType),
+    Boolean(term!(boolean)),
+    Byte(term!(byte)),
+    Octet(term!(octet)),
+    Bigint(term!(bigint)),
+    Identifier(Identifier<'a>),
 }
 
 /// Parses `[attributes]? type`

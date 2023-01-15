@@ -122,7 +122,6 @@ pub enum ConstValue<'a> {
     Boolean(BooleanLit),
     Float(FloatLit<'a>),
     Integer(IntegerLit<'a>),
-    Null(term!(null)),
 }
 
 /// Represents either `true` or `false`
