@@ -197,18 +197,18 @@ mod test {
         Modifier;
     });
 
-    test!(should_parse_regular_operation_member { "short (long a, long b);" =>
-        "";
-        RegularOperationMember;
-        attributes.is_none();
-        identifier.is_none();
-    });
-
     test!(should_parse_operation_interface_member { "undefined readString(long a, long b);" =>
         "";
         OperationInterfaceMember;
         attributes.is_none();
         modifier.is_none();
         identifier.is_some();
+    });
+
+    test!(should_parse_regular_operation_member { "short (long a, long b);" =>
+        "";
+        RegularOperationMember;
+        attributes.is_none();
+        identifier.is_none();
     });
 }
