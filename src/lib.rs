@@ -25,12 +25,11 @@ use self::argument::ArgumentList;
 use self::attribute::ExtendedAttributeList;
 use self::common::{Braced, Identifier, Parenthesized, PunctuatedNonEmpty};
 use self::dictionary::DictionaryMembers;
-use self::interface::{Inheritance, InterfaceMembers};
+use self::interface::{CallbackInterfaceMembers, Inheritance, InterfaceMembers};
 use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, Type};
-use interface::CallbackInterfaceMembers;
 use weedle_derive::Weedle;
 
 #[macro_use]
