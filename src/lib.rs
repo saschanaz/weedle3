@@ -414,9 +414,9 @@ mod test {
 
     test!(should_parse_callback_interface {"
         callback interface Options {
-          attribute DOMString? option1;
-          attribute DOMString? option2;
-          attribute long? option3;
+          const int CONST = 3;
+          undefined foo();
+          undefined bar();
         };
     " =>
         "";
