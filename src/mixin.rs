@@ -37,7 +37,6 @@ mod test {
         "";
         OperationMixinMember;
         attributes.is_none();
-        stringifier.is_none();
         identifier.is_some();
     });
 }
