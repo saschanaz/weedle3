@@ -425,6 +425,12 @@ mod test {
         members.body.len() == 3;
     });
 
+    test!(err should_not_parse_callback_interface_inheritance { "
+        callback interface Options : Parent {};
+    " =>
+        CallbackInterfaceDefinition
+    });
+
     test!(should_parse_callback { "callback AsyncOperationCallback = undefined (DOMString status);" =>
         "";
         CallbackDefinition;
