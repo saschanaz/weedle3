@@ -17,6 +17,7 @@ pub struct DictionaryMember<'a> {
     pub identifier: Identifier<'a>,
     #[weedle(cond = "required.is_none()")]
     pub default: Option<Default<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 

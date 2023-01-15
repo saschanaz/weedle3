@@ -28,6 +28,7 @@ pub struct ConstructorInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub constructor: term!(constructor),
     pub args: Parenthesized<ArgumentList<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -37,6 +38,7 @@ pub struct SingleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub iterable: term!(iterable),
     pub generics: Generics<AttributedType<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -46,6 +48,7 @@ pub struct DoubleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub iterable: term!(iterable),
     pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -64,6 +67,7 @@ pub struct SingleTypedAsyncIterable<'a> {
     pub async_iterable: (term!(async), term!(iterable)),
     pub generics: Generics<AttributedType<'a>>,
     pub args: Option<Parenthesized<ArgumentList<'a>>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -74,6 +78,7 @@ pub struct DoubleTypedAsyncIterable<'a> {
     pub async_iterable: (term!(async), term!(iterable)),
     pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
     pub args: Option<Parenthesized<ArgumentList<'a>>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -93,6 +98,7 @@ pub struct MaplikeInterfaceMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub maplike: term!(maplike),
     pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -103,6 +109,7 @@ pub struct SetlikeInterfaceMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub setlike: term!(setlike),
     pub generics: Generics<AttributedType<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -112,6 +119,7 @@ pub struct SetlikeInterfaceMember<'a> {
 pub struct StringifierMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: term!(stringifier),
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 

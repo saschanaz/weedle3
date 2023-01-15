@@ -20,6 +20,7 @@ pub struct ConstMember<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
     pub const_value: ConstValue<'a>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -73,6 +74,7 @@ pub struct AttributeInterfaceMember<'a> {
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName")]
     pub identifier: Identifier<'a>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -87,6 +89,7 @@ pub struct AttributeMixinMember<'a> {
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName")]
     pub identifier: Identifier<'a>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -100,6 +103,7 @@ pub struct AttributeNamespaceMember<'a> {
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName")]
     pub identifier: Identifier<'a>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -145,6 +149,7 @@ pub struct OperationInterfaceMember<'a> {
     #[weedle(from = "OperationName", opt)]
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -159,6 +164,7 @@ pub struct RegularOperationMember<'a> {
     #[weedle(from = "OperationName", opt)]
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 

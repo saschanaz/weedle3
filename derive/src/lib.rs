@@ -20,6 +20,7 @@ struct MacroFieldArgs {
     from: Option<String>,
     cond: Option<String>,
     post_check: Option<String>,
+    cut: Option<String>,
 
     /// Use if you need to convert from Option<T> to Option<U>
     #[darling(default)]
@@ -95,6 +96,9 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
                 |opt| opt.flatten()
             )
         }
+    }
+    if let Some(cut) = args.cut {
+        parser = quote! { crate::tokens::contextful_cut(#cut, #parser) }
     }
     if let Some(post_check) = args.post_check {
         parser = get_post_check(post_check, &parser)?;
