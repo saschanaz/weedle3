@@ -44,12 +44,9 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
     }
 }
 
-impl<'a> AttributeName<'a> {
-    fn parse_to_id<'slice>(
-        input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Identifier<'a>> {
-        let (input, name) = weedle!(AttributeName)(input)?;
-        Ok((input, Identifier(name.0)))
+impl<'a> From<AttributeName<'a>> for Identifier<'a> {
+    fn from(value: AttributeName<'a>) -> Self {
+        Self(value.0)
     }
 }
 
@@ -61,7 +58,7 @@ pub struct AttributeInterfaceMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    #[weedle(parser = "AttributeName::parse_to_id")]
+    #[weedle(from = "AttributeName")]
     pub identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
@@ -74,7 +71,7 @@ pub struct AttributeMixinMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    #[weedle(parser = "AttributeName::parse_to_id")]
+    #[weedle(from = "AttributeName")]
     pub identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
@@ -86,7 +83,7 @@ pub struct AttributeNamespaceMember<'a> {
     pub readonly: term!(readonly),
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    #[weedle(parser = "AttributeName::parse_to_id")]
+    #[weedle(from = "AttributeName")]
     pub identifier: Identifier<'a>,
     pub semi_colon: term!(;),
 }
@@ -115,12 +112,9 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
     }
 }
 
-impl<'a> OperationName<'a> {
-    fn parse_to_id_opt<'slice>(
-        input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Option<Identifier<'a>>> {
-        let (input, name) = weedle!(Option<OperationName>)(input)?;
-        Ok((input, name.map(|n| Identifier(n.0))))
+impl<'a> From<OperationName<'a>> for Identifier<'a> {
+    fn from(value: OperationName<'a>) -> Self {
+        Self(value.0)
     }
 }
 
@@ -132,7 +126,7 @@ pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub modifier: Option<Modifier>,
     pub return_type: Type<'a>,
-    #[weedle(parser = "OperationName::parse_to_id_opt")]
+    #[weedle(from = "OperationName", opt)]
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),
@@ -145,7 +139,7 @@ pub struct OperationInterfaceMember<'a> {
 pub struct RegularOperationMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: Type<'a>,
-    #[weedle(parser = "OperationName::parse_to_id_opt")]
+    #[weedle(from = "OperationName", opt)]
     pub identifier: Option<Identifier<'a>>,
     pub args: Parenthesized<ArgumentList<'a>>,
     pub semi_colon: term!(;),

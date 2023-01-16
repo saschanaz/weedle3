@@ -59,38 +59,15 @@ impl<'a> From<ArgumentName<'a>> for Identifier<'a> {
 /// Parses `[attributes]? optional? attributedtype identifier ( = default )?`
 ///
 /// Note: `= default` is only allowed if `optional` is present
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct SingleArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub optional: Option<term!(optional)>,
     pub type_: AttributedType<'a>,
+    #[weedle(from = "ArgumentName")]
     pub identifier: Identifier<'a>,
+    #[weedle(cond = "optional.is_some()")]
     pub default: Option<Default<'a>>,
-}
-
-impl<'a> Parse<'a> for SingleArgument<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
-        let (input, (attributes, optional, type_, identifier)) = nom::sequence::tuple((
-            weedle!(Option<ExtendedAttributeList<'a>>),
-            weedle!(Option<term!(optional)>),
-            weedle!(AttributedType<'a>),
-            nom::combinator::into(weedle!(ArgumentName<'a>)),
-        ))(input)?;
-        let (input, default) = nom::combinator::map(
-            nom::combinator::cond(optional.is_some(), weedle!(Option<Default<'a>>)),
-            |default| default.unwrap_or(None),
-        )(input)?;
-        Ok((
-            input,
-            Self {
-                attributes,
-                optional,
-                type_,
-                identifier,
-                default,
-            },
-        ))
-    }
 }
 
 /// Parses `[attributes]? type... identifier`

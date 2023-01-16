@@ -14,8 +14,12 @@ struct MacroTopArgs {
 #[derive(FromField, Debug)]
 #[darling(attributes(weedle))]
 struct MacroArgs {
-    parser: Option<String>,
+    from: Option<String>,
     cond: Option<String>,
+
+    /// Use if you need to convert from Option<T> to Option<U>
+    #[darling(default)]
+    opt: bool,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -33,10 +37,16 @@ fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
 fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
     let ty = &field.ty;
-    let mut parser = match args.parser {
-        Some(p) => string_to_tokens::<Path>(p)?,
+    let mut parser = match args.from {
+        Some(from) => {
+            let from = string_to_tokens::<Type>(from)?;
+            quote! { nom::combinator::into(weedle!(#from)) }
+        }
         _ => quote! { weedle!(#ty) },
     };
+    if args.opt {
+        parser = quote! { nom::combinator::opt(#parser) };
+    }
     if let Some(cond) = args.cond {
         let cond = string_to_tokens::<Expr>(cond)?;
         parser = quote! {
