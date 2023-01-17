@@ -1,7 +1,7 @@
 use nom::Parser;
 use weedle_derive::Weedle;
 
-use crate::Parse;
+use crate::{Parse, ParsePost};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -68,6 +68,7 @@ impl<'a> IntegerLit<'a> {
 impl<'a> Parse<'a> for IntegerLit<'a> {
     parser!(eat!(Integer));
 }
+impl<'a> ParsePost<'a> for IntegerLit<'a> {}
 
 /// Represents a string value
 ///
@@ -89,6 +90,7 @@ impl<'a> StringLit<'a> {
 impl<'a> Parse<'a> for StringLit<'a> {
     parser!(eat!(String));
 }
+impl<'a> ParsePost<'a> for StringLit<'a> {}
 
 /// Represents `[ ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -137,6 +139,8 @@ impl<'a> Parse<'a> for BooleanLit {
         BooleanLit
     ));
 }
+
+impl<'a> ParsePost<'a> for BooleanLit {}
 
 /// Parses `/-?(([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([Ee][+-]?[0-9]+)?|[0-9]+[Ee][+-]?[0-9]+)/`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -190,6 +194,7 @@ impl<'a> FloatValueLit<'a> {
 impl<'a> Parse<'a> for FloatValueLit<'a> {
     parser!(eat!(Decimal));
 }
+impl<'a> ParsePost<'a> for FloatValueLit<'a> {}
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

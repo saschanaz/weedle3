@@ -87,8 +87,17 @@ pub fn parse(
     Ok(defs)
 }
 
-pub trait Parse<'token>: Sized {
+pub trait Parse<'token>: Sized + ParsePost<'token> {
     fn parse_tokens<'slice>(
+        input: Tokens<'slice, 'token>,
+    ) -> VerboseResult<Tokens<'slice, 'token>, Self> {
+        nom::combinator::map(
+            nom::sequence::tuple((Self::parse_body, Self::parse_post)),
+            |(body, _post)| body,
+        )(input)
+    }
+
+    fn parse_body<'slice>(
         input: Tokens<'slice, 'token>,
     ) -> VerboseResult<Tokens<'slice, 'token>, Self>;
 
@@ -99,6 +108,14 @@ pub trait Parse<'token>: Sized {
             Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
         let (unread, _) = whitespace::sp(unread.into())?;
         Ok((unread, def))
+    }
+}
+
+pub trait ParsePost<'token>: Sized {
+    fn parse_post<'slice>(
+        input: Tokens<'slice, 'token>,
+    ) -> VerboseResult<Tokens<'slice, 'token>, ()> {
+        nom::combinator::success(())(input)
     }
 }
 

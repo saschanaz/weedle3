@@ -9,6 +9,8 @@ extern crate quote;
 #[darling(attributes(weedle))]
 struct MacroTopArgs {
     impl_bound: Option<String>,
+    #[darling(default)]
+    post_check: bool,
 }
 
 #[derive(FromField, Debug)]
@@ -57,15 +59,6 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
         }
     }
     Ok(parser)
-}
-
-fn get_where_from_derive_input(input: &DeriveInput) -> Result<proc_macro2::TokenStream> {
-    let args = MacroTopArgs::from_derive_input(input).map_err(syn::Error::from)?;
-    let impl_bound = match args.impl_bound {
-        Some(b) => string_to_tokens::<WhereClause>(b)?,
-        _ => quote! {},
-    };
-    Ok(impl_bound)
 }
 
 fn generate_tuple_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
@@ -170,24 +163,41 @@ fn generate_enum(data_enum: &DataEnum) -> Result<proc_macro2::TokenStream> {
 }
 
 fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
+    let args = MacroTopArgs::from_derive_input(ast).map_err(syn::Error::from)?;
+
     let id = &ast.ident;
     let generics = &ast.generics;
     let type_param_ids = generics.type_params().map(|p| &p.ident).collect::<Vec<_>>();
-    let impl_bound = get_where_from_derive_input(ast)?;
+    let impl_bound = match args.impl_bound {
+        Some(b) => string_to_tokens::<WhereClause>(b)?,
+        _ => quote! {},
+    };
     let impl_body = match &ast.data {
         syn::Data::Struct(data_struct) => generate_struct(data_struct),
         syn::Data::Enum(data_enum) => generate_enum(data_enum),
         syn::Data::Union(_) => panic!("Unions not supported"),
     }?;
 
+    let impl_head = quote! { impl<'a,#(#type_param_ids),*> };
+    let impl_tail = quote! { for #id #generics #impl_bound };
+
+    let post_impl = if !args.post_check {
+        quote! {
+            #impl_head crate::ParsePost<'a> #impl_tail {}
+        }
+    } else {
+        quote! {}
+    };
+
     Ok(quote! {
-        impl<'a,#(#type_param_ids),*> crate::Parse<'a> for #id #generics #impl_bound {
-            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self>
-            {
+        #impl_head crate::Parse<'a> #impl_tail {
+            fn parse_body <'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
                 #impl_body
             }
         }
-    }.into())
+        #post_impl
+    }
+    .into())
 }
 
 #[proc_macro_derive(Weedle, attributes(weedle))]

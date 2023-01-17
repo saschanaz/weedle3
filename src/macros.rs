@@ -1,6 +1,6 @@
 macro_rules! parser {
     ($parse:expr) => {
-        fn parse_tokens<'slice>(
+        fn parse_body<'slice>(
             input: $crate::tokens::Tokens<'slice, 'a>,
         ) -> $crate::VerboseResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
             $parse(input)
