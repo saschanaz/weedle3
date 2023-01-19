@@ -1,16 +1,20 @@
 use weedle_derive::Weedle;
 
 use crate::argument::ArgumentList;
-use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated};
+use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated, PunctuatedNonEmpty};
 use crate::literal::{FloatLit, IntegerLit, StringLit};
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
 pub type ExtendedAttributeList<'a> = Bracketed<Punctuated<ExtendedAttribute<'a>, term!(,)>>;
 
 /// Matches comma separated identifier list
+pub type IdentifierListNonEmpty<'a> = PunctuatedNonEmpty<Identifier<'a>, term!(,)>;
 pub type IdentifierList<'a> = Punctuated<Identifier<'a>, term!(,)>;
+pub type StringListNonEmpty<'a> = PunctuatedNonEmpty<StringLit<'a>, term!(,)>;
 pub type StringList<'a> = Punctuated<StringLit<'a>, term!(,)>;
+pub type FloatListNonEmpty<'a> = PunctuatedNonEmpty<FloatLit<'a>, term!(,)>;
 pub type FloatList<'a> = Punctuated<FloatLit<'a>, term!(,)>;
+pub type IntegerListNonEmpty<'a> = PunctuatedNonEmpty<IntegerLit<'a>, term!(,)>;
 pub type IntegerList<'a> = Punctuated<IntegerLit<'a>, term!(,)>;
 
 /// Parses an argument list. Ex: `Constructor((double x, double y))`
@@ -40,6 +44,7 @@ pub struct ExtendedAttributeNamedArgList<'a> {
 pub struct ExtendedAttributeIdentList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "Parenthesized<IdentifierListNonEmpty<'a>>", generic_into)]
     pub list: Parenthesized<IdentifierList<'a>>,
 }
 
@@ -76,6 +81,7 @@ pub struct ExtendedAttributeString<'a> {
 pub struct ExtendedAttributeStringList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "Parenthesized<StringListNonEmpty<'a>>", generic_into)]
     pub list: Parenthesized<StringList<'a>>,
 }
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -89,6 +95,7 @@ pub struct ExtendedAttributeFloat<'a> {
 pub struct ExtendedAttributeFloatList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "Parenthesized<FloatListNonEmpty<'a>>", generic_into)]
     pub list: Parenthesized<FloatList<'a>>,
 }
 
@@ -103,6 +110,7 @@ pub struct ExtendedAttributeInteger<'a> {
 pub struct ExtendedAttributeIntegerList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "Parenthesized<IntegerListNonEmpty<'a>>", generic_into)]
     pub list: Parenthesized<IntegerList<'a>>,
 }
 

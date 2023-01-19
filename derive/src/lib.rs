@@ -22,6 +22,8 @@ struct MacroArgs {
     /// Use if you need to convert from Option<T> to Option<U>
     #[darling(default)]
     opt: bool,
+    #[darling(default)]
+    generic_into: bool,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -42,7 +44,11 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     let mut parser = match args.from {
         Some(from) => {
             let from = string_to_tokens::<Type>(from)?;
-            quote! { nom::combinator::into(weedle!(#from)) }
+            if args.generic_into {
+                quote! { nom::combinator::map(weedle!(#from), |g| g.generic_into()) }
+            } else {
+                quote! { nom::combinator::into(weedle!(#from)) }
+            }
         }
         _ => quote! { weedle!(#ty) },
     };

@@ -54,6 +54,21 @@ pub struct Parenthesized<T> {
     pub close_paren: term::CloseParen,
 }
 
+impl<T> Parenthesized<T> {
+    pub fn generic_into<S: From<T>>(self) -> Parenthesized<S> {
+        let Parenthesized {
+            open_paren,
+            body,
+            close_paren,
+        } = self;
+        Parenthesized {
+            open_paren,
+            body: body.into(),
+            close_paren,
+        }
+    }
+}
+
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>", post_check)]
@@ -138,6 +153,15 @@ where
 }
 
 impl<'a, T, S> ParsePost<'a> for PunctuatedNonEmpty<T, S> {}
+
+impl<T, S> From<PunctuatedNonEmpty<T, S>> for Punctuated<T, S> {
+    fn from(value: PunctuatedNonEmpty<T, S>) -> Self {
+        Self {
+            list: value.list,
+            separator: value.separator,
+        }
+    }
+}
 
 /// Represents an identifier
 ///
