@@ -1,7 +1,7 @@
 use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
-use crate::tokens::Tokens;
+use crate::tokens::{contextful_cut, Tokens};
 use crate::{term, Parse, ParsePost, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
@@ -65,9 +65,10 @@ pub struct Bracketed<T> {
 
 impl<'a, T> crate::ParsePost<'a> for Bracketed<T> {
     fn parse_post<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, ()> {
-        nom::combinator::cut(nom::combinator::not(nom::combinator::peek(eat_key!(
-            OpenBracket
-        ))))(input)
+        contextful_cut(
+            "Illegal double extended attribute lists, consider merging them",
+            nom::combinator::not(nom::combinator::peek(eat_key!(OpenBracket))),
+        )(input)
     }
 }
 

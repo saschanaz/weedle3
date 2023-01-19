@@ -21,6 +21,8 @@
 //!
 //! If any flaws found when parsing string with a valid grammar, create an issue.
 
+use crate::tokens::contextful_cut;
+
 use self::argument::ArgumentList;
 use self::attribute::ExtendedAttributeList;
 use self::common::{Braced, Identifier, Parenthesized, PunctuatedNonEmpty};
@@ -77,7 +79,7 @@ pub fn parse(
     let tokens = lex(input)?;
     let (unread, (defs, _eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
-        nom::combinator::cut(eat!(Eof)),
+        contextful_cut("Unrecognized tokens", eat!(Eof)),
     ))(Tokens(&tokens[..]))
     .map_err(tokens::nom_error_into)?;
 
