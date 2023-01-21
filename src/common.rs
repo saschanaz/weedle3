@@ -74,7 +74,9 @@ impl<T> From<ParenthesizedNonEmpty<T>> for Parenthesized<T> {
     }
 }
 
-fn prevent_empty_parentheses<'slice, 'a>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+fn prevent_empty_parentheses<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
     contextful_cut(
         "Unexpected empty parentheses",
         nom::combinator::not(nom::combinator::peek(eat_key!(CloseParen))),
@@ -92,7 +94,9 @@ pub struct Bracketed<T> {
     pub close_bracket: term::CloseBracket,
 }
 
-fn prevent_empty_brackets<'slice, 'a>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+fn prevent_empty_brackets<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
     contextful_cut(
         "Unexpected empty brackets",
         nom::combinator::not(nom::combinator::peek(eat_key!(CloseBracket))),

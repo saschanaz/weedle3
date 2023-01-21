@@ -1,7 +1,7 @@
 use weedle_derive::Weedle;
 
 use crate::argument::ArgumentList;
-use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated, ParenthesizedNonEmpty};
+use crate::common::{Bracketed, Identifier, Parenthesized, ParenthesizedNonEmpty, Punctuated};
 use crate::literal::{FloatLit, IntegerLit, StringLit};
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
