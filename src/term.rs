@@ -115,8 +115,6 @@ macro_rules! generate_keyword_struct {
         impl<'a> $crate::Parse<'a> for $typ {
             parser!(eat_key!($typ));
         }
-
-        impl<'a> $crate::ParsePost<'a> for $typ {}
     };
 }
 

@@ -2,7 +2,7 @@ use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
 use crate::tokens::{contextful_cut, Tokens};
-use crate::{term, Parse, ParsePost, VerboseResult};
+use crate::{term, Parse, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
@@ -18,23 +18,19 @@ where
 impl<'a, T: Parse<'a>> Parse<'a> for Option<T> {
     parser!(nom::combinator::opt(weedle!(T)));
 }
-impl<'a, T> ParsePost<'a> for Option<T> {}
 
 impl<'a, T: Parse<'a>> Parse<'a> for Box<T> {
     parser!(nom::combinator::map(weedle!(T), Box::new));
 }
-impl<'a, T> ParsePost<'a> for Box<T> {}
 
 /// Parses `item1 item2 item3...`
 impl<'a, T: Parse<'a>> Parse<'a> for Vec<T> {
     parser!(nom::multi::many0(T::parse_tokens));
 }
-impl<'a, T> ParsePost<'a> for Vec<T> {}
 
 impl<'a, T: Parse<'a>, U: Parse<'a>> Parse<'a> for (T, U) {
     parser!(nom::sequence::tuple((T::parse_tokens, U::parse_tokens)));
 }
-impl<'a, T, U> ParsePost<'a> for (T, U) {}
 
 impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
     parser!(nom::sequence::tuple((
@@ -43,7 +39,6 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
         V::parse_tokens
     )));
 }
-impl<'a, T, U, V> ParsePost<'a> for (T, U, V) {}
 
 /// Parses `( body )`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -56,20 +51,21 @@ pub struct Parenthesized<T> {
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'a>", post_check)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<T> {
     pub open_bracket: term::OpenBracket,
     pub body: T,
+    #[weedle(post_check = "prevent_double_extended_attributes")]
     pub close_bracket: term::CloseBracket,
 }
 
-impl<'a, T> crate::ParsePost<'a> for Bracketed<T> {
-    fn parse_post<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, ()> {
-        contextful_cut(
-            "Illegal double extended attribute lists, consider merging them",
-            nom::combinator::not(nom::combinator::peek(eat_key!(OpenBracket))),
-        )(input)
-    }
+fn prevent_double_extended_attributes<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Illegal double extended attribute lists, consider merging them",
+        nom::combinator::not(nom::combinator::peek(eat_key!(OpenBracket))),
+    )(input)
 }
 
 /// Parses `{ body }`
@@ -102,7 +98,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_body<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::multi::separated_list0(weedle!(S), weedle!(T)),
             marker,
@@ -110,8 +106,6 @@ where
         Ok((input, Self { list, separator }))
     }
 }
-
-impl<'a, T, S> ParsePost<'a> for Punctuated<T, S> {}
 
 /// Parses `item1, item2, item3, ...`
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -125,7 +119,7 @@ where
     T: Parse<'a>,
     S: Parse<'a> + ::std::default::Default,
 {
-    fn parse_body<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, (list, separator)) = nom::sequence::tuple((
             nom::sequence::terminated(
                 nom::multi::separated_list1(weedle!(S), weedle!(T)),
@@ -136,8 +130,6 @@ where
         Ok((input, Self { list, separator }))
     }
 }
-
-impl<'a, T, S> ParsePost<'a> for PunctuatedNonEmpty<T, S> {}
 
 /// Represents an identifier
 ///
@@ -162,7 +154,6 @@ impl<'a> Identifier<'a> {
 impl<'a> Parse<'a> for Identifier<'a> {
     parser!(eat!(Identifier));
 }
-impl<'a> ParsePost<'a> for Identifier<'a> {}
 
 /// Parses rhs of an assignment expression. Ex: `= 45`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

@@ -33,7 +33,7 @@ pub enum StringifierOrInheritOrStatic {
 struct AttributeName<'a>(&'a str);
 
 impl<'a> crate::Parse<'a> for AttributeName<'a> {
-    fn parse_body<'slice>(
+    fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
     ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
@@ -43,8 +43,6 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
         nom::combinator::fail(input)
     }
 }
-
-impl<'a> crate::ParsePost<'a> for AttributeName<'a> {}
 
 impl<'a> From<AttributeName<'a>> for Identifier<'a> {
     fn from(value: AttributeName<'a>) -> Self {
@@ -103,7 +101,7 @@ pub enum Modifier {
 struct OperationName<'a>(&'a str);
 
 impl<'a> crate::Parse<'a> for OperationName<'a> {
-    fn parse_body<'slice>(
+    fn parse_tokens<'slice>(
         input: crate::tokens::Tokens<'slice, 'a>,
     ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
@@ -113,8 +111,6 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
         nom::combinator::fail(input)
     }
 }
-
-impl<'a> crate::ParsePost<'a> for OperationName<'a> {}
 
 impl<'a> From<OperationName<'a>> for Identifier<'a> {
     fn from(value: OperationName<'a>) -> Self {

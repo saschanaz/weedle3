@@ -9,8 +9,6 @@ extern crate quote;
 #[darling(attributes(weedle))]
 struct MacroTopArgs {
     impl_bound: Option<String>,
-    #[darling(default)]
-    post_check: bool,
 }
 
 #[derive(FromField, Debug)]
@@ -18,6 +16,7 @@ struct MacroTopArgs {
 struct MacroArgs {
     from: Option<String>,
     cond: Option<String>,
+    post_check: Option<String>,
 
     /// Use if you need to convert from Option<T> to Option<U>
     #[darling(default)]
@@ -55,6 +54,15 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
             nom::combinator::map(
                 nom::combinator::cond(#cond, #parser),
                 |opt| opt.flatten()
+            )
+        }
+    }
+    if let Some(post_check) = args.post_check {
+        let post_check = string_to_tokens::<Ident>(post_check)?;
+        parser = quote! {
+            nom::combinator::map(
+                nom::sequence::tuple((#parser, #post_check)),
+                |(body, _post)| body
             )
         }
     }
@@ -181,21 +189,12 @@ fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
     let impl_head = quote! { impl<'a,#(#type_param_ids),*> };
     let impl_tail = quote! { for #id #generics #impl_bound };
 
-    let post_impl = if !args.post_check {
-        quote! {
-            #impl_head crate::ParsePost<'a> #impl_tail {}
-        }
-    } else {
-        quote! {}
-    };
-
     Ok(quote! {
         #impl_head crate::Parse<'a> #impl_tail {
-            fn parse_body <'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
                 #impl_body
             }
         }
-        #post_impl
     }
     .into())
 }
