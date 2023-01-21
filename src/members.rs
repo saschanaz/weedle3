@@ -5,6 +5,7 @@ use crate::{
     attribute::ExtendedAttributeList,
     common::{Identifier, Parenthesized},
     literal::ConstValue,
+    tokens::{contextful_cut, Tokens},
     types::{AttributedType, ConstType, Type},
     VerboseResult,
 };
@@ -25,8 +26,18 @@ pub struct ConstMember<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StringifierOrInheritOrStatic {
     Stringifier(term!(stringifier)),
+    #[weedle(post_check = "prevent_inherit_readonly")]
     Inherit(term!(inherit)),
     Static(term!(static)),
+}
+
+fn prevent_inherit_readonly<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Inherited attributes cannot be read-only, as this form is only used to override the setter of the ancestor's attribute",
+        nom::combinator::not(nom::combinator::peek(eat_key!(ReadOnly))),
+    )(input)
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

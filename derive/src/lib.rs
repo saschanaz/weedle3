@@ -1,4 +1,4 @@
-use darling::{FromDeriveInput, FromField, ToTokens};
+use darling::{FromDeriveInput, FromField, FromVariant, ToTokens};
 use proc_macro::TokenStream;
 use syn::*;
 
@@ -13,7 +13,7 @@ struct MacroTopArgs {
 
 #[derive(FromField, Debug)]
 #[darling(attributes(weedle))]
-struct MacroArgs {
+struct MacroFieldArgs {
     from: Option<String>,
     cond: Option<String>,
     post_check: Option<String>,
@@ -21,6 +21,12 @@ struct MacroArgs {
     /// Use if you need to convert from Option<T> to Option<U>
     #[darling(default)]
     opt: bool,
+}
+
+#[derive(FromVariant, Debug)]
+#[darling(attributes(weedle))]
+struct MacroVariantArgs {
+    post_check: Option<String>,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -35,8 +41,21 @@ fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
     Ok(expr.to_token_stream())
 }
 
+fn get_post_check(
+    post_check: String,
+    parser: &proc_macro2::TokenStream,
+) -> Result<proc_macro2::TokenStream> {
+    let post_check = string_to_tokens::<Ident>(post_check)?;
+    Ok(quote! {
+        nom::combinator::map(
+            nom::sequence::tuple((#parser, #post_check)),
+            |(body, _post)| body
+        )
+    })
+}
+
 fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
-    let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
+    let args = MacroFieldArgs::from_field(field).map_err(syn::Error::from)?;
     let ty = &field.ty;
     let mut parser = match args.from {
         Some(from) => {
@@ -58,13 +77,7 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
         }
     }
     if let Some(post_check) = args.post_check {
-        let post_check = string_to_tokens::<Ident>(post_check)?;
-        parser = quote! {
-            nom::combinator::map(
-                nom::sequence::tuple((#parser, #post_check)),
-                |(body, _post)| body
-            )
-        }
+        parser = get_post_check(post_check, &parser)?;
     }
     Ok(parser)
 }
@@ -143,20 +156,32 @@ fn generate_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream>
 }
 
 fn generate_enum(data_enum: &DataEnum) -> Result<proc_macro2::TokenStream> {
-    let field_parsers = data_enum.variants.iter().map(|variant| {
-        let variant_id = &variant.ident;
-        let fields = match &variant.fields {
-            Fields::Unnamed(unnamed) => unnamed,
-            _ => panic!("Only tuple variant enums are supported"),
-        };
-        if fields.unnamed.len() != 1 {
-            panic!("Only one tuple field is supported");
-        }
-        let field = fields.unnamed.first().unwrap();
-        let ty = &field.ty;
+    let field_parsers = data_enum
+        .variants
+        .iter()
+        .map(|variant| {
+            let args = MacroVariantArgs::from_variant(variant).map_err(syn::Error::from)?;
 
-        quote! { weedle!(#ty).map(Self::#variant_id) }
-    });
+            let variant_id = &variant.ident;
+            let fields = match &variant.fields {
+                Fields::Unnamed(unnamed) => unnamed,
+                _ => panic!("Only tuple variant enums are supported"),
+            };
+            if fields.unnamed.len() != 1 {
+                panic!("Only one tuple field is supported");
+            }
+            let field = fields.unnamed.first().unwrap();
+            let ty = &field.ty;
+
+            let mut parser = quote! { weedle!(#ty).map(Self::#variant_id) };
+
+            if let Some(post_check) = args.post_check {
+                parser = get_post_check(post_check, &parser)?;
+            }
+
+            Ok(parser)
+        })
+        .collect::<Result<Vec<_>>>()?;
 
     let result = quote! {
         use nom::Parser;

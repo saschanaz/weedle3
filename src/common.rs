@@ -52,7 +52,7 @@ pub struct Parenthesized<T> {
 /// Parses `( body )`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
-pub struct ParenthesizedNonEmpty<T> {
+pub(crate) struct ParenthesizedNonEmpty<T> {
     #[weedle(post_check = "prevent_empty_parentheses")]
     pub open_paren: term::OpenParen,
     pub body: T,
