@@ -1,7 +1,7 @@
 use weedle_derive::Weedle;
 
 use crate::argument::ArgumentList;
-use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated};
+use crate::common::{Bracketed, Identifier, Parenthesized, Punctuated, ParenthesizedNonEmpty};
 use crate::literal::{FloatLit, IntegerLit, StringLit};
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
@@ -40,6 +40,7 @@ pub struct ExtendedAttributeNamedArgList<'a> {
 pub struct ExtendedAttributeIdentList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "ParenthesizedNonEmpty<IdentifierList<'a>>")]
     pub list: Parenthesized<IdentifierList<'a>>,
 }
 
@@ -76,6 +77,7 @@ pub struct ExtendedAttributeString<'a> {
 pub struct ExtendedAttributeStringList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "ParenthesizedNonEmpty<StringList<'a>>")]
     pub list: Parenthesized<StringList<'a>>,
 }
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -89,6 +91,7 @@ pub struct ExtendedAttributeFloat<'a> {
 pub struct ExtendedAttributeFloatList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "ParenthesizedNonEmpty<FloatList<'a>>")]
     pub list: Parenthesized<FloatList<'a>>,
 }
 
@@ -103,6 +106,7 @@ pub struct ExtendedAttributeInteger<'a> {
 pub struct ExtendedAttributeIntegerList<'a> {
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(from = "ParenthesizedNonEmpty<IntegerList<'a>>")]
     pub list: Parenthesized<IntegerList<'a>>,
 }
 

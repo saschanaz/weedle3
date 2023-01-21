@@ -49,6 +49,38 @@ pub struct Parenthesized<T> {
     pub close_paren: term::CloseParen,
 }
 
+/// Parses `( body )`
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
+pub struct ParenthesizedNonEmpty<T> {
+    #[weedle(post_check = "prevent_empty_parentheses")]
+    pub open_paren: term::OpenParen,
+    pub body: T,
+    pub close_paren: term::CloseParen,
+}
+
+impl<T> From<ParenthesizedNonEmpty<T>> for Parenthesized<T> {
+    fn from(value: ParenthesizedNonEmpty<T>) -> Self {
+        let ParenthesizedNonEmpty {
+            open_paren,
+            body,
+            close_paren,
+        } = value;
+        Self {
+            open_paren,
+            body,
+            close_paren,
+        }
+    }
+}
+
+fn prevent_empty_parentheses<'slice, 'a>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Unexpected empty parentheses",
+        nom::combinator::not(nom::combinator::peek(eat_key!(CloseParen))),
+    )(input)
+}
+
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
