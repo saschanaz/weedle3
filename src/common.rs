@@ -85,10 +85,18 @@ fn prevent_empty_parentheses<'slice, 'a>(input: Tokens<'slice, 'a>) -> VerboseRe
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<T> {
+    #[weedle(post_check = "prevent_empty_brackets")]
     pub open_bracket: term::OpenBracket,
     pub body: T,
     #[weedle(post_check = "prevent_double_extended_attributes")]
     pub close_bracket: term::CloseBracket,
+}
+
+fn prevent_empty_brackets<'slice, 'a>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Unexpected empty brackets",
+        nom::combinator::not(nom::combinator::peek(eat_key!(CloseBracket))),
+    )(input)
 }
 
 fn prevent_double_extended_attributes<'slice, 'a>(
