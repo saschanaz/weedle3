@@ -139,12 +139,15 @@ pub fn contextful_cut<I, O, F>(
 ) -> impl FnMut(I) -> nom::IResult<I, O, nom::error::VerboseError<I>>
 where
     F: nom::Parser<I, O, nom::error::VerboseError<I>>,
+    I: Copy,
 {
-    // Get an error and add a context?
+    use nom::error::ContextError;
     move |input: I| match parser.parse(input) {
         Err(nom::Err::Error(mut e)) => {
-            e.errors.last_mut().unwrap().1 = nom::error::VerboseErrorKind::Context(ctx);
-            Err(nom::Err::Failure(e))
+            e.errors.clear();
+            Err(nom::Err::Failure(nom::error::VerboseError::add_context(
+                input, ctx, e,
+            )))
         }
         rest => rest,
     }

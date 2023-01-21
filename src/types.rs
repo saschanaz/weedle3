@@ -149,16 +149,18 @@ pub enum FloatingPointType {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct RecordType<'a> {
     pub record: term!(record),
-    pub generics: Generics<(Box<RecordKeyType<'a>>, term!(,), Box<AttributedType<'a>>)>,
+    pub generics: Generics<(RecordKeyType, term!(,), Box<AttributedType<'a>>)>,
 }
 
 /// Parses one of the string types `ByteString|DOMString|USVString` or any other type.
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum RecordKeyType<'a> {
+#[weedle(
+    cut = "Record key must be one of: ByteString, DOMString, USVString with no extended attributes"
+)]
+pub enum RecordKeyType {
     Byte(term!(ByteString)),
     DOM(term!(DOMString)),
     USV(term!(USVString)),
-    NonAny(DistinguishableType<'a>),
 }
 
 /// Parses one of the member of a union type
@@ -273,9 +275,8 @@ mod test {
         RecordType;
     });
 
-    test!(should_parse_record_type_alt_types { "record<u64, short>" =>
-        "";
-        RecordType;
+    test!(err should_not_parse_record_type_alt_types { "record<u64, short>" =>
+        RecordType
     });
 
     test!(should_parse_double_type { "double" =>

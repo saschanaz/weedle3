@@ -9,6 +9,7 @@ extern crate quote;
 #[darling(attributes(weedle))]
 struct MacroTopArgs {
     impl_bound: Option<String>,
+    cut: Option<String>,
 }
 
 #[derive(FromField, Debug)]
@@ -205,11 +206,17 @@ fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
         Some(b) => string_to_tokens::<WhereClause>(b)?,
         _ => quote! {},
     };
-    let impl_body = match &ast.data {
+    let mut impl_body = match &ast.data {
         syn::Data::Struct(data_struct) => generate_struct(data_struct),
         syn::Data::Enum(data_enum) => generate_enum(data_enum),
         syn::Data::Union(_) => panic!("Unions not supported"),
     }?;
+
+    if let Some(cut) = args.cut {
+        impl_body = quote! {
+            crate::tokens::contextful_cut(#cut, |input| { #impl_body })(input)
+        };
+    }
 
     let impl_head = quote! { impl<'a,#(#type_param_ids),*> };
     let impl_tail = quote! { for #id #generics #impl_bound };
