@@ -22,12 +22,17 @@ struct MacroFieldArgs {
     /// Use if you need to convert from Option<T> to Option<U>
     #[darling(default)]
     opt: bool,
+    #[darling(default)]
+    generic_into: bool,
 }
 
 #[derive(FromVariant, Debug)]
 #[darling(attributes(weedle))]
 struct MacroVariantArgs {
+    from: Option<String>,
     post_check: Option<String>,
+    #[darling(default)]
+    generic_into: bool,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -40,6 +45,24 @@ fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
     };
     let expr: T = s.parse()?;
     Ok(expr.to_token_stream())
+}
+
+fn get_base_parser(
+    ty: &Type,
+    from: Option<String>,
+    generic_into: bool,
+) -> Result<proc_macro2::TokenStream> {
+    Ok(match from {
+        Some(from) => {
+            let from = string_to_tokens::<Type>(from)?;
+            if generic_into {
+                quote! { nom::combinator::map(weedle!(#from), |g| g.generic_into()) }
+            } else {
+                quote! { nom::combinator::into(weedle!(#from)) }
+            }
+        }
+        _ => quote! { weedle!(#ty) },
+    })
 }
 
 fn get_post_check(
@@ -58,13 +81,7 @@ fn get_post_check(
 fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     let args = MacroFieldArgs::from_field(field).map_err(syn::Error::from)?;
     let ty = &field.ty;
-    let mut parser = match args.from {
-        Some(from) => {
-            let from = string_to_tokens::<Type>(from)?;
-            quote! { nom::combinator::into(weedle!(#from)) }
-        }
-        _ => quote! { weedle!(#ty) },
-    };
+    let mut parser = get_base_parser(ty, args.from, args.generic_into)?;
     if args.opt {
         parser = quote! { nom::combinator::opt(#parser) };
     }
@@ -174,7 +191,8 @@ fn generate_enum(data_enum: &DataEnum) -> Result<proc_macro2::TokenStream> {
             let field = fields.unnamed.first().unwrap();
             let ty = &field.ty;
 
-            let mut parser = quote! { weedle!(#ty).map(Self::#variant_id) };
+            let parser = get_base_parser(ty, args.from, args.generic_into)?;
+            let mut parser = quote! { #parser.map(Self::#variant_id) };
 
             if let Some(post_check) = args.post_check {
                 parser = get_post_check(post_check, &parser)?;

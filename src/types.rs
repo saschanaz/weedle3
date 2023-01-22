@@ -9,6 +9,31 @@ use crate::Parse;
 pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)>>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+struct UnionTypeMultiple<'a>(
+    Parenthesized<(
+        UnionMemberType<'a>,
+        term!(or),
+        Punctuated<UnionMemberType<'a>, term!(or)>,
+    )>,
+);
+
+impl<'a> From<UnionTypeMultiple<'a>> for UnionType<'a> {
+    fn from(value: UnionTypeMultiple<'a>) -> Self {
+        // XXX: request nom::multi::separated_list_m_n?
+        let mut list = vec![value.0.body.0];
+        list.extend(value.0.body.2.list);
+        Self {
+            open_paren: value.0.open_paren,
+            body: Punctuated {
+                list,
+                separator: term!(or),
+            },
+            close_paren: value.0.close_paren,
+        }
+    }
+}
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
     Any(term!(any)),
     Promise(PromiseType<'a>),
@@ -19,6 +44,7 @@ pub enum SingleType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Single(SingleType<'a>),
+    #[weedle(from = "MayBeNull<UnionTypeMultiple<'a>>", generic_into)]
     Union(MayBeNull<UnionType<'a>>),
 }
 
@@ -86,6 +112,16 @@ pub struct ObservableArrayType<'a> {
 pub struct MayBeNull<T> {
     pub type_: T,
     pub q_mark: Option<term::QMark>,
+}
+
+impl<T> MayBeNull<T> {
+    pub fn generic_into<S: From<T>>(self) -> MayBeNull<S> {
+        let MayBeNull { type_, q_mark } = self;
+        MayBeNull {
+            type_: type_.into(),
+            q_mark,
+        }
+    }
 }
 
 /// Parses a `Promise<Type|undefined>` type
@@ -165,6 +201,7 @@ pub enum RecordKeyType {
 
 /// Parses one of the member of a union type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(cut = "Expected a union member type that is not an `any` or `Promise`")]
 pub enum UnionMemberType<'a> {
     Single(AttributedNonAnyType<'a>),
     Union(MayBeNull<UnionType<'a>>),
