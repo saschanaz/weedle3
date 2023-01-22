@@ -1,12 +1,14 @@
 use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
-use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
+use crate::common::{Generics, Identifier, Parenthesized, ParenthesizedNonEmpty, Punctuated};
 use crate::term;
 use crate::Parse;
 
+type UnionInner<'a> = Punctuated<UnionMemberType<'a>, term!(or)>;
+type UnionTypeNonEmpty<'a> = ParenthesizedNonEmpty<UnionInner<'a>>;
 /// Parses a union of types
-pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)>>;
+pub type UnionType<'a> = Parenthesized<UnionInner<'a>>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
@@ -19,6 +21,7 @@ pub enum SingleType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Single(SingleType<'a>),
+    #[weedle(from = "MayBeNull<UnionTypeNonEmpty<'a>>", generic_into)]
     Union(MayBeNull<UnionType<'a>>),
 }
 
@@ -86,6 +89,16 @@ pub struct ObservableArrayType<'a> {
 pub struct MayBeNull<T> {
     pub type_: T,
     pub q_mark: Option<term::QMark>,
+}
+
+impl<T> MayBeNull<T> {
+    pub fn generic_into<S: From<T>>(self) -> MayBeNull<S> {
+        let MayBeNull { type_, q_mark } = self;
+        MayBeNull {
+            type_: type_.into(),
+            q_mark,
+        }
+    }
 }
 
 /// Parses a `Promise<Type|undefined>` type
