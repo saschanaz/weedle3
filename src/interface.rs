@@ -23,6 +23,7 @@ pub struct Inheritance<'a> {
 ///
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct ConstructorInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub constructor: term!(constructor),
@@ -50,6 +51,7 @@ pub struct DoubleTypedIterable<'a> {
 
 /// Parses an iterable declaration `[attributes]? (iterable<attributedtype> | iterable<attributedtype, attributedtype>) ;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub enum IterableInterfaceMember<'a> {
     Single(SingleTypedIterable<'a>),
     Double(DoubleTypedIterable<'a>),
@@ -77,6 +79,7 @@ pub struct DoubleTypedAsyncIterable<'a> {
 
 /// Parses an async iterable declaration `[attributes]? async (iterable<attributedtype> | iterable<attributedtype, attributedtype>) (( args ))? ;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub enum AsyncIterableInterfaceMember<'a> {
     Single(SingleTypedAsyncIterable<'a>),
     Double(DoubleTypedAsyncIterable<'a>),
@@ -84,6 +87,7 @@ pub enum AsyncIterableInterfaceMember<'a> {
 
 /// Parses an maplike declaration `[attributes]? readonly? maplike<attributedtype, attributedtype>;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct MaplikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: Option<term!(readonly)>,
@@ -93,6 +97,7 @@ pub struct MaplikeInterfaceMember<'a> {
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct SetlikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: Option<term!(readonly)>,
@@ -103,6 +108,7 @@ pub struct SetlikeInterfaceMember<'a> {
 
 /// Parses `stringifier;`
 #[derive(Weedle, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct StringifierMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: term!(stringifier),

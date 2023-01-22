@@ -124,6 +124,7 @@ pub type Definitions<'a> = Vec<Definition<'a>>;
 
 /// Parses `[attributes]? callback identifier = type ( (arg1, arg2, ..., argN)? );`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
@@ -136,6 +137,7 @@ pub struct CallbackDefinition<'a> {
 
 /// Parses `[attributes]? callback interface identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct CallbackInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
@@ -147,6 +149,7 @@ pub struct CallbackInterfaceDefinition<'a> {
 
 /// Parses `[attributes]? interface identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
@@ -158,6 +161,7 @@ pub struct InterfaceDefinition<'a> {
 
 /// Parses `[attributes]? interface mixin identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct InterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
@@ -169,6 +173,7 @@ pub struct InterfaceMixinDefinition<'a> {
 
 /// Parses `[attributes]? namespace identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
@@ -179,6 +184,7 @@ pub struct NamespaceDefinition<'a> {
 
 /// Parses `[attributes]? dictionary identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
@@ -190,6 +196,7 @@ pub struct DictionaryDefinition<'a> {
 
 /// Parses `[attributes]? partial interface identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
@@ -201,6 +208,7 @@ pub struct PartialInterfaceDefinition<'a> {
 
 /// Parses `[attributes]? partial interface mixin identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialInterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
@@ -213,6 +221,7 @@ pub struct PartialInterfaceMixinDefinition<'a> {
 
 /// Parses `[attributes]? partial dictionary identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialDictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
@@ -224,6 +233,7 @@ pub struct PartialDictionaryDefinition<'a> {
 
 /// Parses `[attributes]? partial namespace identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialNamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
@@ -235,6 +245,7 @@ pub struct PartialNamespaceDefinition<'a> {
 
 /// Parses `[attributes]? enum identifier { values };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
@@ -245,6 +256,7 @@ pub struct EnumDefinition<'a> {
 
 /// Parses `[attributes]? typedef attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub typedef: term!(typedef),
@@ -255,6 +267,7 @@ pub struct TypedefDefinition<'a> {
 
 /// Parses `[attributes]? identifier includes identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub lhs_identifier: Identifier<'a>,

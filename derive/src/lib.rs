@@ -10,6 +10,8 @@ extern crate quote;
 struct MacroTopArgs {
     impl_bound: Option<String>,
     cut: Option<String>,
+    #[darling(default)]
+    context: bool,
 }
 
 #[derive(FromField, Debug)]
@@ -233,6 +235,11 @@ fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
     if let Some(cut) = args.cut {
         impl_body = quote! {
             crate::tokens::contextful_cut(#cut, |input| { #impl_body })(input)
+        };
+    } else if args.context {
+        let id = id.to_string();
+        impl_body = quote! {
+            nom::error::context(#id, |input| { #impl_body })(input)
         };
     }
 

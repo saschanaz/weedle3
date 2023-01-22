@@ -12,6 +12,7 @@ use crate::{
 
 /// Parses a const interface member `[attributes]? const type identifier = value;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub const_: term!(const),
@@ -63,6 +64,7 @@ impl<'a> From<AttributeName<'a>> for Identifier<'a> {
 
 /// Parses `[attributes]? (stringifier|inherit|static)? readonly? attribute attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct AttributeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub modifier: Option<StringifierOrInheritOrStatic>,
@@ -76,6 +78,7 @@ pub struct AttributeInterfaceMember<'a> {
 
 /// Parses `[attributes]? stringifier? readonly? attribute attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct AttributeMixinMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub stringifier: Option<term!(stringifier)>,
@@ -89,6 +92,7 @@ pub struct AttributeMixinMember<'a> {
 
 /// Parses `[attribute]? readonly attributetype type identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct AttributeNamespaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: term!(readonly),
@@ -133,6 +137,7 @@ impl<'a> From<OperationName<'a>> for Identifier<'a> {
 ///
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub modifier: Option<Modifier>,
@@ -147,6 +152,7 @@ pub struct OperationInterfaceMember<'a> {
 ///
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct RegularOperationMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: Type<'a>,

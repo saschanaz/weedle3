@@ -9,6 +9,7 @@ pub type DictionaryMembers<'a> = Vec<DictionaryMember<'a>>;
 
 /// Parses dictionary member `[attributes]? required? type identifier ( = default )?;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct DictionaryMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub required: Option<term!(required)>,

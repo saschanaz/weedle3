@@ -116,6 +116,7 @@ pub struct ExtendedAttributeNoArgs<'a>(pub Identifier<'a>);
 
 /// Parses on of the forms of attribute
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub enum ExtendedAttribute<'a> {
     ArgList(ExtendedAttributeArgList<'a>),
     NamedArgList(ExtendedAttributeNamedArgList<'a>),

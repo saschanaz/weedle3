@@ -81,6 +81,7 @@ pub struct VariadicArgument<'a> {
 
 /// Parses an argument. Ex: `double v1|double... v1s`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub enum Argument<'a> {
     Single(SingleArgument<'a>),
     Variadic(VariadicArgument<'a>),
