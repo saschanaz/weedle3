@@ -1,14 +1,37 @@
 use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
-use crate::common::{Generics, Identifier, Parenthesized, ParenthesizedNonEmpty, Punctuated};
+use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
 use crate::term;
 use crate::Parse;
 
-type UnionInner<'a> = Punctuated<UnionMemberType<'a>, term!(or)>;
-type UnionTypeNonEmpty<'a> = ParenthesizedNonEmpty<UnionInner<'a>>;
 /// Parses a union of types
-pub type UnionType<'a> = Parenthesized<UnionInner<'a>>;
+pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)>>;
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+struct UnionTypeMultiple<'a>(
+    Parenthesized<(
+        UnionMemberType<'a>,
+        term!(or),
+        Punctuated<UnionMemberType<'a>, term!(or)>,
+    )>,
+);
+
+impl<'a> From<UnionTypeMultiple<'a>> for UnionType<'a> {
+    fn from(value: UnionTypeMultiple<'a>) -> Self {
+        // XXX: request nom::multi::separated_list_m_n?
+        let mut list = vec![value.0.body.0];
+        list.extend(value.0.body.2.list);
+        Self {
+            open_paren: value.0.open_paren,
+            body: Punctuated {
+                list,
+                separator: term!(or),
+            },
+            close_paren: value.0.close_paren,
+        }
+    }
+}
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
@@ -21,7 +44,7 @@ pub enum SingleType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Single(SingleType<'a>),
-    #[weedle(from = "MayBeNull<UnionTypeNonEmpty<'a>>", generic_into)]
+    #[weedle(from = "MayBeNull<UnionTypeMultiple<'a>>", generic_into)]
     Union(MayBeNull<UnionType<'a>>),
 }
 
@@ -178,6 +201,7 @@ pub enum RecordKeyType {
 
 /// Parses one of the member of a union type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(cut = "Expected a union member type that is not an `any` or `Promise`")]
 pub enum UnionMemberType<'a> {
     Single(AttributedNonAnyType<'a>),
     Union(MayBeNull<UnionType<'a>>),
