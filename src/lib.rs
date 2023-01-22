@@ -128,6 +128,7 @@ pub type Definitions<'a> = Vec<Definition<'a>>;
 pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
     pub return_type: Type<'a>,
@@ -143,6 +144,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
     pub interface: term!(interface),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<CallbackInterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -155,6 +157,7 @@ pub struct CallbackInterfaceDefinition<'a> {
 pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<InterfaceMembers<'a>>,
@@ -169,6 +172,7 @@ pub struct InterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
     pub mixin: term!(mixin),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<MixinMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -181,6 +185,7 @@ pub struct InterfaceMixinDefinition<'a> {
 pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<NamespaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -193,6 +198,7 @@ pub struct NamespaceDefinition<'a> {
 pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<DictionaryMembers<'a>>,
@@ -207,6 +213,7 @@ pub struct PartialInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub interface: term!(interface),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<InterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -221,6 +228,7 @@ pub struct PartialInterfaceMixinDefinition<'a> {
     pub partial: term!(partial),
     pub interface: term!(interface),
     pub mixin: term!(mixin),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<MixinMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -234,6 +242,7 @@ pub struct PartialDictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<DictionaryMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -247,6 +256,7 @@ pub struct PartialNamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub namespace: term!(namespace),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub members: Braced<NamespaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -259,6 +269,7 @@ pub struct PartialNamespaceDefinition<'a> {
 pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub values: Braced<EnumValueList<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -272,6 +283,7 @@ pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub typedef: term!(typedef),
     pub type_: AttributedType<'a>,
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -292,14 +304,14 @@ pub struct IncludesStatementDefinition<'a> {
 /// Parses a definition
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
-    Callback(CallbackDefinition<'a>),
     CallbackInterface(CallbackInterfaceDefinition<'a>),
-    Interface(InterfaceDefinition<'a>),
+    Callback(CallbackDefinition<'a>),
     InterfaceMixin(InterfaceMixinDefinition<'a>),
+    Interface(InterfaceDefinition<'a>),
     Namespace(NamespaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
-    PartialInterface(PartialInterfaceDefinition<'a>),
     PartialInterfaceMixin(PartialInterfaceMixinDefinition<'a>),
+    PartialInterface(PartialInterfaceDefinition<'a>),
     PartialDictionary(PartialDictionaryDefinition<'a>),
     PartialNamespace(PartialNamespaceDefinition<'a>),
     Enum(EnumDefinition<'a>),

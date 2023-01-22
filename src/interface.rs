@@ -16,6 +16,7 @@ pub type CallbackInterfaceMembers<'a> = Vec<CallbackInterfaceMember<'a>>;
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Inheritance<'a> {
     pub colon: term!(:),
+    #[weedle(cut = "Missing name for inheritance")]
     pub identifier: Identifier<'a>,
 }
 

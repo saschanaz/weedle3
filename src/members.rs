@@ -17,6 +17,7 @@ pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub const_: term!(const),
     pub const_type: ConstType<'a>,
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
     pub const_value: ConstValue<'a>,
@@ -72,7 +73,7 @@ pub struct AttributeInterfaceMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    #[weedle(from = "AttributeName")]
+    #[weedle(from = "AttributeName", cut = "Missing name")]
     pub identifier: Identifier<'a>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -87,7 +88,7 @@ pub struct AttributeMixinMember<'a> {
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    #[weedle(from = "AttributeName")]
+    #[weedle(from = "AttributeName", cut = "Missing name")]
     pub identifier: Identifier<'a>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -101,7 +102,7 @@ pub struct AttributeNamespaceMember<'a> {
     pub readonly: term!(readonly),
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
-    #[weedle(from = "AttributeName")]
+    #[weedle(from = "AttributeName", cut = "Missing name")]
     pub identifier: Identifier<'a>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
