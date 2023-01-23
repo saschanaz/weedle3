@@ -45,7 +45,9 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Parenthesized<T> {
     pub open_paren: term::OpenParen,
+    #[weedle(cut = "Unrecognized argument")]
     pub body: T,
+    #[weedle(cut = "Unrecognized argument")]
     pub close_paren: term::CloseParen,
 }
 
