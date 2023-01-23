@@ -116,6 +116,7 @@ fn prevent_double_extended_attributes<'slice, 'a>(
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Braced<T> {
+    #[weedle(cut = "Missing body")]
     pub open_brace: term::OpenBrace,
     #[weedle(cut = "Unrecognized member definition")]
     pub body: T,
