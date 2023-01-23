@@ -92,7 +92,10 @@ pub struct Bracketed<T> {
     #[weedle(post_check = "prevent_empty_brackets")]
     pub open_bracket: term::OpenBracket,
     pub body: T,
-    #[weedle(post_check = "prevent_double_extended_attributes")]
+    #[weedle(
+        cut = "Unrecognized extended attribute",
+        post_check = "prevent_double_extended_attributes"
+    )]
     pub close_bracket: term::CloseBracket,
 }
 
