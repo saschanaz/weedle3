@@ -130,8 +130,11 @@ pub struct CallbackDefinition<'a> {
     pub callback: term!(callback),
     #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
+    #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
+    #[weedle(cut = "Unrecognized return type")]
     pub return_type: Type<'a>,
+    #[weedle(cut = "Unrecognized argument list")]
     pub arguments: Parenthesized<ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
