@@ -129,6 +129,7 @@ pub struct Braced<T> {
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Generics<T> {
     pub open_angle: term::LessThan,
+    #[weedle(cut = "Unrecognized type parameter")]
     pub body: T,
     pub close_angle: term::GreaterThan,
 }
