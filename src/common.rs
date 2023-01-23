@@ -118,6 +118,7 @@ fn prevent_double_extended_attributes<'slice, 'a>(
 pub struct Braced<T> {
     pub open_brace: term::OpenBrace,
     pub body: T,
+    #[weedle(cut = "Unrecognized member definition")]
     pub close_brace: term::CloseBrace,
 }
 
