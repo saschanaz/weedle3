@@ -212,6 +212,7 @@ impl<'a> Parse<'a> for Identifier<'a> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Default<'a> {
     pub assign: term!(=),
+    #[weedle(cut = "Unrecognized default value")]
     pub value: DefaultValue<'a>,
 }
 
