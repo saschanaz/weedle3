@@ -14,6 +14,7 @@ pub struct DictionaryMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub required: Option<term!(required)>,
     pub type_: Type<'a>,
+    #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     #[weedle(cond = "required.is_none()")]
     pub default: Option<Default<'a>>,
