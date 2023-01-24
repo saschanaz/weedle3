@@ -16,9 +16,11 @@ use crate::{
 pub struct ConstMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub const_: term!(const),
+    #[weedle(cut = "Unrecognized const type")]
     pub const_type: ConstType<'a>,
     #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
+    #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
     #[weedle(cut = "Unrecognized const value")]
     pub const_value: ConstValue<'a>,
