@@ -20,6 +20,7 @@ pub struct ConstMember<'a> {
     #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
     pub assign: term!(=),
+    #[weedle(cut = "Unrecognized const value")]
     pub const_value: ConstValue<'a>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
