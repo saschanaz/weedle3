@@ -99,6 +99,7 @@ pub struct AttributeMixinMember<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(context)]
 pub struct AttributeNamespaceMember<'a> {
+    #[weedle(post_check = "prevent_writable_attribute")]
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: term!(readonly),
     pub attribute: term!(attribute),
@@ -107,6 +108,15 @@ pub struct AttributeNamespaceMember<'a> {
     pub identifier: Identifier<'a>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
+}
+
+fn prevent_writable_attribute<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Non-readonly attributes are not allowed in namespaces",
+        nom::combinator::not(nom::combinator::peek(eat_key!(Attribute))),
+    )(input)
 }
 
 /// Parses one of the special keyword `getter|setter|deleter` or `static`.
