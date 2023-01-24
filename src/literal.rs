@@ -94,6 +94,7 @@ impl<'a> Parse<'a> for StringLit<'a> {
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EmptyArrayLit {
     pub open_bracket: term!(OpenBracket),
+    #[weedle(cut = "Default sequence value must be empty")]
     pub close_bracket: term!(CloseBracket),
 }
 
@@ -101,6 +102,7 @@ pub struct EmptyArrayLit {
 #[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct EmptyDictionaryLit {
     pub open_brace: term!(OpenBrace),
+    #[weedle(cut = "Default dictionary value must be empty")]
     pub close_brace: term!(CloseBrace),
 }
 
