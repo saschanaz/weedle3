@@ -10,26 +10,28 @@ use crate::{term, VerboseResult};
 pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)>>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-struct UnionTypeMultiple<'a>(
-    Parenthesized<(
-        UnionMemberType<'a>,
-        term!(or),
-        Punctuated<UnionMemberType<'a>, term!(or)>,
-    )>,
-);
+struct UnionTypeMultiple<'a> {
+    open_paren: term!(OpenParen),
+    first: UnionMemberType<'a>,
+    #[weedle(cut = "A union type needs at least two member types")]
+    or: term!(or),
+    more: Punctuated<UnionMemberType<'a>, term!(or)>,
+    #[weedle(cut = "Expected a union member type")]
+    close_paren: term!(CloseParen),
+}
 
 impl<'a> From<UnionTypeMultiple<'a>> for UnionType<'a> {
     fn from(value: UnionTypeMultiple<'a>) -> Self {
         // XXX: request nom::multi::separated_list_m_n?
-        let mut list = vec![value.0.body.0];
-        list.extend(value.0.body.2.list);
+        let mut list = vec![value.first];
+        list.extend(value.more.list);
         Self {
-            open_paren: value.0.open_paren,
+            open_paren: value.open_paren,
             body: Punctuated {
                 list,
                 separator: term!(or),
             },
-            close_paren: value.0.close_paren,
+            close_paren: value.close_paren,
         }
     }
 }

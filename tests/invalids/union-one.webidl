@@ -1,1 +1,1 @@
-typedef (/*OnlyOne*/) UnionOne;
+typedef (OnlyOne) UnionOne;
