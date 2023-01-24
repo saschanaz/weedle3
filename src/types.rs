@@ -2,8 +2,9 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
-use crate::term;
+use crate::tokens::{contextful_cut, Tokens};
 use crate::Parse;
+use crate::{term, VerboseResult};
 
 /// Parses a union of types
 pub type UnionType<'a> = Parenthesized<Punctuated<UnionMemberType<'a>, term!(or)>>;
@@ -35,9 +36,20 @@ impl<'a> From<UnionTypeMultiple<'a>> for UnionType<'a> {
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
+    #[weedle(post_check = "prevent_unexpected_nullable")]
     Any(term!(any)),
+    #[weedle(post_check = "prevent_unexpected_nullable")]
     Promise(PromiseType<'a>),
     Distinguishable(DistinguishableType<'a>),
+}
+
+fn prevent_unexpected_nullable<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "`any` and Promise cannot be nullable",
+        nom::combinator::not(nom::combinator::peek(eat_key!(QMark))),
+    )(input)
 }
 
 /// Parses either single type or a union type
