@@ -285,6 +285,7 @@ pub struct EnumDefinition<'a> {
 pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub typedef: term!(typedef),
+    #[weedle(cut = "Unrecognized type")]
     pub type_: AttributedType<'a>,
     #[weedle(cut = "Missing name")]
     pub identifier: Identifier<'a>,
