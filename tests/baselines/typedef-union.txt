@@ -3,9 +3,7 @@
         TypedefDefinition {
             attributes: None,
             typedef: VariantToken {
-                variant: Typedef(
-                    "typedef",
-                ),
+                variant: Typedef,
                 trivia: "  ",
             },
             type_: AttributedType {
@@ -14,9 +12,7 @@
                     MayBeNull {
                         type_: Parenthesized {
                             open_paren: VariantToken {
-                                variant: OpenParen(
-                                    "(",
-                                ),
+                                variant: OpenParen,
                                 trivia: " ",
                             },
                             body: Punctuated {
@@ -86,12 +82,10 @@
                                         },
                                     ),
                                 ],
-                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Or>>,
+                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Or>>,
                             },
                             close_paren: VariantToken {
-                                variant: CloseParen(
-                                    ")",
-                                ),
+                                variant: CloseParen,
                                 trivia: "",
                             },
                         },
@@ -106,9 +100,7 @@
                 trivia: " ",
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

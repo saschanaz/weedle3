@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
             },
             identifier: VariantToken {
@@ -17,9 +15,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -29,70 +25,54 @@
                             modifier: Some(
                                 Stringifier(
                                     VariantToken {
-                                        variant: Stringifier(
-                                            "stringifier",
-                                        ),
+                                        variant: Stringifier,
                                         trivia: "\n  ",
                                     },
                                 ),
                             ),
                             special: None,
-                            return_type: Type(
-                                Single(
-                                    NonAny(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
-                                                    trivia: " ",
-                                                },
-                                                q_mark: None,
+                            return_type: Single(
+                                Distinguishable(
+                                    DOMString(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: DOMString,
+                                                trivia: " ",
                                             },
-                                        ),
+                                            q_mark: None,
+                                        },
                                     ),
                                 ),
                             ),
                             identifier: None,
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: " ",
                                 },
                                 body: Punctuated {
                                     list: [],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },
@@ -101,9 +81,7 @@
         InterfaceDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "\n\n",
             },
             identifier: VariantToken {
@@ -115,9 +93,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -125,31 +101,23 @@
                         StringifierMember {
                             attributes: None,
                             stringifier: VariantToken {
-                                variant: Stringifier(
-                                    "stringifier",
-                                ),
+                                variant: Stringifier,
                                 trivia: "\n  ",
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

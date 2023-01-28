@@ -1,16 +1,24 @@
 macro_rules! parser {
     ($parse:expr) => {
-        fn parse(
-            input: $crate::parser::Tokens<'slice, 'a>,
-        ) -> $crate::IResult<$crate::parser::Tokens<'slice, 'a>, Self> {
+        fn parse_tokens<'slice>(
+            input: $crate::tokens::Tokens<'slice, 'a>,
+        ) -> $crate::IResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
             $parse(input)
+        }
+    };
+}
+
+macro_rules! lexer {
+    ($lex:expr) => {
+        pub fn lex(input: &'a str) -> $crate::IResult<&'a str, Self> {
+            $lex(input)
         }
     };
 }
 
 macro_rules! weedle {
     ($t:ty) => {
-        <$t as $crate::Parse<'slice, 'a>>::parse
+        <$t as $crate::Parse<'a>>::parse_tokens
     };
 }
 
@@ -32,11 +40,75 @@ macro_rules! test_match {
     ($name:ident { $input:literal => $rem:expr; $typ:ty => $match:pat_param $(if $guard:expr)? }) => {
         #[test]
         fn $name() {
-            let (unread, result) = <$typ>::parse($input).unwrap();
+            let (unread, result) = <$typ>::lex($input).unwrap();
 
             assert_eq!(unread, $rem);
             assert!(matches!(result, $match $(if $guard )?));
         }
+    };
+}
+
+// XXX: Working around the lambda function limitation about lifetimes
+// https://github.com/rust-lang/rust/issues/58052
+pub fn annotate<'slice, 'token, F, R>(f: F) -> F
+where
+    F: Fn(
+        crate::tokens::Tokens<'slice, 'token>,
+    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'token>, R>,
+    'token: 'slice,
+{
+    f
+}
+
+macro_rules! eat {
+    ($variant:ident) => {
+        $crate::macros::annotate(
+            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
+                use nom::{InputIter, Slice};
+                match input.iter_elements().next() {
+                    Some($crate::lexer::Token {
+                        value: $crate::lexer::Terminal::$variant(variant),
+                        trivia,
+                    }) => Ok((
+                        input.slice(1..),
+                        $crate::parser::eat::VariantToken { variant, trivia },
+                    )),
+                    _ => nom::combinator::fail(input),
+                }
+            },
+        )
+    };
+}
+
+macro_rules! eat_key {
+    ($variant:ident) => {
+        $crate::macros::annotate(
+            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
+                use nom::{InputIter, Slice};
+                use $crate::lexer::Terminal;
+                use $crate::term::Keyword;
+                match input.iter_elements().next() {
+                    Some($crate::lexer::Token {
+                        value: Terminal::Keyword(Keyword::$variant(variant)),
+                        trivia,
+                    }) => Ok((
+                        input.slice(1..),
+                        $crate::parser::eat::VariantToken { variant, trivia },
+                    )),
+                    _ => nom::combinator::fail(input),
+                }
+            },
+        )
+    };
+}
+
+macro_rules! try_eat_keys {
+    ($typ:ident, $input:ident, $($variant:ident),+) => {
+        $(
+            if let Ok((tokens, result)) = eat_key!($variant)($input) {
+                return Ok((tokens, $typ(result.trivia, result.variant.value())));
+            }
+        )+
     };
 }
 
@@ -54,29 +126,25 @@ macro_rules! test {
     (@arg $parsed:ident $($lhs:tt).+() == $rhs:expr; $($rest:tt)*) => {
         assert_eq!($parsed.$($lhs).+(), $rhs);
         test!(@arg $parsed $($rest)*);
-    };
-    (err $name:ident { $raw:expr => $typ:ty }) => {
+    };    (err $name:ident { $raw:expr => $typ:ty }) => {
         #[test]
         fn $name() {
-            let tokens = $crate::lexer::lex($raw).unwrap();
-            <$typ>::parse($crate::parser::Tokens(&tokens[..])).unwrap_err();
+            <$typ>::parse($raw).unwrap_err();
         }
     };
     ($name:ident { $raw:expr => $rem:expr; $typ:ty => $val:expr }) => {
         #[test]
         fn $name() {
-            let tokens = $crate::lexer::lex($raw).unwrap();
-            let (rem, parsed) = <$typ>::parse($crate::parser::Tokens(&tokens[..])).unwrap();
-            assert_eq!(unsafe { rem.remaining($raw) }, $rem);
+            let (rem, parsed) = <$typ>::parse($raw).unwrap();
+            assert_eq!(rem, $rem);
             assert_eq!(parsed, $val);
         }
     };
     ($name:ident { $raw:expr => $rem:expr; $typ:ty; $($body:tt)* }) => {
         #[test]
         fn $name() {
-            let tokens = $crate::lexer::lex($raw).unwrap();
-            let (_rem, _parsed) = <$typ>::parse($crate::parser::Tokens(&tokens[..])).unwrap();
-            assert_eq!(unsafe { _rem.remaining($raw) }, $rem);
+            let (_rem, _parsed) = <$typ>::parse($raw).unwrap();
+            assert_eq!(_rem, $rem);
             test!(@arg _parsed $($body)*);
         }
     };
@@ -92,9 +160,8 @@ macro_rules! test_variants {
                     use $crate::types::*;
                     #[test]
                     fn should_parse() {
-                        let tokens = $crate::lexer::lex($value).unwrap();
-                        let (rem, parsed) = $struct_::parse($crate::parser::Tokens(&tokens[..])).unwrap();
-                        assert_eq!(unsafe { rem.remaining($value) }, "");
+                        let (rem, parsed) = $struct_::parse($value).unwrap();
+                        assert_eq!(rem, "");
                         match parsed {
                             $struct_::$variant(_) => {},
                             _ => { panic!("Failed to parse"); }

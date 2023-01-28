@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "",
             },
             identifier: VariantToken {
@@ -17,9 +15,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -29,28 +25,22 @@
                             modifier: None,
                             readonly: Some(
                                 VariantToken {
-                                    variant: ReadOnly(
-                                        "readonly",
-                                    ),
+                                    variant: ReadOnly,
                                     trivia: "\n\n  // A simple attribute that can be set to any string value.\n  ",
                                 },
                             ),
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
+                                                    variant: DOMString,
                                                     trivia: " ",
                                                 },
                                                 q_mark: None,
@@ -59,34 +49,26 @@
                                     ),
                                 ),
                             },
-                            identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "name",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "name",
                                 ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },
@@ -95,9 +77,7 @@
         InterfaceDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "\n\n",
             },
             identifier: VariantToken {
@@ -109,9 +89,7 @@
             inheritance: Some(
                 Inheritance {
                     colon: VariantToken {
-                        variant: Colon(
-                            ":",
-                        ),
+                        variant: Colon,
                         trivia: " ",
                     },
                     identifier: VariantToken {
@@ -124,9 +102,7 @@
             ),
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -136,38 +112,30 @@
                             modifier: None,
                             readonly: Some(
                                 VariantToken {
-                                    variant: ReadOnly(
-                                        "readonly",
-                                    ),
+                                    variant: ReadOnly,
                                     trivia: "\n\n  // An attribute whose value cannot be assigned to.\n  ",
                                 },
                             ),
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Integer(
                                             MayBeNull {
                                                 type_: Short(
                                                     ShortType {
                                                         unsigned: Some(
                                                             VariantToken {
-                                                                variant: Unsigned(
-                                                                    "unsigned",
-                                                                ),
+                                                                variant: Unsigned,
                                                                 trivia: " ",
                                                             },
                                                         ),
                                                         short: VariantToken {
-                                                            variant: Short(
-                                                                "short",
-                                                            ),
+                                                            variant: Short,
                                                             trivia: " ",
                                                         },
                                                     },
@@ -178,18 +146,14 @@
                                     ),
                                 ),
                             },
-                            identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "age",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "age",
                                 ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -200,30 +164,24 @@
                             modifier: Some(
                                 Inherit(
                                     VariantToken {
-                                        variant: Inherit(
-                                            "inherit",
-                                        ),
+                                        variant: Inherit,
                                         trivia: "\n\n  // An attribute that can raise an exception if it is set to an invalid value.\n  // Its getter behavior is inherited from Animal, and need not be specified\n  // the description of Person.\n  ",
                                     },
                                 ),
                             ),
                             readonly: None,
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
+                                                    variant: DOMString,
                                                     trivia: " ",
                                                 },
                                                 q_mark: None,
@@ -232,34 +190,26 @@
                                     ),
                                 ),
                             },
-                            identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "name",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "name",
                                 ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

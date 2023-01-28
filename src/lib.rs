@@ -29,15 +29,16 @@ use self::interface::{Inheritance, InterfaceMembers};
 use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
-use self::types::{AttributedType, ReturnType};
+use self::types::{AttributedType, Type};
 pub use nom::{error::Error, Err, IResult};
 use parser::eat::VariantToken;
 use weedle_derive::Weedle;
 
 #[macro_use]
 mod macros;
-#[macro_use]
 mod whitespace;
+#[macro_use]
+pub mod term;
 pub mod argument;
 pub mod attribute;
 pub mod common;
@@ -48,13 +49,12 @@ pub mod mixin;
 pub mod namespace;
 pub mod types;
 
-#[macro_use]
-pub mod lexer;
-#[macro_use]
+mod lexer;
+mod tokens;
 pub mod parser;
 
-use crate::lexer::lex;
-use crate::parser::Tokens;
+use lexer::lex;
+use tokens::Tokens;
 
 /// A convenient parse function
 ///
@@ -71,34 +71,31 @@ use crate::parser::Tokens;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(
-    input: &'_ str,
-) -> Result<(Definitions<'_>, &'_ str), nom::Err<nom::error::Error<&'_ str>>> {
+pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
     let tokens = lex(input)?;
-
-    let (unread, (defs, eof)) = nom::sequence::tuple((Definitions::parse, eat!(Eof)))(Tokens(
-        &tokens[..],
-    ))
-    .map_err(|err| match err {
-        nom::Err::Incomplete(need) => nom::Err::Incomplete(need),
-        nom::Err::Error(err) => nom::Err::Error(nom::error::Error {
-            code: err.code,
-            input: unsafe { err.input.0[0].remaining(input) },
-        }),
-        nom::Err::Failure(err) => nom::Err::Failure(nom::error::Error {
-            code: err.code,
-            input: unsafe { err.input.0[0].remaining(input) },
-        }),
-    })?;
+    let (unread, (defs, _eof)) = nom::sequence::tuple((
+        Definitions::parse_tokens,
+        nom::combinator::cut(eat!(Eof)),
+    ))(Tokens(&tokens[..]))
+    .map_err(tokens::nom_error_into)?;
 
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
 
-    Ok((defs, eof.trivia))
+    Ok(defs)
 }
 
-pub trait Parse<'slice, 'token>: Sized {
-    fn parse(input: Tokens<'slice, 'token>) -> IResult<Tokens<'slice, 'token>, Self>;
+pub trait Parse<'token>: Sized {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'token>)
+        -> IResult<Tokens<'slice, 'token>, Self>;
+
+    fn parse(input: &'token str) -> IResult<&'token str, Self> {
+        let tokens = lex(input)?;
+        let (unread, def) =
+            Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
+        let (unread, _) = whitespace::sp(unread.into())?;
+        Ok((unread, def))
+    }
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.
@@ -113,7 +110,7 @@ pub struct CallbackDefinition<'a> {
     pub callback: term!(callback),
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub return_type: ReturnType<'a>,
+    pub return_type: Type<'a>,
     pub arguments: Parenthesized<'a, ArgumentList<'a>>,
     pub semi_colon: term!(;),
 }
@@ -321,7 +318,7 @@ mod test {
             Vector crossProduct(Vector x, Vector y);
         };
     " =>
-        "\n    ";
+        "";
         PartialNamespaceDefinition;
         attributes.is_none();
         identifier.variant.0 == "VectorUtils";
@@ -341,7 +338,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         PartialInterfaceMixinDefinition;
         attributes.is_none();
         identifier.variant.0 == "WindowSessionStorage";
@@ -353,7 +350,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         PartialInterfaceDefinition;
         attributes.is_none();
         identifier.variant.0 == "Window";
@@ -367,7 +364,7 @@ mod test {
           Vector crossProduct(Vector x, Vector y);
         };
     " =>
-        "\n    ";
+        "";
         NamespaceDefinition;
         attributes.is_none();
         identifier.variant.0 == "VectorUtils";
@@ -379,7 +376,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         InterfaceMixinDefinition;
         attributes.is_none();
         identifier.variant.0 == "WindowSessionStorage";
@@ -391,7 +388,7 @@ mod test {
           readonly attribute Storage sessionStorage;
         };
     " =>
-        "\n    ";
+        "";
         InterfaceDefinition;
         attributes.is_none();
         identifier.variant.0 == "Window";
@@ -405,7 +402,7 @@ mod test {
           attribute long? option3;
         };
     " =>
-        "\n    ";
+        "";
         CallbackInterfaceDefinition;
         attributes.is_none();
         identifier.variant.0 == "Options";
@@ -424,7 +421,7 @@ mod test {
         // This is a comment
         callback AsyncOperationCallback = undefined (DOMString status);
     " =>
-        "\n    ";
+        "";
         CallbackDefinition;
     });
 
@@ -432,7 +429,7 @@ mod test {
         /* This is a comment */
         callback AsyncOperationCallback = undefined (DOMString status);
     " =>
-        "\n    ";
+        "";
         CallbackDefinition;
     });
 
@@ -444,7 +441,7 @@ mod test {
         // This is a comment
         callback AsyncOperationCallback = undefined (DOMString status);
     " =>
-        "\n    ";
+        "";
         CallbackDefinition;
     });
 }

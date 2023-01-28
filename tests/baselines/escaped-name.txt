@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "",
             },
             identifier: VariantToken {
@@ -17,9 +15,7 @@
             inheritance: Some(
                 Inheritance {
                     colon: VariantToken {
-                        variant: Colon(
-                            ":",
-                        ),
+                        variant: Colon,
                         trivia: " ",
                     },
                     identifier: VariantToken {
@@ -32,23 +28,17 @@
             ),
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },
@@ -63,9 +53,7 @@
                 trivia: "\n",
             },
             includes: VariantToken {
-                variant: Includes(
-                    "includes",
-                ),
+                variant: Includes,
                 trivia: " ",
             },
             rhs_identifier: VariantToken {
@@ -75,9 +63,7 @@
                 trivia: " ",
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

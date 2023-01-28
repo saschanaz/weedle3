@@ -3,15 +3,11 @@
         PartialInterfaceDefinition {
             attributes: None,
             partial: VariantToken {
-                variant: Partial(
-                    "partial",
-                ),
+                variant: Partial,
                 trivia: "",
             },
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: " ",
             },
             identifier: VariantToken {
@@ -22,9 +18,7 @@
             },
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -33,9 +27,7 @@
                             attributes: Some(
                                 Bracketed {
                                     open_bracket: VariantToken {
-                                        variant: OpenBracket(
-                                            "[",
-                                        ),
+                                        variant: OpenBracket,
                                         trivia: "\n  ",
                                     },
                                     body: Punctuated {
@@ -51,12 +43,10 @@
                                                 ),
                                             ),
                                         ],
-                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                     },
                                     close_bracket: VariantToken {
-                                        variant: CloseBracket(
-                                            "]",
-                                        ),
+                                        variant: CloseBracket,
                                         trivia: "",
                                     },
                                 },
@@ -64,18 +54,14 @@
                             modifier: None,
                             readonly: None,
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: Some(
                                     Bracketed {
                                         open_bracket: VariantToken {
-                                            variant: OpenBracket(
-                                                "[",
-                                            ),
+                                            variant: OpenBracket,
                                             trivia: " ",
                                         },
                                         body: Punctuated {
@@ -89,9 +75,7 @@
                                                             trivia: "",
                                                         },
                                                         assign: VariantToken {
-                                                            variant: Assign(
-                                                                "=",
-                                                            ),
+                                                            variant: Assign,
                                                             trivia: "",
                                                         },
                                                         rhs: VariantToken {
@@ -103,18 +87,16 @@
                                                     },
                                                 ),
                                             ],
-                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                         },
                                         close_bracket: VariantToken {
-                                            variant: CloseBracket(
-                                                "]",
-                                            ),
+                                            variant: CloseBracket,
                                             trivia: "",
                                         },
                                     },
                                 ),
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Identifier(
                                             MayBeNull {
                                                 type_: VariantToken {
@@ -129,34 +111,26 @@
                                     ),
                                 ),
                             },
-                            identifier: Identifier(
-                                VariantToken {
-                                    variant: Identifier(
-                                        "-will-change",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "-will-change",
                                 ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

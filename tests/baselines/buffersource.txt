@@ -4,9 +4,7 @@
             attributes: Some(
                 Bracketed {
                     open_bracket: VariantToken {
-                        variant: OpenBracket(
-                            "[",
-                        ),
+                        variant: OpenBracket,
                         trivia: "",
                     },
                     body: Punctuated {
@@ -20,9 +18,7 @@
                                         trivia: "",
                                     },
                                     assign: VariantToken {
-                                        variant: Assign(
-                                            "=",
-                                        ),
+                                        variant: Assign,
                                         trivia: "",
                                     },
                                     rhs: VariantToken {
@@ -34,20 +30,16 @@
                                 },
                             ),
                         ],
-                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                     },
                     close_bracket: VariantToken {
-                        variant: CloseBracket(
-                            "]",
-                        ),
+                        variant: CloseBracket,
                         trivia: "",
                     },
                 },
             ),
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "\n",
             },
             identifier: VariantToken {
@@ -59,9 +51,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -70,29 +60,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -104,13 +95,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             DataView(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: DataView(
-                                                                            "DataView",
-                                                                        ),
+                                                                        variant: DataView,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -119,31 +108,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "view",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "view",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -153,29 +136,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -187,13 +171,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Int8Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Int8Array(
-                                                                            "Int8Array",
-                                                                        ),
+                                                                        variant: Int8Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -202,31 +184,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -236,29 +212,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -270,13 +247,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Int16Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Int16Array(
-                                                                            "Int16Array",
-                                                                        ),
+                                                                        variant: Int16Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -285,31 +260,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -319,29 +288,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -353,13 +323,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Int32Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Int32Array(
-                                                                            "Int32Array",
-                                                                        ),
+                                                                        variant: Int32Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -368,31 +336,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -402,29 +364,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -436,13 +399,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Uint8Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Uint8Array(
-                                                                            "Uint8Array",
-                                                                        ),
+                                                                        variant: Uint8Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -451,31 +412,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -485,29 +440,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -519,13 +475,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Uint16Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Uint16Array(
-                                                                            "Uint16Array",
-                                                                        ),
+                                                                        variant: Uint16Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -534,31 +488,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -568,29 +516,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -602,13 +551,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Uint32Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Uint32Array(
-                                                                            "Uint32Array",
-                                                                        ),
+                                                                        variant: Uint32Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -617,31 +564,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -651,29 +592,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -685,13 +627,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Uint8ClampedArray(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Uint8ClampedArray(
-                                                                            "Uint8ClampedArray",
-                                                                        ),
+                                                                        variant: Uint8ClampedArray,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -700,31 +640,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -734,29 +668,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -768,13 +703,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             BigInt64Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: BigInt64Array(
-                                                                            "BigInt64Array",
-                                                                        ),
+                                                                        variant: BigInt64Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -783,31 +716,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -817,29 +744,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -851,13 +779,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             BigUint64Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: BigUint64Array(
-                                                                            "BigUint64Array",
-                                                                        ),
+                                                                        variant: BigUint64Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -866,31 +792,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -900,29 +820,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -934,13 +855,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Float32Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Float32Array(
-                                                                            "Float32Array",
-                                                                        ),
+                                                                        variant: Float32Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -949,31 +868,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -983,29 +896,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "add",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "add",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -1017,13 +931,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Float64Array(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Float64Array(
-                                                                            "Float64Array",
-                                                                        ),
+                                                                        variant: Float64Array,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -1032,31 +944,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "array",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "array",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -1066,29 +972,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "addAny",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "addAny",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -1100,7 +1007,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
@@ -1115,31 +1022,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "source",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "source",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -1149,29 +1050,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "addBuffer",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "addBuffer",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -1183,13 +1085,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             ArrayBuffer(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: ArrayBuffer(
-                                                                            "ArrayBuffer",
-                                                                        ),
+                                                                        variant: ArrayBuffer,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -1198,31 +1098,25 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "buffer",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "buffer",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -1232,29 +1126,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "addView",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "addView",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -1266,7 +1161,7 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
@@ -1281,47 +1176,37 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Identifier(
-                                                    VariantToken {
-                                                        variant: Identifier(
-                                                            "view",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "view",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

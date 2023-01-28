@@ -3,9 +3,7 @@
         DictionaryDefinition {
             attributes: None,
             dictionary: VariantToken {
-                variant: Dictionary(
-                    "dictionary",
-                ),
+                variant: Dictionary,
                 trivia: "",
             },
             identifier: VariantToken {
@@ -17,9 +15,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -27,20 +23,16 @@
                         attributes: None,
                         required: None,
                         type_: Single(
-                            NonAny(
+                            Distinguishable(
                                 DOMString(
                                     MayBeNull {
                                         type_: VariantToken {
-                                            variant: DOMString(
-                                                "DOMString",
-                                            ),
+                                            variant: DOMString,
                                             trivia: "\n  ",
                                         },
                                         q_mark: Some(
                                             VariantToken {
-                                                variant: QuestionMark(
-                                                    "?",
-                                                ),
+                                                variant: QMark,
                                                 trivia: "",
                                             },
                                         ),
@@ -57,9 +49,7 @@
                         default: Some(
                             Default {
                                 assign: VariantToken {
-                                    variant: Assign(
-                                        "=",
-                                    ),
+                                    variant: Assign,
                                     trivia: " ",
                                 },
                                 value: String(
@@ -73,9 +63,7 @@
                             },
                         ),
                         semi_colon: VariantToken {
-                            variant: SemiColon(
-                                ";",
-                            ),
+                            variant: SemiColon,
                             trivia: "",
                         },
                     },
@@ -83,20 +71,16 @@
                         attributes: None,
                         required: None,
                         type_: Single(
-                            NonAny(
+                            Distinguishable(
                                 DOMString(
                                     MayBeNull {
                                         type_: VariantToken {
-                                            variant: DOMString(
-                                                "DOMString",
-                                            ),
+                                            variant: DOMString,
                                             trivia: "\n  ",
                                         },
                                         q_mark: Some(
                                             VariantToken {
-                                                variant: QuestionMark(
-                                                    "?",
-                                                ),
+                                                variant: QMark,
                                                 trivia: "",
                                             },
                                         ),
@@ -113,25 +97,19 @@
                         default: Some(
                             Default {
                                 assign: VariantToken {
-                                    variant: Assign(
-                                        "=",
-                                    ),
+                                    variant: Assign,
                                     trivia: " ",
                                 },
                                 value: Null(
                                     VariantToken {
-                                        variant: Null(
-                                            "null",
-                                        ),
+                                        variant: Null,
                                         trivia: " ",
                                     },
                                 ),
                             },
                         ),
                         semi_colon: VariantToken {
-                            variant: SemiColon(
-                                ";",
-                            ),
+                            variant: SemiColon,
                             trivia: "",
                         },
                     },
@@ -139,7 +117,7 @@
                         attributes: None,
                         required: None,
                         type_: Single(
-                            NonAny(
+                            Distinguishable(
                                 Identifier(
                                     MayBeNull {
                                         type_: VariantToken {
@@ -161,24 +139,18 @@
                         },
                         default: None,
                         semi_colon: VariantToken {
-                            variant: SemiColon(
-                                ";",
-                            ),
+                            variant: SemiColon,
                             trivia: "",
                         },
                     },
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },
@@ -187,9 +159,7 @@
         DictionaryDefinition {
             attributes: None,
             dictionary: VariantToken {
-                variant: Dictionary(
-                    "dictionary",
-                ),
+                variant: Dictionary,
                 trivia: "\n\n",
             },
             identifier: VariantToken {
@@ -201,9 +171,7 @@
             inheritance: Some(
                 Inheritance {
                     colon: VariantToken {
-                        variant: Colon(
-                            ":",
-                        ),
+                        variant: Colon,
                         trivia: " ",
                     },
                     identifier: VariantToken {
@@ -216,9 +184,7 @@
             ),
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -226,16 +192,14 @@
                         attributes: None,
                         required: None,
                         type_: Single(
-                            NonAny(
+                            Distinguishable(
                                 FloatingPoint(
                                     MayBeNull {
                                         type_: Float(
                                             FloatType {
                                                 unrestricted: None,
                                                 float: VariantToken {
-                                                    variant: Float(
-                                                        "float",
-                                                    ),
+                                                    variant: Float,
                                                     trivia: "\n  ",
                                                 },
                                             },
@@ -253,24 +217,18 @@
                         },
                         default: None,
                         semi_colon: VariantToken {
-                            variant: SemiColon(
-                                ";",
-                            ),
+                            variant: SemiColon,
                             trivia: "",
                         },
                     },
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

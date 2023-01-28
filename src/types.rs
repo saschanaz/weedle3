@@ -2,7 +2,6 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
-use crate::lexer::keywords;
 use crate::parser::eat::VariantToken;
 use crate::term;
 use crate::Parse;
@@ -13,8 +12,8 @@ pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, term!
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
     Any(term!(any)),
-    NonAny(NonAnyType<'a>),
     Promise(PromiseType<'a>),
+    Distinguishable(DistinguishableType<'a>),
 }
 
 /// Parses either single type or a union type
@@ -26,7 +25,7 @@ pub enum Type<'a> {
 
 // Parses any single non-any type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum NonAnyType<'a> {
+pub enum DistinguishableType<'a> {
     Integer(MayBeNull<'a, IntegerType<'a>>),
     FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
     Boolean(MayBeNull<'a, term!(boolean)>),
@@ -55,8 +54,8 @@ pub enum NonAnyType<'a> {
     FrozenArrayType(MayBeNull<'a, FrozenArrayType<'a>>),
     ObservableArrayType(MayBeNull<'a, ObservableArrayType<'a>>),
     RecordType(MayBeNull<'a, RecordType<'a>>),
-    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
     Undefined(MayBeNull<'a, term!(undefined)>),
+    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
 }
 
 /// Parses `sequence<Type>`
@@ -84,17 +83,17 @@ pub struct ObservableArrayType<'a> {
 ///
 /// `??` means an actual ? not an optional requirement
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct MayBeNull<'a, T> {
     pub type_: T,
-    pub q_mark: Option<VariantToken<'a, keywords::QuestionMark<'a>>>,
+    pub q_mark: Option<VariantToken<'a, term::QMark>>,
 }
 
 /// Parses a `Promise<Type|undefined>` type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PromiseType<'a> {
     pub promise: term!(Promise),
-    pub generics: Generics<'a, Box<ReturnType<'a>>>,
+    pub generics: Generics<'a, Box<Type<'a>>>,
 }
 
 /// Parses `unsigned? long long`
@@ -160,7 +159,7 @@ pub enum RecordKeyType<'a> {
     Byte(term!(ByteString)),
     DOM(term!(DOMString)),
     USV(term!(USVString)),
-    NonAny(NonAnyType<'a>),
+    NonAny(DistinguishableType<'a>),
 }
 
 /// Parses one of the member of a union type
@@ -182,13 +181,6 @@ pub enum ConstType<'a> {
     Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
 }
 
-/// Parses the return type which may be `undefined` or any given Type
-#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum ReturnType<'a> {
-    Undefined(term!(undefined)),
-    Type(Type<'a>),
-}
-
 /// Parses `[attributes]? type`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributedType<'a> {
@@ -200,7 +192,7 @@ pub struct AttributedType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct AttributedNonAnyType<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub type_: NonAnyType<'a>,
+    pub type_: DistinguishableType<'a>,
 }
 
 #[cfg(test)]
@@ -220,25 +212,19 @@ mod test {
     });
 
     test_variants!(
-        ReturnType {
-            Undefined == "undefined",
-            Type == "any",
-        }
-    );
-
-    test_variants!(
         ConstType {
             Integer == "short",
             FloatingPoint == "float",
             Boolean == "boolean",
             Byte == "byte",
             Octet == "octet",
+            Bigint == "bigint",
             Identifier == "name",
         }
     );
 
     test_variants!(
-        NonAnyType {
+        DistinguishableType {
             Integer == "long",
             FloatingPoint == "float",
             Boolean == "boolean",
@@ -263,6 +249,7 @@ mod test {
             Float64Array == "Float64Array",
             FrozenArrayType == "FrozenArray<short>",
             RecordType == "record<DOMString, short>",
+            Undefined == "undefined",
             Identifier == "mango"
         }
     );
@@ -350,8 +337,8 @@ mod test {
     test_variants!(
         SingleType {
             Any == "any",
-            NonAny == "record<DOMString, short>",
             Promise == "Promise<long>",
+            Distinguishable == "record<DOMString, short>",
         }
     );
 
@@ -377,11 +364,8 @@ mod test {
     #[test]
     fn should_parse_union_member_type_attributed_union() {
         use crate::types::UnionMemberType;
-
-        let input = "([Clamp] byte or [Named] byte)";
-        let tokens = crate::lexer::lex(input).unwrap();
-        let (rem, parsed) = UnionMemberType::parse(crate::parser::Tokens(&tokens[..])).unwrap();
-        assert_eq!(unsafe { rem.remaining(input) }, "");
+        let (rem, parsed) = UnionMemberType::parse("([Clamp] byte or [Named] byte)").unwrap();
+        assert_eq!(rem, "");
         match parsed {
             UnionMemberType::Union(MayBeNull {
                 type_:

@@ -3,15 +3,13 @@
         TypedefDefinition {
             attributes: None,
             typedef: VariantToken {
-                variant: Typedef(
-                    "typedef",
-                ),
+                variant: Typedef,
                 trivia: "",
             },
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
-                    NonAny(
+                    Distinguishable(
                         Identifier(
                             MayBeNull {
                                 type_: VariantToken {
@@ -33,9 +31,7 @@
                 trivia: " ",
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },
@@ -44,35 +40,29 @@
         TypedefDefinition {
             attributes: None,
             typedef: VariantToken {
-                variant: Typedef(
-                    "typedef",
-                ),
+                variant: Typedef,
                 trivia: "\n",
             },
             type_: AttributedType {
                 attributes: None,
                 type_: Single(
-                    NonAny(
+                    Distinguishable(
                         Sequence(
                             MayBeNull {
                                 type_: SequenceType {
                                     sequence: VariantToken {
-                                        variant: Sequence(
-                                            "sequence",
-                                        ),
+                                        variant: Sequence,
                                         trivia: " ",
                                     },
                                     generics: Generics {
                                         open_angle: VariantToken {
-                                            variant: LessThan(
-                                                "<",
-                                            ),
+                                            variant: LessThan,
                                             trivia: "",
                                         },
                                         body: AttributedType {
                                             attributes: None,
                                             type_: Single(
-                                                NonAny(
+                                                Distinguishable(
                                                     Identifier(
                                                         MayBeNull {
                                                             type_: VariantToken {
@@ -88,9 +78,7 @@
                                             ),
                                         },
                                         close_angle: VariantToken {
-                                            variant: GreaterThan(
-                                                ">",
-                                            ),
+                                            variant: GreaterThan,
                                             trivia: "",
                                         },
                                     },
@@ -108,9 +96,7 @@
                 trivia: " ",
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

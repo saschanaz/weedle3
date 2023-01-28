@@ -4,9 +4,7 @@
             attributes: Some(
                 Bracketed {
                     open_bracket: VariantToken {
-                        variant: OpenBracket(
-                            "[",
-                        ),
+                        variant: OpenBracket,
                         trivia: "\n",
                     },
                     body: Punctuated {
@@ -20,9 +18,7 @@
                                         trivia: "",
                                     },
                                     assign: VariantToken {
-                                        variant: Assign(
-                                            "=",
-                                        ),
+                                        variant: Assign,
                                         trivia: "",
                                     },
                                     rhs: VariantToken {
@@ -34,20 +30,16 @@
                                 },
                             ),
                         ],
-                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                     },
                     close_bracket: VariantToken {
-                        variant: CloseBracket(
-                            "]",
-                        ),
+                        variant: CloseBracket,
                         trivia: "",
                     },
                 },
             ),
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "\n",
             },
             identifier: VariantToken {
@@ -59,9 +51,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -71,21 +61,17 @@
                             modifier: None,
                             readonly: None,
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: "\n  ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Boolean(
                                             MayBeNull {
                                                 type_: VariantToken {
-                                                    variant: Boolean(
-                                                        "boolean",
-                                                    ),
+                                                    variant: Boolean,
                                                     trivia: " ",
                                                 },
                                                 q_mark: None,
@@ -94,18 +80,14 @@
                                     ),
                                 ),
                             },
-                            identifier: Async(
-                                VariantToken {
-                                    variant: Async(
-                                        "async",
-                                    ),
-                                    trivia: " ",
-                                },
-                            ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "async",
                                 ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -115,29 +97,30 @@
                             attributes: None,
                             modifier: None,
                             special: None,
-                            return_type: Undefined(
-                                VariantToken {
-                                    variant: Undefined(
-                                        "undefined",
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
                                     ),
-                                    trivia: "\n  ",
-                                },
+                                ),
                             ),
                             identifier: Some(
-                                Identifier(
-                                    VariantToken {
-                                        variant: Identifier(
-                                            "asyncOp",
-                                        ),
-                                        trivia: " ",
-                                    },
-                                ),
+                                VariantToken {
+                                    variant: Identifier(
+                                        "asyncOp",
+                                    ),
+                                    trivia: " ",
+                                },
                             ),
                             args: Parenthesized {
                                 open_paren: VariantToken {
-                                    variant: OpenParen(
-                                        "(",
-                                    ),
+                                    variant: OpenParen,
                                     trivia: "",
                                 },
                                 body: Punctuated {
@@ -149,13 +132,11 @@
                                                 type_: AttributedType {
                                                     attributes: None,
                                                     type_: Single(
-                                                        NonAny(
+                                                        Distinguishable(
                                                             Boolean(
                                                                 MayBeNull {
                                                                     type_: VariantToken {
-                                                                        variant: Boolean(
-                                                                            "boolean",
-                                                                        ),
+                                                                        variant: Boolean,
                                                                         trivia: "",
                                                                     },
                                                                     q_mark: None,
@@ -164,47 +145,37 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: Async(
-                                                    VariantToken {
-                                                        variant: Async(
-                                                            "async",
-                                                        ),
-                                                        trivia: " ",
-                                                    },
-                                                ),
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "async",
+                                                    ),
+                                                    trivia: " ",
+                                                },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                 },
                                 close_paren: VariantToken {
-                                    variant: CloseParen(
-                                        ")",
-                                    ),
+                                    variant: CloseParen,
                                     trivia: "",
                                 },
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

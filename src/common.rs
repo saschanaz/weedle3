@@ -2,73 +2,74 @@ use std::marker::PhantomData;
 
 use weedle_derive::Weedle;
 
-use crate::lexer::keywords;
 use crate::literal::DefaultValue;
 use crate::parser::eat::VariantToken;
-use crate::parser::Tokens;
-use crate::{term, Parse};
+use crate::tokens::Tokens;
+use crate::{term, IResult, Parse};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Option<T> {
+impl<'a, T: Parse<'a>> Parse<'a> for Option<T> {
     parser!(nom::combinator::opt(weedle!(T)));
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Box<T> {
+impl<'a, T: Parse<'a>> Parse<'a> for Box<T> {
     parser!(nom::combinator::map(weedle!(T), Box::new));
 }
 
 /// Parses `item1 item2 item3...`
-impl<'slice, 'a, T: Parse<'slice, 'a>> Parse<'slice, 'a> for Vec<T> {
-    parser!(nom::multi::many0(T::parse));
+impl<'a, T: Parse<'a>> Parse<'a> for Vec<T> {
+    parser!(nom::multi::many0(T::parse_tokens));
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>> Parse<'slice, 'a> for (T, U) {
-    parser!(nom::sequence::tuple((T::parse, U::parse)));
+impl<'a, T: Parse<'a>, U: Parse<'a>> Parse<'a> for (T, U) {
+    parser!(nom::sequence::tuple((T::parse_tokens, U::parse_tokens)));
 }
 
-impl<'slice, 'a, T: Parse<'slice, 'a>, U: Parse<'slice, 'a>, V: Parse<'slice, 'a>> Parse<'slice, 'a>
-    for (T, U, V)
-{
-    parser!(nom::sequence::tuple((T::parse, U::parse, V::parse)));
+impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
+    parser!(nom::sequence::tuple((
+        T::parse_tokens,
+        U::parse_tokens,
+        V::parse_tokens
+    )));
 }
 
 /// Parses `( body )`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Parenthesized<'a, T> {
-    pub open_paren: VariantToken<'a, keywords::OpenParen<'a>>,
+    pub open_paren: VariantToken<'a, term::OpenParen>,
     pub body: T,
-    pub close_paren: VariantToken<'a, keywords::CloseParen<'a>>,
+    pub close_paren: VariantToken<'a, term::CloseParen>,
 }
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<'a, T> {
-    pub open_bracket: VariantToken<'a, keywords::OpenBracket<'a>>,
+    pub open_bracket: VariantToken<'a, term::OpenBracket>,
     pub body: T,
-    pub close_bracket: VariantToken<'a, keywords::CloseBracket<'a>>,
+    pub close_bracket: VariantToken<'a, term::CloseBracket>,
 }
 
 /// Parses `{ body }`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Braced<'a, T> {
-    pub open_brace: VariantToken<'a, keywords::OpenBrace<'a>>,
+    pub open_brace: VariantToken<'a, term::OpenBrace>,
     pub body: T,
-    pub close_brace: VariantToken<'a, keywords::CloseBrace<'a>>,
+    pub close_brace: VariantToken<'a, term::CloseBrace>,
 }
 
 /// Parses `< body >`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[weedle(impl_bound = "where T: Parse<'slice, 'a>")]
+#[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Generics<'a, T> {
-    pub open_angle: VariantToken<'a, keywords::LessThan<'a>>,
+    pub open_angle: VariantToken<'a, term::LessThan>,
     pub body: T,
-    pub close_angle: VariantToken<'a, keywords::GreaterThan<'a>>,
+    pub close_angle: VariantToken<'a, term::GreaterThan>,
 }
 
 /// Parses `(item1, item2, item3,...)?`
@@ -78,12 +79,12 @@ pub struct Punctuated<T, S> {
     pub separator: std::marker::PhantomData<S>,
 }
 
-impl<'slice, 'a, T, S> Parse<'slice, 'a> for Punctuated<T, S>
+impl<'a, T, S> Parse<'a> for Punctuated<T, S>
 where
-    T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a>,
+    T: Parse<'a>,
+    S: Parse<'a>,
 {
-    fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
         Ok((
             input,
@@ -102,12 +103,12 @@ pub struct PunctuatedNonEmpty<T, S> {
     pub separator: std::marker::PhantomData<S>,
 }
 
-impl<'slice, 'a, T, S> Parse<'slice, 'a> for PunctuatedNonEmpty<T, S>
+impl<'a, T, S> Parse<'a> for PunctuatedNonEmpty<T, S>
 where
-    T: Parse<'slice, 'a>,
-    S: Parse<'slice, 'a>,
+    T: Parse<'a>,
+    S: Parse<'a>,
 {
-    fn parse(input: Tokens<'slice, 'a>) -> crate::IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(
             nom::multi::separated_list1(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S)),
@@ -129,23 +130,21 @@ where
 pub struct Identifier<'a>(pub &'a str);
 
 impl<'a> Identifier<'a> {
-    pub fn parse(input: &'a str) -> crate::IResult<&'a str, Self> {
-        nom::combinator::map(
-            nom::combinator::recognize(nom::sequence::tuple((
-                nom::combinator::opt(nom::branch::alt((
-                    nom::character::complete::char('_'),
-                    nom::character::complete::char('-'),
-                ))),
-                nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
-                nom::bytes::complete::take_while(is_alphanum_underscore_dash),
+    lexer!(nom::combinator::map(
+        nom::combinator::recognize(nom::sequence::tuple((
+            nom::combinator::opt(nom::branch::alt((
+                nom::character::complete::char('_'),
+                nom::character::complete::char('-'),
             ))),
-            Identifier,
-        )(input)
-    }
+            nom::bytes::complete::take_while1(nom::AsChar::is_alpha),
+            nom::bytes::complete::take_while(is_alphanum_underscore_dash),
+        ))),
+        Identifier,
+    ));
 }
 
-impl<'slice, 'a> Parse<'slice, 'a> for VariantToken<'a, Identifier<'a>> {
-    parser!(crate::eat!(Id));
+impl<'a> Parse<'a> for VariantToken<'a, Identifier<'a>> {
+    parser!(eat!(Identifier));
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`
@@ -208,7 +207,7 @@ mod test {
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(VariantToken<Identifier>, VariantToken<keywords::Comma>, VariantToken<Identifier>)> =>
+        Generics<(VariantToken<Identifier>, VariantToken<term::Comma>, VariantToken<Identifier>)> =>
             Generics {
                 open_angle: VariantToken::default(),
                 body: (
@@ -222,12 +221,12 @@ mod test {
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<VariantToken<Identifier>, VariantToken<keywords::Comma>>;
+        Punctuated<VariantToken<Identifier>, VariantToken<term::Comma>>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<VariantToken<Identifier>, VariantToken<keywords::Comma>>
+        PunctuatedNonEmpty<VariantToken<Identifier>, VariantToken<term::Comma>>
     });
 
     test_match!(should_parse_identifier { "hello" =>
@@ -251,7 +250,7 @@ mod test {
     });
 
     test!(should_parse_identifier_surrounding_with_spaces { "  hello  " =>
-        "  ";
+        "";
         VariantToken<Identifier>;
         variant.0 == "hello";
     });

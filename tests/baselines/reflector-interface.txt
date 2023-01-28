@@ -3,15 +3,11 @@
         InterfaceMixinDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "",
             },
             mixin: VariantToken {
-                variant: Mixin(
-                    "mixin",
-                ),
+                variant: Mixin,
                 trivia: " ",
             },
             identifier: VariantToken {
@@ -22,9 +18,7 @@
             },
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -33,9 +27,7 @@
                             attributes: Some(
                                 Bracketed {
                                     open_bracket: VariantToken {
-                                        variant: OpenBracket(
-                                            "[",
-                                        ),
+                                        variant: OpenBracket,
                                         trivia: "\n  ",
                                     },
                                     body: Punctuated {
@@ -59,9 +51,7 @@
                                                         trivia: " ",
                                                     },
                                                     assign: VariantToken {
-                                                        variant: Assign(
-                                                            "=",
-                                                        ),
+                                                        variant: Assign,
                                                         trivia: "",
                                                     },
                                                     rhs: VariantToken {
@@ -73,12 +63,10 @@
                                                 },
                                             ),
                                         ],
-                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                     },
                                     close_bracket: VariantToken {
-                                        variant: CloseBracket(
-                                            "]",
-                                        ),
+                                        variant: CloseBracket,
                                         trivia: "",
                                     },
                                 },
@@ -86,21 +74,17 @@
                             stringifier: None,
                             readonly: None,
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
+                                                    variant: DOMString,
                                                     trivia: " ",
                                                 },
                                                 q_mark: None,
@@ -116,9 +100,7 @@
                                 trivia: " ",
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -128,9 +110,7 @@
                             attributes: Some(
                                 Bracketed {
                                     open_bracket: VariantToken {
-                                        variant: OpenBracket(
-                                            "[",
-                                        ),
+                                        variant: OpenBracket,
                                         trivia: "\n  // Parens may contain 2 to n values.\n  ",
                                     },
                                     body: Punctuated {
@@ -144,9 +124,7 @@
                                                         trivia: "",
                                                     },
                                                     assign: VariantToken {
-                                                        variant: Assign(
-                                                            "=",
-                                                        ),
+                                                        variant: Assign,
                                                         trivia: "",
                                                     },
                                                     rhs: VariantToken {
@@ -166,16 +144,12 @@
                                                         trivia: " ",
                                                     },
                                                     assign: VariantToken {
-                                                        variant: Assign(
-                                                            "=",
-                                                        ),
+                                                        variant: Assign,
                                                         trivia: "",
                                                     },
                                                     list: Parenthesized {
                                                         open_paren: VariantToken {
-                                                            variant: OpenParen(
-                                                                "(",
-                                                            ),
+                                                            variant: OpenParen,
                                                             trivia: "",
                                                         },
                                                         body: Punctuated {
@@ -193,24 +167,20 @@
                                                                     trivia: " ",
                                                                 },
                                                             ],
-                                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                                         },
                                                         close_paren: VariantToken {
-                                                            variant: CloseParen(
-                                                                ")",
-                                                            ),
+                                                            variant: CloseParen,
                                                             trivia: "",
                                                         },
                                                     },
                                                 },
                                             ),
                                         ],
-                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                     },
                                     close_bracket: VariantToken {
-                                        variant: CloseBracket(
-                                            "]",
-                                        ),
+                                        variant: CloseBracket,
                                         trivia: "",
                                     },
                                 },
@@ -218,21 +188,17 @@
                             stringifier: None,
                             readonly: None,
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         DOMString(
                                             MayBeNull {
                                                 type_: VariantToken {
-                                                    variant: DOMString(
-                                                        "DOMString",
-                                                    ),
+                                                    variant: DOMString,
                                                     trivia: " ",
                                                 },
                                                 q_mark: None,
@@ -248,9 +214,7 @@
                                 trivia: " ",
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -260,9 +224,7 @@
                             attributes: Some(
                                 Bracketed {
                                     open_bracket: VariantToken {
-                                        variant: OpenBracket(
-                                            "[",
-                                        ),
+                                        variant: OpenBracket,
                                         trivia: "\n  ",
                                     },
                                     body: Punctuated {
@@ -286,16 +248,12 @@
                                                         trivia: " ",
                                                     },
                                                     assign: VariantToken {
-                                                        variant: Assign(
-                                                            "=",
-                                                        ),
+                                                        variant: Assign,
                                                         trivia: "",
                                                     },
                                                     list: Parenthesized {
                                                         open_paren: VariantToken {
-                                                            variant: OpenParen(
-                                                                "(",
-                                                            ),
+                                                            variant: OpenParen,
                                                             trivia: "",
                                                         },
                                                         body: Punctuated {
@@ -317,24 +275,20 @@
                                                                     trivia: " ",
                                                                 },
                                                             ],
-                                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                                            separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                                         },
                                                         close_paren: VariantToken {
-                                                            variant: CloseParen(
-                                                                ")",
-                                                            ),
+                                                            variant: CloseParen,
                                                             trivia: "",
                                                         },
                                                     },
                                                 },
                                             ),
                                         ],
-                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::lexer::keywords::Comma>>,
+                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
                                     },
                                     close_bracket: VariantToken {
-                                        variant: CloseBracket(
-                                            "]",
-                                        ),
+                                        variant: CloseBracket,
                                         trivia: "",
                                     },
                                 },
@@ -342,31 +296,25 @@
                             stringifier: None,
                             readonly: None,
                             attribute: VariantToken {
-                                variant: Attribute(
-                                    "attribute",
-                                ),
+                                variant: Attribute,
                                 trivia: " ",
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Single(
-                                    NonAny(
+                                    Distinguishable(
                                         Integer(
                                             MayBeNull {
                                                 type_: Long(
                                                     LongType {
                                                         unsigned: Some(
                                                             VariantToken {
-                                                                variant: Unsigned(
-                                                                    "unsigned",
-                                                                ),
+                                                                variant: Unsigned,
                                                                 trivia: " ",
                                                             },
                                                         ),
                                                         long: VariantToken {
-                                                            variant: Long(
-                                                                "long",
-                                                            ),
+                                                            variant: Long,
                                                             trivia: " ",
                                                         },
                                                     },
@@ -384,25 +332,19 @@
                                 trivia: " ",
                             },
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },

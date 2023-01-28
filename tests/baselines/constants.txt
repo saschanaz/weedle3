@@ -3,9 +3,7 @@
         InterfaceDefinition {
             attributes: None,
             interface: VariantToken {
-                variant: Interface(
-                    "interface",
-                ),
+                variant: Interface,
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
             },
             identifier: VariantToken {
@@ -17,9 +15,7 @@
             inheritance: None,
             members: Braced {
                 open_brace: VariantToken {
-                    variant: OpenBrace(
-                        "{",
-                    ),
+                    variant: OpenBrace,
                     trivia: " ",
                 },
                 body: [
@@ -27,17 +23,13 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: Boolean(
                                 MayBeNull {
                                     type_: VariantToken {
-                                        variant: Boolean(
-                                            "boolean",
-                                        ),
+                                        variant: Boolean,
                                         trivia: " ",
                                     },
                                     q_mark: None,
@@ -50,9 +42,7 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Boolean(
@@ -61,9 +51,7 @@
                                 ),
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -72,9 +60,7 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: Integer(
@@ -83,9 +69,7 @@
                                         ShortType {
                                             unsigned: None,
                                             short: VariantToken {
-                                                variant: Short(
-                                                    "short",
-                                                ),
+                                                variant: Short,
                                                 trivia: " ",
                                             },
                                         },
@@ -100,9 +84,7 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Integer(
@@ -116,9 +98,7 @@
                                 },
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -127,17 +107,13 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: Octet(
                                 MayBeNull {
                                     type_: VariantToken {
-                                        variant: Octet(
-                                            "octet",
-                                        ),
+                                        variant: Octet,
                                         trivia: " ",
                                     },
                                     q_mark: None,
@@ -150,9 +126,7 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Integer(
@@ -166,9 +140,7 @@
                                 },
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -177,9 +149,7 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: Integer(
@@ -188,16 +158,12 @@
                                         LongType {
                                             unsigned: Some(
                                                 VariantToken {
-                                                    variant: Unsigned(
-                                                        "unsigned",
-                                                    ),
+                                                    variant: Unsigned,
                                                     trivia: " ",
                                                 },
                                             ),
                                             long: VariantToken {
-                                                variant: Long(
-                                                    "long",
-                                                ),
+                                                variant: Long,
                                                 trivia: " ",
                                             },
                                         },
@@ -212,9 +178,7 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Integer(
@@ -228,9 +192,7 @@
                                 },
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -239,9 +201,7 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: FloatingPoint(
@@ -250,9 +210,7 @@
                                         FloatType {
                                             unrestricted: None,
                                             float: VariantToken {
-                                                variant: Float(
-                                                    "float",
-                                                ),
+                                                variant: Float,
                                                 trivia: " ",
                                             },
                                         },
@@ -267,9 +225,7 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Float(
@@ -283,9 +239,7 @@
                                 ),
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -294,9 +248,7 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: FloatingPoint(
@@ -305,16 +257,12 @@
                                         FloatType {
                                             unrestricted: Some(
                                                 VariantToken {
-                                                    variant: Unrestricted(
-                                                        "unrestricted",
-                                                    ),
+                                                    variant: Unrestricted,
                                                     trivia: " ",
                                                 },
                                             ),
                                             float: VariantToken {
-                                                variant: Float(
-                                                    "float",
-                                                ),
+                                                variant: Float,
                                                 trivia: " ",
                                             },
                                         },
@@ -329,25 +277,19 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Float(
                                 Infinity(
                                     VariantToken {
-                                        variant: Infinity(
-                                            "Infinity",
-                                        ),
+                                        variant: Infinity,
                                         trivia: " ",
                                     },
                                 ),
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -356,9 +298,7 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: FloatingPoint(
@@ -367,16 +307,12 @@
                                         DoubleType {
                                             unrestricted: Some(
                                                 VariantToken {
-                                                    variant: Unrestricted(
-                                                        "unrestricted",
-                                                    ),
+                                                    variant: Unrestricted,
                                                     trivia: " ",
                                                 },
                                             ),
                                             double: VariantToken {
-                                                variant: Double(
-                                                    "double",
-                                                ),
+                                                variant: Double,
                                                 trivia: " ",
                                             },
                                         },
@@ -391,25 +327,19 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Float(
                                 NegInfinity(
                                     VariantToken {
-                                        variant: NegInfinity(
-                                            "-Infinity",
-                                        ),
+                                        variant: NegInfinity,
                                         trivia: " ",
                                     },
                                 ),
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -418,9 +348,7 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: Integer(
@@ -429,9 +357,7 @@
                                         ShortType {
                                             unsigned: None,
                                             short: VariantToken {
-                                                variant: Short(
-                                                    "short",
-                                                ),
+                                                variant: Short,
                                                 trivia: " ",
                                             },
                                         },
@@ -446,25 +372,19 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Float(
                                 NaN(
                                     VariantToken {
-                                        variant: NaN(
-                                            "NaN",
-                                        ),
+                                        variant: NaN,
                                         trivia: " ",
                                     },
                                 ),
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
@@ -473,17 +393,13 @@
                         ConstMember {
                             attributes: None,
                             const_: VariantToken {
-                                variant: Const(
-                                    "const",
-                                ),
+                                variant: Const,
                                 trivia: "\n  ",
                             },
                             const_type: Boolean(
                                 MayBeNull {
                                     type_: VariantToken {
-                                        variant: Boolean(
-                                            "boolean",
-                                        ),
+                                        variant: Boolean,
                                         trivia: " ",
                                     },
                                     q_mark: None,
@@ -496,9 +412,7 @@
                                 trivia: " ",
                             },
                             assign: VariantToken {
-                                variant: Assign(
-                                    "=",
-                                ),
+                                variant: Assign,
                                 trivia: " ",
                             },
                             const_value: Boolean(
@@ -507,25 +421,19 @@
                                 ),
                             ),
                             semi_colon: VariantToken {
-                                variant: SemiColon(
-                                    ";",
-                                ),
+                                variant: SemiColon,
                                 trivia: "",
                             },
                         },
                     ),
                 ],
                 close_brace: VariantToken {
-                    variant: CloseBrace(
-                        "}",
-                    ),
+                    variant: CloseBrace,
                     trivia: "\n",
                 },
             },
             semi_colon: VariantToken {
-                variant: SemiColon(
-                    ";",
-                ),
+                variant: SemiColon,
                 trivia: "",
             },
         },
