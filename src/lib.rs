@@ -50,8 +50,8 @@ pub mod namespace;
 pub mod types;
 
 mod lexer;
-mod tokens;
 pub mod parser;
+mod tokens;
 
 use lexer::lex;
 use tokens::Tokens;
