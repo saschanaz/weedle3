@@ -1,0 +1,124 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: VariantToken {
+                variant: Interface,
+                trivia: "// Keywords that have been removed from the spec\n// can be used as an identifier\n",
+            },
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Keywords",
+                ),
+                trivia: " ",
+            },
+            inheritance: None,
+            members: Braced {
+                open_brace: VariantToken {
+                    variant: OpenBrace,
+                    trivia: " ",
+                },
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                VariantToken {
+                                    variant: Identifier(
+                                        "implements",
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            args: Parenthesized {
+                                open_paren: VariantToken {
+                                    variant: OpenParen,
+                                    trivia: "",
+                                },
+                                body: Punctuated {
+                                    list: [],
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                },
+                                close_paren: VariantToken {
+                                    variant: CloseParen,
+                                    trivia: "",
+                                },
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                VariantToken {
+                                    variant: Identifier(
+                                        "legacyiterable",
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            args: Parenthesized {
+                                open_paren: VariantToken {
+                                    variant: OpenParen,
+                                    trivia: "",
+                                },
+                                body: Punctuated {
+                                    list: [],
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                },
+                                close_paren: VariantToken {
+                                    variant: CloseParen,
+                                    trivia: "",
+                                },
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                ],
+                close_brace: VariantToken {
+                    variant: CloseBrace,
+                    trivia: "\n",
+                },
+            },
+            semi_colon: VariantToken {
+                variant: SemiColon,
+                trivia: "",
+            },
+        },
+    ),
+]

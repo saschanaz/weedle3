@@ -3,23 +3,63 @@ use weedle_derive::Weedle;
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
 use crate::parser::eat::VariantToken;
-use crate::term;
+use crate::tokens::{contextful_cut, Tokens};
 use crate::Parse;
+use crate::{term, VerboseResult};
 
 /// Parses a union of types
 pub type UnionType<'a> = Parenthesized<'a, Punctuated<UnionMemberType<'a>, term!(or)>>;
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+struct UnionTypeMultiple<'a> {
+    open_paren: term!(OpenParen),
+    first: UnionMemberType<'a>,
+    #[weedle(cut = "A union type needs at least two member types")]
+    or: term!(or),
+    more: Punctuated<UnionMemberType<'a>, term!(or)>,
+    #[weedle(cut = "Expected a union member type")]
+    close_paren: term!(CloseParen),
+}
+
+impl<'a> From<UnionTypeMultiple<'a>> for UnionType<'a> {
+    fn from(value: UnionTypeMultiple<'a>) -> Self {
+        // XXX: request nom::multi::separated_list_m_n?
+        let mut list = vec![value.first];
+        list.extend(value.more.list);
+        Self {
+            open_paren: value.open_paren,
+            body: Punctuated {
+                list,
+                separator: std::marker::PhantomData::default(),
+            },
+            close_paren: value.close_paren,
+        }
+    }
+}
+
+#[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SingleType<'a> {
+    #[weedle(post_check = "prevent_unexpected_nullable")]
     Any(term!(any)),
+    #[weedle(post_check = "prevent_unexpected_nullable")]
     Promise(PromiseType<'a>),
     Distinguishable(DistinguishableType<'a>),
+}
+
+fn prevent_unexpected_nullable<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "`any` and Promise cannot be nullable",
+        nom::combinator::not(nom::combinator::peek(eat_key!(QMark))),
+    )(input)
 }
 
 /// Parses either single type or a union type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Type<'a> {
     Single(SingleType<'a>),
+    #[weedle(from = "MayBeNull<UnionTypeMultiple<'a>>", generic_into)]
     Union(MayBeNull<'a, UnionType<'a>>),
 }
 
@@ -89,6 +129,16 @@ pub struct MayBeNull<'a, T> {
     pub q_mark: Option<VariantToken<'a, term::QMark>>,
 }
 
+impl<'a, T> MayBeNull<'a, T> {
+    pub fn generic_into<S: From<T>>(self) -> MayBeNull<'a, S> {
+        let MayBeNull { type_, q_mark } = self;
+        MayBeNull {
+            type_: type_.into(),
+            q_mark,
+        }
+    }
+}
+
 /// Parses a `Promise<Type|undefined>` type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PromiseType<'a> {
@@ -150,20 +200,23 @@ pub enum FloatingPointType<'a> {
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct RecordType<'a> {
     pub record: term!(record),
-    pub generics: Generics<'a, (Box<RecordKeyType<'a>>, term!(,), Box<AttributedType<'a>>)>,
+    pub generics: Generics<'a, (RecordKeyType<'a>, term!(,), Box<AttributedType<'a>>)>,
 }
 
 /// Parses one of the string types `ByteString|DOMString|USVString` or any other type.
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(
+    cut = "Record key must be one of: ByteString, DOMString, USVString with no extended attributes"
+)]
 pub enum RecordKeyType<'a> {
     Byte(term!(ByteString)),
     DOM(term!(DOMString)),
     USV(term!(USVString)),
-    NonAny(DistinguishableType<'a>),
 }
 
 /// Parses one of the member of a union type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(cut = "Expected a union member type that is not an `any` or `Promise`")]
 pub enum UnionMemberType<'a> {
     Single(AttributedNonAnyType<'a>),
     Union(MayBeNull<'a, UnionType<'a>>),
@@ -172,13 +225,13 @@ pub enum UnionMemberType<'a> {
 /// Parses a const type
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ConstType<'a> {
-    Integer(MayBeNull<'a, IntegerType<'a>>),
-    FloatingPoint(MayBeNull<'a, FloatingPointType<'a>>),
-    Boolean(MayBeNull<'a, term!(boolean)>),
-    Byte(MayBeNull<'a, term!(byte)>),
-    Octet(MayBeNull<'a, term!(octet)>),
-    Bigint(MayBeNull<'a, term!(bigint)>),
-    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
+    Integer(IntegerType<'a>),
+    FloatingPoint(FloatingPointType<'a>),
+    Boolean(term!(boolean)),
+    Byte(term!(byte)),
+    Octet(term!(octet)),
+    Bigint(term!(bigint)),
+    Identifier(VariantToken<'a, Identifier<'a>>),
 }
 
 /// Parses `[attributes]? type`
@@ -274,9 +327,8 @@ mod test {
         RecordType;
     });
 
-    test!(should_parse_record_type_alt_types { "record<u64, short>" =>
-        "";
-        RecordType;
+    test!(err should_not_parse_record_type_alt_types { "record<u64, short>" =>
+        RecordType
     });
 
     test!(should_parse_double_type { "double" =>

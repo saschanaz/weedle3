@@ -1,0 +1,330 @@
+[
+    Enum(
+        EnumDefinition {
+            attributes: None,
+            enum_: VariantToken {
+                variant: Enum,
+                trivia: "",
+            },
+            identifier: VariantToken {
+                variant: Identifier(
+                    "MealType",
+                ),
+                trivia: " ",
+            },
+            values: Braced {
+                open_brace: VariantToken {
+                    variant: OpenBrace,
+                    trivia: " ",
+                },
+                body: PunctuatedNonEmpty {
+                    list: [
+                        VariantToken {
+                            variant: StringLit(
+                                "rice",
+                            ),
+                            trivia: " ",
+                        },
+                        VariantToken {
+                            variant: StringLit(
+                                "noodles",
+                            ),
+                            trivia: " ",
+                        },
+                        VariantToken {
+                            variant: StringLit(
+                                "other",
+                            ),
+                            trivia: " ",
+                        },
+                    ],
+                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                },
+                close_brace: VariantToken {
+                    variant: CloseBrace,
+                    trivia: " ",
+                },
+            },
+            semi_colon: VariantToken {
+                variant: SemiColon,
+                trivia: "",
+            },
+        },
+    ),
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: VariantToken {
+                variant: Interface,
+                trivia: "\n\n",
+            },
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Meal",
+                ),
+                trivia: " ",
+            },
+            inheritance: None,
+            members: Braced {
+                open_brace: VariantToken {
+                    variant: OpenBrace,
+                    trivia: " ",
+                },
+                body: [
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: VariantToken {
+                                variant: Attribute,
+                                trivia: "\n  ",
+                            },
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    Distinguishable(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: VariantToken {
+                                                    variant: Identifier(
+                                                        "MealType",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "type",
+                                ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Attribute(
+                        AttributeInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            readonly: None,
+                            attribute: VariantToken {
+                                variant: Attribute,
+                                trivia: "\n  ",
+                            },
+                            type_: AttributedType {
+                                attributes: None,
+                                type_: Single(
+                                    Distinguishable(
+                                        FloatingPoint(
+                                            MayBeNull {
+                                                type_: Float(
+                                                    FloatType {
+                                                        unrestricted: None,
+                                                        float: VariantToken {
+                                                            variant: Float,
+                                                            trivia: " ",
+                                                        },
+                                                    },
+                                                ),
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "size",
+                                ),
+                                trivia: " ",
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            return_type: Single(
+                                Distinguishable(
+                                    Undefined(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Undefined,
+                                                trivia: "     // in grams\n\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                VariantToken {
+                                    variant: Identifier(
+                                        "initialize",
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            args: Parenthesized {
+                                open_paren: VariantToken {
+                                    variant: OpenParen,
+                                    trivia: "",
+                                },
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        Distinguishable(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: VariantToken {
+                                                                        variant: Identifier(
+                                                                            "MealType",
+                                                                        ),
+                                                                        trivia: "",
+                                                                    },
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "type",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        Distinguishable(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: VariantToken {
+                                                                                variant: Float,
+                                                                                trivia: " ",
+                                                                            },
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "size",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                default: None,
+                                            },
+                                        ),
+                                    ],
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                },
+                                close_paren: VariantToken {
+                                    variant: CloseParen,
+                                    trivia: "",
+                                },
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                ],
+                close_brace: VariantToken {
+                    variant: CloseBrace,
+                    trivia: "\n",
+                },
+            },
+            semi_colon: VariantToken {
+                variant: SemiColon,
+                trivia: "",
+            },
+        },
+    ),
+    Enum(
+        EnumDefinition {
+            attributes: None,
+            enum_: VariantToken {
+                variant: Enum,
+                trivia: "\n\n",
+            },
+            identifier: VariantToken {
+                variant: Identifier(
+                    "_AltMealType",
+                ),
+                trivia: " ",
+            },
+            values: Braced {
+                open_brace: VariantToken {
+                    variant: OpenBrace,
+                    trivia: " ",
+                },
+                body: PunctuatedNonEmpty {
+                    list: [
+                        VariantToken {
+                            variant: StringLit(
+                                "rice",
+                            ),
+                            trivia: " ",
+                        },
+                        VariantToken {
+                            variant: StringLit(
+                                "noodles",
+                            ),
+                            trivia: " ",
+                        },
+                        VariantToken {
+                            variant: StringLit(
+                                "other",
+                            ),
+                            trivia: " ",
+                        },
+                    ],
+                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                },
+                close_brace: VariantToken {
+                    variant: CloseBrace,
+                    trivia: " ",
+                },
+            },
+            semi_colon: VariantToken {
+                variant: SemiColon,
+                trivia: "",
+            },
+        },
+    ),
+]

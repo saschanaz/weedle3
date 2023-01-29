@@ -4,8 +4,8 @@ use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
 use crate::parser::eat::VariantToken;
-use crate::tokens::Tokens;
-use crate::{term, IResult, Parse};
+use crate::tokens::{contextful_cut, Tokens};
+use crate::{term, Parse, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
     nom::AsChar::is_alphanum(token) || matches!(token, '_' | '-')
@@ -41,25 +41,87 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Parenthesized<'a, T> {
     pub open_paren: VariantToken<'a, term::OpenParen>,
+    #[weedle(cut = "Unrecognized argument")]
+    pub body: T,
+    #[weedle(cut = "Unrecognized argument")]
+    pub close_paren: VariantToken<'a, term::CloseParen>,
+}
+
+/// Parses `( body )`
+#[derive(Weedle, Copy, Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(impl_bound = "where T: Parse<'a>")]
+pub(crate) struct ParenthesizedNonEmpty<'a, T> {
+    #[weedle(post_check = "prevent_empty_parentheses")]
+    pub open_paren: VariantToken<'a, term::OpenParen>,
     pub body: T,
     pub close_paren: VariantToken<'a, term::CloseParen>,
+}
+
+impl<'a, T> From<ParenthesizedNonEmpty<'a, T>> for Parenthesized<'a, T> {
+    fn from(value: ParenthesizedNonEmpty<'a, T>) -> Self {
+        let ParenthesizedNonEmpty {
+            open_paren,
+            body,
+            close_paren,
+        } = value;
+        Self {
+            open_paren,
+            body,
+            close_paren,
+        }
+    }
+}
+
+fn prevent_empty_parentheses<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Unexpected empty parentheses",
+        nom::combinator::not(nom::combinator::peek(eat_key!(CloseParen))),
+    )(input)
 }
 
 /// Parses `[ body ]`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<'a, T> {
+    #[weedle(post_check = "prevent_empty_brackets")]
     pub open_bracket: VariantToken<'a, term::OpenBracket>,
     pub body: T,
+    #[weedle(
+        cut = "Unrecognized extended attribute",
+        post_check = "prevent_double_extended_attributes"
+    )]
     pub close_bracket: VariantToken<'a, term::CloseBracket>,
+}
+
+fn prevent_empty_brackets<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Unexpected empty brackets",
+        nom::combinator::not(nom::combinator::peek(eat_key!(CloseBracket))),
+    )(input)
+}
+
+fn prevent_double_extended_attributes<'slice, 'a>(
+    input: Tokens<'slice, 'a>,
+) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    contextful_cut(
+        "Illegal double extended attribute lists, consider merging them",
+        nom::combinator::not(nom::combinator::peek(eat_key!(OpenBracket))),
+    )(input)
 }
 
 /// Parses `{ body }`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Braced<'a, T> {
+    #[weedle(cut = "Missing body")]
     pub open_brace: VariantToken<'a, term::OpenBrace>,
+    #[weedle(cut = "Unrecognized member definition")]
     pub body: T,
+    #[weedle(cut = "Unrecognized member definition")]
     pub close_brace: VariantToken<'a, term::CloseBrace>,
 }
 
@@ -68,6 +130,7 @@ pub struct Braced<'a, T> {
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Generics<'a, T> {
     pub open_angle: VariantToken<'a, term::LessThan>,
+    #[weedle(cut = "Unrecognized type parameter")]
     pub body: T,
     pub close_angle: VariantToken<'a, term::GreaterThan>,
 }
@@ -84,7 +147,7 @@ where
     T: Parse<'a>,
     S: Parse<'a>,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
         Ok((
             input,
@@ -108,7 +171,7 @@ where
     T: Parse<'a>,
     S: Parse<'a>,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> IResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(
             nom::multi::separated_list1(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S)),
@@ -151,6 +214,7 @@ impl<'a> Parse<'a> for VariantToken<'a, Identifier<'a>> {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Default<'a> {
     pub assign: term!(=),
+    #[weedle(cut = "Unrecognized default value")]
     pub value: DefaultValue<'a>,
 }
 

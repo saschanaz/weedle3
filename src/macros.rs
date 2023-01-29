@@ -2,7 +2,7 @@ macro_rules! parser {
     ($parse:expr) => {
         fn parse_tokens<'slice>(
             input: $crate::tokens::Tokens<'slice, 'a>,
-        ) -> $crate::IResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
+        ) -> $crate::VerboseResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
             $parse(input)
         }
     };
@@ -10,7 +10,7 @@ macro_rules! parser {
 
 macro_rules! lexer {
     ($lex:expr) => {
-        pub fn lex(input: &'a str) -> $crate::IResult<&'a str, Self> {
+        pub fn lex(input: &'a str) -> $crate::VerboseResult<&'a str, Self> {
             $lex(input)
         }
     };
@@ -54,7 +54,7 @@ pub fn annotate<'slice, 'token, F, R>(f: F) -> F
 where
     F: Fn(
         crate::tokens::Tokens<'slice, 'token>,
-    ) -> nom::IResult<crate::tokens::Tokens<'slice, 'token>, R>,
+    ) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'token>, R>,
     'token: 'slice,
 {
     f
@@ -63,7 +63,7 @@ where
 macro_rules! eat {
     ($variant:ident) => {
         $crate::macros::annotate(
-            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
+            |input: $crate::tokens::Tokens| -> $crate::VerboseResult<$crate::tokens::Tokens, _> {
                 use nom::{InputIter, Slice};
                 match input.iter_elements().next() {
                     Some($crate::lexer::Token {
@@ -83,7 +83,7 @@ macro_rules! eat {
 macro_rules! eat_key {
     ($variant:ident) => {
         $crate::macros::annotate(
-            |input: $crate::tokens::Tokens| -> nom::IResult<$crate::tokens::Tokens, _> {
+            |input: $crate::tokens::Tokens| -> $crate::VerboseResult<$crate::tokens::Tokens, _> {
                 use nom::{InputIter, Slice};
                 use $crate::lexer::Terminal;
                 use $crate::term::Keyword;

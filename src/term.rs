@@ -149,7 +149,8 @@ macro_rules! generate_keywords_enum {
         }
 
         impl Keyword {
-            pub fn parse_punc(input: &str) -> nom::IResult<&str, Keyword> {
+            pub fn parse_punc(input: &str) -> $crate::VerboseResult<&str, Keyword>
+            {
                 alt!(
                     $(nom::combinator::map(
                         nom::combinator::recognize(nom::bytes::complete::tag($tok_punc)),

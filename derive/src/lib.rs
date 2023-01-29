@@ -1,4 +1,4 @@
-use darling::{FromDeriveInput, FromField, ToTokens};
+use darling::{FromDeriveInput, FromField, FromVariant, ToTokens};
 use proc_macro::TokenStream;
 use syn::*;
 
@@ -9,12 +9,33 @@ extern crate quote;
 #[darling(attributes(weedle))]
 struct MacroTopArgs {
     impl_bound: Option<String>,
+    cut: Option<String>,
+    #[darling(default)]
+    context: bool,
 }
 
 #[derive(FromField, Debug)]
 #[darling(attributes(weedle))]
-struct MacroArgs {
-    parser: Option<String>,
+struct MacroFieldArgs {
+    from: Option<String>,
+    cond: Option<String>,
+    post_check: Option<String>,
+    cut: Option<String>,
+
+    /// Use if you need to convert from Option<T> to Option<U>
+    #[darling(default)]
+    opt: bool,
+    #[darling(default)]
+    generic_into: bool,
+}
+
+#[derive(FromVariant, Debug)]
+#[darling(attributes(weedle))]
+struct MacroVariantArgs {
+    from: Option<String>,
+    post_check: Option<String>,
+    #[darling(default)]
+    generic_into: bool,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -29,30 +50,63 @@ fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
     Ok(expr.to_token_stream())
 }
 
-fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
-    let args = MacroArgs::from_field(field).map_err(syn::Error::from)?;
-    let ty = &field.ty;
-    let parser = match args.parser {
-        Some(p) => string_to_tokens::<Path>(p)?,
+fn get_base_parser(
+    ty: &Type,
+    from: Option<String>,
+    generic_into: bool,
+) -> Result<proc_macro2::TokenStream> {
+    Ok(match from {
+        Some(from) => {
+            let from = string_to_tokens::<Type>(from)?;
+            if generic_into {
+                quote! { nom::combinator::map(weedle!(#from), |g| g.generic_into()) }
+            } else {
+                quote! { nom::combinator::into(weedle!(#from)) }
+            }
+        }
         _ => quote! { weedle!(#ty) },
-    };
+    })
+}
+
+fn get_post_check(
+    post_check: String,
+    parser: &proc_macro2::TokenStream,
+) -> Result<proc_macro2::TokenStream> {
+    let post_check = string_to_tokens::<Ident>(post_check)?;
+    Ok(quote! {
+        nom::combinator::map(
+            nom::sequence::tuple((#parser, #post_check)),
+            |(body, _post)| body
+        )
+    })
+}
+
+fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
+    let args = MacroFieldArgs::from_field(field).map_err(syn::Error::from)?;
+    let ty = &field.ty;
+    let mut parser = get_base_parser(ty, args.from, args.generic_into)?;
+    if args.opt {
+        parser = quote! { nom::combinator::opt(#parser) };
+    }
+    if let Some(cond) = args.cond {
+        let cond = string_to_tokens::<Expr>(cond)?;
+        parser = quote! {
+            nom::combinator::map(
+                nom::combinator::cond(#cond, #parser),
+                |opt| opt.flatten()
+            )
+        }
+    }
+    if let Some(cut) = args.cut {
+        parser = quote! { crate::tokens::contextful_cut(#cut, #parser) }
+    }
+    if let Some(post_check) = args.post_check {
+        parser = get_post_check(post_check, &parser)?;
+    }
     Ok(parser)
 }
 
-fn get_where_from_derive_input(input: &DeriveInput) -> Result<proc_macro2::TokenStream> {
-    let args = MacroTopArgs::from_derive_input(input).map_err(syn::Error::from)?;
-    let impl_bound = match args.impl_bound {
-        Some(b) => string_to_tokens::<WhereClause>(b)?,
-        _ => quote! {},
-    };
-    Ok(impl_bound)
-}
-
-fn generate_tuple_struct(
-    id: &Ident,
-    generics: &Generics,
-    data_struct: &DataStruct,
-) -> Result<TokenStream> {
+fn generate_tuple_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
     let mut count = 0;
     let field_ids = data_struct
         .fields
@@ -70,29 +124,20 @@ fn generate_tuple_struct(
         .collect::<Result<Vec<_>>>()?;
 
     let result = quote! {
-        impl<'a> crate::Parse<'a> for #id #generics {
-            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::IResult<crate::tokens::Tokens<'slice, 'a>, Self> {
-                use nom::lib::std::result::Result::Ok;
-                let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
-                    #(#field_parsers,)*
-                ))(input)?;
+        use nom::lib::std::result::Result::Ok;
+        let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
+            #(#field_parsers,)*
+        ))(input)?;
 
-                Ok((input, Self(#(#field_ids,)*)))
-            }
-        }
+        Ok((input, Self(#(#field_ids,)*)))
     };
 
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
-    Ok(result.into())
+    Ok(result)
 }
 
-fn generate_named_struct(
-    id: &Ident,
-    generics: &Generics,
-    data_struct: &DataStruct,
-    impl_bound: &proc_macro2::TokenStream,
-) -> Result<TokenStream> {
+fn generate_named_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
     let field_ids: Vec<_> = data_struct
         .fields
         .iter()
@@ -111,81 +156,108 @@ fn generate_named_struct(
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let type_param_ids = generics.type_params().map(|p| &p.ident).collect::<Vec<_>>();
-
     let result = quote! {
-        impl<'a,#(#type_param_ids),*> crate::Parse<'a> for #id #generics #impl_bound {
-            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::IResult<crate::tokens::Tokens<'slice, 'a>, Self> {
-                use nom::lib::std::result::Result::Ok;
-                #(#field_parsers)*
+        use nom::lib::std::result::Result::Ok;
+        #(#field_parsers)*
 
-                Ok((input, Self {
-                    #(#field_ids),*
-                }))
-            }
-        }
+        Ok((input, Self {
+            #(#field_ids),*
+        }))
     };
 
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
-    Ok(result.into())
+    Ok(result)
 }
 
-fn generate_struct(
-    id: &Ident,
-    generics: &Generics,
-    data_struct: &DataStruct,
-    impl_bound: &proc_macro2::TokenStream,
-) -> Result<TokenStream> {
+fn generate_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
     let all_named = data_struct.fields.iter().all(|field| field.ident.is_some());
     if all_named {
-        generate_named_struct(id, generics, data_struct, impl_bound)
+        generate_named_struct(data_struct)
     } else {
-        generate_tuple_struct(id, generics, data_struct)
+        generate_tuple_struct(data_struct)
     }
 }
 
-fn generate_enum(id: &Ident, generics: &Generics, data_enum: &DataEnum) -> Result<TokenStream> {
-    let field_parsers = data_enum.variants.iter().map(|variant| {
-        let variant_id = &variant.ident;
-        let fields = match &variant.fields {
-            Fields::Unnamed(unnamed) => unnamed,
-            _ => panic!("Only tuple variant enums are supported"),
-        };
-        if fields.unnamed.len() != 1 {
-            panic!("Only one tuple field is supported");
-        }
-        let field = fields.unnamed.first().unwrap();
-        let ty = &field.ty;
+fn generate_enum(data_enum: &DataEnum) -> Result<proc_macro2::TokenStream> {
+    let field_parsers = data_enum
+        .variants
+        .iter()
+        .map(|variant| {
+            let args = MacroVariantArgs::from_variant(variant).map_err(syn::Error::from)?;
 
-        quote! { weedle!(#ty).map(#id::#variant_id) }
-    });
+            let variant_id = &variant.ident;
+            let fields = match &variant.fields {
+                Fields::Unnamed(unnamed) => unnamed,
+                _ => panic!("Only tuple variant enums are supported"),
+            };
+            if fields.unnamed.len() != 1 {
+                panic!("Only one tuple field is supported");
+            }
+            let field = fields.unnamed.first().unwrap();
+            let ty = &field.ty;
+
+            let parser = get_base_parser(ty, args.from, args.generic_into)?;
+            let mut parser = quote! { #parser.map(Self::#variant_id) };
+
+            if let Some(post_check) = args.post_check {
+                parser = get_post_check(post_check, &parser)?;
+            }
+
+            Ok(parser)
+        })
+        .collect::<Result<Vec<_>>>()?;
 
     let result = quote! {
-        impl<'a> crate::Parse<'a> for #id #generics {
-            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::IResult<crate::tokens::Tokens<'slice, 'a>, Self> {
-                use nom::Parser;
-                alt!(
-                    #(#field_parsers,)*
-                )(input)
-            }
-        }
+        use nom::Parser;
+        alt!(
+            #(#field_parsers,)*
+        )(input)
     };
 
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
-    Ok(result.into())
+    Ok(result)
 }
 
 fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
+    let args = MacroTopArgs::from_derive_input(ast).map_err(syn::Error::from)?;
+
     let id = &ast.ident;
     let generics = &ast.generics;
-    let impl_bound = get_where_from_derive_input(ast)?;
-    match &ast.data {
-        syn::Data::Struct(data_struct) => generate_struct(id, generics, data_struct, &impl_bound),
-        syn::Data::Enum(data_enum) => generate_enum(id, generics, data_enum),
+    let type_param_ids = generics.type_params().map(|p| &p.ident).collect::<Vec<_>>();
+    let impl_bound = match args.impl_bound {
+        Some(b) => string_to_tokens::<WhereClause>(b)?,
+        _ => quote! {},
+    };
+    let mut impl_body = match &ast.data {
+        syn::Data::Struct(data_struct) => generate_struct(data_struct),
+        syn::Data::Enum(data_enum) => generate_enum(data_enum),
         syn::Data::Union(_) => panic!("Unions not supported"),
+    }?;
+
+    if let Some(cut) = args.cut {
+        impl_body = quote! {
+            crate::tokens::contextful_cut(#cut, |input| { #impl_body })(input)
+        };
+    } else if args.context {
+        let id = id.to_string();
+        impl_body = quote! {
+            nom::error::context(#id, |input| { #impl_body })(input)
+        };
     }
+
+    let impl_head = quote! { impl<'a,#(#type_param_ids),*> };
+    let impl_tail = quote! { for #id #generics #impl_bound };
+
+    Ok(quote! {
+        #impl_head crate::Parse<'a> #impl_tail {
+            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+                #impl_body
+            }
+        }
+    }
+    .into())
 }
 
 #[proc_macro_derive(Weedle, attributes(weedle))]

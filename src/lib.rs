@@ -21,16 +21,17 @@
 //!
 //! If any flaws found when parsing string with a valid grammar, create an issue.
 
+use crate::tokens::contextful_cut;
+
 use self::argument::ArgumentList;
 use self::attribute::ExtendedAttributeList;
 use self::common::{Braced, Identifier, Parenthesized, PunctuatedNonEmpty};
 use self::dictionary::DictionaryMembers;
-use self::interface::{Inheritance, InterfaceMembers};
+use self::interface::{CallbackInterfaceMembers, Inheritance, InterfaceMembers};
 use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, Type};
-pub use nom::{error::Error, Err, IResult};
 use parser::eat::VariantToken;
 use weedle_derive::Weedle;
 
@@ -45,6 +46,7 @@ pub mod common;
 pub mod dictionary;
 pub mod interface;
 pub mod literal;
+pub mod members;
 pub mod mixin;
 pub mod namespace;
 pub mod types;
@@ -55,6 +57,8 @@ mod tokens;
 
 use lexer::lex;
 use tokens::Tokens;
+
+type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
 
 /// A convenient parse function
 ///
@@ -71,11 +75,13 @@ use tokens::Tokens;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Error<&'_ str>>> {
+pub fn parse(
+    input: &'_ str,
+) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
     let tokens = lex(input)?;
     let (unread, (defs, _eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
-        nom::combinator::cut(eat!(Eof)),
+        contextful_cut("Unrecognized tokens", eat!(Eof)),
     ))(Tokens(&tokens[..]))
     .map_err(tokens::nom_error_into)?;
 
@@ -86,10 +92,11 @@ pub fn parse(input: &'_ str) -> Result<Definitions<'_>, nom::Err<nom::error::Err
 }
 
 pub trait Parse<'token>: Sized {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'token>)
-        -> IResult<Tokens<'slice, 'token>, Self>;
+    fn parse_tokens<'slice>(
+        input: Tokens<'slice, 'token>,
+    ) -> VerboseResult<Tokens<'slice, 'token>, Self>;
 
-    fn parse(input: &'token str) -> IResult<&'token str, Self> {
+    fn parse(input: &'token str) -> VerboseResult<&'token str, Self> {
         let tokens = lex(input)?;
         let (unread, def) =
             Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
@@ -105,157 +112,198 @@ pub type Definitions<'a> = Vec<Definition<'a>>;
 
 /// Parses `[attributes]? callback identifier = type ( (arg1, arg2, ..., argN)? );`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
+    #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
+    #[weedle(cut = "Unrecognized return type")]
     pub return_type: Type<'a>,
+    #[weedle(cut = "Missing argument list")]
     pub arguments: Parenthesized<'a, ArgumentList<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? callback interface identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct CallbackInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
     pub interface: term!(interface),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
-    pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<'a, InterfaceMembers<'a>>,
+    pub members: Braced<'a, CallbackInterfaceMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? interface identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? interface mixin identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct InterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
     pub mixin: term!(mixin),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, MixinMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? namespace identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? dictionary identifier ( : inheritance )? { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial interface identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialInterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub interface: term!(interface),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial interface mixin identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialInterfaceMixinDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub interface: term!(interface),
     pub mixin: term!(mixin),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, MixinMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial dictionary identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialDictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? partial namespace identifier { members };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct PartialNamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub partial: term!(partial),
     pub namespace: term!(namespace),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? enum identifier { values };`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
     pub values: Braced<'a, EnumValueList<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? typedef attributedtype identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct TypedefDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub typedef: term!(typedef),
+    #[weedle(cut = "Unrecognized type")]
     pub type_: AttributedType<'a>,
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses `[attributes]? identifier includes identifier;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
     pub includes: term!(includes),
     pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 /// Parses a definition
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Definition<'a> {
-    Callback(CallbackDefinition<'a>),
     CallbackInterface(CallbackInterfaceDefinition<'a>),
-    Interface(InterfaceDefinition<'a>),
+    Callback(CallbackDefinition<'a>),
     InterfaceMixin(InterfaceMixinDefinition<'a>),
+    Interface(InterfaceDefinition<'a>),
     Namespace(NamespaceDefinition<'a>),
     Dictionary(DictionaryDefinition<'a>),
-    PartialInterface(PartialInterfaceDefinition<'a>),
     PartialInterfaceMixin(PartialInterfaceMixinDefinition<'a>),
+    PartialInterface(PartialInterfaceDefinition<'a>),
     PartialDictionary(PartialDictionaryDefinition<'a>),
     PartialNamespace(PartialNamespaceDefinition<'a>),
     Enum(EnumDefinition<'a>),
@@ -397,9 +445,9 @@ mod test {
 
     test!(should_parse_callback_interface {"
         callback interface Options {
-          attribute DOMString? option1;
-          attribute DOMString? option2;
-          attribute long? option3;
+          const int CONST = 3;
+          undefined foo();
+          undefined bar();
         };
     " =>
         "";
@@ -407,6 +455,12 @@ mod test {
         attributes.is_none();
         identifier.variant.0 == "Options";
         members.body.len() == 3;
+    });
+
+    test!(err should_not_parse_callback_interface_inheritance { "
+        callback interface Options : Parent {};
+    " =>
+        CallbackInterfaceDefinition
     });
 
     test!(should_parse_callback { "callback AsyncOperationCallback = undefined (DOMString status);" =>

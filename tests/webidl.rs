@@ -4,17 +4,35 @@ use weedle::parser::eat::VariantToken;
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
     let content = std::fs::read_to_string(resource).unwrap();
-    let result = weedle::parse(&content);
-
-    assert!(result.is_ok());
+    let result = weedle::parse(&content).unwrap();
 
     let resource_path = std::path::Path::new(resource);
     let stem = resource_path.file_stem().unwrap().to_str().unwrap();
-    let baseline_path = std::path::Path::new("./tests/baselines/").join(format!("{stem}.txt"));
+    let baseline_path = std::path::Path::new("./tests/baselines/defs/").join(format!("{stem}.txt"));
     let baseline = std::fs::read_to_string(baseline_path).unwrap();
 
-    let ast = result.unwrap();
-    assert_eq!(format!("{ast:#?}\n"), baseline);
+    assert_eq!(format!("{result:#?}\n"), baseline);
+}
+
+#[test_resources("tests/invalids/*.webidl")]
+fn should_not_parse(resource: &str) {
+    use nom::error::convert_error;
+    use nom::Err::*;
+
+    let content = std::fs::read_to_string(resource).unwrap();
+    let err = weedle::parse(&content).unwrap_err();
+
+    let resource_path = std::path::Path::new(resource);
+    let stem = resource_path.file_stem().unwrap().to_str().unwrap();
+    let baseline_path =
+        std::path::Path::new("./tests/baselines/invalids/").join(format!("{stem}.txt"));
+    let baseline = std::fs::read_to_string(baseline_path).unwrap();
+
+    let message = match err {
+        Error(e) | Failure(e) => convert_error(&content[..], e),
+        Incomplete(_) => "Unexpected incomplete error".to_owned(),
+    };
+    assert_eq!(message, baseline);
 }
 
 #[test]

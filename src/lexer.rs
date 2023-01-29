@@ -1,11 +1,11 @@
-use nom::{multi::many0, sequence::tuple, IResult, Parser};
+use nom::{multi::many0, sequence::tuple, Parser};
 
 use crate::common::Identifier;
 use crate::literal::{FloatValueLit, IntegerLit, StringLit};
 use crate::term::Keyword;
 use crate::whitespace::sp;
 
-pub type NomResult<'a, O> = IResult<&'a str, O>;
+pub type NomResult<'a, O> = crate::VerboseResult<&'a str, O>;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Terminal<'a> {
@@ -54,7 +54,7 @@ fn tag(input: &str) -> NomResult<Terminal> {
     ))(input)
 }
 
-pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::Error<&str>>> {
+pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::VerboseError<&str>>> {
     let (unread, (mut tokens, eof)) = tuple((
         many0(tuple((sp, tag)).map(Token::new)),
         tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {

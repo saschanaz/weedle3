@@ -1,0 +1,414 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: VariantToken {
+                variant: Interface,
+                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+            },
+            identifier: VariantToken {
+                variant: Identifier(
+                    "Util",
+                ),
+                trivia: " ",
+            },
+            inheritance: None,
+            members: Braced {
+                open_brace: VariantToken {
+                    variant: OpenBrace,
+                    trivia: " ",
+                },
+                body: [
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: Boolean(
+                                VariantToken {
+                                    variant: Boolean,
+                                    trivia: " ",
+                                },
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "DEBUG",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Boolean(
+                                BooleanLit(
+                                    false,
+                                ),
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: Integer(
+                                Short(
+                                    ShortType {
+                                        unsigned: None,
+                                        short: VariantToken {
+                                            variant: Short,
+                                            trivia: " ",
+                                        },
+                                    },
+                                ),
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "negative",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Integer(
+                                VariantToken {
+                                    variant: Dec(
+                                        DecLit(
+                                            "-1",
+                                        ),
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: Octet(
+                                VariantToken {
+                                    variant: Octet,
+                                    trivia: " ",
+                                },
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "LF",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Integer(
+                                VariantToken {
+                                    variant: Dec(
+                                        DecLit(
+                                            "10",
+                                        ),
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: Integer(
+                                Long(
+                                    LongType {
+                                        unsigned: Some(
+                                            VariantToken {
+                                                variant: Unsigned,
+                                                trivia: " ",
+                                            },
+                                        ),
+                                        long: VariantToken {
+                                            variant: Long,
+                                            trivia: " ",
+                                        },
+                                    },
+                                ),
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "BIT_MASK",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Integer(
+                                VariantToken {
+                                    variant: Hex(
+                                        HexLit(
+                                            "0x0000fc00",
+                                        ),
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: FloatingPoint(
+                                Float(
+                                    FloatType {
+                                        unrestricted: None,
+                                        float: VariantToken {
+                                            variant: Float,
+                                            trivia: " ",
+                                        },
+                                    },
+                                ),
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "AVOGADRO",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Float(
+                                Value(
+                                    VariantToken {
+                                        variant: FloatValueLit(
+                                            "6.022e23",
+                                        ),
+                                        trivia: " ",
+                                    },
+                                ),
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: FloatingPoint(
+                                Float(
+                                    FloatType {
+                                        unrestricted: Some(
+                                            VariantToken {
+                                                variant: Unrestricted,
+                                                trivia: " ",
+                                            },
+                                        ),
+                                        float: VariantToken {
+                                            variant: Float,
+                                            trivia: " ",
+                                        },
+                                    },
+                                ),
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "sobig",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Float(
+                                Infinity(
+                                    VariantToken {
+                                        variant: Infinity,
+                                        trivia: " ",
+                                    },
+                                ),
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: FloatingPoint(
+                                Double(
+                                    DoubleType {
+                                        unrestricted: Some(
+                                            VariantToken {
+                                                variant: Unrestricted,
+                                                trivia: " ",
+                                            },
+                                        ),
+                                        double: VariantToken {
+                                            variant: Double,
+                                            trivia: " ",
+                                        },
+                                    },
+                                ),
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "minusonedividedbyzero",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Float(
+                                NegInfinity(
+                                    VariantToken {
+                                        variant: NegInfinity,
+                                        trivia: " ",
+                                    },
+                                ),
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: Integer(
+                                Short(
+                                    ShortType {
+                                        unsigned: None,
+                                        short: VariantToken {
+                                            variant: Short,
+                                            trivia: " ",
+                                        },
+                                    },
+                                ),
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "notanumber",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Float(
+                                NaN(
+                                    VariantToken {
+                                        variant: NaN,
+                                        trivia: " ",
+                                    },
+                                ),
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                    Const(
+                        ConstMember {
+                            attributes: None,
+                            const_: VariantToken {
+                                variant: Const,
+                                trivia: "\n  ",
+                            },
+                            const_type: Boolean(
+                                VariantToken {
+                                    variant: Boolean,
+                                    trivia: " ",
+                                },
+                            ),
+                            identifier: VariantToken {
+                                variant: Identifier(
+                                    "_const",
+                                ),
+                                trivia: " ",
+                            },
+                            assign: VariantToken {
+                                variant: Assign,
+                                trivia: " ",
+                            },
+                            const_value: Boolean(
+                                BooleanLit(
+                                    true,
+                                ),
+                            ),
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                ],
+                close_brace: VariantToken {
+                    variant: CloseBrace,
+                    trivia: "\n",
+                },
+            },
+            semi_colon: VariantToken {
+                variant: SemiColon,
+                trivia: "",
+            },
+        },
+    ),
+]

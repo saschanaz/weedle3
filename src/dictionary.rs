@@ -11,12 +11,16 @@ pub type DictionaryMembers<'a> = Vec<DictionaryMember<'a>>;
 
 /// Parses dictionary member `[attributes]? required? type identifier ( = default )?;`
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[weedle(context)]
 pub struct DictionaryMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub required: Option<term!(required)>,
     pub type_: Type<'a>,
+    #[weedle(cut = "Missing name")]
     pub identifier: VariantToken<'a, Identifier<'a>>,
+    #[weedle(cond = "required.is_none()")]
     pub default: Option<Default<'a>>,
+    #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
@@ -25,11 +29,20 @@ mod test {
     use super::*;
     use crate::Parse;
 
-    test!(should_parse_dictionary_member { "required long num = 5;" =>
+    test!(should_parse_dictionary_member { "required long num;" =>
         "";
         DictionaryMember;
         attributes.is_none();
         required.is_some();
+        identifier.variant.0 == "num";
+        default.is_none();
+    });
+
+    test!(should_parse_required_dictionary_member { "long num = 5;" =>
+        "";
+        DictionaryMember;
+        attributes.is_none();
+        required.is_none();
         identifier.variant.0 == "num";
         default.is_some();
     });

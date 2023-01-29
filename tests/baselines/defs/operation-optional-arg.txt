@@ -1,0 +1,238 @@
+[
+    Interface(
+        InterfaceDefinition {
+            attributes: None,
+            interface: VariantToken {
+                variant: Interface,
+                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+            },
+            identifier: VariantToken {
+                variant: Identifier(
+                    "ColorCreator",
+                ),
+                trivia: " ",
+            },
+            inheritance: None,
+            members: Braced {
+                open_brace: VariantToken {
+                    variant: OpenBrace,
+                    trivia: " ",
+                },
+                body: [
+                    Operation(
+                        OperationInterfaceMember {
+                            attributes: None,
+                            modifier: None,
+                            return_type: Single(
+                                Distinguishable(
+                                    Object(
+                                        MayBeNull {
+                                            type_: VariantToken {
+                                                variant: Object,
+                                                trivia: "\n  ",
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Some(
+                                VariantToken {
+                                    variant: Identifier(
+                                        "createColor",
+                                    ),
+                                    trivia: " ",
+                                },
+                            ),
+                            args: Parenthesized {
+                                open_paren: VariantToken {
+                                    variant: OpenParen,
+                                    trivia: "",
+                                },
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        Distinguishable(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: VariantToken {
+                                                                                variant: Float,
+                                                                                trivia: "",
+                                                                            },
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "v1",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        Distinguishable(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: VariantToken {
+                                                                                variant: Float,
+                                                                                trivia: " ",
+                                                                            },
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "v2",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: None,
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        Distinguishable(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: VariantToken {
+                                                                                variant: Float,
+                                                                                trivia: " ",
+                                                                            },
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "v3",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            SingleArgument {
+                                                attributes: None,
+                                                optional: Some(
+                                                    VariantToken {
+                                                        variant: Optional,
+                                                        trivia: " ",
+                                                    },
+                                                ),
+                                                type_: AttributedType {
+                                                    attributes: None,
+                                                    type_: Single(
+                                                        Distinguishable(
+                                                            FloatingPoint(
+                                                                MayBeNull {
+                                                                    type_: Float(
+                                                                        FloatType {
+                                                                            unrestricted: None,
+                                                                            float: VariantToken {
+                                                                                variant: Float,
+                                                                                trivia: " ",
+                                                                            },
+                                                                        },
+                                                                    ),
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                },
+                                                identifier: VariantToken {
+                                                    variant: Identifier(
+                                                        "alpha",
+                                                    ),
+                                                    trivia: " ",
+                                                },
+                                                default: Some(
+                                                    Default {
+                                                        assign: VariantToken {
+                                                            variant: Assign,
+                                                            trivia: " ",
+                                                        },
+                                                        value: Float(
+                                                            Value(
+                                                                VariantToken {
+                                                                    variant: FloatValueLit(
+                                                                        "3.5",
+                                                                    ),
+                                                                    trivia: " ",
+                                                                },
+                                                            ),
+                                                        ),
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                },
+                                close_paren: VariantToken {
+                                    variant: CloseParen,
+                                    trivia: "",
+                                },
+                            },
+                            semi_colon: VariantToken {
+                                variant: SemiColon,
+                                trivia: "",
+                            },
+                        },
+                    ),
+                ],
+                close_brace: VariantToken {
+                    variant: CloseBrace,
+                    trivia: "\n",
+                },
+            },
+            semi_colon: VariantToken {
+                variant: SemiColon,
+                trivia: "",
+            },
+        },
+    ),
+]
