@@ -49,6 +49,10 @@ impl<'a> Parse<'a> for ArgumentName<'a> {
         );
         nom::combinator::fail(input)
     }
+
+    fn write(&self) -> String {
+        unimplemented!()
+    }
 }
 
 impl<'a> From<ArgumentName<'a>> for VariantToken<'a, Identifier<'a>> {

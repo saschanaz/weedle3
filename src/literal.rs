@@ -1,7 +1,7 @@
 use nom::Parser;
 use weedle_derive::Weedle;
 
-use crate::{parser::eat::VariantToken, term, Parse};
+use crate::{parser::eat::VariantToken, Parse};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -67,6 +67,16 @@ impl<'a> IntegerLit<'a> {
 
 impl<'a> Parse<'a> for VariantToken<'a, IntegerLit<'a>> {
     parser!(eat!(Integer));
+
+    fn write(&self) -> String {
+        let trivia = self.trivia;
+        let variant = match self.variant {
+            IntegerLit::Dec(lit) => lit.0,
+            IntegerLit::Hex(lit) => lit.0,
+            IntegerLit::Oct(lit) => lit.0,
+        };
+        format!("{trivia}{variant}")
+    }
 }
 
 /// Represents a string value
@@ -88,6 +98,12 @@ impl<'a> StringLit<'a> {
 
 impl<'a> Parse<'a> for VariantToken<'a, StringLit<'a>> {
     parser!(eat!(String));
+
+    fn write(&self) -> String {
+        let trivia = self.trivia;
+        let variant = self.variant.0;
+        format!("{trivia}{variant}")
+    }
 }
 
 /// Represents `[ ]`
@@ -109,7 +125,7 @@ pub struct EmptyDictionaryLit<'a> {
 /// Represents a default literal value. Ex: `34|34.23|"value"|[ ]|true|false|null`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum DefaultValue<'a> {
-    Boolean(BooleanLit),
+    Boolean(VariantToken<'a, BooleanLit>),
     EmptyArray(EmptyArrayLit<'a>),
     EmptyDictionary(EmptyDictionaryLit<'a>),
     Float(FloatLit<'a>),
@@ -121,7 +137,7 @@ pub enum DefaultValue<'a> {
 /// Represents `true`, `false`, `34.23`, `null`, `56`, ...
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ConstValue<'a> {
-    Boolean(BooleanLit),
+    Boolean(VariantToken<'a, BooleanLit>),
     Float(FloatLit<'a>),
     Integer(VariantToken<'a, IntegerLit<'a>>),
 }
@@ -130,14 +146,23 @@ pub enum ConstValue<'a> {
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct BooleanLit(bool);
 
-impl<'a> Parse<'a> for BooleanLit {
-    parser!(nom::combinator::map(
-        nom::branch::alt((
-            nom::combinator::value(true, weedle!(term!(true))),
-            nom::combinator::value(false, weedle!(term!(false))),
-        )),
-        BooleanLit
-    ));
+impl<'a> Parse<'a> for VariantToken<'a, BooleanLit> {
+    parser!(nom::branch::alt((
+        nom::combinator::map(weedle!(term!(true)), |r| VariantToken {
+            trivia: r.trivia,
+            variant: BooleanLit(true)
+        }),
+        nom::combinator::map(weedle!(term!(false)), |r| VariantToken {
+            trivia: r.trivia,
+            variant: BooleanLit(false)
+        }),
+    )));
+
+    fn write(&self) -> String {
+        let trivia = self.trivia;
+        let variant = self.variant.0;
+        format!("{trivia}{variant}")
+    }
 }
 
 /// Parses `/-?(([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([Ee][+-]?[0-9]+)?|[0-9]+[Ee][+-]?[0-9]+)/`
@@ -191,6 +216,12 @@ impl<'a> FloatValueLit<'a> {
 
 impl<'a> Parse<'a> for VariantToken<'a, FloatValueLit<'a>> {
     parser!(eat!(Decimal));
+
+    fn write(&self) -> String {
+        let trivia = self.trivia;
+        let variant = self.variant.0;
+        format!("{trivia}{variant}")
+    }
 }
 
 /// Represents a floating point value, `NaN`, `Infinity`, '+Infinity`
@@ -338,11 +369,11 @@ mod test {
 
     test!(should_parse_bool_true { "true" =>
         "";
-        BooleanLit => BooleanLit(true)
+        VariantToken<BooleanLit> => VariantToken { variant: BooleanLit(true), trivia: "" }
     });
 
     test!(should_parse_bool_false { "false" =>
         "";
-        BooleanLit => BooleanLit(false)
+        VariantToken<BooleanLit> => VariantToken { variant: BooleanLit(false), trivia: "" }
     });
 }

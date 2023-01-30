@@ -60,6 +60,10 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
         try_eat_keys!(AttributeName, input, Async, Required);
         nom::combinator::fail(input)
     }
+
+    fn write(&self) -> String {
+        unimplemented!()
+    }
 }
 
 impl<'a> From<AttributeName<'a>> for VariantToken<'a, Identifier<'a>> {
@@ -146,6 +150,10 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
         }
         try_eat_keys!(OperationName, input, Includes);
         nom::combinator::fail(input)
+    }
+
+    fn write(&self) -> String {
+        unimplemented!()
     }
 }
 

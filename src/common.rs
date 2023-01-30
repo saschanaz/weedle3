@@ -13,19 +13,38 @@ pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
 
 impl<'a, T: Parse<'a>> Parse<'a> for Option<T> {
     parser!(nom::combinator::opt(weedle!(T)));
+
+    fn write(&self) -> String {
+        match self {
+            Some(x) => x.write(),
+            None => "".to_owned(),
+        }
+    }
 }
 
 impl<'a, T: Parse<'a>> Parse<'a> for Box<T> {
     parser!(nom::combinator::map(weedle!(T), Box::new));
+
+    fn write(&self) -> String {
+        self.as_ref().write()
+    }
 }
 
 /// Parses `item1 item2 item3...`
 impl<'a, T: Parse<'a>> Parse<'a> for Vec<T> {
     parser!(nom::multi::many0(T::parse_tokens));
+
+    fn write(&self) -> String {
+        self.iter().map(|item| item.write()).collect::<Vec<_>>().join("")
+    }
 }
 
 impl<'a, T: Parse<'a>, U: Parse<'a>> Parse<'a> for (T, U) {
     parser!(nom::sequence::tuple((T::parse_tokens, U::parse_tokens)));
+
+    fn write(&self) -> String {
+        vec![self.0.write(), self.1.write()].join("")
+    }
 }
 
 impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
@@ -34,6 +53,10 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
         U::parse_tokens,
         V::parse_tokens
     )));
+
+    fn write(&self) -> String {
+        vec![self.0.write(), self.1.write(), self.2.write()].join("")
+    }
 }
 
 /// Parses `( body )`
@@ -157,6 +180,11 @@ where
             },
         ))
     }
+
+    fn write(&self) -> String {
+        // XXX: Each item needs its own separator
+        self.list.write()
+    }
 }
 
 /// Parses `item1, item2, item3, ...`
@@ -184,6 +212,11 @@ where
             },
         ))
     }
+
+    fn write(&self) -> String {
+        // XXX: Each item needs its own separator
+        self.list.write()
+    }
 }
 
 /// Represents an identifier
@@ -208,6 +241,12 @@ impl<'a> Identifier<'a> {
 
 impl<'a> Parse<'a> for VariantToken<'a, Identifier<'a>> {
     parser!(eat!(Identifier));
+
+    fn write(&self) -> String {
+        let trivia = self.trivia;
+        let variant = self.variant.0;
+        format!("{trivia}{variant}")
+    }
 }
 
 /// Parses rhs of an assignment expression. Ex: `= 45`

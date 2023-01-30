@@ -103,6 +103,8 @@ pub trait Parse<'token>: Sized {
         let (unread, _) = whitespace::sp(unread.into())?;
         Ok((unread, def))
     }
+
+    fn write(&self) -> String;
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.

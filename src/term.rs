@@ -114,6 +114,12 @@ macro_rules! generate_keyword_struct {
 
         impl<'a> $crate::Parse<'a> for $crate::parser::eat::VariantToken<'a, $typ> {
             parser!(eat_key!($typ));
+
+            fn write(&self) -> String {
+                let trivia = self.trivia;
+                let variant = self.variant.value();
+                format!("{trivia}{variant}")
+            }
         }
     };
 }
