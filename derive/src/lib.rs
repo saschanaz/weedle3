@@ -106,7 +106,9 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     Ok(parser)
 }
 
-fn generate_tuple_struct(data_struct: &DataStruct) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
+fn generate_tuple_struct(
+    data_struct: &DataStruct,
+) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
     let mut count = 0;
     let field_ids = data_struct
         .fields
@@ -149,7 +151,9 @@ fn generate_tuple_struct(data_struct: &DataStruct) -> Result<(proc_macro2::Token
     Ok((parse_body, write_body))
 }
 
-fn generate_named_struct(data_struct: &DataStruct) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
+fn generate_named_struct(
+    data_struct: &DataStruct,
+) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
     let field_ids: Vec<_> = data_struct
         .fields
         .iter()

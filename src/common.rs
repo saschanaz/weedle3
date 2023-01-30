@@ -35,7 +35,10 @@ impl<'a, T: Parse<'a>> Parse<'a> for Vec<T> {
     parser!(nom::multi::many0(T::parse_tokens));
 
     fn write(&self) -> String {
-        self.iter().map(|item| item.write()).collect::<Vec<_>>().join("")
+        self.iter()
+            .map(|item| item.write())
+            .collect::<Vec<_>>()
+            .join("")
     }
 }
 
