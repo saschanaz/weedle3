@@ -4,11 +4,11 @@
             attributes: None,
             interface: Token {
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "Dog",
                 ),
             },
@@ -16,7 +16,7 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -26,7 +26,7 @@
                             readonly: None,
                             attribute: Token {
                                 trivia: "\n  ",
-                                variant: Attribute,
+                                value: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -36,7 +36,7 @@
                                             MayBeNull {
                                                 type_: Token {
                                                     trivia: " ",
-                                                    variant: DOMString,
+                                                    value: DOMString,
                                                 },
                                                 q_mark: None,
                                             },
@@ -46,13 +46,13 @@
                             },
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "name",
                                 ),
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -63,7 +63,7 @@
                             readonly: None,
                             attribute: Token {
                                 trivia: "\n  ",
-                                variant: Attribute,
+                                value: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -73,7 +73,7 @@
                                             MayBeNull {
                                                 type_: Token {
                                                     trivia: " ",
-                                                    variant: DOMString,
+                                                    value: DOMString,
                                                 },
                                                 q_mark: None,
                                             },
@@ -83,13 +83,13 @@
                             },
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "owner",
                                 ),
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -103,7 +103,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n\n  ",
-                                                variant: Boolean,
+                                                value: Boolean,
                                             },
                                             q_mark: None,
                                         },
@@ -113,7 +113,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "isMemberOfBreed",
                                     ),
                                 },
@@ -121,7 +121,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -131,7 +131,7 @@
                                                     Bracketed {
                                                         open_bracket: Token {
                                                             trivia: "",
-                                                            variant: OpenBracket,
+                                                            value: OpenBracket,
                                                         },
                                                         body: Punctuated {
                                                             list: [
@@ -139,17 +139,17 @@
                                                                     ExtendedAttributeIdent {
                                                                         lhs_identifier: Token {
                                                                             trivia: "",
-                                                                            variant: Identifier(
+                                                                            value: Identifier(
                                                                                 "TreatNullAs",
                                                                             ),
                                                                         },
                                                                         assign: Token {
                                                                             trivia: "",
-                                                                            variant: Assign,
+                                                                            value: Assign,
                                                                         },
                                                                         rhs: Token {
                                                                             trivia: "",
-                                                                            variant: Identifier(
+                                                                            value: Identifier(
                                                                                 "EmptyString",
                                                                             ),
                                                                         },
@@ -160,7 +160,7 @@
                                                         },
                                                         close_bracket: Token {
                                                             trivia: "",
-                                                            variant: CloseBracket,
+                                                            value: CloseBracket,
                                                         },
                                                     },
                                                 ),
@@ -173,7 +173,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: " ",
-                                                                        variant: DOMString,
+                                                                        value: DOMString,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -183,7 +183,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "breedName",
                                                     ),
                                                 },
@@ -195,24 +195,24 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

@@ -4,11 +4,11 @@
             attributes: None,
             interface: Token {
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "Util",
                 ),
             },
@@ -16,7 +16,7 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Const(
@@ -24,35 +24,35 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: Boolean(
                                 Token {
                                     trivia: " ",
-                                    variant: Boolean,
+                                    value: Boolean,
                                 },
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "DEBUG",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Boolean(
                                 Token {
                                     trivia: " ",
-                                    variant: BooleanLit(
+                                    value: BooleanLit(
                                         false,
                                     ),
                                 },
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -61,7 +61,7 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: Integer(
                                 Short(
@@ -69,25 +69,25 @@
                                         unsigned: None,
                                         short: Token {
                                             trivia: " ",
-                                            variant: Short,
+                                            value: Short,
                                         },
                                     },
                                 ),
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "negative",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Integer(
                                 Token {
                                     trivia: " ",
-                                    variant: Dec(
+                                    value: Dec(
                                         DecLit(
                                             "-1",
                                         ),
@@ -96,7 +96,7 @@
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -105,28 +105,28 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: Octet(
                                 Token {
                                     trivia: " ",
-                                    variant: Octet,
+                                    value: Octet,
                                 },
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "LF",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Integer(
                                 Token {
                                     trivia: " ",
-                                    variant: Dec(
+                                    value: Dec(
                                         DecLit(
                                             "10",
                                         ),
@@ -135,7 +135,7 @@
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -144,7 +144,7 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: Integer(
                                 Long(
@@ -152,30 +152,30 @@
                                         unsigned: Some(
                                             Token {
                                                 trivia: " ",
-                                                variant: Unsigned,
+                                                value: Unsigned,
                                             },
                                         ),
                                         long: Token {
                                             trivia: " ",
-                                            variant: Long,
+                                            value: Long,
                                         },
                                     },
                                 ),
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "BIT_MASK",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Integer(
                                 Token {
                                     trivia: " ",
-                                    variant: Hex(
+                                    value: Hex(
                                         HexLit(
                                             "0x0000fc00",
                                         ),
@@ -184,7 +184,7 @@
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -193,7 +193,7 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: FloatingPoint(
                                 Float(
@@ -201,26 +201,26 @@
                                         unrestricted: None,
                                         float: Token {
                                             trivia: " ",
-                                            variant: Float,
+                                            value: Float,
                                         },
                                     },
                                 ),
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "AVOGADRO",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Float(
                                 Value(
                                     Token {
                                         trivia: " ",
-                                        variant: FloatValueLit(
+                                        value: FloatValueLit(
                                             "6.022e23",
                                         ),
                                     },
@@ -228,7 +228,7 @@
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -237,7 +237,7 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: FloatingPoint(
                                 Float(
@@ -245,37 +245,37 @@
                                         unrestricted: Some(
                                             Token {
                                                 trivia: " ",
-                                                variant: Unrestricted,
+                                                value: Unrestricted,
                                             },
                                         ),
                                         float: Token {
                                             trivia: " ",
-                                            variant: Float,
+                                            value: Float,
                                         },
                                     },
                                 ),
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "sobig",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Float(
                                 Infinity(
                                     Token {
                                         trivia: " ",
-                                        variant: Infinity,
+                                        value: Infinity,
                                     },
                                 ),
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -284,7 +284,7 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: FloatingPoint(
                                 Double(
@@ -292,37 +292,37 @@
                                         unrestricted: Some(
                                             Token {
                                                 trivia: " ",
-                                                variant: Unrestricted,
+                                                value: Unrestricted,
                                             },
                                         ),
                                         double: Token {
                                             trivia: " ",
-                                            variant: Double,
+                                            value: Double,
                                         },
                                     },
                                 ),
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "minusonedividedbyzero",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Float(
                                 NegInfinity(
                                     Token {
                                         trivia: " ",
-                                        variant: NegInfinity,
+                                        value: NegInfinity,
                                     },
                                 ),
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -331,7 +331,7 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: Integer(
                                 Short(
@@ -339,32 +339,32 @@
                                         unsigned: None,
                                         short: Token {
                                             trivia: " ",
-                                            variant: Short,
+                                            value: Short,
                                         },
                                     },
                                 ),
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "notanumber",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Float(
                                 NaN(
                                     Token {
                                         trivia: " ",
-                                        variant: NaN,
+                                        value: NaN,
                                     },
                                 ),
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -373,47 +373,47 @@
                             attributes: None,
                             const_: Token {
                                 trivia: "\n  ",
-                                variant: Const,
+                                value: Const,
                             },
                             const_type: Boolean(
                                 Token {
                                     trivia: " ",
-                                    variant: Boolean,
+                                    value: Boolean,
                                 },
                             ),
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "_const",
                                 ),
                             },
                             assign: Token {
                                 trivia: " ",
-                                variant: Assign,
+                                value: Assign,
                             },
                             const_value: Boolean(
                                 Token {
                                     trivia: " ",
-                                    variant: BooleanLit(
+                                    value: BooleanLit(
                                         true,
                                     ),
                                 },
                             ),
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

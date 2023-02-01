@@ -4,17 +4,17 @@
             attributes: None,
             callback: Token {
                 trivia: "",
-                variant: Callback,
+                value: Callback,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "AsyncOperationCallback",
                 ),
             },
             assign: Token {
                 trivia: " ",
-                variant: Assign,
+                value: Assign,
             },
             return_type: Single(
                 Distinguishable(
@@ -22,7 +22,7 @@
                         MayBeNull {
                             type_: Token {
                                 trivia: " ",
-                                variant: Undefined,
+                                value: Undefined,
                             },
                             q_mark: None,
                         },
@@ -32,7 +32,7 @@
             arguments: Parenthesized {
                 open_paren: Token {
                     trivia: " ",
-                    variant: OpenParen,
+                    value: OpenParen,
                 },
                 body: Punctuated {
                     list: [
@@ -48,7 +48,7 @@
                                                 MayBeNull {
                                                     type_: Token {
                                                         trivia: "",
-                                                        variant: DOMString,
+                                                        value: DOMString,
                                                     },
                                                     q_mark: None,
                                                 },
@@ -58,7 +58,7 @@
                                 },
                                 identifier: Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "status",
                                     ),
                                 },
@@ -70,12 +70,12 @@
                 },
                 close_paren: Token {
                     trivia: "",
-                    variant: CloseParen,
+                    value: CloseParen,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),
@@ -84,22 +84,22 @@
             attributes: None,
             callback: Token {
                 trivia: "\n\n",
-                variant: Callback,
+                value: Callback,
             },
             interface: Token {
                 trivia: " ",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "EventHandler",
                 ),
             },
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Operation(
@@ -111,7 +111,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -121,7 +121,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "eventOccurred",
                                     ),
                                 },
@@ -129,7 +129,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -145,7 +145,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: DOMString,
+                                                                        value: DOMString,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -155,7 +155,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "details",
                                                     ),
                                                 },
@@ -167,24 +167,24 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),
@@ -193,17 +193,17 @@
             attributes: None,
             callback: Token {
                 trivia: "\n\n",
-                variant: Callback,
+                value: Callback,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "SortCallback",
                 ),
             },
             assign: Token {
                 trivia: " ",
-                variant: Assign,
+                value: Assign,
             },
             return_type: Single(
                 Distinguishable(
@@ -211,7 +211,7 @@
                         MayBeNull {
                             type_: Token {
                                 trivia: " ",
-                                variant: Boolean,
+                                value: Boolean,
                             },
                             q_mark: None,
                         },
@@ -221,7 +221,7 @@
             arguments: Parenthesized {
                 open_paren: Token {
                     trivia: " ",
-                    variant: OpenParen,
+                    value: OpenParen,
                 },
                 body: Punctuated {
                     list: [
@@ -235,14 +235,14 @@
                                         Any(
                                             Token {
                                                 trivia: "",
-                                                variant: Any,
+                                                value: Any,
                                             },
                                         ),
                                     ),
                                 },
                                 identifier: Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "a",
                                     ),
                                 },
@@ -259,14 +259,14 @@
                                         Any(
                                             Token {
                                                 trivia: " ",
-                                                variant: Any,
+                                                value: Any,
                                             },
                                         ),
                                     ),
                                 },
                                 identifier: Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "b",
                                     ),
                                 },
@@ -278,12 +278,12 @@
                 },
                 close_paren: Token {
                     trivia: "",
-                    variant: CloseParen,
+                    value: CloseParen,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

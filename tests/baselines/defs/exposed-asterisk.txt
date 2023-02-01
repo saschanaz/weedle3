@@ -5,7 +5,7 @@
                 Bracketed {
                     open_bracket: Token {
                         trivia: "",
-                        variant: OpenBracket,
+                        value: OpenBracket,
                     },
                     body: Punctuated {
                         list: [
@@ -13,17 +13,17 @@
                                 ExtendedAttributeWildcard {
                                     lhs_identifier: Token {
                                         trivia: "",
-                                        variant: Identifier(
+                                        value: Identifier(
                                             "Exposed",
                                         ),
                                     },
                                     assign: Token {
                                         trivia: "",
-                                        variant: Assign,
+                                        value: Assign,
                                     },
                                     wildcard: Token {
                                         trivia: "",
-                                        variant: Wildcard,
+                                        value: Wildcard,
                                     },
                                 },
                             ),
@@ -32,17 +32,17 @@
                     },
                     close_bracket: Token {
                         trivia: "",
-                        variant: CloseBracket,
+                        value: CloseBracket,
                     },
                 },
             ),
             interface: Token {
                 trivia: "\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "X",
                 ),
             },
@@ -50,17 +50,17 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [],
                 close_brace: Token {
                     trivia: "",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

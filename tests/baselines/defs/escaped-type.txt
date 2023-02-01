@@ -4,7 +4,7 @@
             attributes: None,
             typedef: Token {
                 trivia: "",
-                variant: Typedef,
+                value: Typedef,
             },
             type_: AttributedType {
                 attributes: None,
@@ -14,7 +14,7 @@
                             MayBeNull {
                                 type_: Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "_Type",
                                     ),
                                 },
@@ -26,13 +26,13 @@
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "EscapedType",
                 ),
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),
@@ -41,7 +41,7 @@
             attributes: None,
             typedef: Token {
                 trivia: "\n",
-                variant: Typedef,
+                value: Typedef,
             },
             type_: AttributedType {
                 attributes: None,
@@ -52,12 +52,12 @@
                                 type_: SequenceType {
                                     sequence: Token {
                                         trivia: " ",
-                                        variant: Sequence,
+                                        value: Sequence,
                                     },
                                     generics: Generics {
                                         open_angle: Token {
                                             trivia: "",
-                                            variant: LessThan,
+                                            value: LessThan,
                                         },
                                         body: AttributedType {
                                             attributes: None,
@@ -67,7 +67,7 @@
                                                         MayBeNull {
                                                             type_: Token {
                                                                 trivia: "",
-                                                                variant: Identifier(
+                                                                value: Identifier(
                                                                     "_Type",
                                                                 ),
                                                             },
@@ -79,7 +79,7 @@
                                         },
                                         close_angle: Token {
                                             trivia: "",
-                                            variant: GreaterThan,
+                                            value: GreaterThan,
                                         },
                                     },
                                 },
@@ -91,13 +91,13 @@
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "EscapedSequence",
                 ),
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

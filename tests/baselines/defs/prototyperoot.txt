@@ -5,7 +5,7 @@
                 Bracketed {
                     open_bracket: Token {
                         trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                        variant: OpenBracket,
+                        value: OpenBracket,
                     },
                     body: Punctuated {
                         list: [
@@ -13,7 +13,7 @@
                                 ExtendedAttributeNoArgs(
                                     Token {
                                         trivia: "",
-                                        variant: Identifier(
+                                        value: Identifier(
                                             "PrototypeRoot",
                                         ),
                                     },
@@ -24,17 +24,17 @@
                     },
                     close_bracket: Token {
                         trivia: "",
-                        variant: CloseBracket,
+                        value: CloseBracket,
                     },
                 },
             ),
             interface: Token {
                 trivia: "\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "Node",
                 ),
             },
@@ -42,7 +42,7 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -52,12 +52,12 @@
                             readonly: Some(
                                 Token {
                                     trivia: "\n  ",
-                                    variant: ReadOnly,
+                                    value: ReadOnly,
                                 },
                             ),
                             attribute: Token {
                                 trivia: " ",
-                                variant: Attribute,
+                                value: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -70,12 +70,12 @@
                                                         unsigned: Some(
                                                             Token {
                                                                 trivia: " ",
-                                                                variant: Unsigned,
+                                                                value: Unsigned,
                                                             },
                                                         ),
                                                         short: Token {
                                                             trivia: " ",
-                                                            variant: Short,
+                                                            value: Short,
                                                         },
                                                     },
                                                 ),
@@ -87,25 +87,25 @@
                             },
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "nodeType",
                                 ),
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

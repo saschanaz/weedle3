@@ -251,7 +251,7 @@ impl<'a> Parse<'a> for Token<'a, Identifier<'a>> {
 
     fn write(&self) -> String {
         let trivia = self.trivia;
-        let variant = self.variant.0;
+        let variant = self.value.0;
         format!("{trivia}{variant}")
     }
 }
@@ -294,25 +294,25 @@ mod test {
     test!(should_parse_parenthesized { "( one )" =>
         "";
         Parenthesized<Token<Identifier>>;
-        body.variant.0 == "one";
+        body.value.0 == "one";
     });
 
     test!(should_parse_bracketed { "[ one ]" =>
         "";
         Bracketed<Token<Identifier>>;
-        body.variant.0 == "one";
+        body.value.0 == "one";
     });
 
     test!(should_parse_braced { "{ one }" =>
         "";
         Braced<Token<Identifier>>;
-        body.variant.0 == "one";
+        body.value.0 == "one";
     });
 
     test!(should_parse_generics { "<one>" =>
         "";
         Generics<Token<Identifier>>;
-        body.variant.0 == "one";
+        body.value.0 == "one";
     });
 
     test!(should_parse_generics_two { "<one, two>" =>
@@ -321,9 +321,9 @@ mod test {
             Generics {
                 open_angle: Token::default(),
                 body: (
-                    Token { variant: Identifier("one"), trivia: "" },
+                    Token { value: Identifier("one"), trivia: "" },
                     Token::default(),
-                    Token { variant: Identifier("two"), trivia: " " },
+                    Token { value: Identifier("two"), trivia: " " },
                 ),
                 close_angle: Token::default(),
             }
@@ -362,7 +362,7 @@ mod test {
     test!(should_parse_identifier_surrounding_with_spaces { "  hello  " =>
         "";
         Token<Identifier>;
-        variant.0 == "hello";
+        value.0 == "hello";
     });
 
     test_match!(should_parse_identifier_preceding_others { "hello  note" =>

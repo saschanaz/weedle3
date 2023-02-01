@@ -34,7 +34,7 @@ mod test {
         DictionaryMember;
         attributes.is_none();
         required.is_some();
-        identifier.variant.0 == "num";
+        identifier.value.0 == "num";
         default.is_none();
     });
 
@@ -43,7 +43,7 @@ mod test {
         DictionaryMember;
         attributes.is_none();
         required.is_none();
-        identifier.variant.0 == "num";
+        identifier.value.0 == "num";
         default.is_some();
     });
 }

@@ -1,7 +1,7 @@
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Token<'a, T> {
     pub trivia: &'a str,
-    pub variant: T,
+    pub value: T,
 }
 
 impl<'a, T> Default for Token<'a, T>
@@ -10,8 +10,8 @@ where
 {
     fn default() -> Self {
         Token {
-            variant: T::default(),
             trivia: "",
+            value: T::default(),
         }
     }
 }
@@ -135,8 +135,8 @@ macro_rules! generate_keyword_struct {
 
             fn write(&self) -> String {
                 let trivia = self.trivia;
-                let variant = self.variant.value();
-                format!("{trivia}{variant}")
+                let value = self.value.value();
+                format!("{trivia}{value}")
             }
         }
     };

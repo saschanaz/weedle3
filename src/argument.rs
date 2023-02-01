@@ -18,7 +18,7 @@ impl<'a> Parse<'a> for ArgumentName<'a> {
         input: LexedSlice<'slice, 'a>,
     ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
-            return Ok((tokens, ArgumentName(result.trivia, result.variant.0)));
+            return Ok((tokens, ArgumentName(result.trivia, result.value.0)));
         }
         try_eat_keys!(
             ArgumentName,
@@ -61,7 +61,7 @@ impl<'a> From<ArgumentName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: ArgumentName<'a>) -> Self {
         Self {
             trivia: value.0,
-            variant: Identifier(value.1),
+            value: Identifier(value.1),
         }
     }
 }
@@ -109,7 +109,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier == Token { variant: Identifier("a"), trivia: " " };
+        identifier == Token { value: Identifier("a"), trivia: " " };
         default.is_none();
     });
 
@@ -117,7 +117,7 @@ mod test {
         "";
         VariadicArgument;
         attributes.is_none();
-        identifier.variant.0 == "a";
+        identifier.value.0 == "a";
     });
 
     test!(should_parse_optional_single_argument { "optional short a" =>
@@ -125,7 +125,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == Token { variant: Identifier("a"), trivia: " " };
+        identifier == Token { value: Identifier("a"), trivia: " " };
         default.is_none();
     });
 
@@ -134,10 +134,10 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == Token { variant: Identifier("a"), trivia: " " };
+        identifier == Token { value: Identifier("a"), trivia: " " };
         default == Some(Default {
-            assign: Token { variant: core::default::Default::default(), trivia: " " },
-            value: DefaultValue::Integer(Token { variant: IntegerLit::Dec(DecLit("5")), trivia: " " }),
+            assign: Token { value: core::default::Default::default(), trivia: " " },
+            value: DefaultValue::Integer(Token { value: IntegerLit::Dec(DecLit("5")), trivia: " " }),
         });
     });
 

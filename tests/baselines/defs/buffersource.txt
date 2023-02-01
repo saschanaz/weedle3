@@ -5,7 +5,7 @@
                 Bracketed {
                     open_bracket: Token {
                         trivia: "",
-                        variant: OpenBracket,
+                        value: OpenBracket,
                     },
                     body: Punctuated {
                         list: [
@@ -13,17 +13,17 @@
                                 ExtendedAttributeIdent {
                                     lhs_identifier: Token {
                                         trivia: "",
-                                        variant: Identifier(
+                                        value: Identifier(
                                             "Exposed",
                                         ),
                                     },
                                     assign: Token {
                                         trivia: "",
-                                        variant: Assign,
+                                        value: Assign,
                                     },
                                     rhs: Token {
                                         trivia: "",
-                                        variant: Identifier(
+                                        value: Identifier(
                                             "Window",
                                         ),
                                     },
@@ -34,17 +34,17 @@
                     },
                     close_bracket: Token {
                         trivia: "",
-                        variant: CloseBracket,
+                        value: CloseBracket,
                     },
                 },
             ),
             interface: Token {
                 trivia: "\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "Buffer",
                 ),
             },
@@ -52,7 +52,7 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Operation(
@@ -65,7 +65,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -75,7 +75,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -83,7 +83,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -99,7 +99,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: DataView,
+                                                                        value: DataView,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -109,7 +109,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "view",
                                                     ),
                                                 },
@@ -121,12 +121,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -140,7 +140,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -150,7 +150,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -158,7 +158,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -174,7 +174,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Int8Array,
+                                                                        value: Int8Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -184,7 +184,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -196,12 +196,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -215,7 +215,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -225,7 +225,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -233,7 +233,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -249,7 +249,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Int16Array,
+                                                                        value: Int16Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -259,7 +259,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -271,12 +271,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -290,7 +290,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -300,7 +300,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -308,7 +308,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -324,7 +324,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Int32Array,
+                                                                        value: Int32Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -334,7 +334,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -346,12 +346,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -365,7 +365,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -375,7 +375,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -383,7 +383,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -399,7 +399,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Uint8Array,
+                                                                        value: Uint8Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -409,7 +409,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -421,12 +421,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -440,7 +440,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -450,7 +450,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -458,7 +458,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -474,7 +474,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Uint16Array,
+                                                                        value: Uint16Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -484,7 +484,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -496,12 +496,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -515,7 +515,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -525,7 +525,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -533,7 +533,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -549,7 +549,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Uint32Array,
+                                                                        value: Uint32Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -559,7 +559,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -571,12 +571,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -590,7 +590,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -600,7 +600,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -608,7 +608,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -624,7 +624,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Uint8ClampedArray,
+                                                                        value: Uint8ClampedArray,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -634,7 +634,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -646,12 +646,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -665,7 +665,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -675,7 +675,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -683,7 +683,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -699,7 +699,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: BigInt64Array,
+                                                                        value: BigInt64Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -709,7 +709,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -721,12 +721,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -740,7 +740,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -750,7 +750,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -758,7 +758,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -774,7 +774,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: BigUint64Array,
+                                                                        value: BigUint64Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -784,7 +784,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -796,12 +796,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -815,7 +815,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -825,7 +825,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -833,7 +833,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -849,7 +849,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Float32Array,
+                                                                        value: Float32Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -859,7 +859,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -871,12 +871,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -890,7 +890,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -900,7 +900,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "add",
                                     ),
                                 },
@@ -908,7 +908,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -924,7 +924,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Float64Array,
+                                                                        value: Float64Array,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -934,7 +934,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "array",
                                                     ),
                                                 },
@@ -946,12 +946,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -965,7 +965,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -975,7 +975,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "addAny",
                                     ),
                                 },
@@ -983,7 +983,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -999,7 +999,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Identifier(
+                                                                        value: Identifier(
                                                                             "BufferSource",
                                                                         ),
                                                                     },
@@ -1011,7 +1011,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "source",
                                                     ),
                                                 },
@@ -1023,12 +1023,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -1042,7 +1042,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -1052,7 +1052,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "addBuffer",
                                     ),
                                 },
@@ -1060,7 +1060,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -1076,7 +1076,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: ArrayBuffer,
+                                                                        value: ArrayBuffer,
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -1086,7 +1086,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "buffer",
                                                     ),
                                                 },
@@ -1098,12 +1098,12 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -1117,7 +1117,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -1127,7 +1127,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "addView",
                                     ),
                                 },
@@ -1135,7 +1135,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -1151,7 +1151,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Identifier(
+                                                                        value: Identifier(
                                                                             "ArrayBufferView",
                                                                         ),
                                                                     },
@@ -1163,7 +1163,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "view",
                                                     ),
                                                 },
@@ -1175,24 +1175,24 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

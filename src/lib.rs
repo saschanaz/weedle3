@@ -52,7 +52,6 @@ pub mod namespace;
 pub mod types;
 
 mod lexer;
-pub mod parser;
 mod tokens;
 
 use lexer::lex;
@@ -324,22 +323,22 @@ mod test {
         "";
         IncludesStatementDefinition;
         attributes.is_none();
-        lhs_identifier.variant.0 == "first";
-        rhs_identifier.variant.0 == "second";
+        lhs_identifier.value.0 == "first";
+        rhs_identifier.value.0 == "second";
     });
 
     test!(should_parse_typedef { "typedef short Short;" =>
         "";
         TypedefDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Short";
+        identifier.value.0 == "Short";
     });
 
     test!(should_parse_enum { r#"enum name { "first", "second" };"# =>
         "";
         EnumDefinition;
         attributes.is_none();
-        identifier.variant.0 == "name";
+        identifier.value.0 == "name";
         values.body.list.len() == 2;
     });
 
@@ -347,7 +346,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.variant.0 == "A";
+        identifier.value.0 == "A";
         inheritance.is_none();
         members.body.len() == 2;
     });
@@ -356,7 +355,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.variant.0 == "C";
+        identifier.value.0 == "C";
         inheritance.is_some();
         members.body.len() == 2;
     });
@@ -371,7 +370,7 @@ mod test {
         "";
         PartialNamespaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "VectorUtils";
+        identifier.value.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -379,7 +378,7 @@ mod test {
         "";
         PartialDictionaryDefinition;
         attributes.is_none();
-        identifier.variant.0 == "C";
+        identifier.value.0 == "C";
         members.body.len() == 2;
     });
 
@@ -391,7 +390,7 @@ mod test {
         "";
         PartialInterfaceMixinDefinition;
         attributes.is_none();
-        identifier.variant.0 == "WindowSessionStorage";
+        identifier.value.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -403,7 +402,7 @@ mod test {
         "";
         PartialInterfaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Window";
+        identifier.value.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -417,7 +416,7 @@ mod test {
         "";
         NamespaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "VectorUtils";
+        identifier.value.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -429,7 +428,7 @@ mod test {
         "";
         InterfaceMixinDefinition;
         attributes.is_none();
-        identifier.variant.0 == "WindowSessionStorage";
+        identifier.value.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -441,7 +440,7 @@ mod test {
         "";
         InterfaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Window";
+        identifier.value.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -455,7 +454,7 @@ mod test {
         "";
         CallbackInterfaceDefinition;
         attributes.is_none();
-        identifier.variant.0 == "Options";
+        identifier.value.0 == "Options";
         members.body.len() == 3;
     });
 
@@ -469,7 +468,7 @@ mod test {
         "";
         CallbackDefinition;
         attributes.is_none();
-        identifier.variant.0 == "AsyncOperationCallback";
+        identifier.value.0 == "AsyncOperationCallback";
         arguments.body.list.len() == 1;
     });
 

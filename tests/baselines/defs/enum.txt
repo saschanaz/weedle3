@@ -4,36 +4,36 @@
             attributes: None,
             enum_: Token {
                 trivia: "",
-                variant: Enum,
+                value: Enum,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "MealType",
                 ),
             },
             values: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: PunctuatedNonEmpty {
                     list: [
                         Token {
                             trivia: " ",
-                            variant: StringLit(
+                            value: StringLit(
                                 "rice",
                             ),
                         },
                         Token {
                             trivia: " ",
-                            variant: StringLit(
+                            value: StringLit(
                                 "noodles",
                             ),
                         },
                         Token {
                             trivia: " ",
-                            variant: StringLit(
+                            value: StringLit(
                                 "other",
                             ),
                         },
@@ -42,12 +42,12 @@
                 },
                 close_brace: Token {
                     trivia: " ",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),
@@ -56,11 +56,11 @@
             attributes: None,
             interface: Token {
                 trivia: "\n\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "Meal",
                 ),
             },
@@ -68,7 +68,7 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -78,7 +78,7 @@
                             readonly: None,
                             attribute: Token {
                                 trivia: "\n  ",
-                                variant: Attribute,
+                                value: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -88,7 +88,7 @@
                                             MayBeNull {
                                                 type_: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "MealType",
                                                     ),
                                                 },
@@ -100,13 +100,13 @@
                             },
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "type",
                                 ),
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -117,7 +117,7 @@
                             readonly: None,
                             attribute: Token {
                                 trivia: "\n  ",
-                                variant: Attribute,
+                                value: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -130,7 +130,7 @@
                                                         unrestricted: None,
                                                         float: Token {
                                                             trivia: " ",
-                                                            variant: Float,
+                                                            value: Float,
                                                         },
                                                     },
                                                 ),
@@ -142,13 +142,13 @@
                             },
                             identifier: Token {
                                 trivia: " ",
-                                variant: Identifier(
+                                value: Identifier(
                                     "size",
                                 ),
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
@@ -162,7 +162,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "     // in grams\n\n  ",
-                                                variant: Undefined,
+                                                value: Undefined,
                                             },
                                             q_mark: None,
                                         },
@@ -172,7 +172,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "initialize",
                                     ),
                                 },
@@ -180,7 +180,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -196,7 +196,7 @@
                                                                 MayBeNull {
                                                                     type_: Token {
                                                                         trivia: "",
-                                                                        variant: Identifier(
+                                                                        value: Identifier(
                                                                             "MealType",
                                                                         ),
                                                                     },
@@ -208,7 +208,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "type",
                                                     ),
                                                 },
@@ -230,7 +230,7 @@
                                                                             unrestricted: None,
                                                                             float: Token {
                                                                                 trivia: " ",
-                                                                                variant: Float,
+                                                                                value: Float,
                                                                             },
                                                                         },
                                                                     ),
@@ -242,7 +242,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "size",
                                                     ),
                                                 },
@@ -254,24 +254,24 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),
@@ -280,36 +280,36 @@
             attributes: None,
             enum_: Token {
                 trivia: "\n\n",
-                variant: Enum,
+                value: Enum,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "_AltMealType",
                 ),
             },
             values: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: PunctuatedNonEmpty {
                     list: [
                         Token {
                             trivia: " ",
-                            variant: StringLit(
+                            value: StringLit(
                                 "rice",
                             ),
                         },
                         Token {
                             trivia: " ",
-                            variant: StringLit(
+                            value: StringLit(
                                 "noodles",
                             ),
                         },
                         Token {
                             trivia: " ",
-                            variant: StringLit(
+                            value: StringLit(
                                 "other",
                             ),
                         },
@@ -318,12 +318,12 @@
                 },
                 close_brace: Token {
                     trivia: " ",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

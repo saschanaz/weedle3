@@ -20,14 +20,14 @@ pub enum Terminal<'a> {
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Lexed<'a> {
-    pub value: Terminal<'a>,
     pub trivia: &'a str,
+    pub value: Terminal<'a>,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
 }
 
 impl Lexed<'_> {
-    pub fn new<'a>((trivia, tag): (&'a str, Terminal<'a>)) -> Lexed<'a> {
-        Lexed { value: tag, trivia }
+    pub fn new<'a>((trivia, value): (&'a str, Terminal<'a>)) -> Lexed<'a> {
+        Lexed { trivia, value }
     }
 }
 
@@ -58,8 +58,8 @@ pub fn lex(input: &str) -> Result<Vec<Lexed>, nom::Err<nom::error::VerboseError<
     let (unread, (mut tokens, eof)) = tuple((
         many0(tuple((sp, tag)).map(Lexed::new)),
         tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Lexed {
-            value: Terminal::Eof(()),
             trivia,
+            value: Terminal::Eof(()),
         }),
     ))(input)?;
 

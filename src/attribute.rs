@@ -142,7 +142,7 @@ mod test {
     test!(should_parse_attribute_no_args { "Replaceable" =>
         "";
         ExtendedAttributeNoArgs => ExtendedAttributeNoArgs(Token {
-            variant: Identifier("Replaceable"),
+            value: Identifier("Replaceable"),
             trivia: "",
         })
     });
@@ -150,44 +150,44 @@ mod test {
     test!(should_parse_attribute_arg_list { "Constructor(double x, double y)" =>
         "";
         ExtendedAttributeArgList;
-        identifier.variant.0 == "Constructor";
+        identifier.value.0 == "Constructor";
         args.body.list.len() == 2;
     });
 
     test!(should_parse_attribute_ident { "PutForwards=name" =>
         "";
         ExtendedAttributeIdent;
-        lhs_identifier.variant.0 == "PutForwards";
-        rhs == Token { variant: Identifier("name"), trivia: "" };
+        lhs_identifier.value.0 == "PutForwards";
+        rhs == Token { value: Identifier("name"), trivia: "" };
     });
 
     test!(should_parse_ident_list { "Exposed=(Window,Worker)" =>
         "";
         ExtendedAttributeIdentList;
-        identifier.variant.0 == "Exposed";
+        identifier.value.0 == "Exposed";
         list.body.list.len() == 2;
     });
 
     test!(should_parse_named_arg_list { "NamedConstructor=Image(DOMString src)" =>
         "";
         ExtendedAttributeNamedArgList;
-        lhs_identifier.variant.0 == "NamedConstructor";
-        rhs_identifier.variant.0 == "Image";
+        lhs_identifier.value.0 == "NamedConstructor";
+        rhs_identifier.value.0 == "Image";
         args.body.list.len() == 1;
     });
 
     test!(should_parse_string { "ReflectOnly=\"on\"" =>
         "";
         ExtendedAttributeString;
-        lhs_identifier.variant.0 == "ReflectOnly";
-        rhs.variant.0 == "on";
+        lhs_identifier.value.0 == "ReflectOnly";
+        rhs.value.0 == "on";
     });
 
     test!(should_parse_float { "FloatAttr=3.14" =>
         "";
         ExtendedAttributeFloat;
-        lhs_identifier.variant.0 == "FloatAttr";
-        rhs == FloatLit::Value(Token { variant: FloatValueLit("3.14"), trivia: "" });
+        lhs_identifier.value.0 == "FloatAttr";
+        rhs == FloatLit::Value(Token { value: FloatValueLit("3.14"), trivia: "" });
     });
 
     test!(should_parse_extattr_list { "[IntAttr=0, FloatAttr=3.14]" =>

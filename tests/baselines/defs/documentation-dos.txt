@@ -4,11 +4,11 @@
             attributes: None,
             interface: Token {
                 trivia: "/**\n* \\brief Testing documentation features\n*\n* This is a\n* single paragraph\n*\n* <p>This is valid.</p>\n* <p>This is <em>valid</em>.</p>\n* <p>This is <b>valid</b>.</p>\n* <p>This is <a href=''>valid</a>.</p>\n* <ul>\n* <li>This</li>\n* <li>is</li>\n* <li>valid</li>\n* </ul>\n* <dl>\n* <dt>This</dt>\n* <dd>valid</dd>\n* </dl>\n* <table>\n* <tr>\n* <td>this</td>\n* <td>is</td>\n* </tr>\n* <tr>\n* <td>valid</td>\n* </tr>\n* </table>\n* <p>This is <br> valid.</p>\n* <p>This is <br /> valid.</p>\n* <p>This is <br/> valid.</p>\n*/\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "Documentation",
                 ),
             },
@@ -16,17 +16,17 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [],
                 close_brace: Token {
                     trivia: "",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

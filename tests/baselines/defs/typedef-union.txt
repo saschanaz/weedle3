@@ -4,7 +4,7 @@
             attributes: None,
             typedef: Token {
                 trivia: "  ",
-                variant: Typedef,
+                value: Typedef,
             },
             type_: AttributedType {
                 attributes: None,
@@ -13,7 +13,7 @@
                         type_: Parenthesized {
                             open_paren: Token {
                                 trivia: " ",
-                                variant: OpenParen,
+                                value: OpenParen,
                             },
                             body: Punctuated {
                                 list: [
@@ -24,7 +24,7 @@
                                                 MayBeNull {
                                                     type_: Token {
                                                         trivia: "",
-                                                        variant: Identifier(
+                                                        value: Identifier(
                                                             "ImageData",
                                                         ),
                                                     },
@@ -40,7 +40,7 @@
                                                 MayBeNull {
                                                     type_: Token {
                                                         trivia: "\n           ",
-                                                        variant: Identifier(
+                                                        value: Identifier(
                                                             "HTMLImageElement",
                                                         ),
                                                     },
@@ -56,7 +56,7 @@
                                                 MayBeNull {
                                                     type_: Token {
                                                         trivia: "\n           ",
-                                                        variant: Identifier(
+                                                        value: Identifier(
                                                             "HTMLCanvasElement",
                                                         ),
                                                     },
@@ -72,7 +72,7 @@
                                                 MayBeNull {
                                                     type_: Token {
                                                         trivia: "\n           ",
-                                                        variant: Identifier(
+                                                        value: Identifier(
                                                             "HTMLVideoElement",
                                                         ),
                                                     },
@@ -86,7 +86,7 @@
                             },
                             close_paren: Token {
                                 trivia: "",
-                                variant: CloseParen,
+                                value: CloseParen,
                             },
                         },
                         q_mark: None,
@@ -95,13 +95,13 @@
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "TexImageSource",
                 ),
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

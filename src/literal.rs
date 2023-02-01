@@ -70,7 +70,7 @@ impl<'a> Parse<'a> for Token<'a, IntegerLit<'a>> {
 
     fn write(&self) -> String {
         let trivia = self.trivia;
-        let variant = match self.variant {
+        let variant = match self.value {
             IntegerLit::Dec(lit) => lit.0,
             IntegerLit::Hex(lit) => lit.0,
             IntegerLit::Oct(lit) => lit.0,
@@ -101,7 +101,7 @@ impl<'a> Parse<'a> for Token<'a, StringLit<'a>> {
 
     fn write(&self) -> String {
         let trivia = self.trivia;
-        let variant = self.variant.0;
+        let variant = self.value.0;
         format!("{trivia}{variant}")
     }
 }
@@ -150,17 +150,17 @@ impl<'a> Parse<'a> for Token<'a, BooleanLit> {
     parser!(nom::branch::alt((
         nom::combinator::map(weedle!(term!(true)), |r| Token {
             trivia: r.trivia,
-            variant: BooleanLit(true)
+            value: BooleanLit(true)
         }),
         nom::combinator::map(weedle!(term!(false)), |r| Token {
             trivia: r.trivia,
-            variant: BooleanLit(false)
+            value: BooleanLit(false)
         }),
     )));
 
     fn write(&self) -> String {
         let trivia = self.trivia;
-        let variant = self.variant.0;
+        let variant = self.value.0;
         format!("{trivia}{variant}")
     }
 }
@@ -219,7 +219,7 @@ impl<'a> Parse<'a> for Token<'a, FloatValueLit<'a>> {
 
     fn write(&self) -> String {
         let trivia = self.trivia;
-        let variant = self.variant.0;
+        let variant = self.value.0;
         format!("{trivia}{variant}")
     }
 }
@@ -247,7 +247,7 @@ mod test {
 
     test!(should_parse_integer_surrounding_with_spaces { "  123123  " =>
         "";
-        Token<IntegerLit> => Token { variant: IntegerLit::Dec(DecLit("123123")), trivia: "  " }
+        Token<IntegerLit> => Token { value: IntegerLit::Dec(DecLit("123123")), trivia: "  " }
     });
 
     test_match!(should_parse_integer_preceding_others { "3453 string" =>
@@ -282,38 +282,38 @@ mod test {
 
     test!(should_parse_float { "45.434" =>
         "";
-        FloatLit => FloatLit::Value(Token { variant: FloatValueLit("45.434"), trivia: "" })
+        FloatLit => FloatLit::Value(Token { value: FloatValueLit("45.434"), trivia: "" })
     });
 
     test!(should_parse_float_surrounding_with_spaces { "  2345.2345  " =>
         "";
-        FloatLit => FloatLit::Value(Token { variant: FloatValueLit("2345.2345"), trivia: "  " })
+        FloatLit => FloatLit::Value(Token { value: FloatValueLit("2345.2345"), trivia: "  " })
     });
 
     test!(should_parse_float_preceding_others { "3453.32334 string" =>
         "string";
-        FloatLit => FloatLit::Value(Token { variant: FloatValueLit("3453.32334"), trivia: "" })
+        FloatLit => FloatLit::Value(Token { value: FloatValueLit("3453.32334"), trivia: "" })
     });
 
     test!(should_parse_neg_float { "-435.3435" =>
         "";
-        FloatLit => FloatLit::Value(Token { variant: FloatValueLit("-435.3435"), trivia: "" })
+        FloatLit => FloatLit::Value(Token { value: FloatValueLit("-435.3435"), trivia: "" })
     });
 
     test!(should_parse_float_exp { "3e23" =>
         "";
-        FloatLit => FloatLit::Value(Token { variant: FloatValueLit("3e23"), trivia: "" })
+        FloatLit => FloatLit::Value(Token { value: FloatValueLit("3e23"), trivia: "" })
     });
 
     test!(should_parse_float_exp_with_decimal { "5.3434e23" =>
         "";
-        FloatLit => FloatLit::Value(Token { variant: FloatValueLit("5.3434e23"), trivia: "" })
+        FloatLit => FloatLit::Value(Token { value: FloatValueLit("5.3434e23"), trivia: "" })
     });
 
     test!(should_parse_neg_infinity { "-Infinity" =>
         "";
         FloatLit => FloatLit::NegInfinity(Token {
-            variant: crate::term::NegInfinity,
+            value: crate::term::NegInfinity,
             trivia: "",
         })
     });
@@ -321,7 +321,7 @@ mod test {
     test!(should_parse_infinity { "Infinity" =>
         "";
         FloatLit => FloatLit::Infinity(Token {
-            variant: crate::term::Infinity,
+            value: crate::term::Infinity,
             trivia: "",
         })
     });
@@ -333,28 +333,28 @@ mod test {
 
     test!(should_parse_string_surround_with_spaces { r#"  "this is a string"  "# =>
         "";
-        Token<StringLit> => Token { variant: StringLit("this is a string"), trivia: "  " }
+        Token<StringLit> => Token { value: StringLit("this is a string"), trivia: "  " }
     });
 
     test!(should_parse_string_followed_by_string { r#" "this is first"  "this is second" "# =>
         r#""this is second" "#;
-        Token<StringLit> => Token { variant: StringLit("this is first"), trivia: " " }
+        Token<StringLit> => Token { value: StringLit("this is first"), trivia: " " }
     });
 
     test!(should_parse_string_with_spaces { r#"  "  this is a string  "  "# =>
         "";
-        Token<StringLit> => Token { variant: StringLit("  this is a string  "), trivia: "  " }
+        Token<StringLit> => Token { value: StringLit("  this is a string  "), trivia: "  " }
     });
 
     test!(should_parse_string_with_comment { r#"  "// this is still a string"
      "# =>
         "";
-        Token<StringLit> => Token { variant: StringLit("// this is still a string"), trivia: "  " }
+        Token<StringLit> => Token { value: StringLit("// this is still a string"), trivia: "  " }
     });
 
     test!(should_parse_string_with_multiline_comment { r#"  "/*"  "*/"  "# =>
         r#""*/"  "#;
-        Token<StringLit> => Token { variant: StringLit("/*"), trivia: "  " }
+        Token<StringLit> => Token { value: StringLit("/*"), trivia: "  " }
     });
 
     test!(should_parse_null { "null" =>
@@ -369,11 +369,11 @@ mod test {
 
     test!(should_parse_bool_true { "true" =>
         "";
-        Token<BooleanLit> => Token { variant: BooleanLit(true), trivia: "" }
+        Token<BooleanLit> => Token { value: BooleanLit(true), trivia: "" }
     });
 
     test!(should_parse_bool_false { "false" =>
         "";
-        Token<BooleanLit> => Token { variant: BooleanLit(false), trivia: "" }
+        Token<BooleanLit> => Token { value: BooleanLit(false), trivia: "" }
     });
 }

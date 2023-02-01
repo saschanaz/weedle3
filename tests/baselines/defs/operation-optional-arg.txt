@@ -4,11 +4,11 @@
             attributes: None,
             interface: Token {
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                variant: Interface,
+                value: Interface,
             },
             identifier: Token {
                 trivia: " ",
-                variant: Identifier(
+                value: Identifier(
                     "ColorCreator",
                 ),
             },
@@ -16,7 +16,7 @@
             members: Braced {
                 open_brace: Token {
                     trivia: " ",
-                    variant: OpenBrace,
+                    value: OpenBrace,
                 },
                 body: [
                     Operation(
@@ -29,7 +29,7 @@
                                         MayBeNull {
                                             type_: Token {
                                                 trivia: "\n  ",
-                                                variant: Object,
+                                                value: Object,
                                             },
                                             q_mark: None,
                                         },
@@ -39,7 +39,7 @@
                             identifier: Some(
                                 Token {
                                     trivia: " ",
-                                    variant: Identifier(
+                                    value: Identifier(
                                         "createColor",
                                     ),
                                 },
@@ -47,7 +47,7 @@
                             args: Parenthesized {
                                 open_paren: Token {
                                     trivia: "",
-                                    variant: OpenParen,
+                                    value: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -66,7 +66,7 @@
                                                                             unrestricted: None,
                                                                             float: Token {
                                                                                 trivia: "",
-                                                                                variant: Float,
+                                                                                value: Float,
                                                                             },
                                                                         },
                                                                     ),
@@ -78,7 +78,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "v1",
                                                     ),
                                                 },
@@ -100,7 +100,7 @@
                                                                             unrestricted: None,
                                                                             float: Token {
                                                                                 trivia: " ",
-                                                                                variant: Float,
+                                                                                value: Float,
                                                                             },
                                                                         },
                                                                     ),
@@ -112,7 +112,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "v2",
                                                     ),
                                                 },
@@ -134,7 +134,7 @@
                                                                             unrestricted: None,
                                                                             float: Token {
                                                                                 trivia: " ",
-                                                                                variant: Float,
+                                                                                value: Float,
                                                                             },
                                                                         },
                                                                     ),
@@ -146,7 +146,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "v3",
                                                     ),
                                                 },
@@ -159,7 +159,7 @@
                                                 optional: Some(
                                                     Token {
                                                         trivia: " ",
-                                                        variant: Optional,
+                                                        value: Optional,
                                                     },
                                                 ),
                                                 type_: AttributedType {
@@ -173,7 +173,7 @@
                                                                             unrestricted: None,
                                                                             float: Token {
                                                                                 trivia: " ",
-                                                                                variant: Float,
+                                                                                value: Float,
                                                                             },
                                                                         },
                                                                     ),
@@ -185,7 +185,7 @@
                                                 },
                                                 identifier: Token {
                                                     trivia: " ",
-                                                    variant: Identifier(
+                                                    value: Identifier(
                                                         "alpha",
                                                     ),
                                                 },
@@ -193,13 +193,13 @@
                                                     Default {
                                                         assign: Token {
                                                             trivia: " ",
-                                                            variant: Assign,
+                                                            value: Assign,
                                                         },
                                                         value: Float(
                                                             Value(
                                                                 Token {
                                                                     trivia: " ",
-                                                                    variant: FloatValueLit(
+                                                                    value: FloatValueLit(
                                                                         "3.5",
                                                                     ),
                                                                 },
@@ -214,24 +214,24 @@
                                 },
                                 close_paren: Token {
                                     trivia: "",
-                                    variant: CloseParen,
+                                    value: CloseParen,
                                 },
                             },
                             semi_colon: Token {
                                 trivia: "",
-                                variant: SemiColon,
+                                value: SemiColon,
                             },
                         },
                     ),
                 ],
                 close_brace: Token {
                     trivia: "\n",
-                    variant: CloseBrace,
+                    value: CloseBrace,
                 },
             },
             semi_colon: Token {
                 trivia: "",
-                variant: SemiColon,
+                value: SemiColon,
             },
         },
     ),

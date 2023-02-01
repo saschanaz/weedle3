@@ -67,11 +67,11 @@ macro_rules! eat {
                 use nom::{InputIter, Slice};
                 match input.iter_elements().next() {
                     Some($crate::lexer::Lexed {
-                        value: $crate::lexer::Terminal::$variant(variant),
                         trivia,
+                        value: $crate::lexer::Terminal::$variant(variant),
                     }) => Ok((
                         input.slice(1..),
-                        $crate::term::Token { variant, trivia },
+                        $crate::term::Token { trivia, value: variant },
                     )),
                     _ => nom::combinator::fail(input),
                 }
@@ -89,11 +89,11 @@ macro_rules! eat_key {
                 use $crate::term::Keyword;
                 match input.iter_elements().next() {
                     Some($crate::lexer::Lexed {
-                        value: Terminal::Keyword(Keyword::$variant(variant)),
                         trivia,
+                        value: Terminal::Keyword(Keyword::$variant(variant)),
                     }) => Ok((
                         input.slice(1..),
-                        $crate::term::Token { variant, trivia },
+                        $crate::term::Token { trivia, value: variant },
                     )),
                     _ => nom::combinator::fail(input),
                 }
@@ -106,7 +106,7 @@ macro_rules! try_eat_keys {
     ($typ:ident, $input:ident, $($variant:ident),+) => {
         $(
             if let Ok((tokens, result)) = eat_key!($variant)($input) {
-                return Ok((tokens, $typ(result.trivia, result.variant.value())));
+                return Ok((tokens, $typ(result.trivia, result.value.value())));
             }
         )+
     };

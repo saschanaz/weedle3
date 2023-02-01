@@ -55,7 +55,7 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
         input: crate::tokens::LexedSlice<'slice, 'a>,
     ) -> VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
-            return Ok((tokens, AttributeName(result.trivia, result.variant.0)));
+            return Ok((tokens, AttributeName(result.trivia, result.value.0)));
         }
         try_eat_keys!(AttributeName, input, Async, Required);
         nom::combinator::fail(input)
@@ -70,7 +70,7 @@ impl<'a> From<AttributeName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: AttributeName<'a>) -> Self {
         Self {
             trivia: value.0,
-            variant: Identifier(value.1),
+            value: Identifier(value.1),
         }
     }
 }
@@ -146,7 +146,7 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
         input: crate::tokens::LexedSlice<'slice, 'a>,
     ) -> VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
-            return Ok((tokens, OperationName(result.trivia, result.variant.0)));
+            return Ok((tokens, OperationName(result.trivia, result.value.0)));
         }
         try_eat_keys!(OperationName, input, Includes);
         nom::combinator::fail(input)
@@ -161,7 +161,7 @@ impl<'a> From<OperationName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: OperationName<'a>) -> Self {
         Self {
             trivia: value.0,
-            variant: Identifier(value.1),
+            value: Identifier(value.1),
         }
     }
 }
@@ -206,7 +206,7 @@ mod test {
         "";
         ConstMember;
         attributes.is_none();
-        identifier.variant.0 == "name";
+        identifier.value.0 == "name";
     });
 
     test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
@@ -219,7 +219,7 @@ mod test {
         AttributeInterfaceMember;
         attributes.is_none();
         modifier == Some(StringifierOrInheritOrStatic::Static(Token::default()));
-        identifier.variant.0 == "width";
+        identifier.value.0 == "width";
     });
 
     test!(should_parse_attribute_mixin_member { "stringifier readonly attribute short name;" =>
@@ -228,14 +228,14 @@ mod test {
         attributes.is_none();
         stringifier.is_some();
         readonly.is_some();
-        identifier.variant.0 == "name";
+        identifier.value.0 == "name";
     });
 
     test!(should_parse_attribute_namespace_member { "readonly attribute short name;" =>
         "";
         AttributeNamespaceMember;
         attributes.is_none();
-        identifier.variant.0 == "name";
+        identifier.value.0 == "name";
     });
 
     test!(should_parse_modifier { "static" =>
