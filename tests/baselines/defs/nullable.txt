@@ -2,21 +2,21 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "",
+                variant: Interface,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "Node",
                 ),
-                trivia: " ",
             },
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -24,14 +24,14 @@
                             attributes: None,
                             modifier: None,
                             readonly: Some(
-                                VariantToken {
-                                    variant: ReadOnly,
+                                Token {
                                     trivia: "\n  ",
+                                    variant: ReadOnly,
                                 },
                             ),
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: " ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -39,14 +39,14 @@
                                     Distinguishable(
                                         DOMString(
                                             MayBeNull {
-                                                type_: VariantToken {
-                                                    variant: DOMString,
+                                                type_: Token {
                                                     trivia: " ",
+                                                    variant: DOMString,
                                                 },
                                                 q_mark: Some(
-                                                    VariantToken {
-                                                        variant: QMark,
+                                                    Token {
                                                         trivia: "",
+                                                        variant: QMark,
                                                     },
                                                 ),
                                             },
@@ -54,27 +54,27 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "namespaceURI",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n  // ...\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

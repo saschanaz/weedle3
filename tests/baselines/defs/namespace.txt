@@ -2,32 +2,32 @@
     Namespace(
         NamespaceDefinition {
             attributes: None,
-            namespace: VariantToken {
-                variant: Namespace,
+            namespace: Token {
                 trivia: "// Extracted from Web IDL editors draft March 27 2017\n",
+                variant: Namespace,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "VectorUtils",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
                         AttributeNamespaceMember {
                             attributes: None,
-                            readonly: VariantToken {
-                                variant: ReadOnly,
+                            readonly: Token {
                                 trivia: "\n  ",
+                                variant: ReadOnly,
                             },
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: " ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -35,11 +35,11 @@
                                     Distinguishable(
                                         Identifier(
                                             MayBeNull {
-                                                type_: VariantToken {
+                                                type_: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "Vector",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 q_mark: None,
                                             },
@@ -47,15 +47,15 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "unit",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
@@ -69,9 +69,9 @@
                                             type_: Double(
                                                 DoubleType {
                                                     unrestricted: None,
-                                                    double: VariantToken {
-                                                        variant: Double,
+                                                    double: Token {
                                                         trivia: "\n  ",
+                                                        variant: Double,
                                                     },
                                                 },
                                             ),
@@ -81,17 +81,17 @@
                                 ),
                             ),
                             identifier: Some(
-                                VariantToken {
+                                Token {
+                                    trivia: " ",
                                     variant: Identifier(
                                         "dotProduct",
                                     ),
-                                    trivia: " ",
                                 },
                             ),
                             args: Parenthesized {
-                                open_paren: VariantToken {
-                                    variant: OpenParen,
+                                open_paren: Token {
                                     trivia: "",
+                                    variant: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -105,11 +105,11 @@
                                                         Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
-                                                                    type_: VariantToken {
+                                                                    type_: Token {
+                                                                        trivia: "",
                                                                         variant: Identifier(
                                                                             "Vector",
                                                                         ),
-                                                                        trivia: "",
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -117,11 +117,11 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: VariantToken {
+                                                identifier: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "x",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 default: None,
                                             },
@@ -136,11 +136,11 @@
                                                         Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
-                                                                    type_: VariantToken {
+                                                                    type_: Token {
+                                                                        trivia: " ",
                                                                         variant: Identifier(
                                                                             "Vector",
                                                                         ),
-                                                                        trivia: " ",
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -148,26 +148,26 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: VariantToken {
+                                                identifier: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "y",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                    separator: PhantomData<weedle::term::Token<weedle::term::Comma>>,
                                 },
-                                close_paren: VariantToken {
-                                    variant: CloseParen,
+                                close_paren: Token {
                                     trivia: "",
+                                    variant: CloseParen,
                                 },
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
@@ -178,11 +178,11 @@
                                 Distinguishable(
                                     Identifier(
                                         MayBeNull {
-                                            type_: VariantToken {
+                                            type_: Token {
+                                                trivia: "\n  ",
                                                 variant: Identifier(
                                                     "Vector",
                                                 ),
-                                                trivia: "\n  ",
                                             },
                                             q_mark: None,
                                         },
@@ -190,17 +190,17 @@
                                 ),
                             ),
                             identifier: Some(
-                                VariantToken {
+                                Token {
+                                    trivia: " ",
                                     variant: Identifier(
                                         "crossProduct",
                                     ),
-                                    trivia: " ",
                                 },
                             ),
                             args: Parenthesized {
-                                open_paren: VariantToken {
-                                    variant: OpenParen,
+                                open_paren: Token {
                                     trivia: "",
+                                    variant: OpenParen,
                                 },
                                 body: Punctuated {
                                     list: [
@@ -214,11 +214,11 @@
                                                         Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
-                                                                    type_: VariantToken {
+                                                                    type_: Token {
+                                                                        trivia: "",
                                                                         variant: Identifier(
                                                                             "Vector",
                                                                         ),
-                                                                        trivia: "",
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -226,11 +226,11 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: VariantToken {
+                                                identifier: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "x",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 default: None,
                                             },
@@ -245,11 +245,11 @@
                                                         Distinguishable(
                                                             Identifier(
                                                                 MayBeNull {
-                                                                    type_: VariantToken {
+                                                                    type_: Token {
+                                                                        trivia: " ",
                                                                         variant: Identifier(
                                                                             "Vector",
                                                                         ),
-                                                                        trivia: " ",
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -257,146 +257,146 @@
                                                         ),
                                                     ),
                                                 },
-                                                identifier: VariantToken {
+                                                identifier: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "y",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 default: None,
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                    separator: PhantomData<weedle::term::Token<weedle::term::Comma>>,
                                 },
-                                close_paren: VariantToken {
-                                    variant: CloseParen,
+                                close_paren: Token {
                                     trivia: "",
+                                    variant: CloseParen,
                                 },
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                     Const(
                         ConstMember {
                             attributes: None,
-                            const_: VariantToken {
-                                variant: Const,
+                            const_: Token {
                                 trivia: "\n  ",
+                                variant: Const,
                             },
                             const_type: Integer(
                                 Short(
                                     ShortType {
                                         unsigned: None,
-                                        short: VariantToken {
-                                            variant: Short,
+                                        short: Token {
                                             trivia: " ",
+                                            variant: Short,
                                         },
                                     },
                                 ),
                             ),
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "CONST",
                                 ),
-                                trivia: " ",
                             },
-                            assign: VariantToken {
-                                variant: Assign,
+                            assign: Token {
                                 trivia: " ",
+                                variant: Assign,
                             },
                             const_value: Integer(
-                                VariantToken {
+                                Token {
+                                    trivia: " ",
                                     variant: Dec(
                                         DecLit(
                                             "3",
                                         ),
                                     ),
-                                    trivia: " ",
                                 },
                             ),
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     PartialNamespace(
         PartialNamespaceDefinition {
             attributes: None,
-            partial: VariantToken {
-                variant: Partial,
+            partial: Token {
                 trivia: "\n\n",
+                variant: Partial,
             },
-            namespace: VariantToken {
-                variant: Namespace,
+            namespace: Token {
                 trivia: " ",
+                variant: Namespace,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "SomeNamespace",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n  /* namespace_members... */\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     Namespace(
         NamespaceDefinition {
             attributes: None,
-            namespace: VariantToken {
-                variant: Namespace,
+            namespace: Token {
                 trivia: "\n\n",
+                variant: Namespace,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "_ScalarUtils",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

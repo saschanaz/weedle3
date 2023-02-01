@@ -2,8 +2,8 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier};
-use crate::parser::eat::VariantToken;
 use crate::term;
+use crate::term::Token;
 use crate::types::Type;
 
 /// Parses dictionary members
@@ -17,7 +17,7 @@ pub struct DictionaryMember<'a> {
     pub required: Option<term!(required)>,
     pub type_: Type<'a>,
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cond = "required.is_none()")]
     pub default: Option<Default<'a>>,
     #[weedle(cut = "Missing semicolon")]

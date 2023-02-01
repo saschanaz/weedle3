@@ -3,8 +3,8 @@ use std::marker::PhantomData;
 use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
-use crate::parser::eat::VariantToken;
-use crate::tokens::{contextful_cut, Tokens};
+use crate::term::Token;
+use crate::tokens::{contextful_cut, LexedSlice};
 use crate::{term, Parse, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
@@ -66,11 +66,11 @@ impl<'a, T: Parse<'a>, U: Parse<'a>, V: Parse<'a>> Parse<'a> for (T, U, V) {
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Parenthesized<'a, T> {
-    pub open_paren: VariantToken<'a, term::OpenParen>,
+    pub open_paren: Token<'a, term::OpenParen>,
     #[weedle(cut = "Unrecognized argument")]
     pub body: T,
     #[weedle(cut = "Unrecognized argument")]
-    pub close_paren: VariantToken<'a, term::CloseParen>,
+    pub close_paren: Token<'a, term::CloseParen>,
 }
 
 /// Parses `( body )`
@@ -78,9 +78,9 @@ pub struct Parenthesized<'a, T> {
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub(crate) struct ParenthesizedNonEmpty<'a, T> {
     #[weedle(post_check = "prevent_empty_parentheses")]
-    pub open_paren: VariantToken<'a, term::OpenParen>,
+    pub open_paren: Token<'a, term::OpenParen>,
     pub body: T,
-    pub close_paren: VariantToken<'a, term::CloseParen>,
+    pub close_paren: Token<'a, term::CloseParen>,
 }
 
 impl<'a, T> From<ParenthesizedNonEmpty<'a, T>> for Parenthesized<'a, T> {
@@ -99,8 +99,8 @@ impl<'a, T> From<ParenthesizedNonEmpty<'a, T>> for Parenthesized<'a, T> {
 }
 
 fn prevent_empty_parentheses<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Unexpected empty parentheses",
         nom::combinator::not(nom::combinator::peek(eat_key!(CloseParen))),
@@ -112,18 +112,18 @@ fn prevent_empty_parentheses<'slice, 'a>(
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Bracketed<'a, T> {
     #[weedle(post_check = "prevent_empty_brackets")]
-    pub open_bracket: VariantToken<'a, term::OpenBracket>,
+    pub open_bracket: Token<'a, term::OpenBracket>,
     pub body: T,
     #[weedle(
         cut = "Unrecognized extended attribute",
         post_check = "prevent_double_extended_attributes"
     )]
-    pub close_bracket: VariantToken<'a, term::CloseBracket>,
+    pub close_bracket: Token<'a, term::CloseBracket>,
 }
 
 fn prevent_empty_brackets<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Unexpected empty brackets",
         nom::combinator::not(nom::combinator::peek(eat_key!(CloseBracket))),
@@ -131,8 +131,8 @@ fn prevent_empty_brackets<'slice, 'a>(
 }
 
 fn prevent_double_extended_attributes<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Illegal double extended attribute lists, consider merging them",
         nom::combinator::not(nom::combinator::peek(eat_key!(OpenBracket))),
@@ -144,21 +144,21 @@ fn prevent_double_extended_attributes<'slice, 'a>(
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Braced<'a, T> {
     #[weedle(cut = "Missing body")]
-    pub open_brace: VariantToken<'a, term::OpenBrace>,
+    pub open_brace: Token<'a, term::OpenBrace>,
     #[weedle(cut = "Unrecognized member definition")]
     pub body: T,
     #[weedle(cut = "Unrecognized member definition")]
-    pub close_brace: VariantToken<'a, term::CloseBrace>,
+    pub close_brace: Token<'a, term::CloseBrace>,
 }
 
 /// Parses `< body >`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct Generics<'a, T> {
-    pub open_angle: VariantToken<'a, term::LessThan>,
+    pub open_angle: Token<'a, term::LessThan>,
     #[weedle(cut = "Unrecognized type parameter")]
     pub body: T,
-    pub close_angle: VariantToken<'a, term::GreaterThan>,
+    pub close_angle: Token<'a, term::GreaterThan>,
 }
 
 /// Parses `(item1, item2, item3,...)?`
@@ -173,7 +173,9 @@ where
     T: Parse<'a>,
     S: Parse<'a>,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(
+        input: LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
         let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
         Ok((
             input,
@@ -202,7 +204,9 @@ where
     T: Parse<'a>,
     S: Parse<'a>,
 {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(
+        input: LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
         let (input, list) = nom::sequence::terminated(
             nom::multi::separated_list1(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S)),
@@ -242,7 +246,7 @@ impl<'a> Identifier<'a> {
     ));
 }
 
-impl<'a> Parse<'a> for VariantToken<'a, Identifier<'a>> {
+impl<'a> Parse<'a> for Token<'a, Identifier<'a>> {
     parser!(eat!(Identifier));
 
     fn write(&self) -> String {
@@ -266,73 +270,73 @@ mod test {
 
     test!(should_parse_optional_present { "one" =>
         "";
-        Option<VariantToken<Identifier>>;
+        Option<Token<Identifier>>;
         is_some();
     });
 
     test!(should_parse_optional_not_present { "" =>
         "";
-        Option<VariantToken<Identifier>>;
+        Option<Token<Identifier>>;
         is_none();
     });
 
     test!(should_parse_boxed { "one" =>
         "";
-        Box<VariantToken<Identifier>>;
+        Box<Token<Identifier>>;
     });
 
     test!(should_parse_vec { "one two three" =>
         "";
-        Vec<VariantToken<Identifier>>;
+        Vec<Token<Identifier>>;
         len() == 3;
     });
 
     test!(should_parse_parenthesized { "( one )" =>
         "";
-        Parenthesized<VariantToken<Identifier>>;
+        Parenthesized<Token<Identifier>>;
         body.variant.0 == "one";
     });
 
     test!(should_parse_bracketed { "[ one ]" =>
         "";
-        Bracketed<VariantToken<Identifier>>;
+        Bracketed<Token<Identifier>>;
         body.variant.0 == "one";
     });
 
     test!(should_parse_braced { "{ one }" =>
         "";
-        Braced<VariantToken<Identifier>>;
+        Braced<Token<Identifier>>;
         body.variant.0 == "one";
     });
 
     test!(should_parse_generics { "<one>" =>
         "";
-        Generics<VariantToken<Identifier>>;
+        Generics<Token<Identifier>>;
         body.variant.0 == "one";
     });
 
     test!(should_parse_generics_two { "<one, two>" =>
         "";
-        Generics<(VariantToken<Identifier>, VariantToken<term::Comma>, VariantToken<Identifier>)> =>
+        Generics<(Token<Identifier>, Token<term::Comma>, Token<Identifier>)> =>
             Generics {
-                open_angle: VariantToken::default(),
+                open_angle: Token::default(),
                 body: (
-                    VariantToken { variant: Identifier("one"), trivia: "" },
-                    VariantToken::default(),
-                    VariantToken { variant: Identifier("two"), trivia: " " },
+                    Token { variant: Identifier("one"), trivia: "" },
+                    Token::default(),
+                    Token { variant: Identifier("two"), trivia: " " },
                 ),
-                close_angle: VariantToken::default(),
+                close_angle: Token::default(),
             }
     });
 
     test!(should_parse_comma_separated_values { "one, two, three" =>
         "";
-        Punctuated<VariantToken<Identifier>, VariantToken<term::Comma>>;
+        Punctuated<Token<Identifier>, Token<term::Comma>>;
         list.len() == 3;
     });
 
     test!(err should_not_parse_comma_separated_values_empty { "" =>
-        PunctuatedNonEmpty<VariantToken<Identifier>, VariantToken<term::Comma>>
+        PunctuatedNonEmpty<Token<Identifier>, Token<term::Comma>>
     });
 
     test_match!(should_parse_identifier { "hello" =>
@@ -357,7 +361,7 @@ mod test {
 
     test!(should_parse_identifier_surrounding_with_spaces { "  hello  " =>
         "";
-        VariantToken<Identifier>;
+        Token<Identifier>;
         variant.0 == "hello";
     });
 

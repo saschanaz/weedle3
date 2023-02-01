@@ -2,21 +2,21 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "",
+                variant: Interface,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "Union",
                 ),
-                trivia: " ",
             },
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -24,18 +24,18 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: "\n ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Union(
                                     MayBeNull {
                                         type_: Parenthesized {
-                                            open_paren: VariantToken {
-                                                variant: OpenParen,
+                                            open_paren: Token {
                                                 trivia: " ",
+                                                variant: OpenParen,
                                             },
                                             body: Punctuated {
                                                 list: [
@@ -47,9 +47,9 @@
                                                                     type_: Float(
                                                                         FloatType {
                                                                             unrestricted: None,
-                                                                            float: VariantToken {
-                                                                                variant: Float,
+                                                                            float: Token {
                                                                                 trivia: "",
+                                                                                variant: Float,
                                                                             },
                                                                         },
                                                                     ),
@@ -61,9 +61,9 @@
                                                     Union(
                                                         MayBeNull {
                                                             type_: Parenthesized {
-                                                                open_paren: VariantToken {
-                                                                    variant: OpenParen,
+                                                                open_paren: Token {
                                                                     trivia: " ",
+                                                                    variant: OpenParen,
                                                                 },
                                                                 body: Punctuated {
                                                                     list: [
@@ -72,11 +72,11 @@
                                                                                 attributes: None,
                                                                                 type_: Identifier(
                                                                                     MayBeNull {
-                                                                                        type_: VariantToken {
+                                                                                        type_: Token {
+                                                                                            trivia: "",
                                                                                             variant: Identifier(
                                                                                                 "Date",
                                                                                             ),
-                                                                                            trivia: "",
                                                                                         },
                                                                                         q_mark: None,
                                                                                     },
@@ -88,11 +88,11 @@
                                                                                 attributes: None,
                                                                                 type_: Identifier(
                                                                                     MayBeNull {
-                                                                                        type_: VariantToken {
+                                                                                        type_: Token {
+                                                                                            trivia: " ",
                                                                                             variant: Identifier(
                                                                                                 "Event",
                                                                                             ),
-                                                                                            trivia: " ",
                                                                                         },
                                                                                         q_mark: None,
                                                                                     },
@@ -100,11 +100,11 @@
                                                                             },
                                                                         ),
                                                                     ],
-                                                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Or>>,
+                                                                    separator: PhantomData<weedle::term::Token<weedle::term::Or>>,
                                                                 },
-                                                                close_paren: VariantToken {
-                                                                    variant: CloseParen,
+                                                                close_paren: Token {
                                                                     trivia: "",
+                                                                    variant: CloseParen,
                                                                 },
                                                             },
                                                             q_mark: None,
@@ -113,9 +113,9 @@
                                                     Union(
                                                         MayBeNull {
                                                             type_: Parenthesized {
-                                                                open_paren: VariantToken {
-                                                                    variant: OpenParen,
+                                                                open_paren: Token {
                                                                     trivia: " ",
+                                                                    variant: OpenParen,
                                                                 },
                                                                 body: Punctuated {
                                                                     list: [
@@ -124,11 +124,11 @@
                                                                                 attributes: None,
                                                                                 type_: Identifier(
                                                                                     MayBeNull {
-                                                                                        type_: VariantToken {
+                                                                                        type_: Token {
+                                                                                            trivia: "",
                                                                                             variant: Identifier(
                                                                                                 "Node",
                                                                                             ),
-                                                                                            trivia: "",
                                                                                         },
                                                                                         q_mark: None,
                                                                                     },
@@ -140,9 +140,9 @@
                                                                                 attributes: None,
                                                                                 type_: DOMString(
                                                                                     MayBeNull {
-                                                                                        type_: VariantToken {
-                                                                                            variant: DOMString,
+                                                                                        type_: Token {
                                                                                             trivia: " ",
+                                                                                            variant: DOMString,
                                                                                         },
                                                                                         q_mark: None,
                                                                                     },
@@ -150,42 +150,42 @@
                                                                             },
                                                                         ),
                                                                     ],
-                                                                    separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Or>>,
+                                                                    separator: PhantomData<weedle::term::Token<weedle::term::Or>>,
                                                                 },
-                                                                close_paren: VariantToken {
-                                                                    variant: CloseParen,
+                                                                close_paren: Token {
                                                                     trivia: "",
+                                                                    variant: CloseParen,
                                                                 },
                                                             },
                                                             q_mark: Some(
-                                                                VariantToken {
-                                                                    variant: QMark,
+                                                                Token {
                                                                     trivia: "",
+                                                                    variant: QMark,
                                                                 },
                                                             ),
                                                         },
                                                     ),
                                                 ],
-                                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Or>>,
+                                                separator: PhantomData<weedle::term::Token<weedle::term::Or>>,
                                             },
-                                            close_paren: VariantToken {
-                                                variant: CloseParen,
+                                            close_paren: Token {
                                                 trivia: "",
+                                                variant: CloseParen,
                                             },
                                         },
                                         q_mark: None,
                                     },
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "test",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
@@ -194,18 +194,18 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: "\n ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
                                 type_: Union(
                                     MayBeNull {
                                         type_: Parenthesized {
-                                            open_paren: VariantToken {
-                                                variant: OpenParen,
+                                            open_paren: Token {
                                                 trivia: " ",
+                                                variant: OpenParen,
                                             },
                                             body: Punctuated {
                                                 list: [
@@ -213,28 +213,28 @@
                                                         AttributedNonAnyType {
                                                             attributes: Some(
                                                                 Bracketed {
-                                                                    open_bracket: VariantToken {
-                                                                        variant: OpenBracket,
+                                                                    open_bracket: Token {
                                                                         trivia: "",
+                                                                        variant: OpenBracket,
                                                                     },
                                                                     body: Punctuated {
                                                                         list: [
                                                                             NoArgs(
                                                                                 ExtendedAttributeNoArgs(
-                                                                                    VariantToken {
+                                                                                    Token {
+                                                                                        trivia: "",
                                                                                         variant: Identifier(
                                                                                             "EnforceRange",
                                                                                         ),
-                                                                                        trivia: "",
                                                                                     },
                                                                                 ),
                                                                             ),
                                                                         ],
-                                                                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                                                                        separator: PhantomData<weedle::term::Token<weedle::term::Comma>>,
                                                                     },
-                                                                    close_bracket: VariantToken {
-                                                                        variant: CloseBracket,
+                                                                    close_bracket: Token {
                                                                         trivia: "",
+                                                                        variant: CloseBracket,
                                                                     },
                                                                 },
                                                             ),
@@ -243,9 +243,9 @@
                                                                     type_: Long(
                                                                         LongType {
                                                                             unsigned: None,
-                                                                            long: VariantToken {
-                                                                                variant: Long,
+                                                                            long: Token {
                                                                                 trivia: " ",
+                                                                                variant: Long,
                                                                             },
                                                                         },
                                                                     ),
@@ -259,11 +259,11 @@
                                                             attributes: None,
                                                             type_: Identifier(
                                                                 MayBeNull {
-                                                                    type_: VariantToken {
+                                                                    type_: Token {
+                                                                        trivia: " ",
                                                                         variant: Identifier(
                                                                             "Date",
                                                                         ),
-                                                                        trivia: " ",
                                                                     },
                                                                     q_mark: None,
                                                                 },
@@ -271,38 +271,38 @@
                                                         },
                                                     ),
                                                 ],
-                                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Or>>,
+                                                separator: PhantomData<weedle::term::Token<weedle::term::Or>>,
                                             },
-                                            close_paren: VariantToken {
-                                                variant: CloseParen,
+                                            close_paren: Token {
                                                 trivia: "",
+                                                variant: CloseParen,
                                             },
                                         },
                                         q_mark: None,
                                     },
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "test2",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

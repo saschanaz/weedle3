@@ -1,8 +1,8 @@
 macro_rules! parser {
     ($parse:expr) => {
         fn parse_tokens<'slice>(
-            input: $crate::tokens::Tokens<'slice, 'a>,
-        ) -> $crate::VerboseResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
+            input: $crate::tokens::LexedSlice<'slice, 'a>,
+        ) -> $crate::VerboseResult<$crate::tokens::LexedSlice<'slice, 'a>, Self> {
             $parse(input)
         }
     };
@@ -53,8 +53,8 @@ macro_rules! test_match {
 pub fn annotate<'slice, 'token, F, R>(f: F) -> F
 where
     F: Fn(
-        crate::tokens::Tokens<'slice, 'token>,
-    ) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'token>, R>,
+        crate::tokens::LexedSlice<'slice, 'token>,
+    ) -> crate::VerboseResult<crate::tokens::LexedSlice<'slice, 'token>, R>,
     'token: 'slice,
 {
     f
@@ -63,15 +63,15 @@ where
 macro_rules! eat {
     ($variant:ident) => {
         $crate::macros::annotate(
-            |input: $crate::tokens::Tokens| -> $crate::VerboseResult<$crate::tokens::Tokens, _> {
+            |input: $crate::tokens::LexedSlice| -> $crate::VerboseResult<$crate::tokens::LexedSlice, _> {
                 use nom::{InputIter, Slice};
                 match input.iter_elements().next() {
-                    Some($crate::lexer::Token {
+                    Some($crate::lexer::Lexed {
                         value: $crate::lexer::Terminal::$variant(variant),
                         trivia,
                     }) => Ok((
                         input.slice(1..),
-                        $crate::parser::eat::VariantToken { variant, trivia },
+                        $crate::term::Token { variant, trivia },
                     )),
                     _ => nom::combinator::fail(input),
                 }
@@ -83,17 +83,17 @@ macro_rules! eat {
 macro_rules! eat_key {
     ($variant:ident) => {
         $crate::macros::annotate(
-            |input: $crate::tokens::Tokens| -> $crate::VerboseResult<$crate::tokens::Tokens, _> {
+            |input: $crate::tokens::LexedSlice| -> $crate::VerboseResult<$crate::tokens::LexedSlice, _> {
                 use nom::{InputIter, Slice};
                 use $crate::lexer::Terminal;
                 use $crate::term::Keyword;
                 match input.iter_elements().next() {
-                    Some($crate::lexer::Token {
+                    Some($crate::lexer::Lexed {
                         value: Terminal::Keyword(Keyword::$variant(variant)),
                         trivia,
                     }) => Ok((
                         input.slice(1..),
-                        $crate::parser::eat::VariantToken { variant, trivia },
+                        $crate::term::Token { variant, trivia },
                     )),
                     _ => nom::combinator::fail(input),
                 }
@@ -126,7 +126,8 @@ macro_rules! test {
     (@arg $parsed:ident $($lhs:tt).+() == $rhs:expr; $($rest:tt)*) => {
         assert_eq!($parsed.$($lhs).+(), $rhs);
         test!(@arg $parsed $($rest)*);
-    };    (err $name:ident { $raw:expr => $typ:ty }) => {
+    };
+    (err $name:ident { $raw:expr => $typ:ty }) => {
         #[test]
         fn $name() {
             <$typ>::parse($raw).unwrap_err();

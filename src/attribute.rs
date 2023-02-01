@@ -3,24 +3,24 @@ use weedle_derive::Weedle;
 use crate::argument::ArgumentList;
 use crate::common::{Bracketed, Identifier, Parenthesized, ParenthesizedNonEmpty, Punctuated};
 use crate::literal::{FloatLit, IntegerLit, StringLit};
-use crate::parser::eat::VariantToken;
 use crate::term;
+use crate::term::Token;
 
 /// Parses a list of attributes. Ex: `[ attribute1, attribute2 ]`
 pub type ExtendedAttributeList<'a> = Bracketed<'a, Punctuated<ExtendedAttribute<'a>, term!(,)>>;
 
 /// Matches comma separated identifier list
-pub type IdentifierList<'a> = Punctuated<VariantToken<'a, Identifier<'a>>, term!(,)>;
-pub type StringList<'a> = Punctuated<VariantToken<'a, StringLit<'a>>, term!(,)>;
+pub type IdentifierList<'a> = Punctuated<Token<'a, Identifier<'a>>, term!(,)>;
+pub type StringList<'a> = Punctuated<Token<'a, StringLit<'a>>, term!(,)>;
 pub type FloatList<'a> = Punctuated<FloatLit<'a>, term!(,)>;
-pub type IntegerList<'a> = Punctuated<VariantToken<'a, IntegerLit<'a>>, term!(,)>;
+pub type IntegerList<'a> = Punctuated<Token<'a, IntegerLit<'a>>, term!(,)>;
 
 /// Parses an argument list. Ex: `Constructor((double x, double y))`
 ///
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeArgList<'a> {
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
 }
 
@@ -29,9 +29,9 @@ pub struct ExtendedAttributeArgList<'a> {
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeNamedArgList<'a> {
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub rhs_identifier: Token<'a, Identifier<'a>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
 }
 
@@ -40,7 +40,7 @@ pub struct ExtendedAttributeNamedArgList<'a> {
 /// (( )) means ( ) chars
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIdentList<'a> {
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
     #[weedle(from = "ParenthesizedNonEmpty<IdentifierList<'a>>")]
     pub list: Parenthesized<'a, IdentifierList<'a>>,
@@ -49,15 +49,15 @@ pub struct ExtendedAttributeIdentList<'a> {
 /// Parses an attribute with an identifier. Ex: `PutForwards=name`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIdent<'a> {
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub rhs: VariantToken<'a, Identifier<'a>>,
+    pub rhs: Token<'a, Identifier<'a>>,
 }
 
 /// Parses an attribute with a wildcard. Ex: `Exposed=*`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeWildcard<'a> {
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
     pub wildcard: term!(*),
 }
@@ -70,28 +70,28 @@ pub struct ExtendedAttributeWildcard<'a> {
 /// Parses an attribute with a string. E: `ReflectOnly="on"`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeString<'a> {
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub rhs: VariantToken<'a, StringLit<'a>>,
+    pub rhs: Token<'a, StringLit<'a>>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeStringList<'a> {
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
     #[weedle(from = "ParenthesizedNonEmpty<StringList<'a>>")]
     pub list: Parenthesized<'a, StringList<'a>>,
 }
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeFloat<'a> {
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
     pub rhs: FloatLit<'a>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeFloatList<'a> {
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
     #[weedle(from = "ParenthesizedNonEmpty<FloatList<'a>>")]
     pub list: Parenthesized<'a, FloatList<'a>>,
@@ -99,14 +99,14 @@ pub struct ExtendedAttributeFloatList<'a> {
 
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeInteger<'a> {
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
-    pub rhs: VariantToken<'a, IntegerLit<'a>>,
+    pub rhs: Token<'a, IntegerLit<'a>>,
 }
 
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct ExtendedAttributeIntegerList<'a> {
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub assign: term!(=),
     #[weedle(from = "ParenthesizedNonEmpty<IntegerList<'a>>")]
     pub list: Parenthesized<'a, IntegerList<'a>>,
@@ -114,7 +114,7 @@ pub struct ExtendedAttributeIntegerList<'a> {
 
 /// Parses a plain attribute. Ex: `Replaceable`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct ExtendedAttributeNoArgs<'a>(pub VariantToken<'a, Identifier<'a>>);
+pub struct ExtendedAttributeNoArgs<'a>(pub Token<'a, Identifier<'a>>);
 
 /// Parses on of the forms of attribute
 #[derive(Weedle, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -141,7 +141,7 @@ mod test {
 
     test!(should_parse_attribute_no_args { "Replaceable" =>
         "";
-        ExtendedAttributeNoArgs => ExtendedAttributeNoArgs(VariantToken {
+        ExtendedAttributeNoArgs => ExtendedAttributeNoArgs(Token {
             variant: Identifier("Replaceable"),
             trivia: "",
         })
@@ -158,7 +158,7 @@ mod test {
         "";
         ExtendedAttributeIdent;
         lhs_identifier.variant.0 == "PutForwards";
-        rhs == VariantToken { variant: Identifier("name"), trivia: "" };
+        rhs == Token { variant: Identifier("name"), trivia: "" };
     });
 
     test!(should_parse_ident_list { "Exposed=(Window,Worker)" =>
@@ -187,7 +187,7 @@ mod test {
         "";
         ExtendedAttributeFloat;
         lhs_identifier.variant.0 == "FloatAttr";
-        rhs == FloatLit::Value(VariantToken { variant: FloatValueLit("3.14"), trivia: "" });
+        rhs == FloatLit::Value(Token { variant: FloatValueLit("3.14"), trivia: "" });
     });
 
     test!(should_parse_extattr_list { "[IntAttr=0, FloatAttr=3.14]" =>

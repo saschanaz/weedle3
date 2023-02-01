@@ -2,21 +2,21 @@
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+                variant: Interface,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "Animal",
                 ),
-                trivia: " ",
             },
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -24,9 +24,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: "\n  ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -34,9 +34,9 @@
                                     Distinguishable(
                                         DOMString(
                                             MayBeNull {
-                                                type_: VariantToken {
-                                                    variant: DOMString,
+                                                type_: Token {
                                                     trivia: " ",
+                                                    variant: DOMString,
                                                 },
                                                 q_mark: None,
                                             },
@@ -44,61 +44,61 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "name",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "\n\n",
+                variant: Interface,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "Human",
                 ),
-                trivia: " ",
             },
             inheritance: Some(
                 Inheritance {
-                    colon: VariantToken {
-                        variant: Colon,
+                    colon: Token {
                         trivia: " ",
+                        variant: Colon,
                     },
-                    identifier: VariantToken {
+                    identifier: Token {
+                        trivia: " ",
                         variant: Identifier(
                             "Animal",
                         ),
-                        trivia: " ",
                     },
                 },
             ),
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -106,9 +106,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: "\n  ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -116,11 +116,11 @@
                                     Distinguishable(
                                         Identifier(
                                             MayBeNull {
-                                                type_: VariantToken {
+                                                type_: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "Dog",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 q_mark: None,
                                             },
@@ -128,61 +128,61 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "pet",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     Interface(
         InterfaceDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "\n\n",
+                variant: Interface,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "Dog",
                 ),
-                trivia: " ",
             },
             inheritance: Some(
                 Inheritance {
-                    colon: VariantToken {
-                        variant: Colon,
+                    colon: Token {
                         trivia: " ",
+                        variant: Colon,
                     },
-                    identifier: VariantToken {
+                    identifier: Token {
+                        trivia: " ",
                         variant: Identifier(
                             "Animal",
                         ),
-                        trivia: " ",
                     },
                 },
             ),
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -190,9 +190,9 @@
                             attributes: None,
                             modifier: None,
                             readonly: None,
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: "\n  ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -200,11 +200,11 @@
                                     Distinguishable(
                                         Identifier(
                                             MayBeNull {
-                                                type_: VariantToken {
+                                                type_: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "Human",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 q_mark: None,
                                             },
@@ -212,27 +212,27 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "owner",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

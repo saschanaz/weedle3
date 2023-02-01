@@ -2,24 +2,24 @@
     InterfaceMixin(
         InterfaceMixinDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "// Extracted from https://heycam.github.io/webidl/#using-mixins-and-partials on 2017-11-02\n\n",
+                variant: Interface,
             },
-            mixin: VariantToken {
-                variant: Mixin,
+            mixin: Token {
                 trivia: " ",
+                variant: Mixin,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "GlobalCrypto",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -27,14 +27,14 @@
                             attributes: None,
                             stringifier: None,
                             readonly: Some(
-                                VariantToken {
-                                    variant: ReadOnly,
+                                Token {
                                     trivia: "\n  ",
+                                    variant: ReadOnly,
                                 },
                             ),
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: " ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -42,11 +42,11 @@
                                     Distinguishable(
                                         Identifier(
                                             MayBeNull {
-                                                type_: VariantToken {
+                                                type_: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "Crypto",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 q_mark: None,
                                             },
@@ -54,105 +54,105 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "crypto",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     IncludesStatement(
         IncludesStatementDefinition {
             attributes: None,
-            lhs_identifier: VariantToken {
+            lhs_identifier: Token {
+                trivia: "\n\n",
                 variant: Identifier(
                     "Window",
                 ),
-                trivia: "\n\n",
             },
-            includes: VariantToken {
-                variant: Includes,
+            includes: Token {
                 trivia: " ",
+                variant: Includes,
             },
-            rhs_identifier: VariantToken {
+            rhs_identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "GlobalCrypto",
                 ),
-                trivia: " ",
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     IncludesStatement(
         IncludesStatementDefinition {
             attributes: None,
-            lhs_identifier: VariantToken {
+            lhs_identifier: Token {
+                trivia: "\n",
                 variant: Identifier(
                     "WorkerGlobalScope",
                 ),
-                trivia: "\n",
             },
-            includes: VariantToken {
-                variant: Includes,
+            includes: Token {
                 trivia: " ",
+                variant: Includes,
             },
-            rhs_identifier: VariantToken {
+            rhs_identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "GlobalCrypto",
                 ),
-                trivia: " ",
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     PartialInterfaceMixin(
         PartialInterfaceMixinDefinition {
             attributes: None,
-            partial: VariantToken {
-                variant: Partial,
+            partial: Token {
                 trivia: "\n\n",
+                variant: Partial,
             },
-            interface: VariantToken {
+            interface: Token {
+                trivia: " ",
                 variant: Interface,
-                trivia: " ",
             },
-            mixin: VariantToken {
+            mixin: Token {
+                trivia: " ",
                 variant: Mixin,
-                trivia: " ",
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "WindowOrWorkerGlobalScope",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     Attribute(
@@ -160,14 +160,14 @@
                             attributes: None,
                             stringifier: None,
                             readonly: Some(
-                                VariantToken {
-                                    variant: ReadOnly,
+                                Token {
                                     trivia: "\n  ",
+                                    variant: ReadOnly,
                                 },
                             ),
-                            attribute: VariantToken {
-                                variant: Attribute,
+                            attribute: Token {
                                 trivia: " ",
+                                variant: Attribute,
                             },
                             type_: AttributedType {
                                 attributes: None,
@@ -175,11 +175,11 @@
                                     Distinguishable(
                                         Identifier(
                                             MayBeNull {
-                                                type_: VariantToken {
+                                                type_: Token {
+                                                    trivia: " ",
                                                     variant: Identifier(
                                                         "Crypto",
                                                     ),
-                                                    trivia: " ",
                                                 },
                                                 q_mark: None,
                                             },
@@ -187,61 +187,61 @@
                                     ),
                                 ),
                             },
-                            identifier: VariantToken {
+                            identifier: Token {
+                                trivia: " ",
                                 variant: Identifier(
                                     "crypto",
                                 ),
-                                trivia: " ",
                             },
-                            semi_colon: VariantToken {
-                                variant: SemiColon,
+                            semi_colon: Token {
                                 trivia: "",
+                                variant: SemiColon,
                             },
                         },
                     ),
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     InterfaceMixin(
         InterfaceMixinDefinition {
             attributes: None,
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "\n\n",
+                variant: Interface,
             },
-            mixin: VariantToken {
-                variant: Mixin,
+            mixin: Token {
                 trivia: " ",
+                variant: Mixin,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "_LocalCrypto",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

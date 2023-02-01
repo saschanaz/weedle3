@@ -32,7 +32,7 @@ use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, Type};
-use parser::eat::VariantToken;
+use term::Token;
 use weedle_derive::Weedle;
 
 #[macro_use]
@@ -56,7 +56,7 @@ pub mod parser;
 mod tokens;
 
 use lexer::lex;
-use tokens::Tokens;
+use tokens::LexedSlice;
 
 type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
 
@@ -82,7 +82,7 @@ pub fn parse(
     let (unread, (defs, _eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
         contextful_cut("Unrecognized tokens", eat!(Eof)),
-    ))(Tokens(&tokens[..]))
+    ))(LexedSlice(&tokens[..]))
     .map_err(tokens::nom_error_into)?;
 
     // Cannot be empty here since eof would fail then
@@ -93,13 +93,13 @@ pub fn parse(
 
 pub trait Parse<'token>: Sized {
     fn parse_tokens<'slice>(
-        input: Tokens<'slice, 'token>,
-    ) -> VerboseResult<Tokens<'slice, 'token>, Self>;
+        input: LexedSlice<'slice, 'token>,
+    ) -> VerboseResult<LexedSlice<'slice, 'token>, Self>;
 
     fn parse(input: &'token str) -> VerboseResult<&'token str, Self> {
         let tokens = lex(input)?;
         let (unread, def) =
-            Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
+            Self::parse_tokens(LexedSlice(&tokens[..])).map_err(tokens::nom_error_into)?;
         let (unread, _) = whitespace::sp(unread.into())?;
         Ok((unread, def))
     }
@@ -119,7 +119,7 @@ pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
     #[weedle(cut = "Unrecognized return type")]
@@ -138,7 +138,7 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub callback: term!(callback),
     pub interface: term!(interface),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, CallbackInterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -151,7 +151,7 @@ pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -166,7 +166,7 @@ pub struct InterfaceMixinDefinition<'a> {
     pub interface: term!(interface),
     pub mixin: term!(mixin),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, MixinMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -179,7 +179,7 @@ pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -192,7 +192,7 @@ pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -207,7 +207,7 @@ pub struct PartialInterfaceDefinition<'a> {
     pub partial: term!(partial),
     pub interface: term!(interface),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, InterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -222,7 +222,7 @@ pub struct PartialInterfaceMixinDefinition<'a> {
     pub interface: term!(interface),
     pub mixin: term!(mixin),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, MixinMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -236,7 +236,7 @@ pub struct PartialDictionaryDefinition<'a> {
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, DictionaryMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -250,7 +250,7 @@ pub struct PartialNamespaceDefinition<'a> {
     pub partial: term!(partial),
     pub namespace: term!(namespace),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub members: Braced<'a, NamespaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -263,7 +263,7 @@ pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub values: Braced<'a, EnumValueList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -278,7 +278,7 @@ pub struct TypedefDefinition<'a> {
     #[weedle(cut = "Unrecognized type")]
     pub type_: AttributedType<'a>,
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -288,9 +288,9 @@ pub struct TypedefDefinition<'a> {
 #[weedle(context)]
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub lhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub includes: term!(includes),
-    pub rhs_identifier: VariantToken<'a, Identifier<'a>>,
+    pub rhs_identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -314,7 +314,7 @@ pub enum Definition<'a> {
 }
 
 /// Parses a non-empty enum value list
-pub type EnumValueList<'a> = PunctuatedNonEmpty<VariantToken<'a, StringLit<'a>>, term!(,)>;
+pub type EnumValueList<'a> = PunctuatedNonEmpty<Token<'a, StringLit<'a>>, term!(,)>;
 
 #[cfg(test)]
 mod test {

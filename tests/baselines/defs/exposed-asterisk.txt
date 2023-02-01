@@ -3,64 +3,64 @@
         InterfaceDefinition {
             attributes: Some(
                 Bracketed {
-                    open_bracket: VariantToken {
-                        variant: OpenBracket,
+                    open_bracket: Token {
                         trivia: "",
+                        variant: OpenBracket,
                     },
                     body: Punctuated {
                         list: [
                             Wildcard(
                                 ExtendedAttributeWildcard {
-                                    lhs_identifier: VariantToken {
+                                    lhs_identifier: Token {
+                                        trivia: "",
                                         variant: Identifier(
                                             "Exposed",
                                         ),
-                                        trivia: "",
                                     },
-                                    assign: VariantToken {
+                                    assign: Token {
+                                        trivia: "",
                                         variant: Assign,
-                                        trivia: "",
                                     },
-                                    wildcard: VariantToken {
-                                        variant: Wildcard,
+                                    wildcard: Token {
                                         trivia: "",
+                                        variant: Wildcard,
                                     },
                                 },
                             ),
                         ],
-                        separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Comma>>,
+                        separator: PhantomData<weedle::term::Token<weedle::term::Comma>>,
                     },
-                    close_bracket: VariantToken {
-                        variant: CloseBracket,
+                    close_bracket: Token {
                         trivia: "",
+                        variant: CloseBracket,
                     },
                 },
             ),
-            interface: VariantToken {
-                variant: Interface,
+            interface: Token {
                 trivia: "\n",
+                variant: Interface,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "X",
                 ),
-                trivia: " ",
             },
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

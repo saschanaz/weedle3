@@ -2,21 +2,21 @@
     Dictionary(
         DictionaryDefinition {
             attributes: None,
-            dictionary: VariantToken {
-                variant: Dictionary,
+            dictionary: Token {
                 trivia: "// Extracted from Web IDL editors draft May 31 2011\n",
+                variant: Dictionary,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "PaintOptions",
                 ),
-                trivia: " ",
             },
             inheritance: None,
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     DictionaryMember {
@@ -26,45 +26,45 @@
                             Distinguishable(
                                 DOMString(
                                     MayBeNull {
-                                        type_: VariantToken {
-                                            variant: DOMString,
+                                        type_: Token {
                                             trivia: "\n  ",
+                                            variant: DOMString,
                                         },
                                         q_mark: Some(
-                                            VariantToken {
-                                                variant: QMark,
+                                            Token {
                                                 trivia: "",
+                                                variant: QMark,
                                             },
                                         ),
                                     },
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "fillPattern",
                             ),
-                            trivia: " ",
                         },
                         default: Some(
                             Default {
-                                assign: VariantToken {
-                                    variant: Assign,
+                                assign: Token {
                                     trivia: " ",
+                                    variant: Assign,
                                 },
                                 value: String(
-                                    VariantToken {
+                                    Token {
+                                        trivia: " ",
                                         variant: StringLit(
                                             "black",
                                         ),
-                                        trivia: " ",
                                     },
                                 ),
                             },
                         ),
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                     DictionaryMember {
@@ -74,43 +74,43 @@
                             Distinguishable(
                                 DOMString(
                                     MayBeNull {
-                                        type_: VariantToken {
-                                            variant: DOMString,
+                                        type_: Token {
                                             trivia: "\n  ",
+                                            variant: DOMString,
                                         },
                                         q_mark: Some(
-                                            VariantToken {
-                                                variant: QMark,
+                                            Token {
                                                 trivia: "",
+                                                variant: QMark,
                                             },
                                         ),
                                     },
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "strokePattern",
                             ),
-                            trivia: " ",
                         },
                         default: Some(
                             Default {
-                                assign: VariantToken {
-                                    variant: Assign,
+                                assign: Token {
                                     trivia: " ",
+                                    variant: Assign,
                                 },
                                 value: Null(
-                                    VariantToken {
-                                        variant: Null,
+                                    Token {
                                         trivia: " ",
+                                        variant: Null,
                                     },
                                 ),
                             },
                         ),
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                     DictionaryMember {
@@ -120,27 +120,27 @@
                             Distinguishable(
                                 Identifier(
                                     MayBeNull {
-                                        type_: VariantToken {
+                                        type_: Token {
+                                            trivia: "\n  ",
                                             variant: Identifier(
                                                 "Point",
                                             ),
-                                            trivia: "\n  ",
                                         },
                                         q_mark: None,
                                     },
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "position",
                             ),
-                            trivia: " ",
                         },
                         default: None,
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                     DictionaryMember {
@@ -151,14 +151,14 @@
                                 Sequence(
                                     MayBeNull {
                                         type_: SequenceType {
-                                            sequence: VariantToken {
-                                                variant: Sequence,
+                                            sequence: Token {
                                                 trivia: "\n  // https://heycam.github.io/webidl/#dfn-optional-argument-default-value allows sequences to default to \"[]\".\n  ",
+                                                variant: Sequence,
                                             },
                                             generics: Generics {
-                                                open_angle: VariantToken {
-                                                    variant: LessThan,
+                                                open_angle: Token {
                                                     trivia: "",
+                                                    variant: LessThan,
                                                 },
                                                 body: AttributedType {
                                                     attributes: None,
@@ -169,9 +169,9 @@
                                                                     type_: Long(
                                                                         LongType {
                                                                             unsigned: None,
-                                                                            long: VariantToken {
-                                                                                variant: Long,
+                                                                            long: Token {
                                                                                 trivia: "",
+                                                                                variant: Long,
                                                                             },
                                                                         },
                                                                     ),
@@ -181,9 +181,9 @@
                                                         ),
                                                     ),
                                                 },
-                                                close_angle: VariantToken {
-                                                    variant: GreaterThan,
+                                                close_angle: Token {
                                                     trivia: "",
+                                                    variant: GreaterThan,
                                                 },
                                             },
                                         },
@@ -192,43 +192,43 @@
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "seq",
                             ),
-                            trivia: " ",
                         },
                         default: Some(
                             Default {
-                                assign: VariantToken {
-                                    variant: Assign,
+                                assign: Token {
                                     trivia: " ",
+                                    variant: Assign,
                                 },
                                 value: EmptyArray(
                                     EmptyArrayLit {
-                                        open_bracket: VariantToken {
-                                            variant: OpenBracket,
+                                        open_bracket: Token {
                                             trivia: " ",
+                                            variant: OpenBracket,
                                         },
-                                        close_bracket: VariantToken {
-                                            variant: CloseBracket,
+                                        close_bracket: Token {
                                             trivia: "",
+                                            variant: CloseBracket,
                                         },
                                     },
                                 ),
                             },
                         ),
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                     DictionaryMember {
                         attributes: None,
                         required: Some(
-                            VariantToken {
-                                variant: Required,
+                            Token {
                                 trivia: "\n  // https://heycam.github.io/webidl/#required-dictionary-member\n  ",
+                                variant: Required,
                             },
                         ),
                         type_: Single(
@@ -238,9 +238,9 @@
                                         type_: Long(
                                             LongType {
                                                 unsigned: None,
-                                                long: VariantToken {
-                                                    variant: Long,
+                                                long: Token {
                                                     trivia: " ",
+                                                    variant: Long,
                                                 },
                                             },
                                         ),
@@ -249,16 +249,16 @@
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "reqSeq",
                             ),
-                            trivia: " ",
                         },
                         default: None,
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                     DictionaryMember {
@@ -268,81 +268,81 @@
                             Distinguishable(
                                 Identifier(
                                     MayBeNull {
-                                        type_: VariantToken {
+                                        type_: Token {
+                                            trivia: "\n  ",
                                             variant: Identifier(
                                                 "Dictionary",
                                             ),
-                                            trivia: "\n  ",
                                         },
                                         q_mark: None,
                                     },
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "dict",
                             ),
-                            trivia: " ",
                         },
                         default: Some(
                             Default {
-                                assign: VariantToken {
-                                    variant: Assign,
+                                assign: Token {
                                     trivia: " ",
+                                    variant: Assign,
                                 },
                                 value: EmptyDictionary(
                                     EmptyDictionaryLit {
-                                        open_brace: VariantToken {
-                                            variant: OpenBrace,
+                                        open_brace: Token {
                                             trivia: " ",
+                                            variant: OpenBrace,
                                         },
-                                        close_brace: VariantToken {
-                                            variant: CloseBrace,
+                                        close_brace: Token {
                                             trivia: "",
+                                            variant: CloseBrace,
                                         },
                                     },
                                 ),
                             },
                         ),
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     PartialDictionary(
         PartialDictionaryDefinition {
             attributes: None,
-            partial: VariantToken {
-                variant: Partial,
+            partial: Token {
                 trivia: "\n\n",
+                variant: Partial,
             },
-            dictionary: VariantToken {
-                variant: Dictionary,
+            dictionary: Token {
                 trivia: " ",
+                variant: Dictionary,
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "_A",
                 ),
-                trivia: " ",
             },
             members: Braced {
-                open_brace: VariantToken {
-                    variant: OpenBrace,
+                open_brace: Token {
                     trivia: " ",
+                    variant: OpenBrace,
                 },
                 body: [
                     DictionaryMember {
@@ -355,9 +355,9 @@
                                         type_: Long(
                                             LongType {
                                                 unsigned: None,
-                                                long: VariantToken {
-                                                    variant: Long,
+                                                long: Token {
                                                     trivia: "\n  ",
+                                                    variant: Long,
                                                 },
                                             },
                                         ),
@@ -366,16 +366,16 @@
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "h",
                             ),
-                            trivia: " ",
                         },
                         default: None,
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                     DictionaryMember {
@@ -388,9 +388,9 @@
                                         type_: Long(
                                             LongType {
                                                 unsigned: None,
-                                                long: VariantToken {
-                                                    variant: Long,
+                                                long: Token {
                                                     trivia: "\n  ",
+                                                    variant: Long,
                                                 },
                                             },
                                         ),
@@ -399,27 +399,27 @@
                                 ),
                             ),
                         ),
-                        identifier: VariantToken {
+                        identifier: Token {
+                            trivia: " ",
                             variant: Identifier(
                                 "d",
                             ),
-                            trivia: " ",
                         },
                         default: None,
-                        semi_colon: VariantToken {
-                            variant: SemiColon,
+                        semi_colon: Token {
                             trivia: "",
+                            variant: SemiColon,
                         },
                     },
                 ],
-                close_brace: VariantToken {
-                    variant: CloseBrace,
+                close_brace: Token {
                     trivia: "\n",
+                    variant: CloseBrace,
                 },
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

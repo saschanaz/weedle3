@@ -286,7 +286,7 @@ fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
 
     Ok(quote! {
         #impl_head crate::Parse<'a> #impl_tail {
-            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+            fn parse_tokens<'slice>(input: crate::tokens::LexedSlice<'slice, 'a>) -> crate::VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
                 #impl_body
             }
 

@@ -2,9 +2,9 @@
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: VariantToken {
-                variant: Typedef,
+            typedef: Token {
                 trivia: "",
+                variant: Typedef,
             },
             type_: AttributedType {
                 attributes: None,
@@ -12,11 +12,11 @@
                     Distinguishable(
                         Identifier(
                             MayBeNull {
-                                type_: VariantToken {
+                                type_: Token {
+                                    trivia: " ",
                                     variant: Identifier(
                                         "_Type",
                                     ),
-                                    trivia: " ",
                                 },
                                 q_mark: None,
                             },
@@ -24,24 +24,24 @@
                     ),
                 ),
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "EscapedType",
                 ),
-                trivia: " ",
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: VariantToken {
-                variant: Typedef,
+            typedef: Token {
                 trivia: "\n",
+                variant: Typedef,
             },
             type_: AttributedType {
                 attributes: None,
@@ -50,14 +50,14 @@
                         Sequence(
                             MayBeNull {
                                 type_: SequenceType {
-                                    sequence: VariantToken {
-                                        variant: Sequence,
+                                    sequence: Token {
                                         trivia: " ",
+                                        variant: Sequence,
                                     },
                                     generics: Generics {
-                                        open_angle: VariantToken {
-                                            variant: LessThan,
+                                        open_angle: Token {
                                             trivia: "",
+                                            variant: LessThan,
                                         },
                                         body: AttributedType {
                                             attributes: None,
@@ -65,11 +65,11 @@
                                                 Distinguishable(
                                                     Identifier(
                                                         MayBeNull {
-                                                            type_: VariantToken {
+                                                            type_: Token {
+                                                                trivia: "",
                                                                 variant: Identifier(
                                                                     "_Type",
                                                                 ),
-                                                                trivia: "",
                                                             },
                                                             q_mark: None,
                                                         },
@@ -77,9 +77,9 @@
                                                 ),
                                             ),
                                         },
-                                        close_angle: VariantToken {
-                                            variant: GreaterThan,
+                                        close_angle: Token {
                                             trivia: "",
+                                            variant: GreaterThan,
                                         },
                                     },
                                 },
@@ -89,15 +89,15 @@
                     ),
                 ),
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "EscapedSequence",
                 ),
-                trivia: " ",
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),

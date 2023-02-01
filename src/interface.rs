@@ -6,7 +6,7 @@ use crate::common::{Generics, Identifier, Parenthesized};
 use crate::members::{
     AttributeInterfaceMember, ConstMember, OperationInterfaceMember, RegularOperationMember,
 };
-use crate::parser::eat::VariantToken;
+use crate::term::Token;
 use crate::types::AttributedType;
 
 /// Parses interface members
@@ -18,7 +18,7 @@ pub type CallbackInterfaceMembers<'a> = Vec<CallbackInterfaceMember<'a>>;
 pub struct Inheritance<'a> {
     pub colon: term!(:),
     #[weedle(cut = "Missing name for inheritance")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
 }
 
 /// Parses `[attributes]? constructor(( args ));`
@@ -149,7 +149,7 @@ pub enum CallbackInterfaceMember<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::{parser::eat::VariantToken, Parse};
+    use crate::{term::Token, Parse};
 
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";
@@ -160,14 +160,14 @@ mod test {
         "";
         SetlikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(VariantToken::default());
+        readonly == Some(Token::default());
     });
 
     test!(should_parse_maplike_interface_member { "readonly maplike<long, short>;" =>
         "";
         MaplikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(VariantToken::default());
+        readonly == Some(Token::default());
     });
 
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>

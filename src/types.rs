@@ -2,8 +2,8 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Generics, Identifier, Parenthesized, Punctuated};
-use crate::parser::eat::VariantToken;
-use crate::tokens::{contextful_cut, Tokens};
+use crate::term::Token;
+use crate::tokens::{contextful_cut, LexedSlice};
 use crate::Parse;
 use crate::{term, VerboseResult};
 
@@ -47,8 +47,8 @@ pub enum SingleType<'a> {
 }
 
 fn prevent_unexpected_nullable<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "`any` and Promise cannot be nullable",
         nom::combinator::not(nom::combinator::peek(eat_key!(QMark))),
@@ -95,7 +95,7 @@ pub enum DistinguishableType<'a> {
     ObservableArrayType(MayBeNull<'a, ObservableArrayType<'a>>),
     RecordType(MayBeNull<'a, RecordType<'a>>),
     Undefined(MayBeNull<'a, term!(undefined)>),
-    Identifier(MayBeNull<'a, VariantToken<'a, Identifier<'a>>>),
+    Identifier(MayBeNull<'a, Token<'a, Identifier<'a>>>),
 }
 
 /// Parses `sequence<Type>`
@@ -126,7 +126,7 @@ pub struct ObservableArrayType<'a> {
 #[weedle(impl_bound = "where T: Parse<'a>")]
 pub struct MayBeNull<'a, T> {
     pub type_: T,
-    pub q_mark: Option<VariantToken<'a, term::QMark>>,
+    pub q_mark: Option<Token<'a, term::QMark>>,
 }
 
 impl<'a, T> MayBeNull<'a, T> {
@@ -231,7 +231,7 @@ pub enum ConstType<'a> {
     Byte(term!(byte)),
     Octet(term!(octet)),
     Bigint(term!(bigint)),
-    Identifier(VariantToken<'a, Identifier<'a>>),
+    Identifier(Token<'a, Identifier<'a>>),
 }
 
 /// Parses `[attributes]? type`

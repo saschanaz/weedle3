@@ -2,8 +2,8 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
-use crate::parser::eat::VariantToken;
-use crate::tokens::Tokens;
+use crate::term::Token;
+use crate::tokens::LexedSlice;
 use crate::types::{AttributedType, Type};
 use crate::{Parse, VerboseResult};
 
@@ -14,7 +14,9 @@ pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 struct ArgumentName<'a>(&'a str, &'a str);
 
 impl<'a> Parse<'a> for ArgumentName<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(
+        input: LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, ArgumentName(result.trivia, result.variant.0)));
         }
@@ -55,7 +57,7 @@ impl<'a> Parse<'a> for ArgumentName<'a> {
     }
 }
 
-impl<'a> From<ArgumentName<'a>> for VariantToken<'a, Identifier<'a>> {
+impl<'a> From<ArgumentName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: ArgumentName<'a>) -> Self {
         Self {
             trivia: value.0,
@@ -73,7 +75,7 @@ pub struct SingleArgument<'a> {
     pub optional: Option<term!(optional)>,
     pub type_: AttributedType<'a>,
     #[weedle(from = "ArgumentName")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cond = "optional.is_some()")]
     pub default: Option<Default<'a>>,
 }
@@ -84,7 +86,7 @@ pub struct VariadicArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub type_: Type<'a>,
     pub ellipsis: term!(...),
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
 }
 
 /// Parses an argument. Ex: `double v1|double... v1s`
@@ -99,7 +101,7 @@ pub enum Argument<'a> {
 mod test {
     use super::*;
     use crate::literal::{DecLit, DefaultValue, IntegerLit};
-    use crate::parser::eat::VariantToken;
+    use crate::term::Token;
     use crate::Parse;
 
     test!(should_parse_single_argument { "short a" =>
@@ -107,7 +109,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier == VariantToken { variant: Identifier("a"), trivia: " " };
+        identifier == Token { variant: Identifier("a"), trivia: " " };
         default.is_none();
     });
 
@@ -123,7 +125,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == VariantToken { variant: Identifier("a"), trivia: " " };
+        identifier == Token { variant: Identifier("a"), trivia: " " };
         default.is_none();
     });
 
@@ -132,10 +134,10 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier == VariantToken { variant: Identifier("a"), trivia: " " };
+        identifier == Token { variant: Identifier("a"), trivia: " " };
         default == Some(Default {
-            assign: VariantToken { variant: core::default::Default::default(), trivia: " " },
-            value: DefaultValue::Integer(VariantToken { variant: IntegerLit::Dec(DecLit("5")), trivia: " " }),
+            assign: Token { variant: core::default::Default::default(), trivia: " " },
+            value: DefaultValue::Integer(Token { variant: IntegerLit::Dec(DecLit("5")), trivia: " " }),
         });
     });
 

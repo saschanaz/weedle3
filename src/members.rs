@@ -5,8 +5,8 @@ use crate::{
     attribute::ExtendedAttributeList,
     common::{Identifier, Parenthesized},
     literal::ConstValue,
-    parser::eat::VariantToken,
-    tokens::{contextful_cut, Tokens},
+    term::Token,
+    tokens::{contextful_cut, LexedSlice},
     types::{AttributedType, ConstType, Type},
     VerboseResult,
 };
@@ -20,7 +20,7 @@ pub struct ConstMember<'a> {
     #[weedle(cut = "Unrecognized const type")]
     pub const_type: ConstType<'a>,
     #[weedle(cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
     #[weedle(cut = "Unrecognized const value")]
@@ -39,8 +39,8 @@ pub enum StringifierOrInheritOrStatic<'a> {
 }
 
 fn prevent_inherit_readonly<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Inherited attributes cannot be read-only, as this form is only used to override the setter of the ancestor's attribute",
         nom::combinator::not(nom::combinator::peek(eat_key!(ReadOnly))),
@@ -52,8 +52,8 @@ struct AttributeName<'a>(&'a str, &'a str);
 
 impl<'a> crate::Parse<'a> for AttributeName<'a> {
     fn parse_tokens<'slice>(
-        input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+        input: crate::tokens::LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, AttributeName(result.trivia, result.variant.0)));
         }
@@ -66,7 +66,7 @@ impl<'a> crate::Parse<'a> for AttributeName<'a> {
     }
 }
 
-impl<'a> From<AttributeName<'a>> for VariantToken<'a, Identifier<'a>> {
+impl<'a> From<AttributeName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: AttributeName<'a>) -> Self {
         Self {
             trivia: value.0,
@@ -85,7 +85,7 @@ pub struct AttributeInterfaceMember<'a> {
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName", cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -100,7 +100,7 @@ pub struct AttributeMixinMember<'a> {
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName", cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -115,14 +115,14 @@ pub struct AttributeNamespaceMember<'a> {
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName", cut = "Missing name")]
-    pub identifier: VariantToken<'a, Identifier<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 fn prevent_writable_attribute<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Non-readonly attributes are not allowed in namespaces",
         nom::combinator::not(nom::combinator::peek(eat_key!(Attribute))),
@@ -143,8 +143,8 @@ struct OperationName<'a>(&'a str, &'a str);
 
 impl<'a> crate::Parse<'a> for OperationName<'a> {
     fn parse_tokens<'slice>(
-        input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+        input: crate::tokens::LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
             return Ok((tokens, OperationName(result.trivia, result.variant.0)));
         }
@@ -157,7 +157,7 @@ impl<'a> crate::Parse<'a> for OperationName<'a> {
     }
 }
 
-impl<'a> From<OperationName<'a>> for VariantToken<'a, Identifier<'a>> {
+impl<'a> From<OperationName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: OperationName<'a>) -> Self {
         Self {
             trivia: value.0,
@@ -176,7 +176,7 @@ pub struct OperationInterfaceMember<'a> {
     pub modifier: Option<Modifier<'a>>,
     pub return_type: Type<'a>,
     #[weedle(from = "OperationName", opt)]
-    pub identifier: Option<VariantToken<'a, Identifier<'a>>>,
+    pub identifier: Option<Token<'a, Identifier<'a>>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -191,7 +191,7 @@ pub struct RegularOperationMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: Type<'a>,
     #[weedle(from = "OperationName", opt)]
-    pub identifier: Option<VariantToken<'a, Identifier<'a>>>,
+    pub identifier: Option<Token<'a, Identifier<'a>>>,
     pub args: Parenthesized<'a, ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
@@ -218,7 +218,7 @@ mod test {
         "";
         AttributeInterfaceMember;
         attributes.is_none();
-        modifier == Some(StringifierOrInheritOrStatic::Static(VariantToken::default()));
+        modifier == Some(StringifierOrInheritOrStatic::Static(Token::default()));
         identifier.variant.0 == "width";
     });
 

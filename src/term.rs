@@ -1,3 +1,21 @@
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Token<'a, T> {
+    pub trivia: &'a str,
+    pub variant: T,
+}
+
+impl<'a, T> Default for Token<'a, T>
+where
+    T: Default,
+{
+    fn default() -> Self {
+        Token {
+            variant: T::default(),
+            trivia: "",
+        }
+    }
+}
+
 /*
  * The following will ultimate generate:
  *
@@ -112,7 +130,7 @@ macro_rules! generate_keyword_struct {
             }
         }
 
-        impl<'a> $crate::Parse<'a> for $crate::parser::eat::VariantToken<'a, $typ> {
+        impl<'a> $crate::Parse<'a> for $crate::term::Token<'a, $typ> {
             parser!(eat_key!($typ));
 
             fn write(&self) -> String {
@@ -307,255 +325,255 @@ generate_keywords_enum! {
 #[macro_export]
 macro_rules! term {
     (OpenParen) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::OpenParen>
+        $crate::term::Token<'a, $crate::term::OpenParen>
     };
     (CloseParen) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::CloseParen>
+        $crate::term::Token<'a, $crate::term::CloseParen>
     };
     (OpenBracket) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::OpenBracket>
+        $crate::term::Token<'a, $crate::term::OpenBracket>
     };
     (CloseBracket) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::CloseBracket>
+        $crate::term::Token<'a, $crate::term::CloseBracket>
     };
     (OpenBrace) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::OpenBrace>
+        $crate::term::Token<'a, $crate::term::OpenBrace>
     };
     (CloseBrace) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::CloseBrace>
+        $crate::term::Token<'a, $crate::term::CloseBrace>
     };
     (,) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Comma>
+        $crate::term::Token<'a, $crate::term::Comma>
     };
     (-) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Minus>
+        $crate::term::Token<'a, $crate::term::Minus>
     };
     (.) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Dot>
+        $crate::term::Token<'a, $crate::term::Dot>
     };
     (...) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Ellipsis>
+        $crate::term::Token<'a, $crate::term::Ellipsis>
     };
     (:) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Colon>
+        $crate::term::Token<'a, $crate::term::Colon>
     };
     (;) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::SemiColon>
+        $crate::term::Token<'a, $crate::term::SemiColon>
     };
     (<) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::LessThan>
+        $crate::term::Token<'a, $crate::term::LessThan>
     };
     (=) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Assign>
+        $crate::term::Token<'a, $crate::term::Assign>
     };
     (>) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::GreaterThan>
+        $crate::term::Token<'a, $crate::term::GreaterThan>
     };
     (?) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::QMark>
+        $crate::term::Token<'a, $crate::term::QMark>
     };
     (*) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Wildcard>
+        $crate::term::Token<'a, $crate::term::Wildcard>
     };
     (or) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Or>
+        $crate::term::Token<'a, $crate::term::Or>
     };
     (optional) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Optional>
+        $crate::term::Token<'a, $crate::term::Optional>
     };
     (async) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Async>
+        $crate::term::Token<'a, $crate::term::Async>
     };
     (attribute) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Attribute>
+        $crate::term::Token<'a, $crate::term::Attribute>
     };
     (callback) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Callback>
+        $crate::term::Token<'a, $crate::term::Callback>
     };
     (const) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Const>
+        $crate::term::Token<'a, $crate::term::Const>
     };
     (deleter) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Deleter>
+        $crate::term::Token<'a, $crate::term::Deleter>
     };
     (dictionary) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Dictionary>
+        $crate::term::Token<'a, $crate::term::Dictionary>
     };
     (enum) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Enum>
+        $crate::term::Token<'a, $crate::term::Enum>
     };
     (getter) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Getter>
+        $crate::term::Token<'a, $crate::term::Getter>
     };
     (includes) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Includes>
+        $crate::term::Token<'a, $crate::term::Includes>
     };
     (inherit) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Inherit>
+        $crate::term::Token<'a, $crate::term::Inherit>
     };
     (interface) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Interface>
+        $crate::term::Token<'a, $crate::term::Interface>
     };
     (iterable) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Iterable>
+        $crate::term::Token<'a, $crate::term::Iterable>
     };
     (maplike) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Maplike>
+        $crate::term::Token<'a, $crate::term::Maplike>
     };
     (namespace) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Namespace>
+        $crate::term::Token<'a, $crate::term::Namespace>
     };
     (partial) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Partial>
+        $crate::term::Token<'a, $crate::term::Partial>
     };
     (required) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Required>
+        $crate::term::Token<'a, $crate::term::Required>
     };
     (setlike) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Setlike>
+        $crate::term::Token<'a, $crate::term::Setlike>
     };
     (setter) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Setter>
+        $crate::term::Token<'a, $crate::term::Setter>
     };
     (static) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Static>
+        $crate::term::Token<'a, $crate::term::Static>
     };
     (stringifier) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Stringifier>
+        $crate::term::Token<'a, $crate::term::Stringifier>
     };
     (typedef) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Typedef>
+        $crate::term::Token<'a, $crate::term::Typedef>
     };
     (unrestricted) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Unrestricted>
+        $crate::term::Token<'a, $crate::term::Unrestricted>
     };
     (symbol) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Symbol>
+        $crate::term::Token<'a, $crate::term::Symbol>
     };
     (- Infinity) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::NegInfinity>
+        $crate::term::Token<'a, $crate::term::NegInfinity>
     };
     (ByteString) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::ByteString>
+        $crate::term::Token<'a, $crate::term::ByteString>
     };
     (DOMString) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::DOMString>
+        $crate::term::Token<'a, $crate::term::DOMString>
     };
     (FrozenArray) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::FrozenArray>
+        $crate::term::Token<'a, $crate::term::FrozenArray>
     };
     (Infinity) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Infinity>
+        $crate::term::Token<'a, $crate::term::Infinity>
     };
     (NaN) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::NaN>
+        $crate::term::Token<'a, $crate::term::NaN>
     };
     (ObservableArray) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::ObservableArray>
+        $crate::term::Token<'a, $crate::term::ObservableArray>
     };
     (USVString) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::USVString>
+        $crate::term::Token<'a, $crate::term::USVString>
     };
     (any) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Any>
+        $crate::term::Token<'a, $crate::term::Any>
     };
     (bigint) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Bigint>
+        $crate::term::Token<'a, $crate::term::Bigint>
     };
     (boolean) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Boolean>
+        $crate::term::Token<'a, $crate::term::Boolean>
     };
     (byte) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Byte>
+        $crate::term::Token<'a, $crate::term::Byte>
     };
     (double) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Double>
+        $crate::term::Token<'a, $crate::term::Double>
     };
     (false) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::False>
+        $crate::term::Token<'a, $crate::term::False>
     };
     (float) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Float>
+        $crate::term::Token<'a, $crate::term::Float>
     };
     (long) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Long>
+        $crate::term::Token<'a, $crate::term::Long>
     };
     (null) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Null>
+        $crate::term::Token<'a, $crate::term::Null>
     };
     (object) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Object>
+        $crate::term::Token<'a, $crate::term::Object>
     };
     (octet) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Octet>
+        $crate::term::Token<'a, $crate::term::Octet>
     };
     (sequence) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Sequence>
+        $crate::term::Token<'a, $crate::term::Sequence>
     };
     (short) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Short>
+        $crate::term::Token<'a, $crate::term::Short>
     };
     (true) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::True>
+        $crate::term::Token<'a, $crate::term::True>
     };
     (unsigned) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Unsigned>
+        $crate::term::Token<'a, $crate::term::Unsigned>
     };
     (undefined) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Undefined>
+        $crate::term::Token<'a, $crate::term::Undefined>
     };
     (record) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Record>
+        $crate::term::Token<'a, $crate::term::Record>
     };
     (ArrayBuffer) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::ArrayBuffer>
+        $crate::term::Token<'a, $crate::term::ArrayBuffer>
     };
     (DataView) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::DataView>
+        $crate::term::Token<'a, $crate::term::DataView>
     };
     (Int8Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Int8Array>
+        $crate::term::Token<'a, $crate::term::Int8Array>
     };
     (Int16Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Int16Array>
+        $crate::term::Token<'a, $crate::term::Int16Array>
     };
     (Int32Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Int32Array>
+        $crate::term::Token<'a, $crate::term::Int32Array>
     };
     (Uint8Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Uint8Array>
+        $crate::term::Token<'a, $crate::term::Uint8Array>
     };
     (Uint16Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Uint16Array>
+        $crate::term::Token<'a, $crate::term::Uint16Array>
     };
     (Uint32Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Uint32Array>
+        $crate::term::Token<'a, $crate::term::Uint32Array>
     };
     (Uint8ClampedArray) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Uint8ClampedArray>
+        $crate::term::Token<'a, $crate::term::Uint8ClampedArray>
     };
     (BigInt64Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::BigInt64Array>
+        $crate::term::Token<'a, $crate::term::BigInt64Array>
     };
     (BigUint64Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::BigUint64Array>
+        $crate::term::Token<'a, $crate::term::BigUint64Array>
     };
     (Float32Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Float32Array>
+        $crate::term::Token<'a, $crate::term::Float32Array>
     };
     (Float64Array) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Float64Array>
+        $crate::term::Token<'a, $crate::term::Float64Array>
     };
     (Promise) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Promise>
+        $crate::term::Token<'a, $crate::term::Promise>
     };
     (readonly) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::ReadOnly>
+        $crate::term::Token<'a, $crate::term::ReadOnly>
     };
     (mixin) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Mixin>
+        $crate::term::Token<'a, $crate::term::Mixin>
     };
     (constructor) => {
-        $crate::parser::eat::VariantToken<'a, $crate::term::Constructor>
+        $crate::term::Token<'a, $crate::term::Constructor>
     };
 }

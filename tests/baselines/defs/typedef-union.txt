@@ -2,18 +2,18 @@
     Typedef(
         TypedefDefinition {
             attributes: None,
-            typedef: VariantToken {
-                variant: Typedef,
+            typedef: Token {
                 trivia: "  ",
+                variant: Typedef,
             },
             type_: AttributedType {
                 attributes: None,
                 type_: Union(
                     MayBeNull {
                         type_: Parenthesized {
-                            open_paren: VariantToken {
-                                variant: OpenParen,
+                            open_paren: Token {
                                 trivia: " ",
+                                variant: OpenParen,
                             },
                             body: Punctuated {
                                 list: [
@@ -22,11 +22,11 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
+                                                    type_: Token {
+                                                        trivia: "",
                                                         variant: Identifier(
                                                             "ImageData",
                                                         ),
-                                                        trivia: "",
                                                     },
                                                     q_mark: None,
                                                 },
@@ -38,11 +38,11 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
+                                                    type_: Token {
+                                                        trivia: "\n           ",
                                                         variant: Identifier(
                                                             "HTMLImageElement",
                                                         ),
-                                                        trivia: "\n           ",
                                                     },
                                                     q_mark: None,
                                                 },
@@ -54,11 +54,11 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
+                                                    type_: Token {
+                                                        trivia: "\n           ",
                                                         variant: Identifier(
                                                             "HTMLCanvasElement",
                                                         ),
-                                                        trivia: "\n           ",
                                                     },
                                                     q_mark: None,
                                                 },
@@ -70,11 +70,11 @@
                                             attributes: None,
                                             type_: Identifier(
                                                 MayBeNull {
-                                                    type_: VariantToken {
+                                                    type_: Token {
+                                                        trivia: "\n           ",
                                                         variant: Identifier(
                                                             "HTMLVideoElement",
                                                         ),
-                                                        trivia: "\n           ",
                                                     },
                                                     q_mark: None,
                                                 },
@@ -82,26 +82,26 @@
                                         },
                                     ),
                                 ],
-                                separator: PhantomData<weedle::parser::eat::VariantToken<weedle::term::Or>>,
+                                separator: PhantomData<weedle::term::Token<weedle::term::Or>>,
                             },
-                            close_paren: VariantToken {
-                                variant: CloseParen,
+                            close_paren: Token {
                                 trivia: "",
+                                variant: CloseParen,
                             },
                         },
                         q_mark: None,
                     },
                 ),
             },
-            identifier: VariantToken {
+            identifier: Token {
+                trivia: " ",
                 variant: Identifier(
                     "TexImageSource",
                 ),
-                trivia: " ",
             },
-            semi_colon: VariantToken {
-                variant: SemiColon,
+            semi_colon: Token {
                 trivia: "",
+                variant: SemiColon,
             },
         },
     ),
