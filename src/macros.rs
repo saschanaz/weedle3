@@ -106,7 +106,7 @@ macro_rules! try_eat_keys {
     ($typ:ident, $input:ident, $($variant:ident),+) => {
         $(
             if let Ok((tokens, result)) = eat_key!($variant)($input) {
-                return Ok((tokens, $typ(result.trivia, result.value.value())));
+                return Ok((tokens, $typ(result.trivia, result.value.to_str())));
             }
         )+
     };

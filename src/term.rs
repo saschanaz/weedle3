@@ -125,7 +125,7 @@ macro_rules! generate_keyword_struct {
         pub struct $typ;
 
         impl $typ {
-            pub fn value(&self) -> &'static str {
+            pub fn to_str(&self) -> &'static str {
                 return $tok;
             }
         }
@@ -135,7 +135,7 @@ macro_rules! generate_keyword_struct {
 
             fn write(&self) -> String {
                 let trivia = self.trivia;
-                let value = self.value.value();
+                let value = self.value.to_str();
                 format!("{trivia}{value}")
             }
         }
