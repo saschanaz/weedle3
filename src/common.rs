@@ -4,7 +4,7 @@ use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
 use crate::term::Token;
-use crate::tokens::{contextful_cut, LexedSlice};
+use crate::tokens::{contextful_cut, separated_list0_incl, LexedSlice};
 use crate::{term, Parse, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
@@ -165,7 +165,7 @@ pub struct Generics<'a, T> {
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Punctuated<T, S> {
     pub list: Vec<T>,
-    pub separator: std::marker::PhantomData<S>,
+    pub separator: Vec<S>,
 }
 
 impl<'a, T, S> Parse<'a> for Punctuated<T, S>
@@ -176,14 +176,9 @@ where
     fn parse_tokens<'slice>(
         input: LexedSlice<'slice, 'a>,
     ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
-        let (input, list) = nom::multi::separated_list0(weedle!(S), weedle!(T))(input)?;
-        Ok((
-            input,
-            Self {
-                list,
-                separator: PhantomData::default(),
-            },
-        ))
+        // TODO: replace separated_list0 (and _list1 below)
+        let (input, (list, separator)) = separated_list0_incl(weedle!(S), weedle!(T))(input)?;
+        Ok((input, Self { list, separator }))
     }
 
     fn write(&self) -> String {

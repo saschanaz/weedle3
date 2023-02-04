@@ -105,7 +105,7 @@
                                 },
                             ),
                         ],
-                        separator: PhantomData<weedle::term::Token<weedle::term::Comma>>,
+                        separator: [],
                     },
                     close_bracket: Token {
                         trivia: "",
@@ -247,7 +247,12 @@
                                             },
                                         ),
                                     ],
-                                    separator: PhantomData<weedle::term::Token<weedle::term::Comma>>,
+                                    separator: [
+                                        Token {
+                                            trivia: "",
+                                            value: Comma,
+                                        },
+                                    ],
                                 },
                                 close_paren: Token {
                                     trivia: "",

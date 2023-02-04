@@ -152,3 +152,54 @@ where
         rest => rest,
     }
 }
+
+pub fn separated_list0_incl<I, O, O2, E, F, G>(
+    mut sep: G,
+    mut f: F,
+) -> impl FnMut(I) -> nom::IResult<I, (Vec<O>, Vec<O2>), E>
+where
+    I: Clone + InputLength,
+    F: nom::Parser<I, O, E>,
+    G: nom::Parser<I, O2, E>,
+    E: nom::error::ParseError<I>,
+{
+    move |mut i: I| {
+        use nom::{error::ErrorKind, Err};
+
+        let mut res = Vec::new();
+        let mut res_sep = Vec::new();
+
+        match f.parse(i.clone()) {
+            Err(Err::Error(_)) => return Ok((i, (res, res_sep))),
+            Err(e) => return Err(e),
+            Ok((i1, o)) => {
+                res.push(o);
+                i = i1;
+            }
+        }
+
+        loop {
+            let len = i.input_len();
+            match sep.parse(i.clone()) {
+                Err(Err::Error(_)) => return Ok((i, (res, res_sep))),
+                Err(e) => return Err(e),
+                Ok((i1, s)) => {
+                    // infinite loop check: the parser must always consume
+                    if i1.input_len() == len {
+                        return Err(Err::Error(E::from_error_kind(i1, ErrorKind::SeparatedList)));
+                    }
+                    res_sep.push(s);
+
+                    match f.parse(i1.clone()) {
+                        Err(Err::Error(_)) => return Ok((i, (res, res_sep))),
+                        Err(e) => return Err(e),
+                        Ok((i2, o)) => {
+                            res.push(o);
+                            i = i2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

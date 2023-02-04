@@ -26,12 +26,11 @@ impl<'a> From<UnionTypeMultiple<'a>> for UnionType<'a> {
         // XXX: request nom::multi::separated_list_m_n?
         let mut list = vec![value.first];
         list.extend(value.more.list);
+        let mut separator = vec![value.or];
+        separator.extend(value.more.separator);
         Self {
             open_paren: value.open_paren,
-            body: Punctuated {
-                list,
-                separator: std::marker::PhantomData::default(),
-            },
+            body: Punctuated { list, separator },
             close_paren: value.close_paren,
         }
     }
