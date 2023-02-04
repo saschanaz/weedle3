@@ -182,7 +182,23 @@ where
 
     fn write(&self) -> String {
         // XXX: Each item needs its own separator
-        self.list.write()
+        // self.list.write()
+
+        let vec: Vec<_> = self
+            .list
+            .iter()
+            .zip(self.separator.iter())
+            .map(|(item, sep)| {
+                let item = item.write();
+                let sep = sep.write();
+                format!("{item}{sep}")
+            })
+            .collect();
+        let mut result = vec.join("");
+        if self.list.len() > self.separator.len() {
+            result += &self.list.last().unwrap().write();
+        }
+        result
     }
 }
 
@@ -212,8 +228,21 @@ where
     }
 
     fn write(&self) -> String {
-        // XXX: Each item needs its own separator
-        self.list.write()
+        let vec: Vec<_> = self
+            .list
+            .iter()
+            .zip(self.separator.iter())
+            .map(|(item, sep)| {
+                let item = item.write();
+                let sep = sep.write();
+                format!("{item}{sep}")
+            })
+            .collect();
+        let mut result = vec.join("");
+        if self.list.len() > self.separator.len() {
+            result += &self.list.last().unwrap().write();
+        }
+        result
     }
 }
 
