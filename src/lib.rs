@@ -78,7 +78,7 @@ pub fn parse(
     input: &'_ str,
 ) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
     let tokens = lex(input)?;
-    let (unread, (defs, _eof)) = nom::sequence::tuple((
+    let (unread, (mut defs, eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
         contextful_cut("Unrecognized tokens", eat!(Eof)),
     ))(LexedSlice(&tokens[..]))
@@ -86,6 +86,8 @@ pub fn parse(
 
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
+
+    defs.push(Definition::Eof(eof));
 
     Ok(defs)
 }
@@ -310,6 +312,8 @@ pub enum Definition<'a> {
     Enum(EnumDefinition<'a>),
     Typedef(TypedefDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),
+    #[weedle(skip)]
+    Eof(Token<'a, ()>),
 }
 
 /// Parses a non-empty enum value list

@@ -36,6 +36,8 @@ struct MacroVariantArgs {
     post_check: Option<String>,
     #[darling(default)]
     generic_into: bool,
+    #[darling(default)]
+    skip: bool,
 }
 
 fn string_to_tokens<T: syn::parse::Parse + ToTokens>(
@@ -229,6 +231,12 @@ fn generate_enum(
                 parser = get_post_check(post_check, &parser)?;
             }
 
+            if args.skip {
+                parser = quote! {};
+            } else {
+                parser = quote! { #parser, }
+            }
+
             let writer = quote! { Self::#variant_id(v) => v.write() };
 
             Ok((parser, writer))
@@ -240,7 +248,7 @@ fn generate_enum(
 
     let parse_body = quote! {
         use nom::Parser;
-        alt!(#(#parsers,)*)(input)
+        alt!(#(#parsers)*)(input)
     };
 
     let write_body = quote! {

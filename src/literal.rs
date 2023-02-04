@@ -102,7 +102,7 @@ impl<'a> Parse<'a> for Token<'a, StringLit<'a>> {
     fn write(&self) -> String {
         let trivia = self.trivia;
         let variant = self.value.0;
-        format!("{trivia}{variant}")
+        format!("{trivia}\"{variant}\"")
     }
 }
 

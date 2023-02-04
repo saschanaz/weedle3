@@ -35,12 +35,21 @@ fn should_not_parse(resource: &str) {
     assert_eq!(message, baseline);
 }
 
+#[test_resources("tests/defs/*.webidl")]
+fn should_write_same(resource: &str) {
+    let content = std::fs::read_to_string(resource).unwrap();
+    let result = weedle::parse(&content).unwrap();
+
+    let written = weedle::Parse::write(&result);
+    assert_eq!(written, content);
+}
+
 #[test]
 pub fn should_parse_dom_webidl() {
     let content = std::fs::read_to_string("./tests/defs/dom.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 62);
+    assert_eq!(parsed.len(), 63);
 }
 
 #[test]
@@ -48,7 +57,7 @@ fn should_parse_html_webidl() {
     let content = std::fs::read_to_string("./tests/defs/html.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 325);
+    assert_eq!(parsed.len(), 326);
 }
 
 #[test]
@@ -56,7 +65,7 @@ fn should_parse_mediacapture_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/mediacapture-streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 37);
+    assert_eq!(parsed.len(), 38);
 }
 
 #[test]
@@ -64,7 +73,7 @@ fn should_parse_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 37);
+    assert_eq!(parsed.len(), 38);
 }
 
 #[test]
@@ -74,7 +83,7 @@ fn interface_constructor() {
     let content = std::fs::read_to_string("./tests/defs/interface-constructor.webidl").unwrap();
     let mut parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 1);
+    assert_eq!(parsed.len(), 2);
 
     let definition = parsed.pop().unwrap();
 
@@ -133,6 +142,7 @@ fn interface_constructor() {
                 _ => unreachable!(),
             }
         }
+        Definition::Eof(_) => (),
         _ => unreachable!(),
     }
 }

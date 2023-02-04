@@ -284,6 +284,14 @@ pub struct Default<'a> {
     pub value: DefaultValue<'a>,
 }
 
+impl<'a> Parse<'a> for Token<'a, ()> {
+    parser!(|_| unimplemented!("EOF detection is in weedle::parse"));
+
+    fn write(&self) -> String {
+        self.trivia.to_string()
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
