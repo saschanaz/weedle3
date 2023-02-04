@@ -1,10 +1,8 @@
-use std::marker::PhantomData;
-
 use weedle_derive::Weedle;
 
 use crate::literal::DefaultValue;
 use crate::term::Token;
-use crate::tokens::{contextful_cut, separated_list0_incl, LexedSlice};
+use crate::tokens::{contextful_cut, separated_list_incl, LexedSlice};
 use crate::{term, Parse, VerboseResult};
 
 pub(crate) fn is_alphanum_underscore_dash(token: char) -> bool {
@@ -177,7 +175,8 @@ where
         input: LexedSlice<'slice, 'a>,
     ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
         // TODO: replace separated_list0 (and _list1 below)
-        let (input, (list, separator)) = separated_list0_incl(weedle!(S), weedle!(T))(input)?;
+        let (input, (list, separator)) =
+            separated_list_incl::<false, _, _, _, _, _, _>(weedle!(S), weedle!(T))(input)?;
         Ok((input, Self { list, separator }))
     }
 
@@ -191,7 +190,7 @@ where
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct PunctuatedNonEmpty<T, S> {
     pub list: Vec<T>,
-    pub separator: std::marker::PhantomData<S>,
+    pub separator: Vec<S>,
 }
 
 impl<'a, T, S> Parse<'a> for PunctuatedNonEmpty<T, S>
@@ -202,17 +201,14 @@ where
     fn parse_tokens<'slice>(
         input: LexedSlice<'slice, 'a>,
     ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
-        let (input, list) = nom::sequence::terminated(
-            nom::multi::separated_list1(weedle!(S), weedle!(T)),
+        let (input, ((list, mut separator), trailing)) = nom::sequence::tuple((
+            separated_list_incl::<true, _, _, _, _, _, _>(weedle!(S), weedle!(T)),
             nom::combinator::opt(weedle!(S)),
-        )(input)?;
-        Ok((
-            input,
-            Self {
-                list,
-                separator: PhantomData::default(),
-            },
-        ))
+        ))(input)?;
+        if let Some(trailing) = trailing {
+            separator.push(trailing)
+        }
+        Ok((input, Self { list, separator }))
     }
 
     fn write(&self) -> String {

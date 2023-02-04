@@ -153,7 +153,7 @@ where
     }
 }
 
-pub fn separated_list0_incl<I, O, O2, E, F, G>(
+pub fn separated_list_incl<const REQ1: bool, I, O, O2, E, F, G>(
     mut sep: G,
     mut f: F,
 ) -> impl FnMut(I) -> nom::IResult<I, (Vec<O>, Vec<O2>), E>
@@ -170,7 +170,13 @@ where
         let mut res_sep = Vec::new();
 
         match f.parse(i.clone()) {
-            Err(Err::Error(_)) => return Ok((i, (res, res_sep))),
+            Err(Err::Error(e)) => {
+                return if REQ1 {
+                    Err(Err::Error(e))
+                } else {
+                    Ok((i, (res, res_sep)))
+                }
+            }
             Err(e) => return Err(e),
             Ok((i1, o)) => {
                 res.push(o);
