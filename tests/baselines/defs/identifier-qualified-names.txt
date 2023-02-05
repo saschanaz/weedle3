@@ -1,299 +1,452 @@
-[
-    Typedef(
-        TypedefDefinition {
-            attributes: None,
-            typedef: Typedef,
-            type_: AttributedType {
+Parsed {
+    definitions: [
+        Typedef(
+            TypedefDefinition {
                 attributes: None,
-                type_: Single(
-                    Distinguishable(
-                        FloatingPoint(
-                            MayBeNull {
-                                type_: Float(
-                                    FloatType {
-                                        unrestricted: None,
-                                        float: Float,
-                                    },
-                                ),
-                                q_mark: None,
-                            },
+                typedef: Token {
+                    trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n  // Typedef identifier: \"number\"\n  // Qualified name:    \"::framework::number\"\n  ",
+                    value: Typedef,
+                },
+                type_: AttributedType {
+                    attributes: None,
+                    type_: Single(
+                        Distinguishable(
+                            FloatingPoint(
+                                MayBeNull {
+                                    type_: Float(
+                                        FloatType {
+                                            unrestricted: None,
+                                            float: Token {
+                                                trivia: " ",
+                                                value: Float,
+                                            },
+                                        },
+                                    ),
+                                    q_mark: None,
+                                },
+                            ),
                         ),
                     ),
-                ),
-            },
-            identifier: Identifier(
-                "number",
-            ),
-            semi_colon: SemiColon,
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "System",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Object(
-                                        MayBeNull {
-                                            type_: Object,
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "createObject",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            DOMString(
-                                                                MayBeNull {
-                                                                    type_: DOMString,
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "_interface",
-                                                ),
-                                                default: None,
-                                            },
-                                        ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "number",
                     ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: Some(
-                                Getter(
-                                    Getter,
-                                ),
-                            ),
-                            return_type: Single(
-                                Distinguishable(
-                                    DOMString(
-                                        MayBeNull {
-                                            type_: DOMString,
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: None,
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            DOMString(
-                                                                MayBeNull {
-                                                                    type_: DOMString,
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "keyName",
-                                                ),
-                                                default: None,
-                                            },
-                                        ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "TextField",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Attribute,
-                            type_: AttributedType {
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n  // Interface identifier: \"System\"\n  // Qualified name:       \"::framework::System\"\n  ",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "System",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
                                 attributes: None,
-                                type_: Single(
+                                modifier: None,
+                                return_type: Single(
                                     Distinguishable(
-                                        Boolean(
+                                        Object(
                                             MayBeNull {
-                                                type_: Boolean,
+                                                type_: Token {
+                                                    trivia: "\n\n    // Operation identifier:          \"createObject\"\n    // Operation argument identifier: \"interface\"\n    ",
+                                                    value: Object,
+                                                },
                                                 q_mark: None,
                                             },
                                         ),
                                     ),
                                 ),
-                            },
-                            identifier: Identifier(
-                                "_const",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Attribute,
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: DOMString,
-                                                q_mark: Some(
-                                                    QMark,
-                                                ),
-                                            },
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "createObject",
                                         ),
-                                    ),
+                                    },
                                 ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                DOMString(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: DOMString,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "_interface",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Identifier(
-                                "_value",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "FooEventTarget",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: Some(
+                                    Getter(
+                                        Token {
+                                            trivia: "\n\n    // Operation has no identifier; it declares a getter.\n    ",
+                                            value: Getter,
                                         },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "addEventListener",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "EventListener",
-                                                                    ),
-                                                                    q_mark: Some(
-                                                                        QMark,
-                                                                    ),
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
+                                return_type: Single(
+                                    Distinguishable(
+                                        DOMString(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: " ",
+                                                    value: DOMString,
                                                 },
-                                                identifier: Identifier(
-                                                    "callback",
-                                                ),
-                                                default: None,
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
+                                    ),
+                                ),
+                                identifier: None,
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: " ",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                DOMString(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: DOMString,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "keyName",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
                                 },
-                                close_paren: CloseParen,
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n  ",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n\n    // Interface identifier: \"TextField\"\n    // Qualified name:       \"::framework::gui::TextField\"\n    ",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "TextField",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n\n      // Attribute identifier: \"const\"\n      ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Boolean(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: Boolean,
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "_const",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n\n      // Attribute identifier: \"value\"\n      ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: DOMString,
+                                                    },
+                                                    q_mark: Some(
+                                                        Token {
+                                                            trivia: "",
+                                                            value: QMark,
+                                                        },
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "_value",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n    ",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "FooEventTarget",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  // Argument names allow some selected keywords\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "addEventListener",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "EventListener",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: Some(
+                                                                            Token {
+                                                                                trivia: "",
+                                                                                value: QMark,
+                                                                            },
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "callback",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+    ],
+    trailing_trivia: "\n",
+}

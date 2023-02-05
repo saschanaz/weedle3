@@ -32,6 +32,7 @@ use self::literal::StringLit;
 use self::mixin::MixinMembers;
 use self::namespace::NamespaceMembers;
 use self::types::{AttributedType, Type};
+use term::Token;
 use weedle_derive::Weedle;
 
 #[macro_use]
@@ -54,9 +55,23 @@ mod lexer;
 mod tokens;
 
 use lexer::lex;
-use tokens::Tokens;
+use tokens::LexedSlice;
 
 type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
+
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Parsed<'a> {
+    pub definitions: Definitions<'a>,
+    pub trailing_trivia: &'a str,
+}
+
+impl<'a> Parsed<'a> {
+    pub fn write(&self) -> String {
+        let mut result = self.definitions.write();
+        result += self.trailing_trivia;
+        result
+    }
+}
 
 /// A convenient parse function
 ///
@@ -73,51 +88,40 @@ type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(
-    input: &'_ str,
-) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
+pub fn parse(input: &'_ str) -> Result<Parsed<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
     let tokens = lex(input)?;
-    let (unread, (defs, _eof)) = nom::sequence::tuple((
+    let (unread, (definitions, eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
         contextful_cut("Unrecognized tokens", eat!(Eof)),
-    ))(Tokens(&tokens[..]))
+    ))(LexedSlice(&tokens[..]))
     .map_err(tokens::nom_error_into)?;
 
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
 
-    Ok(defs)
+    Ok(Parsed {
+        definitions,
+        trailing_trivia: eof.trivia,
+    })
 }
 
 pub trait Parse<'token>: Sized {
     fn parse_tokens<'slice>(
-        input: Tokens<'slice, 'token>,
-    ) -> VerboseResult<Tokens<'slice, 'token>, Self>;
+        input: LexedSlice<'slice, 'token>,
+    ) -> VerboseResult<LexedSlice<'slice, 'token>, Self>;
 
     fn parse(input: &'token str) -> VerboseResult<&'token str, Self> {
-        let (input, _) = whitespace::sp(input)?;
         let tokens = lex(input)?;
         let (unread, def) =
-            Self::parse_tokens(Tokens(&tokens[..])).map_err(tokens::nom_error_into)?;
+            Self::parse_tokens(LexedSlice(&tokens[..])).map_err(tokens::nom_error_into)?;
         let (unread, _) = whitespace::sp(unread.into())?;
         Ok((unread, def))
     }
+
+    fn write(&self) -> String;
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.
-///
-/// ### Example
-/// ```
-/// use weedle::{Definitions, Parse};
-///
-/// let (_, parsed) = Definitions::parse("
-///     interface Window {
-///         readonly attribute Storage sessionStorage;
-///     };
-/// ").unwrap();
-///
-/// println!("{:?}", parsed);
-/// ```
 ///
 /// It is recommended to use [`parse`](fn.parse.html) instead.
 pub type Definitions<'a> = Vec<Definition<'a>>;
@@ -129,13 +133,13 @@ pub struct CallbackDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub callback: term!(callback),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
     #[weedle(cut = "Unrecognized return type")]
     pub return_type: Type<'a>,
     #[weedle(cut = "Missing argument list")]
-    pub arguments: Parenthesized<ArgumentList<'a>>,
+    pub arguments: Parenthesized<'a, ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -148,8 +152,8 @@ pub struct CallbackInterfaceDefinition<'a> {
     pub callback: term!(callback),
     pub interface: term!(interface),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<CallbackInterfaceMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, CallbackInterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -161,9 +165,9 @@ pub struct InterfaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub interface: term!(interface),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<InterfaceMembers<'a>>,
+    pub members: Braced<'a, InterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -176,8 +180,8 @@ pub struct InterfaceMixinDefinition<'a> {
     pub interface: term!(interface),
     pub mixin: term!(mixin),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<MixinMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, MixinMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -189,8 +193,8 @@ pub struct NamespaceDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub namespace: term!(namespace),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<NamespaceMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, NamespaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -202,9 +206,9 @@ pub struct DictionaryDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub dictionary: term!(dictionary),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     pub inheritance: Option<Inheritance<'a>>,
-    pub members: Braced<DictionaryMembers<'a>>,
+    pub members: Braced<'a, DictionaryMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -217,8 +221,8 @@ pub struct PartialInterfaceDefinition<'a> {
     pub partial: term!(partial),
     pub interface: term!(interface),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<InterfaceMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, InterfaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -232,8 +236,8 @@ pub struct PartialInterfaceMixinDefinition<'a> {
     pub interface: term!(interface),
     pub mixin: term!(mixin),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<MixinMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, MixinMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -246,8 +250,8 @@ pub struct PartialDictionaryDefinition<'a> {
     pub partial: term!(partial),
     pub dictionary: term!(dictionary),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<DictionaryMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, DictionaryMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -260,8 +264,8 @@ pub struct PartialNamespaceDefinition<'a> {
     pub partial: term!(partial),
     pub namespace: term!(namespace),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub members: Braced<NamespaceMembers<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub members: Braced<'a, NamespaceMembers<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -273,8 +277,8 @@ pub struct EnumDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub enum_: term!(enum),
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
-    pub values: Braced<EnumValueList<'a>>,
+    pub identifier: Token<'a, Identifier<'a>>,
+    pub values: Braced<'a, EnumValueList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -288,7 +292,7 @@ pub struct TypedefDefinition<'a> {
     #[weedle(cut = "Unrecognized type")]
     pub type_: AttributedType<'a>,
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -298,9 +302,9 @@ pub struct TypedefDefinition<'a> {
 #[weedle(context)]
 pub struct IncludesStatementDefinition<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub lhs_identifier: Identifier<'a>,
+    pub lhs_identifier: Token<'a, Identifier<'a>>,
     pub includes: term!(includes),
-    pub rhs_identifier: Identifier<'a>,
+    pub rhs_identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -324,7 +328,7 @@ pub enum Definition<'a> {
 }
 
 /// Parses a non-empty enum value list
-pub type EnumValueList<'a> = PunctuatedNonEmpty<StringLit<'a>, term!(,)>;
+pub type EnumValueList<'a> = PunctuatedNonEmpty<Token<'a, StringLit<'a>>, term!(,)>;
 
 #[cfg(test)]
 mod test {
@@ -334,22 +338,22 @@ mod test {
         "";
         IncludesStatementDefinition;
         attributes.is_none();
-        lhs_identifier.0 == "first";
-        rhs_identifier.0 == "second";
+        lhs_identifier.value.0 == "first";
+        rhs_identifier.value.0 == "second";
     });
 
     test!(should_parse_typedef { "typedef short Short;" =>
         "";
         TypedefDefinition;
         attributes.is_none();
-        identifier.0 == "Short";
+        identifier.value.0 == "Short";
     });
 
-    test!(should_parse_enum { r#"enum name { "first", "second" }; "# =>
+    test!(should_parse_enum { r#"enum name { "first", "second" };"# =>
         "";
         EnumDefinition;
         attributes.is_none();
-        identifier.0 == "name";
+        identifier.value.0 == "name";
         values.body.list.len() == 2;
     });
 
@@ -357,7 +361,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.0 == "A";
+        identifier.value.0 == "A";
         inheritance.is_none();
         members.body.len() == 2;
     });
@@ -366,7 +370,7 @@ mod test {
         "";
         DictionaryDefinition;
         attributes.is_none();
-        identifier.0 == "C";
+        identifier.value.0 == "C";
         inheritance.is_some();
         members.body.len() == 2;
     });
@@ -381,7 +385,7 @@ mod test {
         "";
         PartialNamespaceDefinition;
         attributes.is_none();
-        identifier.0 == "VectorUtils";
+        identifier.value.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -389,7 +393,7 @@ mod test {
         "";
         PartialDictionaryDefinition;
         attributes.is_none();
-        identifier.0 == "C";
+        identifier.value.0 == "C";
         members.body.len() == 2;
     });
 
@@ -401,7 +405,7 @@ mod test {
         "";
         PartialInterfaceMixinDefinition;
         attributes.is_none();
-        identifier.0 == "WindowSessionStorage";
+        identifier.value.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -413,7 +417,7 @@ mod test {
         "";
         PartialInterfaceDefinition;
         attributes.is_none();
-        identifier.0 == "Window";
+        identifier.value.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -427,7 +431,7 @@ mod test {
         "";
         NamespaceDefinition;
         attributes.is_none();
-        identifier.0 == "VectorUtils";
+        identifier.value.0 == "VectorUtils";
         members.body.len() == 3;
     });
 
@@ -439,7 +443,7 @@ mod test {
         "";
         InterfaceMixinDefinition;
         attributes.is_none();
-        identifier.0 == "WindowSessionStorage";
+        identifier.value.0 == "WindowSessionStorage";
         members.body.len() == 1;
     });
 
@@ -451,7 +455,7 @@ mod test {
         "";
         InterfaceDefinition;
         attributes.is_none();
-        identifier.0 == "Window";
+        identifier.value.0 == "Window";
         members.body.len() == 1;
     });
 
@@ -465,7 +469,7 @@ mod test {
         "";
         CallbackInterfaceDefinition;
         attributes.is_none();
-        identifier.0 == "Options";
+        identifier.value.0 == "Options";
         members.body.len() == 3;
     });
 
@@ -479,7 +483,7 @@ mod test {
         "";
         CallbackDefinition;
         attributes.is_none();
-        identifier.0 == "AsyncOperationCallback";
+        identifier.value.0 == "AsyncOperationCallback";
         arguments.body.list.len() == 1;
     });
 

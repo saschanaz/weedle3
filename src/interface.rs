@@ -6,6 +6,7 @@ use crate::common::{Generics, Identifier, Parenthesized};
 use crate::members::{
     AttributeInterfaceMember, ConstMember, OperationInterfaceMember, RegularOperationMember,
 };
+use crate::term::Token;
 use crate::types::AttributedType;
 
 /// Parses interface members
@@ -17,7 +18,7 @@ pub type CallbackInterfaceMembers<'a> = Vec<CallbackInterfaceMember<'a>>;
 pub struct Inheritance<'a> {
     pub colon: term!(:),
     #[weedle(cut = "Missing name for inheritance")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
 }
 
 /// Parses `[attributes]? constructor(( args ));`
@@ -28,7 +29,7 @@ pub struct Inheritance<'a> {
 pub struct ConstructorInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub constructor: term!(constructor),
-    pub args: Parenthesized<ArgumentList<'a>>,
+    pub args: Parenthesized<'a, ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -38,7 +39,7 @@ pub struct ConstructorInterfaceMember<'a> {
 pub struct SingleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub iterable: term!(iterable),
-    pub generics: Generics<AttributedType<'a>>,
+    pub generics: Generics<'a, AttributedType<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -48,7 +49,7 @@ pub struct SingleTypedIterable<'a> {
 pub struct DoubleTypedIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub iterable: term!(iterable),
-    pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -66,8 +67,8 @@ pub enum IterableInterfaceMember<'a> {
 pub struct SingleTypedAsyncIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub async_iterable: (term!(async), term!(iterable)),
-    pub generics: Generics<AttributedType<'a>>,
-    pub args: Option<Parenthesized<ArgumentList<'a>>>,
+    pub generics: Generics<'a, AttributedType<'a>>,
+    pub args: Option<Parenthesized<'a, ArgumentList<'a>>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -77,8 +78,8 @@ pub struct SingleTypedAsyncIterable<'a> {
 pub struct DoubleTypedAsyncIterable<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub async_iterable: (term!(async), term!(iterable)),
-    pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
-    pub args: Option<Parenthesized<ArgumentList<'a>>>,
+    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub args: Option<Parenthesized<'a, ArgumentList<'a>>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -98,7 +99,7 @@ pub struct MaplikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: Option<term!(readonly)>,
     pub maplike: term!(maplike),
-    pub generics: Generics<(AttributedType<'a>, term!(,), AttributedType<'a>)>,
+    pub generics: Generics<'a, (AttributedType<'a>, term!(,), AttributedType<'a>)>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -109,7 +110,7 @@ pub struct SetlikeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub readonly: Option<term!(readonly)>,
     pub setlike: term!(setlike),
-    pub generics: Generics<AttributedType<'a>>,
+    pub generics: Generics<'a, AttributedType<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -148,7 +149,7 @@ pub enum CallbackInterfaceMember<'a> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::Parse;
+    use crate::{term::Token, Parse};
 
     test!(should_parse_stringifier_member { "stringifier;" =>
         "";
@@ -159,14 +160,14 @@ mod test {
         "";
         SetlikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(term!(readonly));
+        readonly == Some(Token::default());
     });
 
     test!(should_parse_maplike_interface_member { "readonly maplike<long, short>;" =>
         "";
         MaplikeInterfaceMember;
         attributes.is_none();
-        readonly == Some(term!(readonly));
+        readonly == Some(Token::default());
     });
 
     test!(should_parse_double_typed_iterable { "iterable<long, long>;" =>

@@ -5,7 +5,8 @@ use crate::{
     attribute::ExtendedAttributeList,
     common::{Identifier, Parenthesized},
     literal::ConstValue,
-    tokens::{contextful_cut, Tokens},
+    term::Token,
+    tokens::{contextful_cut, LexedSlice},
     types::{AttributedType, ConstType, Type},
     VerboseResult,
 };
@@ -19,7 +20,7 @@ pub struct ConstMember<'a> {
     #[weedle(cut = "Unrecognized const type")]
     pub const_type: ConstType<'a>,
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing equal sign")]
     pub assign: term!(=),
     #[weedle(cut = "Unrecognized const value")]
@@ -30,7 +31,7 @@ pub struct ConstMember<'a> {
 
 /// Parses `stringifier|inherit|static`
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum StringifierOrInheritOrStatic {
+pub enum StringifierOrInheritOrStatic<'a> {
     Stringifier(term!(stringifier)),
     #[weedle(post_check = "prevent_inherit_readonly")]
     Inherit(term!(inherit)),
@@ -38,8 +39,8 @@ pub enum StringifierOrInheritOrStatic {
 }
 
 fn prevent_inherit_readonly<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Inherited attributes cannot be read-only, as this form is only used to override the setter of the ancestor's attribute",
         nom::combinator::not(nom::combinator::peek(eat_key!(ReadOnly))),
@@ -47,23 +48,30 @@ fn prevent_inherit_readonly<'slice, 'a>(
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-struct AttributeName<'a>(&'a str);
+struct AttributeName<'a>(&'a str, &'a str);
 
 impl<'a> crate::Parse<'a> for AttributeName<'a> {
     fn parse_tokens<'slice>(
-        input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+        input: crate::tokens::LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
-            return Ok((tokens, AttributeName(result.0)));
+            return Ok((tokens, AttributeName(result.trivia, result.value.0)));
         }
         try_eat_keys!(AttributeName, input, Async, Required);
         nom::combinator::fail(input)
     }
+
+    fn write(&self) -> String {
+        unimplemented!()
+    }
 }
 
-impl<'a> From<AttributeName<'a>> for Identifier<'a> {
+impl<'a> From<AttributeName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: AttributeName<'a>) -> Self {
-        Self(value.0)
+        Self {
+            trivia: value.0,
+            value: Identifier(value.1),
+        }
     }
 }
 
@@ -72,12 +80,12 @@ impl<'a> From<AttributeName<'a>> for Identifier<'a> {
 #[weedle(context)]
 pub struct AttributeInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub modifier: Option<StringifierOrInheritOrStatic>,
+    pub modifier: Option<StringifierOrInheritOrStatic<'a>>,
     pub readonly: Option<term!(readonly)>,
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName", cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -92,7 +100,7 @@ pub struct AttributeMixinMember<'a> {
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName", cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -107,14 +115,14 @@ pub struct AttributeNamespaceMember<'a> {
     pub attribute: term!(attribute),
     pub type_: AttributedType<'a>,
     #[weedle(from = "AttributeName", cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
 
 fn prevent_writable_attribute<'slice, 'a>(
-    input: Tokens<'slice, 'a>,
-) -> VerboseResult<Tokens<'slice, 'a>, ()> {
+    input: LexedSlice<'slice, 'a>,
+) -> VerboseResult<LexedSlice<'slice, 'a>, ()> {
     contextful_cut(
         "Non-readonly attributes are not allowed in namespaces",
         nom::combinator::not(nom::combinator::peek(eat_key!(Attribute))),
@@ -123,7 +131,7 @@ fn prevent_writable_attribute<'slice, 'a>(
 
 /// Parses one of the special keyword `getter|setter|deleter` or `static`.
 #[derive(Weedle, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Modifier {
+pub enum Modifier<'a> {
     Getter(term!(getter)),
     Setter(term!(setter)),
     Deleter(term!(deleter)),
@@ -131,23 +139,30 @@ pub enum Modifier {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-struct OperationName<'a>(&'a str);
+struct OperationName<'a>(&'a str, &'a str);
 
 impl<'a> crate::Parse<'a> for OperationName<'a> {
     fn parse_tokens<'slice>(
-        input: crate::tokens::Tokens<'slice, 'a>,
-    ) -> VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+        input: crate::tokens::LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
-            return Ok((tokens, OperationName(result.0)));
+            return Ok((tokens, OperationName(result.trivia, result.value.0)));
         }
         try_eat_keys!(OperationName, input, Includes);
         nom::combinator::fail(input)
     }
+
+    fn write(&self) -> String {
+        unimplemented!()
+    }
 }
 
-impl<'a> From<OperationName<'a>> for Identifier<'a> {
+impl<'a> From<OperationName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: OperationName<'a>) -> Self {
-        Self(value.0)
+        Self {
+            trivia: value.0,
+            value: Identifier(value.1),
+        }
     }
 }
 
@@ -158,11 +173,11 @@ impl<'a> From<OperationName<'a>> for Identifier<'a> {
 #[weedle(context)]
 pub struct OperationInterfaceMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
-    pub modifier: Option<Modifier>,
+    pub modifier: Option<Modifier<'a>>,
     pub return_type: Type<'a>,
     #[weedle(from = "OperationName", opt)]
-    pub identifier: Option<Identifier<'a>>,
-    pub args: Parenthesized<ArgumentList<'a>>,
+    pub identifier: Option<Token<'a, Identifier<'a>>>,
+    pub args: Parenthesized<'a, ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -176,8 +191,8 @@ pub struct RegularOperationMember<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub return_type: Type<'a>,
     #[weedle(from = "OperationName", opt)]
-    pub identifier: Option<Identifier<'a>>,
-    pub args: Parenthesized<ArgumentList<'a>>,
+    pub identifier: Option<Token<'a, Identifier<'a>>>,
+    pub args: Parenthesized<'a, ArgumentList<'a>>,
     #[weedle(cut = "Missing semicolon")]
     pub semi_colon: term!(;),
 }
@@ -191,7 +206,7 @@ mod test {
         "";
         ConstMember;
         attributes.is_none();
-        identifier.0 == "name";
+        identifier.value.0 == "name";
     });
 
     test!(should_parse_stringifier_or_inherit_or_static { "inherit" =>
@@ -203,8 +218,8 @@ mod test {
         "";
         AttributeInterfaceMember;
         attributes.is_none();
-        modifier == Some(StringifierOrInheritOrStatic::Static(term!(static)));
-        identifier.0 == "width";
+        modifier == Some(StringifierOrInheritOrStatic::Static(Token::default()));
+        identifier.value.0 == "width";
     });
 
     test!(should_parse_attribute_mixin_member { "stringifier readonly attribute short name;" =>
@@ -213,14 +228,14 @@ mod test {
         attributes.is_none();
         stringifier.is_some();
         readonly.is_some();
-        identifier.0 == "name";
+        identifier.value.0 == "name";
     });
 
     test!(should_parse_attribute_namespace_member { "readonly attribute short name;" =>
         "";
         AttributeNamespaceMember;
         attributes.is_none();
-        identifier.0 == "name";
+        identifier.value.0 == "name";
     });
 
     test!(should_parse_modifier { "static" =>

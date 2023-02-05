@@ -1,854 +1,1202 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: Some(
-                Bracketed {
-                    open_bracket: OpenBracket,
-                    body: Punctuated {
-                        list: [
-                            Ident(
-                                ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
-                                    assign: Assign,
-                                    rhs: Identifier(
-                                        "Window",
-                                    ),
-                                },
-                            ),
-                        ],
-                        separator: Comma,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: Some(
+                    Bracketed {
+                        open_bracket: Token {
+                            trivia: "",
+                            value: OpenBracket,
+                        },
+                        body: Punctuated {
+                            list: [
+                                Ident(
+                                    ExtendedAttributeIdent {
+                                        lhs_identifier: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Exposed",
+                                            ),
+                                        },
+                                        assign: Token {
+                                            trivia: "",
+                                            value: Assign,
+                                        },
+                                        rhs: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Window",
+                                            ),
+                                        },
+                                    },
+                                ),
+                            ],
+                            separator: [],
+                        },
+                        close_bracket: Token {
+                            trivia: "",
+                            value: CloseBracket,
+                        },
                     },
-                    close_bracket: CloseBracket,
+                ),
+                interface: Token {
+                    trivia: "\n",
+                    value: Interface,
                 },
-            ),
-            interface: Interface,
-            identifier: Identifier(
-                "Buffer",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            DataView(
-                                                                MayBeNull {
-                                                                    type_: DataView,
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Buffer",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
                                                 },
-                                                identifier: Identifier(
-                                                    "view",
-                                                ),
-                                                default: None,
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Int8Array(
-                                                                MayBeNull {
-                                                                    type_: Int8Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                DataView(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: DataView,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "view",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Int16Array(
-                                                                MayBeNull {
-                                                                    type_: Int16Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Int8Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Int8Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Int32Array(
-                                                                MayBeNull {
-                                                                    type_: Int32Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Int16Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Int16Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Uint8Array(
-                                                                MayBeNull {
-                                                                    type_: Uint8Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Int32Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Int32Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Uint16Array(
-                                                                MayBeNull {
-                                                                    type_: Uint16Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Uint8Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Uint8Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Uint32Array(
-                                                                MayBeNull {
-                                                                    type_: Uint32Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Uint16Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Uint16Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Uint8ClampedArray(
-                                                                MayBeNull {
-                                                                    type_: Uint8ClampedArray,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Uint32Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Uint32Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            BigInt64Array(
-                                                                MayBeNull {
-                                                                    type_: BigInt64Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Uint8ClampedArray(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Uint8ClampedArray,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            BigUint64Array(
-                                                                MayBeNull {
-                                                                    type_: BigUint64Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                BigInt64Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: BigInt64Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Float32Array(
-                                                                MayBeNull {
-                                                                    type_: Float32Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                BigUint64Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: BigUint64Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "add",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Float64Array(
-                                                                MayBeNull {
-                                                                    type_: Float64Array,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Float32Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Float32Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "array",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "addAny",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "add",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "BufferSource",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Float64Array(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Float64Array,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "array",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "source",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "addBuffer",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "addAny",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            ArrayBuffer(
-                                                                MayBeNull {
-                                                                    type_: ArrayBuffer,
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "BufferSource",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "source",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "buffer",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
                                     ),
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "addView",
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "addBuffer",
+                                        ),
+                                    },
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
                                                     attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "ArrayBufferView",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                ArrayBuffer(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: ArrayBuffer,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "buffer",
+                                                        ),
+                                                    },
+                                                    default: None,
                                                 },
-                                                identifier: Identifier(
-                                                    "view",
-                                                ),
-                                                default: None,
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "addView",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "ArrayBufferView",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "view",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
                                 },
-                                close_paren: CloseParen,
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

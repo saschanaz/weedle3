@@ -1,8 +1,8 @@
 macro_rules! parser {
     ($parse:expr) => {
         fn parse_tokens<'slice>(
-            input: $crate::tokens::Tokens<'slice, 'a>,
-        ) -> $crate::VerboseResult<$crate::tokens::Tokens<'slice, 'a>, Self> {
+            input: $crate::tokens::LexedSlice<'slice, 'a>,
+        ) -> $crate::VerboseResult<$crate::tokens::LexedSlice<'slice, 'a>, Self> {
             $parse(input)
         }
     };
@@ -35,13 +35,26 @@ macro_rules! alt {
     };
 }
 
+#[cfg(test)]
+macro_rules! test_match {
+    ($name:ident { $input:literal => $rem:expr; $typ:ty => $match:pat_param $(if $guard:expr)? }) => {
+        #[test]
+        fn $name() {
+            let (unread, result) = <$typ>::lex($input).unwrap();
+
+            assert_eq!(unread, $rem);
+            assert!(matches!(result, $match $(if $guard )?));
+        }
+    };
+}
+
 // XXX: Working around the lambda function limitation about lifetimes
 // https://github.com/rust-lang/rust/issues/58052
 pub fn annotate<'slice, 'token, F, R>(f: F) -> F
 where
     F: Fn(
-        crate::tokens::Tokens<'slice, 'token>,
-    ) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'token>, R>,
+        crate::tokens::LexedSlice<'slice, 'token>,
+    ) -> crate::VerboseResult<crate::tokens::LexedSlice<'slice, 'token>, R>,
     'token: 'slice,
 {
     f
@@ -50,13 +63,16 @@ where
 macro_rules! eat {
     ($variant:ident) => {
         $crate::macros::annotate(
-            |input: $crate::tokens::Tokens| -> $crate::VerboseResult<$crate::tokens::Tokens, _> {
+            |input: $crate::tokens::LexedSlice| -> $crate::VerboseResult<$crate::tokens::LexedSlice, _> {
                 use nom::{InputIter, Slice};
                 match input.iter_elements().next() {
-                    Some($crate::lexer::Token {
+                    Some($crate::lexer::Lexed {
+                        trivia,
                         value: $crate::lexer::Terminal::$variant(variant),
-                        trivia: _,
-                    }) => Ok((input.slice(1..), variant)),
+                    }) => Ok((
+                        input.slice(1..),
+                        $crate::term::Token { trivia, value: variant },
+                    )),
                     _ => nom::combinator::fail(input),
                 }
             },
@@ -67,15 +83,18 @@ macro_rules! eat {
 macro_rules! eat_key {
     ($variant:ident) => {
         $crate::macros::annotate(
-            |input: $crate::tokens::Tokens| -> $crate::VerboseResult<$crate::tokens::Tokens, _> {
+            |input: $crate::tokens::LexedSlice| -> $crate::VerboseResult<$crate::tokens::LexedSlice, _> {
                 use nom::{InputIter, Slice};
                 use $crate::lexer::Terminal;
                 use $crate::term::Keyword;
                 match input.iter_elements().next() {
-                    Some($crate::lexer::Token {
+                    Some($crate::lexer::Lexed {
+                        trivia,
                         value: Terminal::Keyword(Keyword::$variant(variant)),
-                        trivia: _,
-                    }) => Ok((input.slice(1..), variant)),
+                    }) => Ok((
+                        input.slice(1..),
+                        $crate::term::Token { trivia, value: variant },
+                    )),
                     _ => nom::combinator::fail(input),
                 }
             },
@@ -87,7 +106,7 @@ macro_rules! try_eat_keys {
     ($typ:ident, $input:ident, $($variant:ident),+) => {
         $(
             if let Ok((tokens, result)) = eat_key!($variant)($input) {
-                return Ok((tokens, $typ(result.value())));
+                return Ok((tokens, $typ(result.trivia, result.value.to_str())));
             }
         )+
     };

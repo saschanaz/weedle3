@@ -1,71 +1,107 @@
-[
-    Typedef(
-        TypedefDefinition {
-            attributes: None,
-            typedef: Typedef,
-            type_: AttributedType {
+Parsed {
+    definitions: [
+        Typedef(
+            TypedefDefinition {
                 attributes: None,
-                type_: Single(
-                    Distinguishable(
-                        Identifier(
-                            MayBeNull {
-                                type_: Identifier(
-                                    "_Type",
-                                ),
-                                q_mark: None,
-                            },
+                typedef: Token {
+                    trivia: "",
+                    value: Typedef,
+                },
+                type_: AttributedType {
+                    attributes: None,
+                    type_: Single(
+                        Distinguishable(
+                            Identifier(
+                                MayBeNull {
+                                    type_: Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "_Type",
+                                        ),
+                                    },
+                                    q_mark: None,
+                                },
+                            ),
                         ),
                     ),
-                ),
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "EscapedType",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            identifier: Identifier(
-                "EscapedType",
-            ),
-            semi_colon: SemiColon,
-        },
-    ),
-    Typedef(
-        TypedefDefinition {
-            attributes: None,
-            typedef: Typedef,
-            type_: AttributedType {
+        ),
+        Typedef(
+            TypedefDefinition {
                 attributes: None,
-                type_: Single(
-                    Distinguishable(
-                        Sequence(
-                            MayBeNull {
-                                type_: SequenceType {
-                                    sequence: Sequence,
-                                    generics: Generics {
-                                        open_angle: LessThan,
-                                        body: AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    Identifier(
-                                                        MayBeNull {
-                                                            type_: Identifier(
-                                                                "_Type",
-                                                            ),
-                                                            q_mark: None,
-                                                        },
+                typedef: Token {
+                    trivia: "\n",
+                    value: Typedef,
+                },
+                type_: AttributedType {
+                    attributes: None,
+                    type_: Single(
+                        Distinguishable(
+                            Sequence(
+                                MayBeNull {
+                                    type_: SequenceType {
+                                        sequence: Token {
+                                            trivia: " ",
+                                            value: Sequence,
+                                        },
+                                        generics: Generics {
+                                            open_angle: Token {
+                                                trivia: "",
+                                                value: LessThan,
+                                            },
+                                            body: AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        Identifier(
+                                                            MayBeNull {
+                                                                type_: Token {
+                                                                    trivia: "",
+                                                                    value: Identifier(
+                                                                        "_Type",
+                                                                    ),
+                                                                },
+                                                                q_mark: None,
+                                                            },
+                                                        ),
                                                     ),
                                                 ),
-                                            ),
+                                            },
+                                            close_angle: Token {
+                                                trivia: "",
+                                                value: GreaterThan,
+                                            },
                                         },
-                                        close_angle: GreaterThan,
                                     },
+                                    q_mark: None,
                                 },
-                                q_mark: None,
-                            },
+                            ),
                         ),
                     ),
-                ),
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "EscapedSequence",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            identifier: Identifier(
-                "EscapedSequence",
-            ),
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

@@ -1,146 +1,239 @@
-[
-    Dictionary(
-        DictionaryDefinition {
-            attributes: None,
-            dictionary: Dictionary,
-            identifier: Identifier(
-                "PaintOptions",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                DOMString(
-                                    MayBeNull {
-                                        type_: DOMString,
-                                        q_mark: Some(
-                                            QMark,
-                                        ),
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "fillPattern",
-                        ),
-                        default: Some(
-                            Default {
-                                assign: Assign,
-                                value: String(
-                                    StringLit(
-                                        "black",
-                                    ),
-                                ),
-                            },
-                        ),
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                DOMString(
-                                    MayBeNull {
-                                        type_: DOMString,
-                                        q_mark: Some(
-                                            QMark,
-                                        ),
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "strokePattern",
-                        ),
-                        default: Some(
-                            Default {
-                                assign: Assign,
-                                value: Null(
-                                    Null,
-                                ),
-                            },
-                        ),
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Identifier(
-                                    MayBeNull {
-                                        type_: Identifier(
-                                            "Point",
-                                        ),
-                                        q_mark: None,
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "position",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
-                    },
-                ],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-    Dictionary(
-        DictionaryDefinition {
-            attributes: None,
-            dictionary: Dictionary,
-            identifier: Identifier(
-                "WetPaintOptions",
-            ),
-            inheritance: Some(
-                Inheritance {
-                    colon: Colon,
-                    identifier: Identifier(
+Parsed {
+    definitions: [
+        Dictionary(
+            DictionaryDefinition {
+                attributes: None,
+                dictionary: Token {
+                    trivia: "",
+                    value: Dictionary,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
                         "PaintOptions",
                     ),
                 },
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                FloatingPoint(
-                                    MayBeNull {
-                                        type_: Float(
-                                            FloatType {
-                                                unrestricted: None,
-                                                float: Float,
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    DOMString(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: DOMString,
                                             },
-                                        ),
-                                        q_mark: None,
-                                    },
+                                            q_mark: Some(
+                                                Token {
+                                                    trivia: "",
+                                                    value: QMark,
+                                                },
+                                            ),
+                                        },
+                                    ),
                                 ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "hydrometry",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "fillPattern",
+                                ),
+                            },
+                            default: Some(
+                                Default {
+                                    assign: Token {
+                                        trivia: " ",
+                                        value: Assign,
+                                    },
+                                    value: String(
+                                        Token {
+                                            trivia: " ",
+                                            value: StringLit(
+                                                "black",
+                                            ),
+                                        },
+                                    ),
+                                },
+                            ),
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    DOMString(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: DOMString,
+                                            },
+                                            q_mark: Some(
+                                                Token {
+                                                    trivia: "",
+                                                    value: QMark,
+                                                },
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "strokePattern",
+                                ),
+                            },
+                            default: Some(
+                                Default {
+                                    assign: Token {
+                                        trivia: " ",
+                                        value: Assign,
+                                    },
+                                    value: Null(
+                                        Token {
+                                            trivia: " ",
+                                            value: Null,
+                                        },
+                                    ),
+                                },
+                            ),
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    Identifier(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: Identifier(
+                                                    "Point",
+                                                ),
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "position",
+                                ),
+                            },
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
                     },
-                ],
-                close_brace: CloseBrace,
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+        Dictionary(
+            DictionaryDefinition {
+                attributes: None,
+                dictionary: Token {
+                    trivia: "\n\n",
+                    value: Dictionary,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "WetPaintOptions",
+                    ),
+                },
+                inheritance: Some(
+                    Inheritance {
+                        colon: Token {
+                            trivia: " ",
+                            value: Colon,
+                        },
+                        identifier: Token {
+                            trivia: " ",
+                            value: Identifier(
+                                "PaintOptions",
+                            ),
+                        },
+                    },
+                ),
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    FloatingPoint(
+                                        MayBeNull {
+                                            type_: Float(
+                                                FloatType {
+                                                    unrestricted: None,
+                                                    float: Token {
+                                                        trivia: "\n  ",
+                                                        value: Float,
+                                                    },
+                                                },
+                                            ),
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "hydrometry",
+                                ),
+                            },
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+    ],
+    trailing_trivia: "",
+}

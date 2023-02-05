@@ -1,37 +1,70 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: Some(
-                Bracketed {
-                    open_bracket: OpenBracket,
-                    body: Punctuated {
-                        list: [
-                            Wildcard(
-                                ExtendedAttributeWildcard {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
-                                    assign: Assign,
-                                    wildcard: Wildcard,
-                                },
-                            ),
-                        ],
-                        separator: Comma,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: Some(
+                    Bracketed {
+                        open_bracket: Token {
+                            trivia: "",
+                            value: OpenBracket,
+                        },
+                        body: Punctuated {
+                            list: [
+                                Wildcard(
+                                    ExtendedAttributeWildcard {
+                                        lhs_identifier: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Exposed",
+                                            ),
+                                        },
+                                        assign: Token {
+                                            trivia: "",
+                                            value: Assign,
+                                        },
+                                        wildcard: Token {
+                                            trivia: "",
+                                            value: Wildcard,
+                                        },
+                                    },
+                                ),
+                            ],
+                            separator: [],
+                        },
+                        close_bracket: Token {
+                            trivia: "",
+                            value: CloseBracket,
+                        },
                     },
-                    close_bracket: CloseBracket,
+                ),
+                interface: Token {
+                    trivia: "\n",
+                    value: Interface,
                 },
-            ),
-            interface: Interface,
-            identifier: Identifier(
-                "X",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [],
-                close_brace: CloseBrace,
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "X",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

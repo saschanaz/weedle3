@@ -2,6 +2,8 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier};
+use crate::term;
+use crate::term::Token;
 use crate::types::Type;
 
 /// Parses dictionary members
@@ -15,7 +17,7 @@ pub struct DictionaryMember<'a> {
     pub required: Option<term!(required)>,
     pub type_: Type<'a>,
     #[weedle(cut = "Missing name")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cond = "required.is_none()")]
     pub default: Option<Default<'a>>,
     #[weedle(cut = "Missing semicolon")]
@@ -32,7 +34,7 @@ mod test {
         DictionaryMember;
         attributes.is_none();
         required.is_some();
-        identifier.0 == "num";
+        identifier.value.0 == "num";
         default.is_none();
     });
 
@@ -41,7 +43,7 @@ mod test {
         DictionaryMember;
         attributes.is_none();
         required.is_none();
-        identifier.0 == "num";
+        identifier.value.0 == "num";
         default.is_some();
     });
 }

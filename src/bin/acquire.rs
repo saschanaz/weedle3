@@ -6,6 +6,7 @@ use std::{
 };
 
 use nom::error::{convert_error, VerboseError};
+use weedle::Parsed;
 
 fn convert_err(content: &str, err: nom::Err<VerboseError<&str>>) -> String {
     use nom::Err::*;
@@ -17,7 +18,7 @@ fn convert_err(content: &str, err: nom::Err<VerboseError<&str>>) -> String {
 
 fn iterate<F>(path: &str, func: F) -> std::io::Result<()>
 where
-    F: Fn(&DirEntry, Result<Vec<weedle::Definition>, String>) -> std::io::Result<()>,
+    F: Fn(&DirEntry, Result<Parsed, String>) -> std::io::Result<()>,
 {
     let read_dir = std::fs::read_dir(Path::new(env!("CARGO_MANIFEST_DIR")).join(path)).unwrap();
 

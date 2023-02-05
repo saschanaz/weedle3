@@ -1,273 +1,429 @@
-[
-    Dictionary(
-        DictionaryDefinition {
-            attributes: None,
-            dictionary: Dictionary,
-            identifier: Identifier(
-                "PaintOptions",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                DOMString(
-                                    MayBeNull {
-                                        type_: DOMString,
-                                        q_mark: Some(
-                                            QMark,
-                                        ),
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "fillPattern",
-                        ),
-                        default: Some(
-                            Default {
-                                assign: Assign,
-                                value: String(
-                                    StringLit(
-                                        "black",
+Parsed {
+    definitions: [
+        Dictionary(
+            DictionaryDefinition {
+                attributes: None,
+                dictionary: Token {
+                    trivia: "// Extracted from Web IDL editors draft May 31 2011\n",
+                    value: Dictionary,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "PaintOptions",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    DOMString(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: DOMString,
+                                            },
+                                            q_mark: Some(
+                                                Token {
+                                                    trivia: "",
+                                                    value: QMark,
+                                                },
+                                            ),
+                                        },
                                     ),
                                 ),
-                            },
-                        ),
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                DOMString(
-                                    MayBeNull {
-                                        type_: DOMString,
-                                        q_mark: Some(
-                                            QMark,
-                                        ),
-                                    },
-                                ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "strokePattern",
-                        ),
-                        default: Some(
-                            Default {
-                                assign: Assign,
-                                value: Null(
-                                    Null,
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "fillPattern",
                                 ),
                             },
-                        ),
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Identifier(
-                                    MayBeNull {
-                                        type_: Identifier(
-                                            "Point",
-                                        ),
-                                        q_mark: None,
+                            default: Some(
+                                Default {
+                                    assign: Token {
+                                        trivia: " ",
+                                        value: Assign,
                                     },
+                                    value: String(
+                                        Token {
+                                            trivia: " ",
+                                            value: StringLit(
+                                                "black",
+                                            ),
+                                        },
+                                    ),
+                                },
+                            ),
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    DOMString(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: DOMString,
+                                            },
+                                            q_mark: Some(
+                                                Token {
+                                                    trivia: "",
+                                                    value: QMark,
+                                                },
+                                            ),
+                                        },
+                                    ),
                                 ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "position",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Sequence(
-                                    MayBeNull {
-                                        type_: SequenceType {
-                                            sequence: Sequence,
-                                            generics: Generics {
-                                                open_angle: LessThan,
-                                                body: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Integer(
-                                                                MayBeNull {
-                                                                    type_: Long(
-                                                                        LongType {
-                                                                            unsigned: None,
-                                                                            long: Long,
-                                                                        },
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "strokePattern",
+                                ),
+                            },
+                            default: Some(
+                                Default {
+                                    assign: Token {
+                                        trivia: " ",
+                                        value: Assign,
+                                    },
+                                    value: Null(
+                                        Token {
+                                            trivia: " ",
+                                            value: Null,
+                                        },
+                                    ),
+                                },
+                            ),
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    Identifier(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: Identifier(
+                                                    "Point",
+                                                ),
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "position",
+                                ),
+                            },
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    Sequence(
+                                        MayBeNull {
+                                            type_: SequenceType {
+                                                sequence: Token {
+                                                    trivia: "\n  // https://heycam.github.io/webidl/#dfn-optional-argument-default-value allows sequences to default to \"[]\".\n  ",
+                                                    value: Sequence,
+                                                },
+                                                generics: Generics {
+                                                    open_angle: Token {
+                                                        trivia: "",
+                                                        value: LessThan,
+                                                    },
+                                                    body: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Integer(
+                                                                    MayBeNull {
+                                                                        type_: Long(
+                                                                            LongType {
+                                                                                unsigned: None,
+                                                                                long: Token {
+                                                                                    trivia: "",
+                                                                                    value: Long,
+                                                                                },
+                                                                            },
+                                                                        ),
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
                                                             ),
                                                         ),
-                                                    ),
+                                                    },
+                                                    close_angle: Token {
+                                                        trivia: "",
+                                                        value: GreaterThan,
+                                                    },
                                                 },
-                                                close_angle: GreaterThan,
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                ),
+                            ),
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "seq",
+                                ),
+                            },
+                            default: Some(
+                                Default {
+                                    assign: Token {
+                                        trivia: " ",
+                                        value: Assign,
+                                    },
+                                    value: EmptyArray(
+                                        EmptyArrayLit {
+                                            open_bracket: Token {
+                                                trivia: " ",
+                                                value: OpenBracket,
+                                            },
+                                            close_bracket: Token {
+                                                trivia: "",
+                                                value: CloseBracket,
                                             },
                                         },
-                                        q_mark: None,
-                                    },
+                                    ),
+                                },
+                            ),
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: Some(
+                                Token {
+                                    trivia: "\n  // https://heycam.github.io/webidl/#required-dictionary-member\n  ",
+                                    value: Required,
+                                },
+                            ),
+                            type_: Single(
+                                Distinguishable(
+                                    Integer(
+                                        MayBeNull {
+                                            type_: Long(
+                                                LongType {
+                                                    unsigned: None,
+                                                    long: Token {
+                                                        trivia: " ",
+                                                        value: Long,
+                                                    },
+                                                },
+                                            ),
+                                            q_mark: None,
+                                        },
+                                    ),
                                 ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "seq",
-                        ),
-                        default: Some(
-                            Default {
-                                assign: Assign,
-                                value: EmptyArray(
-                                    EmptyArrayLit {
-                                        open_bracket: OpenBracket,
-                                        close_bracket: CloseBracket,
-                                    },
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "reqSeq",
                                 ),
                             },
-                        ),
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: Some(
-                            Required,
-                        ),
-                        type_: Single(
-                            Distinguishable(
-                                Integer(
-                                    MayBeNull {
-                                        type_: Long(
-                                            LongType {
-                                                unsigned: None,
-                                                long: Long,
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    Identifier(
+                                        MayBeNull {
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: Identifier(
+                                                    "Dictionary",
+                                                ),
                                             },
-                                        ),
-                                        q_mark: None,
-                                    },
+                                            q_mark: None,
+                                        },
+                                    ),
                                 ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "reqSeq",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Identifier(
-                                    MayBeNull {
-                                        type_: Identifier(
-                                            "Dictionary",
-                                        ),
-                                        q_mark: None,
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "dict",
-                        ),
-                        default: Some(
-                            Default {
-                                assign: Assign,
-                                value: EmptyDictionary(
-                                    EmptyDictionaryLit {
-                                        open_brace: OpenBrace,
-                                        close_brace: CloseBrace,
-                                    },
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "dict",
                                 ),
                             },
-                        ),
-                        semi_colon: SemiColon,
-                    },
-                ],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-    PartialDictionary(
-        PartialDictionaryDefinition {
-            attributes: None,
-            partial: Partial,
-            dictionary: Dictionary,
-            identifier: Identifier(
-                "_A",
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Integer(
-                                    MayBeNull {
-                                        type_: Long(
-                                            LongType {
-                                                unsigned: None,
-                                                long: Long,
-                                            },
-                                        ),
-                                        q_mark: None,
+                            default: Some(
+                                Default {
+                                    assign: Token {
+                                        trivia: " ",
+                                        value: Assign,
                                     },
+                                    value: EmptyDictionary(
+                                        EmptyDictionaryLit {
+                                            open_brace: Token {
+                                                trivia: " ",
+                                                value: OpenBrace,
+                                            },
+                                            close_brace: Token {
+                                                trivia: "",
+                                                value: CloseBrace,
+                                            },
+                                        },
+                                    ),
+                                },
+                            ),
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        PartialDictionary(
+            PartialDictionaryDefinition {
+                attributes: None,
+                partial: Token {
+                    trivia: "\n\n",
+                    value: Partial,
+                },
+                dictionary: Token {
+                    trivia: " ",
+                    value: Dictionary,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_A",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    Integer(
+                                        MayBeNull {
+                                            type_: Long(
+                                                LongType {
+                                                    unsigned: None,
+                                                    long: Token {
+                                                        trivia: "\n  ",
+                                                        value: Long,
+                                                    },
+                                                },
+                                            ),
+                                            q_mark: None,
+                                        },
+                                    ),
                                 ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "h",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Integer(
-                                    MayBeNull {
-                                        type_: Long(
-                                            LongType {
-                                                unsigned: None,
-                                                long: Long,
-                                            },
-                                        ),
-                                        q_mark: None,
-                                    },
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "h",
+                                ),
+                            },
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                        DictionaryMember {
+                            attributes: None,
+                            required: None,
+                            type_: Single(
+                                Distinguishable(
+                                    Integer(
+                                        MayBeNull {
+                                            type_: Long(
+                                                LongType {
+                                                    unsigned: None,
+                                                    long: Token {
+                                                        trivia: "\n  ",
+                                                        value: Long,
+                                                    },
+                                                },
+                                            ),
+                                            q_mark: None,
+                                        },
+                                    ),
                                 ),
                             ),
-                        ),
-                        identifier: Identifier(
-                            "d",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "d",
+                                ),
+                            },
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
                     },
-                ],
-                close_brace: CloseBrace,
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

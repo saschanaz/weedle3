@@ -1,38 +1,74 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "_Iroha",
-            ),
-            inheritance: Some(
-                Inheritance {
-                    colon: Colon,
-                    identifier: Identifier(
-                        "_Magic",
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_Iroha",
                     ),
                 },
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [],
-                close_brace: CloseBrace,
+                inheritance: Some(
+                    Inheritance {
+                        colon: Token {
+                            trivia: " ",
+                            value: Colon,
+                        },
+                        identifier: Token {
+                            trivia: " ",
+                            value: Identifier(
+                                "_Magic",
+                            ),
+                        },
+                    },
+                ),
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-    IncludesStatement(
-        IncludesStatementDefinition {
-            attributes: None,
-            lhs_identifier: Identifier(
-                "_Iroha",
-            ),
-            includes: Includes,
-            rhs_identifier: Identifier(
-                "_Color",
-            ),
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+        IncludesStatement(
+            IncludesStatementDefinition {
+                attributes: None,
+                lhs_identifier: Token {
+                    trivia: "\n",
+                    value: Identifier(
+                        "_Iroha",
+                    ),
+                },
+                includes: Token {
+                    trivia: " ",
+                    value: Includes,
+                },
+                rhs_identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_Color",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+    ],
+    trailing_trivia: "\n",
+}

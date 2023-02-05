@@ -1,262 +1,405 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: Some(
-                Bracketed {
-                    open_bracket: OpenBracket,
-                    body: Punctuated {
-                        list: [
-                            Ident(
-                                ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "Exposed",
-                                    ),
-                                    assign: Assign,
-                                    rhs: Identifier(
-                                        "Window",
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: Some(
+                    Bracketed {
+                        open_bracket: Token {
+                            trivia: "",
+                            value: OpenBracket,
+                        },
+                        body: Punctuated {
+                            list: [
+                                Ident(
+                                    ExtendedAttributeIdent {
+                                        lhs_identifier: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Exposed",
+                                            ),
+                                        },
+                                        assign: Token {
+                                            trivia: "",
+                                            value: Assign,
+                                        },
+                                        rhs: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Window",
+                                            ),
+                                        },
+                                    },
+                                ),
+                            ],
+                            separator: [],
+                        },
+                        close_bracket: Token {
+                            trivia: "",
+                            value: CloseBracket,
+                        },
+                    },
+                ),
+                interface: Token {
+                    trivia: "\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Interface",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Bigint(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: Bigint,
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
                                     ),
                                 },
-                            ),
-                        ],
-                        separator: Comma,
-                    },
-                    close_bracket: CloseBracket,
-                },
-            ),
-            interface: Interface,
-            identifier: Identifier(
-                "Interface",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Attribute,
-                            type_: AttributedType {
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "_bigint",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
                                 attributes: None,
-                                type_: Single(
+                                modifier: None,
+                                return_type: Single(
                                     Distinguishable(
                                         Bigint(
                                             MayBeNull {
-                                                type_: Bigint,
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Bigint,
+                                                },
                                                 q_mark: None,
                                             },
                                         ),
                                     ),
                                 ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "getBig",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Identifier(
-                                "_bigint",
-                            ),
-                            semi_colon: SemiColon,
-                        },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Identifier(
+                                                        "void",
+                                                    ),
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "setBig",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Bigint(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Bigint,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "big",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Dictionary(
+            DictionaryDefinition {
+                attributes: None,
+                dictionary: Token {
+                    trivia: "\n\n",
+                    value: Dictionary,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Dictionary",
                     ),
-                    Operation(
-                        OperationInterfaceMember {
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        DictionaryMember {
                             attributes: None,
-                            modifier: None,
-                            return_type: Single(
+                            required: None,
+                            type_: Single(
                                 Distinguishable(
                                     Bigint(
                                         MayBeNull {
-                                            type_: Bigint,
+                                            type_: Token {
+                                                trivia: "\n  ",
+                                                value: Bigint,
+                                            },
                                             q_mark: None,
                                         },
                                     ),
                                 ),
                             ),
-                            identifier: Some(
-                                Identifier(
-                                    "getBig",
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "big",
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
                             },
-                            semi_colon: SemiColon,
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
                         },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
+                        DictionaryMember {
                             attributes: None,
-                            modifier: None,
-                            return_type: Single(
+                            required: Some(
+                                Token {
+                                    trivia: "\n  ",
+                                    value: Required,
+                                },
+                            ),
+                            type_: Single(
                                 Distinguishable(
-                                    Identifier(
+                                    Bigint(
                                         MayBeNull {
-                                            type_: Identifier(
-                                                "void",
-                                            ),
+                                            type_: Token {
+                                                trivia: " ",
+                                                value: Bigint,
+                                            },
                                             q_mark: None,
                                         },
                                     ),
                                 ),
                             ),
-                            identifier: Some(
-                                Identifier(
-                                    "setBig",
+                            identifier: Token {
+                                trivia: " ",
+                                value: Identifier(
+                                    "another",
                                 ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
+                            },
+                            default: None,
+                            semi_colon: Token {
+                                trivia: "",
+                                value: SemiColon,
+                            },
+                        },
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Typedef(
+            TypedefDefinition {
+                attributes: None,
+                typedef: Token {
+                    trivia: "\n\n",
+                    value: Typedef,
+                },
+                type_: AttributedType {
+                    attributes: None,
+                    type_: Union(
+                        MayBeNull {
+                            type_: Parenthesized {
+                                open_paren: Token {
+                                    trivia: " ",
+                                    value: OpenParen,
+                                },
                                 body: Punctuated {
                                     list: [
                                         Single(
-                                            SingleArgument {
+                                            AttributedNonAnyType {
                                                 attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Bigint(
-                                                                MayBeNull {
-                                                                    type_: Bigint,
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "big",
+                                                type_: Bigint(
+                                                    MayBeNull {
+                                                        type_: Token {
+                                                            trivia: "",
+                                                            value: Bigint,
+                                                        },
+                                                        q_mark: None,
+                                                    },
                                                 ),
-                                                default: None,
+                                            },
+                                        ),
+                                        Single(
+                                            AttributedNonAnyType {
+                                                attributes: None,
+                                                type_: Integer(
+                                                    MayBeNull {
+                                                        type_: Short(
+                                                            ShortType {
+                                                                unsigned: None,
+                                                                short: Token {
+                                                                    trivia: " ",
+                                                                    value: Short,
+                                                                },
+                                                            },
+                                                        ),
+                                                        q_mark: None,
+                                                    },
+                                                ),
                                             },
                                         ),
                                     ],
-                                    separator: Comma,
+                                    separator: [
+                                        Token {
+                                            trivia: " ",
+                                            value: Or,
+                                        },
+                                    ],
                                 },
-                                close_paren: CloseParen,
+                                close_paren: Token {
+                                    trivia: "",
+                                    value: CloseParen,
+                                },
                             },
-                            semi_colon: SemiColon,
+                            q_mark: None,
                         },
                     ),
-                ],
-                close_brace: CloseBrace,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "allowed",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-    Dictionary(
-        DictionaryDefinition {
-            attributes: None,
-            dictionary: Dictionary,
-            identifier: Identifier(
-                "Dictionary",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    DictionaryMember {
-                        attributes: None,
-                        required: None,
-                        type_: Single(
-                            Distinguishable(
-                                Bigint(
-                                    MayBeNull {
-                                        type_: Bigint,
-                                        q_mark: None,
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "big",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
-                    },
-                    DictionaryMember {
-                        attributes: None,
-                        required: Some(
-                            Required,
-                        ),
-                        type_: Single(
-                            Distinguishable(
-                                Bigint(
-                                    MayBeNull {
-                                        type_: Bigint,
-                                        q_mark: None,
-                                    },
-                                ),
-                            ),
-                        ),
-                        identifier: Identifier(
-                            "another",
-                        ),
-                        default: None,
-                        semi_colon: SemiColon,
-                    },
-                ],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-    Typedef(
-        TypedefDefinition {
-            attributes: None,
-            typedef: Typedef,
-            type_: AttributedType {
-                attributes: None,
-                type_: Union(
-                    MayBeNull {
-                        type_: Parenthesized {
-                            open_paren: OpenParen,
-                            body: Punctuated {
-                                list: [
-                                    Single(
-                                        AttributedNonAnyType {
-                                            attributes: None,
-                                            type_: Bigint(
-                                                MayBeNull {
-                                                    type_: Bigint,
-                                                    q_mark: None,
-                                                },
-                                            ),
-                                        },
-                                    ),
-                                    Single(
-                                        AttributedNonAnyType {
-                                            attributes: None,
-                                            type_: Integer(
-                                                MayBeNull {
-                                                    type_: Short(
-                                                        ShortType {
-                                                            unsigned: None,
-                                                            short: Short,
-                                                        },
-                                                    ),
-                                                    q_mark: None,
-                                                },
-                                            ),
-                                        },
-                                    ),
-                                ],
-                                separator: Or,
-                            },
-                            close_paren: CloseParen,
-                        },
-                        q_mark: None,
-                    },
-                ),
-            },
-            identifier: Identifier(
-                "allowed",
-            ),
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

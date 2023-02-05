@@ -1,219 +1,336 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "Union",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Attribute,
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Union(
-                                    MayBeNull {
-                                        type_: Parenthesized {
-                                            open_paren: OpenParen,
-                                            body: Punctuated {
-                                                list: [
-                                                    Single(
-                                                        AttributedNonAnyType {
-                                                            attributes: None,
-                                                            type_: FloatingPoint(
-                                                                MayBeNull {
-                                                                    type_: Float(
-                                                                        FloatType {
-                                                                            unrestricted: None,
-                                                                            float: Float,
-                                                                        },
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        },
-                                                    ),
-                                                    Union(
-                                                        MayBeNull {
-                                                            type_: Parenthesized {
-                                                                open_paren: OpenParen,
-                                                                body: Punctuated {
-                                                                    list: [
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: Identifier(
-                                                                                    MayBeNull {
-                                                                                        type_: Identifier(
-                                                                                            "Date",
-                                                                                        ),
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                        ),
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: Identifier(
-                                                                                    MayBeNull {
-                                                                                        type_: Identifier(
-                                                                                            "Event",
-                                                                                        ),
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                        ),
-                                                                    ],
-                                                                    separator: Or,
-                                                                },
-                                                                close_paren: CloseParen,
-                                                            },
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                    Union(
-                                                        MayBeNull {
-                                                            type_: Parenthesized {
-                                                                open_paren: OpenParen,
-                                                                body: Punctuated {
-                                                                    list: [
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: Identifier(
-                                                                                    MayBeNull {
-                                                                                        type_: Identifier(
-                                                                                            "Node",
-                                                                                        ),
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                        ),
-                                                                        Single(
-                                                                            AttributedNonAnyType {
-                                                                                attributes: None,
-                                                                                type_: DOMString(
-                                                                                    MayBeNull {
-                                                                                        type_: DOMString,
-                                                                                        q_mark: None,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                        ),
-                                                                    ],
-                                                                    separator: Or,
-                                                                },
-                                                                close_paren: CloseParen,
-                                                            },
-                                                            q_mark: Some(
-                                                                QMark,
-                                                            ),
-                                                        },
-                                                    ),
-                                                ],
-                                                separator: Or,
-                                            },
-                                            close_paren: CloseParen,
-                                        },
-                                        q_mark: None,
-                                    },
-                                ),
-                            },
-                            identifier: Identifier(
-                                "test",
-                            ),
-                            semi_colon: SemiColon,
-                        },
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Union",
                     ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Attribute,
-                            type_: AttributedType {
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Union(
-                                    MayBeNull {
-                                        type_: Parenthesized {
-                                            open_paren: OpenParen,
-                                            body: Punctuated {
-                                                list: [
-                                                    Single(
-                                                        AttributedNonAnyType {
-                                                            attributes: Some(
-                                                                Bracketed {
-                                                                    open_bracket: OpenBracket,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Union(
+                                        MayBeNull {
+                                            type_: Parenthesized {
+                                                open_paren: Token {
+                                                    trivia: " ",
+                                                    value: OpenParen,
+                                                },
+                                                body: Punctuated {
+                                                    list: [
+                                                        Single(
+                                                            AttributedNonAnyType {
+                                                                attributes: None,
+                                                                type_: FloatingPoint(
+                                                                    MayBeNull {
+                                                                        type_: Float(
+                                                                            FloatType {
+                                                                                unrestricted: None,
+                                                                                float: Token {
+                                                                                    trivia: "",
+                                                                                    value: Float,
+                                                                                },
+                                                                            },
+                                                                        ),
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            },
+                                                        ),
+                                                        Union(
+                                                            MayBeNull {
+                                                                type_: Parenthesized {
+                                                                    open_paren: Token {
+                                                                        trivia: " ",
+                                                                        value: OpenParen,
+                                                                    },
                                                                     body: Punctuated {
                                                                         list: [
-                                                                            NoArgs(
-                                                                                ExtendedAttributeNoArgs(
-                                                                                    Identifier(
-                                                                                        "EnforceRange",
+                                                                            Single(
+                                                                                AttributedNonAnyType {
+                                                                                    attributes: None,
+                                                                                    type_: Identifier(
+                                                                                        MayBeNull {
+                                                                                            type_: Token {
+                                                                                                trivia: "",
+                                                                                                value: Identifier(
+                                                                                                    "Date",
+                                                                                                ),
+                                                                                            },
+                                                                                            q_mark: None,
+                                                                                        },
                                                                                     ),
-                                                                                ),
+                                                                                },
+                                                                            ),
+                                                                            Single(
+                                                                                AttributedNonAnyType {
+                                                                                    attributes: None,
+                                                                                    type_: Identifier(
+                                                                                        MayBeNull {
+                                                                                            type_: Token {
+                                                                                                trivia: " ",
+                                                                                                value: Identifier(
+                                                                                                    "Event",
+                                                                                                ),
+                                                                                            },
+                                                                                            q_mark: None,
+                                                                                        },
+                                                                                    ),
+                                                                                },
                                                                             ),
                                                                         ],
-                                                                        separator: Comma,
+                                                                        separator: [
+                                                                            Token {
+                                                                                trivia: " ",
+                                                                                value: Or,
+                                                                            },
+                                                                        ],
                                                                     },
-                                                                    close_bracket: CloseBracket,
+                                                                    close_paren: Token {
+                                                                        trivia: "",
+                                                                        value: CloseParen,
+                                                                    },
                                                                 },
-                                                            ),
-                                                            type_: Integer(
-                                                                MayBeNull {
-                                                                    type_: Long(
-                                                                        LongType {
-                                                                            unsigned: None,
-                                                                            long: Long,
-                                                                        },
-                                                                    ),
-                                                                    q_mark: None,
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                        Union(
+                                                            MayBeNull {
+                                                                type_: Parenthesized {
+                                                                    open_paren: Token {
+                                                                        trivia: " ",
+                                                                        value: OpenParen,
+                                                                    },
+                                                                    body: Punctuated {
+                                                                        list: [
+                                                                            Single(
+                                                                                AttributedNonAnyType {
+                                                                                    attributes: None,
+                                                                                    type_: Identifier(
+                                                                                        MayBeNull {
+                                                                                            type_: Token {
+                                                                                                trivia: "",
+                                                                                                value: Identifier(
+                                                                                                    "Node",
+                                                                                                ),
+                                                                                            },
+                                                                                            q_mark: None,
+                                                                                        },
+                                                                                    ),
+                                                                                },
+                                                                            ),
+                                                                            Single(
+                                                                                AttributedNonAnyType {
+                                                                                    attributes: None,
+                                                                                    type_: DOMString(
+                                                                                        MayBeNull {
+                                                                                            type_: Token {
+                                                                                                trivia: " ",
+                                                                                                value: DOMString,
+                                                                                            },
+                                                                                            q_mark: None,
+                                                                                        },
+                                                                                    ),
+                                                                                },
+                                                                            ),
+                                                                        ],
+                                                                        separator: [
+                                                                            Token {
+                                                                                trivia: " ",
+                                                                                value: Or,
+                                                                            },
+                                                                        ],
+                                                                    },
+                                                                    close_paren: Token {
+                                                                        trivia: "",
+                                                                        value: CloseParen,
+                                                                    },
                                                                 },
-                                                            ),
+                                                                q_mark: Some(
+                                                                    Token {
+                                                                        trivia: "",
+                                                                        value: QMark,
+                                                                    },
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ],
+                                                    separator: [
+                                                        Token {
+                                                            trivia: " ",
+                                                            value: Or,
                                                         },
-                                                    ),
-                                                    Single(
-                                                        AttributedNonAnyType {
-                                                            attributes: None,
-                                                            type_: Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "Date",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
+                                                        Token {
+                                                            trivia: " ",
+                                                            value: Or,
                                                         },
-                                                    ),
-                                                ],
-                                                separator: Or,
+                                                    ],
+                                                },
+                                                close_paren: Token {
+                                                    trivia: "",
+                                                    value: CloseParen,
+                                                },
                                             },
-                                            close_paren: CloseParen,
+                                            q_mark: None,
                                         },
-                                        q_mark: None,
-                                    },
-                                ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "test",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Identifier(
-                                "test2",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Union(
+                                        MayBeNull {
+                                            type_: Parenthesized {
+                                                open_paren: Token {
+                                                    trivia: " ",
+                                                    value: OpenParen,
+                                                },
+                                                body: Punctuated {
+                                                    list: [
+                                                        Single(
+                                                            AttributedNonAnyType {
+                                                                attributes: Some(
+                                                                    Bracketed {
+                                                                        open_bracket: Token {
+                                                                            trivia: "",
+                                                                            value: OpenBracket,
+                                                                        },
+                                                                        body: Punctuated {
+                                                                            list: [
+                                                                                NoArgs(
+                                                                                    ExtendedAttributeNoArgs(
+                                                                                        Token {
+                                                                                            trivia: "",
+                                                                                            value: Identifier(
+                                                                                                "EnforceRange",
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                ),
+                                                                            ],
+                                                                            separator: [],
+                                                                        },
+                                                                        close_bracket: Token {
+                                                                            trivia: "",
+                                                                            value: CloseBracket,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                                type_: Integer(
+                                                                    MayBeNull {
+                                                                        type_: Long(
+                                                                            LongType {
+                                                                                unsigned: None,
+                                                                                long: Token {
+                                                                                    trivia: " ",
+                                                                                    value: Long,
+                                                                                },
+                                                                            },
+                                                                        ),
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            },
+                                                        ),
+                                                        Single(
+                                                            AttributedNonAnyType {
+                                                                attributes: None,
+                                                                type_: Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: " ",
+                                                                            value: Identifier(
+                                                                                "Date",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ],
+                                                    separator: [
+                                                        Token {
+                                                            trivia: " ",
+                                                            value: Or,
+                                                        },
+                                                    ],
+                                                },
+                                                close_paren: Token {
+                                                    trivia: "",
+                                                    value: CloseParen,
+                                                },
+                                            },
+                                            q_mark: None,
+                                        },
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "test2",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "",
+}

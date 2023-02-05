@@ -1,3 +1,21 @@
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Token<'a, T> {
+    pub trivia: &'a str,
+    pub value: T,
+}
+
+impl<'a, T> Default for Token<'a, T>
+where
+    T: Default,
+{
+    fn default() -> Self {
+        Token {
+            trivia: "",
+            value: T::default(),
+        }
+    }
+}
+
 /*
  * The following will ultimate generate:
  *
@@ -107,13 +125,19 @@ macro_rules! generate_keyword_struct {
         pub struct $typ;
 
         impl $typ {
-            pub fn value(&self) -> &'static str {
+            pub fn to_str(&self) -> &'static str {
                 return $tok;
             }
         }
 
-        impl<'a> $crate::Parse<'a> for $typ {
+        impl<'a> $crate::Parse<'a> for $crate::term::Token<'a, $typ> {
             parser!(eat_key!($typ));
+
+            fn write(&self) -> String {
+                let trivia = self.trivia;
+                let value = self.value.to_str();
+                format!("{trivia}{value}")
+            }
         }
     };
 }
@@ -301,255 +325,255 @@ generate_keywords_enum! {
 #[macro_export]
 macro_rules! term {
     (OpenParen) => {
-        $crate::term::OpenParen
+        $crate::term::Token<'a, $crate::term::OpenParen>
     };
     (CloseParen) => {
-        $crate::term::CloseParen
+        $crate::term::Token<'a, $crate::term::CloseParen>
     };
     (OpenBracket) => {
-        $crate::term::OpenBracket
+        $crate::term::Token<'a, $crate::term::OpenBracket>
     };
     (CloseBracket) => {
-        $crate::term::CloseBracket
+        $crate::term::Token<'a, $crate::term::CloseBracket>
     };
     (OpenBrace) => {
-        $crate::term::OpenBrace
+        $crate::term::Token<'a, $crate::term::OpenBrace>
     };
     (CloseBrace) => {
-        $crate::term::CloseBrace
+        $crate::term::Token<'a, $crate::term::CloseBrace>
     };
     (,) => {
-        $crate::term::Comma
+        $crate::term::Token<'a, $crate::term::Comma>
     };
     (-) => {
-        $crate::term::Minus
+        $crate::term::Token<'a, $crate::term::Minus>
     };
     (.) => {
-        $crate::term::Dot
+        $crate::term::Token<'a, $crate::term::Dot>
     };
     (...) => {
-        $crate::term::Ellipsis
+        $crate::term::Token<'a, $crate::term::Ellipsis>
     };
     (:) => {
-        $crate::term::Colon
+        $crate::term::Token<'a, $crate::term::Colon>
     };
     (;) => {
-        $crate::term::SemiColon
+        $crate::term::Token<'a, $crate::term::SemiColon>
     };
     (<) => {
-        $crate::term::LessThan
+        $crate::term::Token<'a, $crate::term::LessThan>
     };
     (=) => {
-        $crate::term::Assign
+        $crate::term::Token<'a, $crate::term::Assign>
     };
     (>) => {
-        $crate::term::GreaterThan
+        $crate::term::Token<'a, $crate::term::GreaterThan>
     };
     (?) => {
-        $crate::term::QMark
+        $crate::term::Token<'a, $crate::term::QMark>
     };
     (*) => {
-        $crate::term::Wildcard
+        $crate::term::Token<'a, $crate::term::Wildcard>
     };
     (or) => {
-        $crate::term::Or
+        $crate::term::Token<'a, $crate::term::Or>
     };
     (optional) => {
-        $crate::term::Optional
+        $crate::term::Token<'a, $crate::term::Optional>
     };
     (async) => {
-        $crate::term::Async
+        $crate::term::Token<'a, $crate::term::Async>
     };
     (attribute) => {
-        $crate::term::Attribute
+        $crate::term::Token<'a, $crate::term::Attribute>
     };
     (callback) => {
-        $crate::term::Callback
+        $crate::term::Token<'a, $crate::term::Callback>
     };
     (const) => {
-        $crate::term::Const
+        $crate::term::Token<'a, $crate::term::Const>
     };
     (deleter) => {
-        $crate::term::Deleter
+        $crate::term::Token<'a, $crate::term::Deleter>
     };
     (dictionary) => {
-        $crate::term::Dictionary
+        $crate::term::Token<'a, $crate::term::Dictionary>
     };
     (enum) => {
-        $crate::term::Enum
+        $crate::term::Token<'a, $crate::term::Enum>
     };
     (getter) => {
-        $crate::term::Getter
+        $crate::term::Token<'a, $crate::term::Getter>
     };
     (includes) => {
-        $crate::term::Includes
+        $crate::term::Token<'a, $crate::term::Includes>
     };
     (inherit) => {
-        $crate::term::Inherit
+        $crate::term::Token<'a, $crate::term::Inherit>
     };
     (interface) => {
-        $crate::term::Interface
+        $crate::term::Token<'a, $crate::term::Interface>
     };
     (iterable) => {
-        $crate::term::Iterable
+        $crate::term::Token<'a, $crate::term::Iterable>
     };
     (maplike) => {
-        $crate::term::Maplike
+        $crate::term::Token<'a, $crate::term::Maplike>
     };
     (namespace) => {
-        $crate::term::Namespace
+        $crate::term::Token<'a, $crate::term::Namespace>
     };
     (partial) => {
-        $crate::term::Partial
+        $crate::term::Token<'a, $crate::term::Partial>
     };
     (required) => {
-        $crate::term::Required
+        $crate::term::Token<'a, $crate::term::Required>
     };
     (setlike) => {
-        $crate::term::Setlike
+        $crate::term::Token<'a, $crate::term::Setlike>
     };
     (setter) => {
-        $crate::term::Setter
+        $crate::term::Token<'a, $crate::term::Setter>
     };
     (static) => {
-        $crate::term::Static
+        $crate::term::Token<'a, $crate::term::Static>
     };
     (stringifier) => {
-        $crate::term::Stringifier
+        $crate::term::Token<'a, $crate::term::Stringifier>
     };
     (typedef) => {
-        $crate::term::Typedef
+        $crate::term::Token<'a, $crate::term::Typedef>
     };
     (unrestricted) => {
-        $crate::term::Unrestricted
+        $crate::term::Token<'a, $crate::term::Unrestricted>
     };
     (symbol) => {
-        $crate::term::Symbol
+        $crate::term::Token<'a, $crate::term::Symbol>
     };
     (- Infinity) => {
-        $crate::term::NegInfinity
+        $crate::term::Token<'a, $crate::term::NegInfinity>
     };
     (ByteString) => {
-        $crate::term::ByteString
+        $crate::term::Token<'a, $crate::term::ByteString>
     };
     (DOMString) => {
-        $crate::term::DOMString
+        $crate::term::Token<'a, $crate::term::DOMString>
     };
     (FrozenArray) => {
-        $crate::term::FrozenArray
+        $crate::term::Token<'a, $crate::term::FrozenArray>
     };
     (Infinity) => {
-        $crate::term::Infinity
+        $crate::term::Token<'a, $crate::term::Infinity>
     };
     (NaN) => {
-        $crate::term::NaN
+        $crate::term::Token<'a, $crate::term::NaN>
     };
     (ObservableArray) => {
-        $crate::term::ObservableArray
+        $crate::term::Token<'a, $crate::term::ObservableArray>
     };
     (USVString) => {
-        $crate::term::USVString
+        $crate::term::Token<'a, $crate::term::USVString>
     };
     (any) => {
-        $crate::term::Any
+        $crate::term::Token<'a, $crate::term::Any>
     };
     (bigint) => {
-        $crate::term::Bigint
+        $crate::term::Token<'a, $crate::term::Bigint>
     };
     (boolean) => {
-        $crate::term::Boolean
+        $crate::term::Token<'a, $crate::term::Boolean>
     };
     (byte) => {
-        $crate::term::Byte
+        $crate::term::Token<'a, $crate::term::Byte>
     };
     (double) => {
-        $crate::term::Double
+        $crate::term::Token<'a, $crate::term::Double>
     };
     (false) => {
-        $crate::term::False
+        $crate::term::Token<'a, $crate::term::False>
     };
     (float) => {
-        $crate::term::Float
+        $crate::term::Token<'a, $crate::term::Float>
     };
     (long) => {
-        $crate::term::Long
+        $crate::term::Token<'a, $crate::term::Long>
     };
     (null) => {
-        $crate::term::Null
+        $crate::term::Token<'a, $crate::term::Null>
     };
     (object) => {
-        $crate::term::Object
+        $crate::term::Token<'a, $crate::term::Object>
     };
     (octet) => {
-        $crate::term::Octet
+        $crate::term::Token<'a, $crate::term::Octet>
     };
     (sequence) => {
-        $crate::term::Sequence
+        $crate::term::Token<'a, $crate::term::Sequence>
     };
     (short) => {
-        $crate::term::Short
+        $crate::term::Token<'a, $crate::term::Short>
     };
     (true) => {
-        $crate::term::True
+        $crate::term::Token<'a, $crate::term::True>
     };
     (unsigned) => {
-        $crate::term::Unsigned
+        $crate::term::Token<'a, $crate::term::Unsigned>
     };
     (undefined) => {
-        $crate::term::Undefined
+        $crate::term::Token<'a, $crate::term::Undefined>
     };
     (record) => {
-        $crate::term::Record
+        $crate::term::Token<'a, $crate::term::Record>
     };
     (ArrayBuffer) => {
-        $crate::term::ArrayBuffer
+        $crate::term::Token<'a, $crate::term::ArrayBuffer>
     };
     (DataView) => {
-        $crate::term::DataView
+        $crate::term::Token<'a, $crate::term::DataView>
     };
     (Int8Array) => {
-        $crate::term::Int8Array
+        $crate::term::Token<'a, $crate::term::Int8Array>
     };
     (Int16Array) => {
-        $crate::term::Int16Array
+        $crate::term::Token<'a, $crate::term::Int16Array>
     };
     (Int32Array) => {
-        $crate::term::Int32Array
+        $crate::term::Token<'a, $crate::term::Int32Array>
     };
     (Uint8Array) => {
-        $crate::term::Uint8Array
+        $crate::term::Token<'a, $crate::term::Uint8Array>
     };
     (Uint16Array) => {
-        $crate::term::Uint16Array
+        $crate::term::Token<'a, $crate::term::Uint16Array>
     };
     (Uint32Array) => {
-        $crate::term::Uint32Array
+        $crate::term::Token<'a, $crate::term::Uint32Array>
     };
     (Uint8ClampedArray) => {
-        $crate::term::Uint8ClampedArray
+        $crate::term::Token<'a, $crate::term::Uint8ClampedArray>
     };
     (BigInt64Array) => {
-        $crate::term::BigInt64Array
+        $crate::term::Token<'a, $crate::term::BigInt64Array>
     };
     (BigUint64Array) => {
-        $crate::term::BigUint64Array
+        $crate::term::Token<'a, $crate::term::BigUint64Array>
     };
     (Float32Array) => {
-        $crate::term::Float32Array
+        $crate::term::Token<'a, $crate::term::Float32Array>
     };
     (Float64Array) => {
-        $crate::term::Float64Array
+        $crate::term::Token<'a, $crate::term::Float64Array>
     };
     (Promise) => {
-        $crate::term::Promise
+        $crate::term::Token<'a, $crate::term::Promise>
     };
     (readonly) => {
-        $crate::term::ReadOnly
+        $crate::term::Token<'a, $crate::term::ReadOnly>
     };
     (mixin) => {
-        $crate::term::Mixin
+        $crate::term::Token<'a, $crate::term::Mixin>
     };
     (constructor) => {
-        $crate::term::Constructor
+        $crate::term::Token<'a, $crate::term::Constructor>
     };
 }

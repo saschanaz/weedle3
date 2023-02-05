@@ -1,268 +1,416 @@
-[
-    Namespace(
-        NamespaceDefinition {
-            attributes: None,
-            namespace: Namespace,
-            identifier: Identifier(
-                "VectorUtils",
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Attribute(
-                        AttributeNamespaceMember {
-                            attributes: None,
-                            readonly: ReadOnly,
-                            attribute: Attribute,
-                            type_: AttributedType {
+Parsed {
+    definitions: [
+        Namespace(
+            NamespaceDefinition {
+                attributes: None,
+                namespace: Token {
+                    trivia: "// Extracted from Web IDL editors draft March 27 2017\n",
+                    value: Namespace,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "VectorUtils",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeNamespaceMember {
                                 attributes: None,
-                                type_: Single(
+                                readonly: Token {
+                                    trivia: "\n  ",
+                                    value: ReadOnly,
+                                },
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Identifier(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "Vector",
+                                                        ),
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "unit",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            RegularOperationMember {
+                                attributes: None,
+                                return_type: Single(
                                     Distinguishable(
-                                        Identifier(
+                                        FloatingPoint(
                                             MayBeNull {
-                                                type_: Identifier(
-                                                    "Vector",
+                                                type_: Double(
+                                                    DoubleType {
+                                                        unrestricted: None,
+                                                        double: Token {
+                                                            trivia: "\n  ",
+                                                            value: Double,
+                                                        },
+                                                    },
                                                 ),
                                                 q_mark: None,
                                             },
                                         ),
                                     ),
                                 ),
-                            },
-                            identifier: Identifier(
-                                "unit",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        RegularOperationMember {
-                            attributes: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    FloatingPoint(
-                                        MayBeNull {
-                                            type_: Double(
-                                                DoubleType {
-                                                    unrestricted: None,
-                                                    double: Double,
-                                                },
-                                            ),
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "dotProduct",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "Vector",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "x",
-                                                ),
-                                                default: None,
-                                            },
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "dotProduct",
                                         ),
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "Vector",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "y",
-                                                ),
-                                                default: None,
-                                            },
-                                        ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        RegularOperationMember {
-                            attributes: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Identifier(
-                                        MayBeNull {
-                                            type_: Identifier(
-                                                "Vector",
-                                            ),
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "crossProduct",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "Vector",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "x",
-                                                ),
-                                                default: None,
-                                            },
-                                        ),
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Identifier(
-                                                                        "Vector",
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Identifier(
-                                                    "y",
-                                                ),
-                                                default: None,
-                                            },
-                                        ),
-                                    ],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Const,
-                            const_type: Integer(
-                                Short(
-                                    ShortType {
-                                        unsigned: None,
-                                        short: Short,
                                     },
                                 ),
-                            ),
-                            identifier: Identifier(
-                                "CONST",
-                            ),
-                            assign: Assign,
-                            const_value: Integer(
-                                Dec(
-                                    DecLit(
-                                        "3",
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "Vector",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "x",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: " ",
+                                                                            value: Identifier(
+                                                                                "Vector",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "y",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                        ],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            RegularOperationMember {
+                                attributes: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Identifier(
+                                                        "Vector",
+                                                    ),
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
                                     ),
                                 ),
-                            ),
-                            semi_colon: SemiColon,
-                        },
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "crossProduct",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "Vector",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "x",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: " ",
+                                                                            value: Identifier(
+                                                                                "Vector",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "y",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                        ],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: Integer(
+                                    Short(
+                                        ShortType {
+                                            unsigned: None,
+                                            short: Token {
+                                                trivia: " ",
+                                                value: Short,
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "CONST",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Integer(
+                                    Token {
+                                        trivia: " ",
+                                        value: Dec(
+                                            DecLit(
+                                                "3",
+                                            ),
+                                        ),
+                                    },
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        PartialNamespace(
+            PartialNamespaceDefinition {
+                attributes: None,
+                partial: Token {
+                    trivia: "\n\n",
+                    value: Partial,
+                },
+                namespace: Token {
+                    trivia: " ",
+                    value: Namespace,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "SomeNamespace",
                     ),
-                ],
-                close_brace: CloseBrace,
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "\n  /* namespace_members... */\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-    PartialNamespace(
-        PartialNamespaceDefinition {
-            attributes: None,
-            partial: Partial,
-            namespace: Namespace,
-            identifier: Identifier(
-                "SomeNamespace",
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [],
-                close_brace: CloseBrace,
+        ),
+        Namespace(
+            NamespaceDefinition {
+                attributes: None,
+                namespace: Token {
+                    trivia: "\n\n",
+                    value: Namespace,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_ScalarUtils",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-    Namespace(
-        NamespaceDefinition {
-            attributes: None,
-            namespace: Namespace,
-            identifier: Identifier(
-                "_ScalarUtils",
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

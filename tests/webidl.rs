@@ -1,4 +1,5 @@
 use test_generator::test_resources;
+use weedle::term::Token;
 
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
@@ -34,12 +35,21 @@ fn should_not_parse(resource: &str) {
     assert_eq!(message, baseline);
 }
 
+#[test_resources("tests/defs/*.webidl")]
+fn should_write_same(resource: &str) {
+    let content = std::fs::read_to_string(resource).unwrap();
+    let result = weedle::parse(&content).unwrap();
+
+    let written = result.write();
+    assert_eq!(written, content);
+}
+
 #[test]
 pub fn should_parse_dom_webidl() {
     let content = std::fs::read_to_string("./tests/defs/dom.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 62);
+    assert_eq!(parsed.definitions.len(), 62);
 }
 
 #[test]
@@ -47,7 +57,7 @@ fn should_parse_html_webidl() {
     let content = std::fs::read_to_string("./tests/defs/html.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 325);
+    assert_eq!(parsed.definitions.len(), 325);
 }
 
 #[test]
@@ -55,7 +65,7 @@ fn should_parse_mediacapture_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/mediacapture-streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 37);
+    assert_eq!(parsed.definitions.len(), 37);
 }
 
 #[test]
@@ -63,7 +73,7 @@ fn should_parse_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 37);
+    assert_eq!(parsed.definitions.len(), 37);
 }
 
 #[test]
@@ -73,15 +83,15 @@ fn interface_constructor() {
     let content = std::fs::read_to_string("./tests/defs/interface-constructor.webidl").unwrap();
     let mut parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 1);
+    assert_eq!(parsed.definitions.len(), 1);
 
-    let definition = parsed.pop().unwrap();
+    let definition = parsed.definitions.pop().unwrap();
 
     match definition {
         Definition::Interface(mut interface) => {
             assert!(interface.attributes.is_none());
-            assert_eq!(interface.interface, term!(interface));
-            assert_eq!(interface.identifier.0, "InterfaceWithConstructor");
+            assert_eq!(interface.interface, Token::default());
+            assert_eq!(interface.identifier.value.0, "InterfaceWithConstructor");
             assert_eq!(interface.inheritance, None);
 
             assert_eq!(interface.members.body.len(), 1);
@@ -96,7 +106,7 @@ fn interface_constructor() {
 
                     match attribute {
                         attribute::ExtendedAttribute::NoArgs(attribute) => {
-                            assert_eq!((attribute.0).0, "Throws");
+                            assert_eq!((attribute.0).value.0, "Throws");
                         }
                         _ => unreachable!(),
                     }
@@ -121,7 +131,13 @@ fn interface_constructor() {
                         _ => unreachable!(),
                     };
 
-                    assert_eq!(constructor.constructor, term::Constructor);
+                    assert_eq!(
+                        constructor.constructor,
+                        Token {
+                            value: Default::default(),
+                            trivia: "\n  ",
+                        }
+                    );
                 }
                 _ => unreachable!(),
             }

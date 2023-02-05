@@ -5,16 +5,16 @@ use std::{
 
 use nom::{InputIter, InputLength, InputTake, Needed, Slice};
 
-use crate::lexer::Token;
+use crate::lexer::Lexed;
 
 // Using custom struct as an input format requires implementations for the following traits
 // https://github.com/Geal/nom/blob/main/doc/custom_input_types.md
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Tokens<'slice, 'token>(pub &'slice [Token<'token>]);
+pub struct LexedSlice<'slice, 'token>(pub &'slice [Lexed<'token>]);
 
-impl<'slice, 'token> From<Tokens<'slice, 'token>> for &'token str {
-    fn from(value: Tokens<'slice, 'token>) -> Self {
+impl<'slice, 'token> From<LexedSlice<'slice, 'token>> for &'token str {
+    fn from(value: LexedSlice<'slice, 'token>) -> Self {
         if value.0.is_empty() {
             return "";
         }
@@ -34,14 +34,14 @@ impl<'slice, 'token> From<Tokens<'slice, 'token>> for &'token str {
     }
 }
 
-impl<'slice, 'token> InputLength for Tokens<'slice, 'token> {
+impl<'slice, 'token> InputLength for LexedSlice<'slice, 'token> {
     #[inline]
     fn input_len(&self) -> usize {
         self.0.input_len()
     }
 }
 
-impl<'slice, 'token> InputTake for Tokens<'slice, 'token> {
+impl<'slice, 'token> InputTake for LexedSlice<'slice, 'token> {
     #[inline]
     fn take(&self, count: usize) -> Self {
         Self(&self.0[..count])
@@ -54,45 +54,45 @@ impl<'slice, 'token> InputTake for Tokens<'slice, 'token> {
     }
 }
 
-impl<'a> InputLength for Token<'a> {
+impl<'a> InputLength for Lexed<'a> {
     #[inline]
     fn input_len(&self) -> usize {
         1
     }
 }
 
-impl<'slice, 'token> Slice<Range<usize>> for Tokens<'slice, 'token> {
+impl<'slice, 'token> Slice<Range<usize>> for LexedSlice<'slice, 'token> {
     #[inline]
     fn slice(&self, range: Range<usize>) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'slice, 'token> Slice<RangeTo<usize>> for Tokens<'slice, 'token> {
+impl<'slice, 'token> Slice<RangeTo<usize>> for LexedSlice<'slice, 'token> {
     #[inline]
     fn slice(&self, range: RangeTo<usize>) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'slice, 'token> Slice<RangeFrom<usize>> for Tokens<'slice, 'token> {
+impl<'slice, 'token> Slice<RangeFrom<usize>> for LexedSlice<'slice, 'token> {
     #[inline]
     fn slice(&self, range: RangeFrom<usize>) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'slice, 'token> Slice<RangeFull> for Tokens<'slice, 'token> {
+impl<'slice, 'token> Slice<RangeFull> for LexedSlice<'slice, 'token> {
     #[inline]
     fn slice(&self, range: RangeFull) -> Self {
         Self(self.0.slice(range))
     }
 }
 
-impl<'slice, 'token> InputIter for Tokens<'slice, 'token> {
-    type Item = Token<'token>;
+impl<'slice, 'token> InputIter for LexedSlice<'slice, 'token> {
+    type Item = Lexed<'token>;
     type Iter = Enumerate<Self::IterElem>;
-    type IterElem = Copied<::std::slice::Iter<'slice, Token<'token>>>;
+    type IterElem = Copied<::std::slice::Iter<'slice, Lexed<'token>>>;
 
     #[inline]
     fn iter_indices(&self) -> Self::Iter {
@@ -150,5 +150,62 @@ where
             )))
         }
         rest => rest,
+    }
+}
+
+pub fn separated_list_incl<const REQ1: bool, I, O, O2, E, F, G>(
+    mut sep: G,
+    mut f: F,
+) -> impl FnMut(I) -> nom::IResult<I, (Vec<O>, Vec<O2>), E>
+where
+    I: Clone + InputLength,
+    F: nom::Parser<I, O, E>,
+    G: nom::Parser<I, O2, E>,
+    E: nom::error::ParseError<I>,
+{
+    move |mut i: I| {
+        use nom::{error::ErrorKind, Err};
+
+        let mut res = Vec::new();
+        let mut res_sep = Vec::new();
+
+        match f.parse(i.clone()) {
+            Err(Err::Error(e)) => {
+                return if REQ1 {
+                    Err(Err::Error(e))
+                } else {
+                    Ok((i, (res, res_sep)))
+                }
+            }
+            Err(e) => return Err(e),
+            Ok((i1, o)) => {
+                res.push(o);
+                i = i1;
+            }
+        }
+
+        loop {
+            let len = i.input_len();
+            match sep.parse(i.clone()) {
+                Err(Err::Error(_)) => return Ok((i, (res, res_sep))),
+                Err(e) => return Err(e),
+                Ok((i1, s)) => {
+                    // infinite loop check: the parser must always consume
+                    if i1.input_len() == len {
+                        return Err(Err::Error(E::from_error_kind(i1, ErrorKind::SeparatedList)));
+                    }
+                    res_sep.push(s);
+
+                    match f.parse(i1.clone()) {
+                        Err(Err::Error(_)) => return Ok((i, (res, res_sep))),
+                        Err(e) => return Err(e),
+                        Ok((i2, o)) => {
+                            res.push(o);
+                            i = i2;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

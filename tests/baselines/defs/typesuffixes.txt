@@ -1,96 +1,150 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "Suffixes",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Undefined,
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "test",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Sequence(
-                                                                MayBeNull {
-                                                                    type_: SequenceType {
-                                                                        sequence: Sequence,
-                                                                        generics: Generics {
-                                                                            open_angle: LessThan,
-                                                                            body: AttributedType {
-                                                                                attributes: None,
-                                                                                type_: Single(
-                                                                                    Distinguishable(
-                                                                                        DOMString(
-                                                                                            MayBeNull {
-                                                                                                type_: DOMString,
-                                                                                                q_mark: Some(
-                                                                                                    QMark,
-                                                                                                ),
-                                                                                            },
-                                                                                        ),
-                                                                                    ),
-                                                                                ),
-                                                                            },
-                                                                            close_angle: GreaterThan,
-                                                                        },
-                                                                    },
-                                                                    q_mark: Some(
-                                                                        QMark,
-                                                                    ),
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Suffixes",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
                                                 },
-                                                identifier: Identifier(
-                                                    "foo",
-                                                ),
-                                                default: None,
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: Comma,
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "test",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Sequence(
+                                                                    MayBeNull {
+                                                                        type_: SequenceType {
+                                                                            sequence: Token {
+                                                                                trivia: "",
+                                                                                value: Sequence,
+                                                                            },
+                                                                            generics: Generics {
+                                                                                open_angle: Token {
+                                                                                    trivia: "",
+                                                                                    value: LessThan,
+                                                                                },
+                                                                                body: AttributedType {
+                                                                                    attributes: None,
+                                                                                    type_: Single(
+                                                                                        Distinguishable(
+                                                                                            DOMString(
+                                                                                                MayBeNull {
+                                                                                                    type_: Token {
+                                                                                                        trivia: "",
+                                                                                                        value: DOMString,
+                                                                                                    },
+                                                                                                    q_mark: Some(
+                                                                                                        Token {
+                                                                                                            trivia: "",
+                                                                                                            value: QMark,
+                                                                                                        },
+                                                                                                    ),
+                                                                                                },
+                                                                                            ),
+                                                                                        ),
+                                                                                    ),
+                                                                                },
+                                                                                close_angle: Token {
+                                                                                    trivia: "",
+                                                                                    value: GreaterThan,
+                                                                                },
+                                                                            },
+                                                                        },
+                                                                        q_mark: Some(
+                                                                            Token {
+                                                                                trivia: "",
+                                                                                value: QMark,
+                                                                            },
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "foo",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
                                 },
-                                close_paren: CloseParen,
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

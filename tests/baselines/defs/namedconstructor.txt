@@ -1,89 +1,154 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: Some(
-                Bracketed {
-                    open_bracket: OpenBracket,
-                    body: Punctuated {
-                        list: [
-                            Ident(
-                                ExtendedAttributeIdent {
-                                    lhs_identifier: Identifier(
-                                        "NamedConstructor",
-                                    ),
-                                    assign: Assign,
-                                    rhs: Identifier(
-                                        "Audio",
-                                    ),
-                                },
-                            ),
-                            NamedArgList(
-                                ExtendedAttributeNamedArgList {
-                                    lhs_identifier: Identifier(
-                                        "NamedConstructor",
-                                    ),
-                                    assign: Assign,
-                                    rhs_identifier: Identifier(
-                                        "Audio",
-                                    ),
-                                    args: Parenthesized {
-                                        open_paren: OpenParen,
-                                        body: Punctuated {
-                                            list: [
-                                                Single(
-                                                    SingleArgument {
-                                                        attributes: None,
-                                                        optional: None,
-                                                        type_: AttributedType {
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: Some(
+                    Bracketed {
+                        open_bracket: Token {
+                            trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+                            value: OpenBracket,
+                        },
+                        body: Punctuated {
+                            list: [
+                                Ident(
+                                    ExtendedAttributeIdent {
+                                        lhs_identifier: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "NamedConstructor",
+                                            ),
+                                        },
+                                        assign: Token {
+                                            trivia: "",
+                                            value: Assign,
+                                        },
+                                        rhs: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Audio",
+                                            ),
+                                        },
+                                    },
+                                ),
+                                NamedArgList(
+                                    ExtendedAttributeNamedArgList {
+                                        lhs_identifier: Token {
+                                            trivia: "\n ",
+                                            value: Identifier(
+                                                "NamedConstructor",
+                                            ),
+                                        },
+                                        assign: Token {
+                                            trivia: "",
+                                            value: Assign,
+                                        },
+                                        rhs_identifier: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Audio",
+                                            ),
+                                        },
+                                        args: Parenthesized {
+                                            open_paren: Token {
+                                                trivia: "",
+                                                value: OpenParen,
+                                            },
+                                            body: Punctuated {
+                                                list: [
+                                                    Single(
+                                                        SingleArgument {
                                                             attributes: None,
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    DOMString(
-                                                                        MayBeNull {
-                                                                            type_: DOMString,
-                                                                            q_mark: None,
-                                                                        },
+                                                            optional: None,
+                                                            type_: AttributedType {
+                                                                attributes: None,
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        DOMString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: "",
+                                                                                    value: DOMString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
                                                                     ),
                                                                 ),
-                                                            ),
+                                                            },
+                                                            identifier: Token {
+                                                                trivia: " ",
+                                                                value: Identifier(
+                                                                    "src",
+                                                                ),
+                                                            },
+                                                            default: None,
                                                         },
-                                                        identifier: Identifier(
-                                                            "src",
-                                                        ),
-                                                        default: None,
-                                                    },
-                                                ),
-                                            ],
-                                            separator: Comma,
+                                                    ),
+                                                ],
+                                                separator: [],
+                                            },
+                                            close_paren: Token {
+                                                trivia: "",
+                                                value: CloseParen,
+                                            },
                                         },
-                                        close_paren: CloseParen,
                                     },
+                                ),
+                            ],
+                            separator: [
+                                Token {
+                                    trivia: "",
+                                    value: Comma,
                                 },
-                            ),
-                        ],
-                        separator: Comma,
+                            ],
+                        },
+                        close_bracket: Token {
+                            trivia: "",
+                            value: CloseBracket,
+                        },
                     },
-                    close_bracket: CloseBracket,
+                ),
+                interface: Token {
+                    trivia: "\n",
+                    value: Interface,
                 },
-            ),
-            interface: Interface,
-            identifier: Identifier(
-                "HTMLAudioElement",
-            ),
-            inheritance: Some(
-                Inheritance {
-                    colon: Colon,
-                    identifier: Identifier(
-                        "HTMLMediaElement",
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "HTMLAudioElement",
                     ),
                 },
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [],
-                close_brace: CloseBrace,
+                inheritance: Some(
+                    Inheritance {
+                        colon: Token {
+                            trivia: " ",
+                            value: Colon,
+                        },
+                        identifier: Token {
+                            trivia: " ",
+                            value: Identifier(
+                                "HTMLMediaElement",
+                            ),
+                        },
+                    },
+                ),
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "\n  // ...\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "",
+}

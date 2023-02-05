@@ -1,523 +1,850 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "Foo",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Promise(
-                                    PromiseType {
-                                        promise: Promise,
-                                        generics: Generics {
-                                            open_angle: LessThan,
-                                            body: Single(
-                                                Promise(
-                                                    PromiseType {
-                                                        promise: Promise,
-                                                        generics: Generics {
-                                                            open_angle: LessThan,
-                                                            body: Single(
-                                                                Distinguishable(
-                                                                    Sequence(
-                                                                        MayBeNull {
-                                                                            type_: SequenceType {
-                                                                                sequence: Sequence,
-                                                                                generics: Generics {
-                                                                                    open_angle: LessThan,
-                                                                                    body: AttributedType {
-                                                                                        attributes: None,
-                                                                                        type_: Single(
-                                                                                            Distinguishable(
-                                                                                                DOMString(
-                                                                                                    MayBeNull {
-                                                                                                        type_: DOMString,
-                                                                                                        q_mark: Some(
-                                                                                                            QMark,
-                                                                                                        ),
-                                                                                                    },
-                                                                                                ),
-                                                                                            ),
-                                                                                        ),
-                                                                                    },
-                                                                                    close_angle: GreaterThan,
-                                                                                },
-                                                                            },
-                                                                            q_mark: None,
-                                                                        },
-                                                                    ),
-                                                                ),
-                                                            ),
-                                                            close_angle: GreaterThan,
-                                                        },
-                                                    },
-                                                ),
-                                            ),
-                                            close_angle: GreaterThan,
-                                        },
-                                    },
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "bar",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Foo",
                     ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                ReadOnly,
-                            ),
-                            attribute: Attribute,
-                            type_: AttributedType {
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
                                 attributes: None,
-                                type_: Single(
+                                modifier: None,
+                                return_type: Single(
                                     Promise(
                                         PromiseType {
-                                            promise: Promise,
+                                            promise: Token {
+                                                trivia: "\n  ",
+                                                value: Promise,
+                                            },
                                             generics: Generics {
-                                                open_angle: LessThan,
+                                                open_angle: Token {
+                                                    trivia: "",
+                                                    value: LessThan,
+                                                },
+                                                body: Single(
+                                                    Promise(
+                                                        PromiseType {
+                                                            promise: Token {
+                                                                trivia: "",
+                                                                value: Promise,
+                                                            },
+                                                            generics: Generics {
+                                                                open_angle: Token {
+                                                                    trivia: "",
+                                                                    value: LessThan,
+                                                                },
+                                                                body: Single(
+                                                                    Distinguishable(
+                                                                        Sequence(
+                                                                            MayBeNull {
+                                                                                type_: SequenceType {
+                                                                                    sequence: Token {
+                                                                                        trivia: "",
+                                                                                        value: Sequence,
+                                                                                    },
+                                                                                    generics: Generics {
+                                                                                        open_angle: Token {
+                                                                                            trivia: "",
+                                                                                            value: LessThan,
+                                                                                        },
+                                                                                        body: AttributedType {
+                                                                                            attributes: None,
+                                                                                            type_: Single(
+                                                                                                Distinguishable(
+                                                                                                    DOMString(
+                                                                                                        MayBeNull {
+                                                                                                            type_: Token {
+                                                                                                                trivia: "",
+                                                                                                                value: DOMString,
+                                                                                                            },
+                                                                                                            q_mark: Some(
+                                                                                                                Token {
+                                                                                                                    trivia: "",
+                                                                                                                    value: QMark,
+                                                                                                                },
+                                                                                                            ),
+                                                                                                        },
+                                                                                                    ),
+                                                                                                ),
+                                                                                            ),
+                                                                                        },
+                                                                                        close_angle: Token {
+                                                                                            trivia: "",
+                                                                                            value: GreaterThan,
+                                                                                        },
+                                                                                    },
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                                close_angle: Token {
+                                                                    trivia: "",
+                                                                    value: GreaterThan,
+                                                                },
+                                                            },
+                                                        },
+                                                    ),
+                                                ),
+                                                close_angle: Token {
+                                                    trivia: "",
+                                                    value: GreaterThan,
+                                                },
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "bar",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Promise(
+                                            PromiseType {
+                                                promise: Token {
+                                                    trivia: " ",
+                                                    value: Promise,
+                                                },
+                                                generics: Generics {
+                                                    open_angle: Token {
+                                                        trivia: "",
+                                                        value: LessThan,
+                                                    },
+                                                    body: Single(
+                                                        Distinguishable(
+                                                            DOMString(
+                                                                MayBeNull {
+                                                                    type_: Token {
+                                                                        trivia: "",
+                                                                        value: DOMString,
+                                                                    },
+                                                                    q_mark: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    close_angle: Token {
+                                                        trivia: "",
+                                                        value: GreaterThan,
+                                                    },
+                                                },
+                                            },
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "baz",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            FrozenArrayType(
+                                                MayBeNull {
+                                                    type_: FrozenArrayType {
+                                                        frozen_array: Token {
+                                                            trivia: " ",
+                                                            value: FrozenArray,
+                                                        },
+                                                        generics: Generics {
+                                                            open_angle: Token {
+                                                                trivia: "",
+                                                                value: LessThan,
+                                                            },
+                                                            body: AttributedType {
+                                                                attributes: None,
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        DOMString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: "",
+                                                                                    value: DOMString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            close_angle: Token {
+                                                                trivia: "",
+                                                                value: GreaterThan,
+                                                            },
+                                                        },
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "frozen",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            ObservableArrayType(
+                                                MayBeNull {
+                                                    type_: ObservableArrayType {
+                                                        observable_array: Token {
+                                                            trivia: " ",
+                                                            value: ObservableArray,
+                                                        },
+                                                        generics: Generics {
+                                                            open_angle: Token {
+                                                                trivia: "",
+                                                                value: LessThan,
+                                                            },
+                                                            body: AttributedType {
+                                                                attributes: None,
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        DOMString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: "",
+                                                                                    value: DOMString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            close_angle: Token {
+                                                                trivia: "",
+                                                                value: GreaterThan,
+                                                            },
+                                                        },
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "observable",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "ExtendedFoo",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            FrozenArrayType(
+                                                MayBeNull {
+                                                    type_: FrozenArrayType {
+                                                        frozen_array: Token {
+                                                            trivia: " ",
+                                                            value: FrozenArray,
+                                                        },
+                                                        generics: Generics {
+                                                            open_angle: Token {
+                                                                trivia: "",
+                                                                value: LessThan,
+                                                            },
+                                                            body: AttributedType {
+                                                                attributes: Some(
+                                                                    Bracketed {
+                                                                        open_bracket: Token {
+                                                                            trivia: "",
+                                                                            value: OpenBracket,
+                                                                        },
+                                                                        body: Punctuated {
+                                                                            list: [
+                                                                                NoArgs(
+                                                                                    ExtendedAttributeNoArgs(
+                                                                                        Token {
+                                                                                            trivia: "",
+                                                                                            value: Identifier(
+                                                                                                "Foo",
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                ),
+                                                                            ],
+                                                                            separator: [],
+                                                                        },
+                                                                        close_bracket: Token {
+                                                                            trivia: "",
+                                                                            value: CloseBracket,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        DOMString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: " ",
+                                                                                    value: DOMString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            close_angle: Token {
+                                                                trivia: "",
+                                                                value: GreaterThan,
+                                                            },
+                                                        },
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "frozen",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            ObservableArrayType(
+                                                MayBeNull {
+                                                    type_: ObservableArrayType {
+                                                        observable_array: Token {
+                                                            trivia: " ",
+                                                            value: ObservableArray,
+                                                        },
+                                                        generics: Generics {
+                                                            open_angle: Token {
+                                                                trivia: "",
+                                                                value: LessThan,
+                                                            },
+                                                            body: AttributedType {
+                                                                attributes: Some(
+                                                                    Bracketed {
+                                                                        open_bracket: Token {
+                                                                            trivia: "",
+                                                                            value: OpenBracket,
+                                                                        },
+                                                                        body: Punctuated {
+                                                                            list: [
+                                                                                NoArgs(
+                                                                                    ExtendedAttributeNoArgs(
+                                                                                        Token {
+                                                                                            trivia: "",
+                                                                                            value: Identifier(
+                                                                                                "Foo",
+                                                                                            ),
+                                                                                        },
+                                                                                    ),
+                                                                                ),
+                                                                            ],
+                                                                            separator: [],
+                                                                        },
+                                                                        close_bracket: Token {
+                                                                            trivia: "",
+                                                                            value: CloseBracket,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        DOMString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: " ",
+                                                                                    value: DOMString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            close_angle: Token {
+                                                                trivia: "",
+                                                                value: GreaterThan,
+                                                            },
+                                                        },
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "observable",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n// Extracted from https://slightlyoff.github.io/ServiceWorker/spec/service_worker/ on 2014-05-08\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "ServiceWorkerClients",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Promise(
+                                        PromiseType {
+                                            promise: Token {
+                                                trivia: "\n  ",
+                                                value: Promise,
+                                            },
+                                            generics: Generics {
+                                                open_angle: Token {
+                                                    trivia: "",
+                                                    value: LessThan,
+                                                },
                                                 body: Single(
                                                     Distinguishable(
-                                                        DOMString(
+                                                        Identifier(
                                                             MayBeNull {
-                                                                type_: DOMString,
-                                                                q_mark: None,
+                                                                type_: Token {
+                                                                    trivia: "",
+                                                                    value: Identifier(
+                                                                        "Client",
+                                                                    ),
+                                                                },
+                                                                q_mark: Some(
+                                                                    Token {
+                                                                        trivia: "",
+                                                                        value: QMark,
+                                                                    },
+                                                                ),
                                                             },
                                                         ),
                                                     ),
                                                 ),
-                                                close_angle: GreaterThan,
+                                                close_angle: Token {
+                                                    trivia: "",
+                                                    value: GreaterThan,
+                                                },
                                             },
                                         },
                                     ),
                                 ),
-                            },
-                            identifier: Identifier(
-                                "baz",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                ReadOnly,
-                            ),
-                            attribute: Attribute,
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        FrozenArrayType(
-                                            MayBeNull {
-                                                type_: FrozenArrayType {
-                                                    frozen_array: FrozenArray,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: AttributedType {
-                                                            attributes: None,
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    DOMString(
-                                                                        MayBeNull {
-                                                                            type_: DOMString,
-                                                                            q_mark: None,
-                                                                        },
-                                                                    ),
-                                                                ),
-                                                            ),
-                                                        },
-                                                        close_angle: GreaterThan,
-                                                    },
-                                                },
-                                                q_mark: None,
-                                            },
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "getServiced",
                                         ),
-                                    ),
+                                    },
                                 ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Identifier(
-                                "frozen",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                ReadOnly,
-                            ),
-                            attribute: Attribute,
-                            type_: AttributedType {
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        ObservableArrayType(
-                                            MayBeNull {
-                                                type_: ObservableArrayType {
-                                                    observable_array: ObservableArray,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: AttributedType {
-                                                            attributes: None,
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    DOMString(
-                                                                        MayBeNull {
-                                                                            type_: DOMString,
-                                                                            q_mark: None,
-                                                                        },
-                                                                    ),
-                                                                ),
-                                                            ),
-                                                        },
-                                                        close_angle: GreaterThan,
-                                                    },
-                                                },
-                                                q_mark: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Promise(
+                                        PromiseType {
+                                            promise: Token {
+                                                trivia: "\n  ",
+                                                value: Promise,
                                             },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Identifier(
-                                "observable",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "ExtendedFoo",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                ReadOnly,
-                            ),
-                            attribute: Attribute,
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        FrozenArrayType(
-                                            MayBeNull {
-                                                type_: FrozenArrayType {
-                                                    frozen_array: FrozenArray,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: AttributedType {
-                                                            attributes: Some(
-                                                                Bracketed {
-                                                                    open_bracket: OpenBracket,
-                                                                    body: Punctuated {
-                                                                        list: [
-                                                                            NoArgs(
-                                                                                ExtendedAttributeNoArgs(
-                                                                                    Identifier(
-                                                                                        "Foo",
-                                                                                    ),
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                        separator: Comma,
-                                                                    },
-                                                                    close_bracket: CloseBracket,
-                                                                },
-                                                            ),
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    DOMString(
-                                                                        MayBeNull {
-                                                                            type_: DOMString,
-                                                                            q_mark: None,
-                                                                        },
-                                                                    ),
-                                                                ),
-                                                            ),
-                                                        },
-                                                        close_angle: GreaterThan,
-                                                    },
+                                            generics: Generics {
+                                                open_angle: Token {
+                                                    trivia: "",
+                                                    value: LessThan,
                                                 },
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Identifier(
-                                "frozen",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                ReadOnly,
-                            ),
-                            attribute: Attribute,
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        ObservableArrayType(
-                                            MayBeNull {
-                                                type_: ObservableArrayType {
-                                                    observable_array: ObservableArray,
-                                                    generics: Generics {
-                                                        open_angle: LessThan,
-                                                        body: AttributedType {
-                                                            attributes: Some(
-                                                                Bracketed {
-                                                                    open_bracket: OpenBracket,
-                                                                    body: Punctuated {
-                                                                        list: [
-                                                                            NoArgs(
-                                                                                ExtendedAttributeNoArgs(
-                                                                                    Identifier(
-                                                                                        "Foo",
-                                                                                    ),
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                        separator: Comma,
-                                                                    },
-                                                                    close_bracket: CloseBracket,
-                                                                },
-                                                            ),
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    DOMString(
-                                                                        MayBeNull {
-                                                                            type_: DOMString,
-                                                                            q_mark: None,
-                                                                        },
-                                                                    ),
-                                                                ),
-                                                            ),
-                                                        },
-                                                        close_angle: GreaterThan,
-                                                    },
-                                                },
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Identifier(
-                                "observable",
-                            ),
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
-            },
-            semi_colon: SemiColon,
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "ServiceWorkerClients",
-            ),
-            inheritance: None,
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Promise(
-                                    PromiseType {
-                                        promise: Promise,
-                                        generics: Generics {
-                                            open_angle: LessThan,
-                                            body: Single(
-                                                Distinguishable(
-                                                    Identifier(
-                                                        MayBeNull {
-                                                            type_: Identifier(
-                                                                "Client",
-                                                            ),
-                                                            q_mark: Some(
-                                                                QMark,
-                                                            ),
+                                                body: Single(
+                                                    Any(
+                                                        Token {
+                                                            trivia: "",
+                                                            value: Any,
                                                         },
                                                     ),
                                                 ),
-                                            ),
-                                            close_angle: GreaterThan,
+                                                close_angle: Token {
+                                                    trivia: "",
+                                                    value: GreaterThan,
+                                                },
+                                            },
                                         },
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "reloadAll",
+                                        ),
                                     },
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "getServiced",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [],
-                                    separator: Comma,
-                                },
-                                close_paren: CloseParen,
-                            },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Promise(
-                                    PromiseType {
-                                        promise: Promise,
-                                        generics: Generics {
-                                            open_angle: LessThan,
-                                            body: Single(
-                                                Any(
-                                                    Any,
-                                                ),
-                                            ),
-                                            close_angle: GreaterThan,
-                                        },
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
                                     },
-                                ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "reloadAll",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [],
-                                    separator: Comma,
+                                    body: Punctuated {
+                                        list: [],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
                                 },
-                                close_paren: CloseParen,
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Interface,
-            identifier: Identifier(
-                "FetchEvent",
-            ),
-            inheritance: Some(
-                Inheritance {
-                    colon: Colon,
-                    identifier: Identifier(
-                        "Event",
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n// Extracted from https://slightlyoff.github.io/ServiceWorker/spec/service_worker/ on 2014-05-13\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "FetchEvent",
                     ),
                 },
-            ),
-            members: Braced {
-                open_brace: OpenBrace,
-                body: [
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Promise(
-                                    PromiseType {
-                                        promise: Promise,
-                                        generics: Generics {
-                                            open_angle: LessThan,
-                                            body: Single(
-                                                Any(
-                                                    Any,
+                inheritance: Some(
+                    Inheritance {
+                        colon: Token {
+                            trivia: " ",
+                            value: Colon,
+                        },
+                        identifier: Token {
+                            trivia: " ",
+                            value: Identifier(
+                                "Event",
+                            ),
+                        },
+                    },
+                ),
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Promise(
+                                        PromiseType {
+                                            promise: Token {
+                                                trivia: "\n  ",
+                                                value: Promise,
+                                            },
+                                            generics: Generics {
+                                                open_angle: Token {
+                                                    trivia: "",
+                                                    value: LessThan,
+                                                },
+                                                body: Single(
+                                                    Any(
+                                                        Token {
+                                                            trivia: "",
+                                                            value: Any,
+                                                        },
+                                                    ),
                                                 ),
-                                            ),
-                                            close_angle: GreaterThan,
+                                                close_angle: Token {
+                                                    trivia: "",
+                                                    value: GreaterThan,
+                                                },
+                                            },
                                         },
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "default",
+                                        ),
                                     },
                                 ),
-                            ),
-                            identifier: Some(
-                                Identifier(
-                                    "default",
-                                ),
-                            ),
-                            args: Parenthesized {
-                                open_paren: OpenParen,
-                                body: Punctuated {
-                                    list: [],
-                                    separator: Comma,
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
                                 },
-                                close_paren: CloseParen,
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            semi_colon: SemiColon,
-                        },
-                    ),
-                ],
-                close_brace: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            semi_colon: SemiColon,
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

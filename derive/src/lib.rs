@@ -106,15 +106,24 @@ fn get_parser_from_field(field: &Field) -> Result<proc_macro2::TokenStream> {
     Ok(parser)
 }
 
-fn generate_tuple_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
+fn generate_tuple_struct(
+    data_struct: &DataStruct,
+) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
     let mut count = 0;
     let field_ids = data_struct
         .fields
         .iter()
         .map(|_| {
-            let id = string_to_tokens::<Ident>(format!("m{count}")).unwrap();
+            let id = string_to_tokens::<Index>(count.to_string()).unwrap();
             count += 1;
             quote! { #id }
+        })
+        .collect::<Vec<_>>();
+    let field_vars = field_ids
+        .iter()
+        .map(|id| {
+            let var = string_to_tokens::<Ident>(format!("m{id}")).unwrap();
+            quote! { #var }
         })
         .collect::<Vec<_>>();
     let field_parsers = data_struct
@@ -123,21 +132,28 @@ fn generate_tuple_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenS
         .map(get_parser_from_field)
         .collect::<Result<Vec<_>>>()?;
 
-    let result = quote! {
+    let parse_body = quote! {
         use nom::lib::std::result::Result::Ok;
-        let (input, (#(#field_ids,)*)) = nom::sequence::tuple((
+        let (input, (#(#field_vars,)*)) = nom::sequence::tuple((
             #(#field_parsers,)*
         ))(input)?;
 
-        Ok((input, Self(#(#field_ids,)*)))
+        Ok((input, Self(#(#field_vars,)*)))
+    };
+
+    let write_body = quote! {
+        let written = vec![#(self.#field_ids.write(),)*];
+        written.join("")
     };
 
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
-    Ok(result)
+    Ok((parse_body, write_body))
 }
 
-fn generate_named_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
+fn generate_named_struct(
+    data_struct: &DataStruct,
+) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
     let field_ids: Vec<_> = data_struct
         .fields
         .iter()
@@ -156,7 +172,7 @@ fn generate_named_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenS
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let result = quote! {
+    let parse_body = quote! {
         use nom::lib::std::result::Result::Ok;
         #(#field_parsers)*
 
@@ -165,12 +181,19 @@ fn generate_named_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenS
         }))
     };
 
+    let write_body = quote! {
+        let written = vec![#(self.#field_ids.write(),)*];
+        written.join("")
+    };
+
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
-    Ok(result)
+    Ok((parse_body, write_body))
 }
 
-fn generate_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream> {
+fn generate_struct(
+    data_struct: &DataStruct,
+) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
     let all_named = data_struct.fields.iter().all(|field| field.ident.is_some());
     if all_named {
         generate_named_struct(data_struct)
@@ -179,7 +202,9 @@ fn generate_struct(data_struct: &DataStruct) -> Result<proc_macro2::TokenStream>
     }
 }
 
-fn generate_enum(data_enum: &DataEnum) -> Result<proc_macro2::TokenStream> {
+fn generate_enum(
+    data_enum: &DataEnum,
+) -> Result<(proc_macro2::TokenStream, proc_macro2::TokenStream)> {
     let field_parsers = data_enum
         .variants
         .iter()
@@ -204,20 +229,29 @@ fn generate_enum(data_enum: &DataEnum) -> Result<proc_macro2::TokenStream> {
                 parser = get_post_check(post_check, &parser)?;
             }
 
-            Ok(parser)
+            let writer = quote! { Self::#variant_id(v) => v.write() };
+
+            Ok((parser, writer))
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let result = quote! {
+    let parsers = field_parsers.iter().map(|(parser, _)| parser);
+    let writers = field_parsers.iter().map(|(_, writer)| writer);
+
+    let parse_body = quote! {
         use nom::Parser;
-        alt!(
-            #(#field_parsers,)*
-        )(input)
+        alt!(#(#parsers,)*)(input)
+    };
+
+    let write_body = quote! {
+        match self {
+            #(#writers,)*
+        }
     };
 
     // eprintln!("\n***\nglobal_impl: {}\n---\n", result);
 
-    Ok(result)
+    Ok((parse_body, write_body))
 }
 
 fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
@@ -230,7 +264,7 @@ fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
         Some(b) => string_to_tokens::<WhereClause>(b)?,
         _ => quote! {},
     };
-    let mut impl_body = match &ast.data {
+    let (mut impl_body, impl_write) = match &ast.data {
         syn::Data::Struct(data_struct) => generate_struct(data_struct),
         syn::Data::Enum(data_enum) => generate_enum(data_enum),
         syn::Data::Union(_) => panic!("Unions not supported"),
@@ -252,8 +286,12 @@ fn generate(ast: &syn::DeriveInput) -> Result<TokenStream> {
 
     Ok(quote! {
         #impl_head crate::Parse<'a> #impl_tail {
-            fn parse_tokens<'slice>(input: crate::tokens::Tokens<'slice, 'a>) -> crate::VerboseResult<crate::tokens::Tokens<'slice, 'a>, Self> {
+            fn parse_tokens<'slice>(input: crate::tokens::LexedSlice<'slice, 'a>) -> crate::VerboseResult<crate::tokens::LexedSlice<'slice, 'a>, Self> {
                 #impl_body
+            }
+
+            fn write(&self) -> String {
+                #impl_write
             }
         }
     }

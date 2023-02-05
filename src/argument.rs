@@ -2,7 +2,8 @@ use weedle_derive::Weedle;
 
 use crate::attribute::ExtendedAttributeList;
 use crate::common::{Default, Identifier, Punctuated};
-use crate::tokens::Tokens;
+use crate::term::Token;
+use crate::tokens::LexedSlice;
 use crate::types::{AttributedType, Type};
 use crate::{Parse, VerboseResult};
 
@@ -10,12 +11,14 @@ use crate::{Parse, VerboseResult};
 pub type ArgumentList<'a> = Punctuated<Argument<'a>, term!(,)>;
 
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-struct ArgumentName<'a>(&'a str);
+struct ArgumentName<'a>(&'a str, &'a str);
 
 impl<'a> Parse<'a> for ArgumentName<'a> {
-    fn parse_tokens<'slice>(input: Tokens<'slice, 'a>) -> VerboseResult<Tokens<'slice, 'a>, Self> {
+    fn parse_tokens<'slice>(
+        input: LexedSlice<'slice, 'a>,
+    ) -> VerboseResult<LexedSlice<'slice, 'a>, Self> {
         if let Ok((tokens, result)) = eat!(Identifier)(input) {
-            return Ok((tokens, ArgumentName(result.0)));
+            return Ok((tokens, ArgumentName(result.trivia, result.value.0)));
         }
         try_eat_keys!(
             ArgumentName,
@@ -48,11 +51,18 @@ impl<'a> Parse<'a> for ArgumentName<'a> {
         );
         nom::combinator::fail(input)
     }
+
+    fn write(&self) -> String {
+        unimplemented!()
+    }
 }
 
-impl<'a> From<ArgumentName<'a>> for Identifier<'a> {
+impl<'a> From<ArgumentName<'a>> for Token<'a, Identifier<'a>> {
     fn from(value: ArgumentName<'a>) -> Self {
-        Self(value.0)
+        Self {
+            trivia: value.0,
+            value: Identifier(value.1),
+        }
     }
 }
 
@@ -65,7 +75,7 @@ pub struct SingleArgument<'a> {
     pub optional: Option<term!(optional)>,
     pub type_: AttributedType<'a>,
     #[weedle(from = "ArgumentName")]
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
     #[weedle(cond = "optional.is_some()")]
     pub default: Option<Default<'a>>,
 }
@@ -76,7 +86,7 @@ pub struct VariadicArgument<'a> {
     pub attributes: Option<ExtendedAttributeList<'a>>,
     pub type_: Type<'a>,
     pub ellipsis: term!(...),
-    pub identifier: Identifier<'a>,
+    pub identifier: Token<'a, Identifier<'a>>,
 }
 
 /// Parses an argument. Ex: `double v1|double... v1s`
@@ -91,6 +101,7 @@ pub enum Argument<'a> {
 mod test {
     use super::*;
     use crate::literal::{DecLit, DefaultValue, IntegerLit};
+    use crate::term::Token;
     use crate::Parse;
 
     test!(should_parse_single_argument { "short a" =>
@@ -98,7 +109,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_none();
-        identifier.0 == "a";
+        identifier == Token { value: Identifier("a"), trivia: " " };
         default.is_none();
     });
 
@@ -106,7 +117,7 @@ mod test {
         "";
         VariadicArgument;
         attributes.is_none();
-        identifier.0 == "a";
+        identifier.value.0 == "a";
     });
 
     test!(should_parse_optional_single_argument { "optional short a" =>
@@ -114,7 +125,7 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier.0 == "a";
+        identifier == Token { value: Identifier("a"), trivia: " " };
         default.is_none();
     });
 
@@ -123,10 +134,10 @@ mod test {
         SingleArgument;
         attributes.is_none();
         optional.is_some();
-        identifier.0 == "a";
+        identifier == Token { value: Identifier("a"), trivia: " " };
         default == Some(Default {
-            assign: term!(=),
-            value: DefaultValue::Integer(IntegerLit::Dec(DecLit("5"))),
+            assign: Token { value: core::default::Default::default(), trivia: " " },
+            value: DefaultValue::Integer(Token { value: IntegerLit::Dec(DecLit("5")), trivia: " " }),
         });
     });
 

@@ -19,15 +19,15 @@ pub enum Terminal<'a> {
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Token<'a> {
-    pub value: Terminal<'a>,
+pub struct Lexed<'a> {
     pub trivia: &'a str,
+    pub value: Terminal<'a>,
     // TODO: Use https://github.com/fflorent/nom_locate/ ?
 }
 
-impl Token<'_> {
-    pub fn new<'a>((trivia, tag): (&'a str, Terminal<'a>)) -> Token<'a> {
-        Token { value: tag, trivia }
+impl Lexed<'_> {
+    pub fn new<'a>((trivia, value): (&'a str, Terminal<'a>)) -> Lexed<'a> {
+        Lexed { trivia, value }
     }
 }
 
@@ -54,12 +54,12 @@ fn tag(input: &str) -> NomResult<Terminal> {
     ))(input)
 }
 
-pub fn lex(input: &str) -> Result<Vec<Token>, nom::Err<nom::error::VerboseError<&str>>> {
+pub fn lex(input: &str) -> Result<Vec<Lexed>, nom::Err<nom::error::VerboseError<&str>>> {
     let (unread, (mut tokens, eof)) = tuple((
-        many0(tuple((sp, tag)).map(Token::new)),
-        tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Token {
-            value: Terminal::Eof(()),
+        many0(tuple((sp, tag)).map(Lexed::new)),
+        tuple((sp, nom::combinator::eof)).map(|(trivia, _)| Lexed {
             trivia,
+            value: Terminal::Eof(()),
         }),
     ))(input)?;
 
@@ -84,31 +84,31 @@ mod tests {
         assert!(matches!(
             &tokens[..],
             [
-                Token {
+                Lexed {
                     value: Terminal::Keyword(Keyword::Interface(_)),
                     ..
                 },
-                Token {
+                Lexed {
                     value: Terminal::Keyword(Keyword::Mixin(_)),
                     ..
                 },
-                Token {
+                Lexed {
                     value: Terminal::Identifier(_),
                     ..
                 },
-                Token {
+                Lexed {
                     value: Terminal::Keyword(Keyword::OpenBrace(_)),
                     ..
                 },
-                Token {
+                Lexed {
                     value: Terminal::Keyword(Keyword::CloseBrace(_)),
                     ..
                 },
-                Token {
+                Lexed {
                     value: Terminal::Keyword(Keyword::SemiColon(_)),
                     ..
                 },
-                Token {
+                Lexed {
                     value: Terminal::Eof(_),
                     ..
                 }
