@@ -1,87 +1,84 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Node",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
                 },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                Token {
-                                    trivia: "\n  ",
-                                    value: ReadOnly,
-                                },
-                            ),
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Node",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: DOMString,
-                                                },
-                                                q_mark: Some(
-                                                    Token {
-                                                        trivia: "",
-                                                        value: QMark,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: DOMString,
                                                     },
-                                                ),
-                                            },
+                                                    q_mark: Some(
+                                                        Token {
+                                                            trivia: "",
+                                                            value: QMark,
+                                                        },
+                                                    ),
+                                                },
+                                            ),
                                         ),
                                     ),
-                                ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "namespaceURI",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "namespaceURI",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n  // ...\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n  // ...\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

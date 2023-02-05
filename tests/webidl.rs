@@ -1,5 +1,5 @@
 use test_generator::test_resources;
-use weedle::term::Token;
+use weedle::{term::Token};
 
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
@@ -40,7 +40,7 @@ fn should_write_same(resource: &str) {
     let content = std::fs::read_to_string(resource).unwrap();
     let result = weedle::parse(&content).unwrap();
 
-    let written = weedle::Parse::write(&result);
+    let written = result.write();
     assert_eq!(written, content);
 }
 
@@ -49,7 +49,7 @@ pub fn should_parse_dom_webidl() {
     let content = std::fs::read_to_string("./tests/defs/dom.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 63);
+    assert_eq!(parsed.definitions.len(), 62);
 }
 
 #[test]
@@ -57,7 +57,7 @@ fn should_parse_html_webidl() {
     let content = std::fs::read_to_string("./tests/defs/html.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 326);
+    assert_eq!(parsed.definitions.len(), 325);
 }
 
 #[test]
@@ -65,7 +65,7 @@ fn should_parse_mediacapture_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/mediacapture-streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 38);
+    assert_eq!(parsed.definitions.len(), 37);
 }
 
 #[test]
@@ -73,7 +73,7 @@ fn should_parse_streams_webidl() {
     let content = std::fs::read_to_string("./tests/defs/streams.webidl").unwrap();
     let parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 38);
+    assert_eq!(parsed.definitions.len(), 37);
 }
 
 #[test]
@@ -83,9 +83,9 @@ fn interface_constructor() {
     let content = std::fs::read_to_string("./tests/defs/interface-constructor.webidl").unwrap();
     let mut parsed = weedle::parse(&content).unwrap();
 
-    assert_eq!(parsed.len(), 2);
+    assert_eq!(parsed.definitions.len(), 1);
 
-    let definition = parsed.pop().unwrap();
+    let definition = parsed.definitions.pop().unwrap();
 
     match definition {
         Definition::Interface(mut interface) => {
@@ -142,7 +142,6 @@ fn interface_constructor() {
                 _ => unreachable!(),
             }
         }
-        Definition::Eof(_) => (),
         _ => unreachable!(),
     }
 }

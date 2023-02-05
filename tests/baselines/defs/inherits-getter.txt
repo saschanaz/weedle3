@@ -1,223 +1,220 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Animal",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
+                },
+                identifier: Token {
                     trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                Token {
-                                    trivia: "\n\n  // A simple attribute that can be set to any string value.\n  ",
-                                    value: ReadOnly,
-                                },
-                            ),
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: DOMString,
-                                                },
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "name",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
+                    value: Identifier(
+                        "Animal",
                     ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
                 },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Person",
-                ),
-            },
-            inheritance: Some(
-                Inheritance {
-                    colon: Token {
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
                         trivia: " ",
-                        value: Colon,
+                        value: OpenBrace,
                     },
-                    identifier: Token {
-                        trivia: " ",
-                        value: Identifier(
-                            "Animal",
-                        ),
-                    },
-                },
-            ),
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: Some(
-                                Token {
-                                    trivia: "\n\n  // An attribute whose value cannot be assigned to.\n  ",
-                                    value: ReadOnly,
-                                },
-                            ),
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        Integer(
-                                            MayBeNull {
-                                                type_: Short(
-                                                    ShortType {
-                                                        unsigned: Some(
-                                                            Token {
-                                                                trivia: " ",
-                                                                value: Unsigned,
-                                                            },
-                                                        ),
-                                                        short: Token {
-                                                            trivia: " ",
-                                                            value: Short,
-                                                        },
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "age",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: Some(
-                                Inherit(
+                                modifier: None,
+                                readonly: Some(
                                     Token {
-                                        trivia: "\n\n  // An attribute that can raise an exception if it is set to an invalid value.\n  // Its getter behavior is inherited from Animal, and need not be specified\n  // the description of Person.\n  ",
-                                        value: Inherit,
+                                        trivia: "\n\n  // A simple attribute that can be set to any string value.\n  ",
+                                        value: ReadOnly,
                                     },
                                 ),
-                            ),
-                            readonly: None,
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: DOMString,
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: DOMString,
+                                                    },
+                                                    q_mark: None,
                                                 },
-                                                q_mark: None,
-                                            },
+                                            ),
                                         ),
                                     ),
-                                ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "name",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "name",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Person",
+                    ),
+                },
+                inheritance: Some(
+                    Inheritance {
+                        colon: Token {
+                            trivia: " ",
+                            value: Colon,
+                        },
+                        identifier: Token {
+                            trivia: " ",
+                            value: Identifier(
+                                "Animal",
+                            ),
+                        },
+                    },
+                ),
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n\n  // An attribute whose value cannot be assigned to.\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Integer(
+                                                MayBeNull {
+                                                    type_: Short(
+                                                        ShortType {
+                                                            unsigned: Some(
+                                                                Token {
+                                                                    trivia: " ",
+                                                                    value: Unsigned,
+                                                                },
+                                                            ),
+                                                            short: Token {
+                                                                trivia: " ",
+                                                                value: Short,
+                                                            },
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "age",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: Some(
+                                    Inherit(
+                                        Token {
+                                            trivia: "\n\n  // An attribute that can raise an exception if it is set to an invalid value.\n  // Its getter behavior is inherited from Animal, and need not be specified\n  // the description of Person.\n  ",
+                                            value: Inherit,
+                                        },
+                                    ),
+                                ),
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: DOMString,
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "name",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

@@ -1,254 +1,251 @@
-[
-    InterfaceMixin(
-        InterfaceMixinDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "// Extracted from https://heycam.github.io/webidl/#using-mixins-and-partials on 2017-11-02\n\n",
-                value: Interface,
-            },
-            mixin: Token {
-                trivia: " ",
-                value: Mixin,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "GlobalCrypto",
-                ),
-            },
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        InterfaceMixin(
+            InterfaceMixinDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "// Extracted from https://heycam.github.io/webidl/#using-mixins-and-partials on 2017-11-02\n\n",
+                    value: Interface,
                 },
-                body: [
-                    Attribute(
-                        AttributeMixinMember {
-                            attributes: None,
-                            stringifier: None,
-                            readonly: Some(
-                                Token {
-                                    trivia: "\n  ",
-                                    value: ReadOnly,
-                                },
-                            ),
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                mixin: Token {
+                    trivia: " ",
+                    value: Mixin,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "GlobalCrypto",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeMixinMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        Identifier(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "Crypto",
-                                                    ),
+                                stringifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Identifier(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "Crypto",
+                                                        ),
+                                                    },
+                                                    q_mark: None,
                                                 },
-                                                q_mark: None,
-                                            },
+                                            ),
                                         ),
                                     ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "crypto",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    IncludesStatement(
-        IncludesStatementDefinition {
-            attributes: None,
-            lhs_identifier: Token {
-                trivia: "\n\n",
-                value: Identifier(
-                    "Window",
-                ),
-            },
-            includes: Token {
-                trivia: " ",
-                value: Includes,
-            },
-            rhs_identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "GlobalCrypto",
-                ),
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    IncludesStatement(
-        IncludesStatementDefinition {
-            attributes: None,
-            lhs_identifier: Token {
-                trivia: "\n",
-                value: Identifier(
-                    "WorkerGlobalScope",
-                ),
-            },
-            includes: Token {
-                trivia: " ",
-                value: Includes,
-            },
-            rhs_identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "GlobalCrypto",
-                ),
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    PartialInterfaceMixin(
-        PartialInterfaceMixinDefinition {
-            attributes: None,
-            partial: Token {
-                trivia: "\n\n",
-                value: Partial,
-            },
-            interface: Token {
-                trivia: " ",
-                value: Interface,
-            },
-            mixin: Token {
-                trivia: " ",
-                value: Mixin,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "WindowOrWorkerGlobalScope",
-                ),
-            },
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    Attribute(
-                        AttributeMixinMember {
-                            attributes: None,
-                            stringifier: None,
-                            readonly: Some(
-                                Token {
-                                    trivia: "\n  ",
-                                    value: ReadOnly,
                                 },
-                            ),
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        Identifier(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "Crypto",
-                                                    ),
-                                                },
-                                                q_mark: None,
-                                            },
-                                        ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "crypto",
                                     ),
-                                ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "crypto",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
                 },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    InterfaceMixin(
-        InterfaceMixinDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            mixin: Token {
-                trivia: " ",
-                value: Mixin,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "_LocalCrypto",
-                ),
-            },
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [],
-                close_brace: Token {
+                semi_colon: Token {
                     trivia: "",
-                    value: CloseBrace,
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
+        ),
+        IncludesStatement(
+            IncludesStatementDefinition {
+                attributes: None,
+                lhs_identifier: Token {
+                    trivia: "\n\n",
+                    value: Identifier(
+                        "Window",
+                    ),
+                },
+                includes: Token {
+                    trivia: " ",
+                    value: Includes,
+                },
+                rhs_identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "GlobalCrypto",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+        IncludesStatement(
+            IncludesStatementDefinition {
+                attributes: None,
+                lhs_identifier: Token {
+                    trivia: "\n",
+                    value: Identifier(
+                        "WorkerGlobalScope",
+                    ),
+                },
+                includes: Token {
+                    trivia: " ",
+                    value: Includes,
+                },
+                rhs_identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "GlobalCrypto",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        PartialInterfaceMixin(
+            PartialInterfaceMixinDefinition {
+                attributes: None,
+                partial: Token {
+                    trivia: "\n\n",
+                    value: Partial,
+                },
+                interface: Token {
+                    trivia: " ",
+                    value: Interface,
+                },
+                mixin: Token {
+                    trivia: " ",
+                    value: Mixin,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "WindowOrWorkerGlobalScope",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeMixinMember {
+                                attributes: None,
+                                stringifier: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Identifier(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "Crypto",
+                                                        ),
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "crypto",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        InterfaceMixin(
+            InterfaceMixinDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                mixin: Token {
+                    trivia: " ",
+                    value: Mixin,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_LocalCrypto",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+    ],
+    trailing_trivia: "\n",
+}

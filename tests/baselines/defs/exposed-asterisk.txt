@@ -1,73 +1,70 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: Some(
-                Bracketed {
-                    open_bracket: Token {
-                        trivia: "",
-                        value: OpenBracket,
-                    },
-                    body: Punctuated {
-                        list: [
-                            Wildcard(
-                                ExtendedAttributeWildcard {
-                                    lhs_identifier: Token {
-                                        trivia: "",
-                                        value: Identifier(
-                                            "Exposed",
-                                        ),
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: Some(
+                    Bracketed {
+                        open_bracket: Token {
+                            trivia: "",
+                            value: OpenBracket,
+                        },
+                        body: Punctuated {
+                            list: [
+                                Wildcard(
+                                    ExtendedAttributeWildcard {
+                                        lhs_identifier: Token {
+                                            trivia: "",
+                                            value: Identifier(
+                                                "Exposed",
+                                            ),
+                                        },
+                                        assign: Token {
+                                            trivia: "",
+                                            value: Assign,
+                                        },
+                                        wildcard: Token {
+                                            trivia: "",
+                                            value: Wildcard,
+                                        },
                                     },
-                                    assign: Token {
-                                        trivia: "",
-                                        value: Assign,
-                                    },
-                                    wildcard: Token {
-                                        trivia: "",
-                                        value: Wildcard,
-                                    },
-                                },
-                            ),
-                        ],
-                        separator: [],
+                                ),
+                            ],
+                            separator: [],
+                        },
+                        close_bracket: Token {
+                            trivia: "",
+                            value: CloseBracket,
+                        },
                     },
-                    close_bracket: Token {
-                        trivia: "",
-                        value: CloseBracket,
-                    },
-                },
-            ),
-            interface: Token {
-                trivia: "\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "X",
                 ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
+                interface: Token {
+                    trivia: "\n",
+                    value: Interface,
+                },
+                identifier: Token {
                     trivia: " ",
-                    value: OpenBrace,
+                    value: Identifier(
+                        "X",
+                    ),
                 },
-                body: [],
-                close_brace: Token {
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
                     trivia: "",
-                    value: CloseBrace,
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

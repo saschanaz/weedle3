@@ -1,119 +1,116 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Person",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n\n",
+                    value: Interface,
                 },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n\n  // A simple attribute that can be set to any value the range an unsigned\n  // short can take.\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Person",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        Integer(
-                                            MayBeNull {
-                                                type_: Short(
-                                                    ShortType {
-                                                        unsigned: Some(
-                                                            Token {
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n\n  // A simple attribute that can be set to any value the range an unsigned\n  // short can take.\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Integer(
+                                                MayBeNull {
+                                                    type_: Short(
+                                                        ShortType {
+                                                            unsigned: Some(
+                                                                Token {
+                                                                    trivia: " ",
+                                                                    value: Unsigned,
+                                                                },
+                                                            ),
+                                                            short: Token {
                                                                 trivia: " ",
-                                                                value: Unsigned,
+                                                                value: Short,
                                                             },
-                                                        ),
-                                                        short: Token {
-                                                            trivia: " ",
-                                                            value: Short,
                                                         },
-                                                    },
-                                                ),
-                                                q_mark: None,
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "age",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n\n  // required is an allowed attribute name\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Any(
+                                            Token {
+                                                trivia: " ",
+                                                value: Any,
                                             },
                                         ),
                                     ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "age",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n\n  // required is an allowed attribute name\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Any(
-                                        Token {
-                                            trivia: " ",
-                                            value: Any,
-                                        },
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "required",
                                     ),
-                                ),
+                                },
+                                semi_colon: Token {
+                                    trivia: " ",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "required",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: " ",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

@@ -1,301 +1,298 @@
-[
-    Callback(
-        CallbackDefinition {
-            attributes: None,
-            callback: Token {
-                trivia: "",
-                value: Callback,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncOperationCallback",
-                ),
-            },
-            assign: Token {
-                trivia: " ",
-                value: Assign,
-            },
-            return_type: Single(
-                Distinguishable(
-                    Undefined(
-                        MayBeNull {
-                            type_: Token {
-                                trivia: " ",
-                                value: Undefined,
+Parsed {
+    definitions: [
+        Callback(
+            CallbackDefinition {
+                attributes: None,
+                callback: Token {
+                    trivia: "",
+                    value: Callback,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncOperationCallback",
+                    ),
+                },
+                assign: Token {
+                    trivia: " ",
+                    value: Assign,
+                },
+                return_type: Single(
+                    Distinguishable(
+                        Undefined(
+                            MayBeNull {
+                                type_: Token {
+                                    trivia: " ",
+                                    value: Undefined,
+                                },
+                                q_mark: None,
                             },
-                            q_mark: None,
-                        },
+                        ),
                     ),
                 ),
-            ),
-            arguments: Parenthesized {
-                open_paren: Token {
-                    trivia: " ",
-                    value: OpenParen,
-                },
-                body: Punctuated {
-                    list: [
-                        Single(
-                            SingleArgument {
-                                attributes: None,
-                                optional: None,
-                                type_: AttributedType {
+                arguments: Parenthesized {
+                    open_paren: Token {
+                        trivia: " ",
+                        value: OpenParen,
+                    },
+                    body: Punctuated {
+                        list: [
+                            Single(
+                                SingleArgument {
                                     attributes: None,
-                                    type_: Single(
-                                        Distinguishable(
-                                            DOMString(
-                                                MayBeNull {
-                                                    type_: Token {
-                                                        trivia: "",
-                                                        value: DOMString,
+                                    optional: None,
+                                    type_: AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            Distinguishable(
+                                                DOMString(
+                                                    MayBeNull {
+                                                        type_: Token {
+                                                            trivia: "",
+                                                            value: DOMString,
+                                                        },
+                                                        q_mark: None,
                                                     },
-                                                    q_mark: None,
+                                                ),
+                                            ),
+                                        ),
+                                    },
+                                    identifier: Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "status",
+                                        ),
+                                    },
+                                    default: None,
+                                },
+                            ),
+                        ],
+                        separator: [],
+                    },
+                    close_paren: Token {
+                        trivia: "",
+                        value: CloseParen,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        CallbackInterface(
+            CallbackInterfaceDefinition {
+                attributes: None,
+                callback: Token {
+                    trivia: "\n\n",
+                    value: Callback,
+                },
+                interface: Token {
+                    trivia: " ",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "EventHandler",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Operation(
+                            RegularOperationMember {
+                                attributes: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Undefined(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n  ",
+                                                    value: Undefined,
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "eventOccurred",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                DOMString(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: DOMString,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "details",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Callback(
+            CallbackDefinition {
+                attributes: None,
+                callback: Token {
+                    trivia: "\n\n",
+                    value: Callback,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "SortCallback",
+                    ),
+                },
+                assign: Token {
+                    trivia: " ",
+                    value: Assign,
+                },
+                return_type: Single(
+                    Distinguishable(
+                        Boolean(
+                            MayBeNull {
+                                type_: Token {
+                                    trivia: " ",
+                                    value: Boolean,
+                                },
+                                q_mark: None,
+                            },
+                        ),
+                    ),
+                ),
+                arguments: Parenthesized {
+                    open_paren: Token {
+                        trivia: " ",
+                        value: OpenParen,
+                    },
+                    body: Punctuated {
+                        list: [
+                            Single(
+                                SingleArgument {
+                                    attributes: None,
+                                    optional: None,
+                                    type_: AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            Any(
+                                                Token {
+                                                    trivia: "",
+                                                    value: Any,
                                                 },
                                             ),
                                         ),
-                                    ),
-                                },
-                                identifier: Token {
-                                    trivia: " ",
-                                    value: Identifier(
-                                        "status",
-                                    ),
-                                },
-                                default: None,
-                            },
-                        ),
-                    ],
-                    separator: [],
-                },
-                close_paren: Token {
-                    trivia: "",
-                    value: CloseParen,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    CallbackInterface(
-        CallbackInterfaceDefinition {
-            attributes: None,
-            callback: Token {
-                trivia: "\n\n",
-                value: Callback,
-            },
-            interface: Token {
-                trivia: " ",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "EventHandler",
-                ),
-            },
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    Operation(
-                        RegularOperationMember {
-                            attributes: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Undefined(
-                                        MayBeNull {
-                                            type_: Token {
-                                                trivia: "\n  ",
-                                                value: Undefined,
-                                            },
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Token {
-                                    trivia: " ",
-                                    value: Identifier(
-                                        "eventOccurred",
-                                    ),
+                                    },
+                                    identifier: Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "a",
+                                        ),
+                                    },
+                                    default: None,
                                 },
                             ),
-                            args: Parenthesized {
-                                open_paren: Token {
-                                    trivia: "",
-                                    value: OpenParen,
-                                },
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            DOMString(
-                                                                MayBeNull {
-                                                                    type_: Token {
-                                                                        trivia: "",
-                                                                        value: DOMString,
-                                                                    },
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Token {
+                            Single(
+                                SingleArgument {
+                                    attributes: None,
+                                    optional: None,
+                                    type_: AttributedType {
+                                        attributes: None,
+                                        type_: Single(
+                                            Any(
+                                                Token {
                                                     trivia: " ",
-                                                    value: Identifier(
-                                                        "details",
-                                                    ),
+                                                    value: Any,
                                                 },
-                                                default: None,
-                                            },
+                                            ),
                                         ),
-                                    ],
-                                    separator: [],
+                                    },
+                                    identifier: Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "b",
+                                        ),
+                                    },
+                                    default: None,
                                 },
-                                close_paren: Token {
-                                    trivia: "",
-                                    value: CloseParen,
-                                },
-                            },
-                            semi_colon: Token {
+                            ),
+                        ],
+                        separator: [
+                            Token {
                                 trivia: "",
-                                value: SemiColon,
+                                value: Comma,
                             },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ],
+                    },
+                    close_paren: Token {
+                        trivia: "",
+                        value: CloseParen,
+                    },
                 },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Callback(
-        CallbackDefinition {
-            attributes: None,
-            callback: Token {
-                trivia: "\n\n",
-                value: Callback,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "SortCallback",
-                ),
-            },
-            assign: Token {
-                trivia: " ",
-                value: Assign,
-            },
-            return_type: Single(
-                Distinguishable(
-                    Boolean(
-                        MayBeNull {
-                            type_: Token {
-                                trivia: " ",
-                                value: Boolean,
-                            },
-                            q_mark: None,
-                        },
-                    ),
-                ),
-            ),
-            arguments: Parenthesized {
-                open_paren: Token {
-                    trivia: " ",
-                    value: OpenParen,
-                },
-                body: Punctuated {
-                    list: [
-                        Single(
-                            SingleArgument {
-                                attributes: None,
-                                optional: None,
-                                type_: AttributedType {
-                                    attributes: None,
-                                    type_: Single(
-                                        Any(
-                                            Token {
-                                                trivia: "",
-                                                value: Any,
-                                            },
-                                        ),
-                                    ),
-                                },
-                                identifier: Token {
-                                    trivia: " ",
-                                    value: Identifier(
-                                        "a",
-                                    ),
-                                },
-                                default: None,
-                            },
-                        ),
-                        Single(
-                            SingleArgument {
-                                attributes: None,
-                                optional: None,
-                                type_: AttributedType {
-                                    attributes: None,
-                                    type_: Single(
-                                        Any(
-                                            Token {
-                                                trivia: " ",
-                                                value: Any,
-                                            },
-                                        ),
-                                    ),
-                                },
-                                identifier: Token {
-                                    trivia: " ",
-                                    value: Identifier(
-                                        "b",
-                                    ),
-                                },
-                                default: None,
-                            },
-                        ),
-                    ],
-                    separator: [
-                        Token {
-                            trivia: "",
-                            value: Comma,
-                        },
-                    ],
-                },
-                close_paren: Token {
+                semi_colon: Token {
                     trivia: "",
-                    value: CloseParen,
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

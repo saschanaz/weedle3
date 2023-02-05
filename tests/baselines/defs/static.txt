@@ -1,408 +1,405 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Point",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+                    value: Interface,
+                },
+                identifier: Token {
                     trivia: " ",
-                    value: OpenBrace,
+                    value: Identifier(
+                        "Point",
+                    ),
                 },
-                body: [],
-                close_brace: Token {
-                    trivia: " /* ... */ ",
-                    value: CloseBrace,
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: " /* ... */ ",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Circle",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
                     trivia: " ",
-                    value: OpenBrace,
+                    value: Identifier(
+                        "Circle",
+                    ),
                 },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        FloatingPoint(
-                                            MayBeNull {
-                                                type_: Float(
-                                                    FloatType {
-                                                        unrestricted: None,
-                                                        float: Token {
-                                                            trivia: " ",
-                                                            value: Float,
-                                                        },
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "cx",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        FloatingPoint(
-                                            MayBeNull {
-                                                type_: Float(
-                                                    FloatType {
-                                                        unrestricted: None,
-                                                        float: Token {
-                                                            trivia: " ",
-                                                            value: Float,
-                                                        },
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "cy",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        FloatingPoint(
-                                            MayBeNull {
-                                                type_: Float(
-                                                    FloatType {
-                                                        unrestricted: None,
-                                                        float: Token {
-                                                            trivia: " ",
-                                                            value: Float,
-                                                        },
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "radius",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: Some(
-                                Static(
-                                    Token {
-                                        trivia: "\n\n  ",
-                                        value: Static,
-                                    },
-                                ),
-                            ),
-                            readonly: Some(
-                                Token {
-                                    trivia: " ",
-                                    value: ReadOnly,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n  ",
+                                    value: Attribute,
                                 },
-                            ),
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        Integer(
-                                            MayBeNull {
-                                                type_: Long(
-                                                    LongType {
-                                                        unsigned: None,
-                                                        long: Token {
-                                                            trivia: " ",
-                                                            value: Long,
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            FloatingPoint(
+                                                MayBeNull {
+                                                    type_: Float(
+                                                        FloatType {
+                                                            unrestricted: None,
+                                                            float: Token {
+                                                                trivia: " ",
+                                                                value: Float,
+                                                            },
                                                         },
-                                                    },
-                                                ),
-                                                q_mark: None,
-                                            },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
                                         ),
                                     ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "triangulationCount",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: Some(
-                                Static(
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Static,
-                                    },
-                                ),
-                            ),
-                            return_type: Single(
-                                Distinguishable(
-                                    Identifier(
-                                        MayBeNull {
-                                            type_: Token {
-                                                trivia: " ",
-                                                value: Identifier(
-                                                    "Point",
-                                                ),
-                                            },
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Token {
+                                },
+                                identifier: Token {
                                     trivia: " ",
                                     value: Identifier(
-                                        "triangulate",
+                                        "cx",
                                     ),
                                 },
-                            ),
-                            args: Parenthesized {
-                                open_paren: Token {
+                                semi_colon: Token {
                                     trivia: "",
-                                    value: OpenParen,
-                                },
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Token {
-                                                                        trivia: "",
-                                                                        value: Identifier(
-                                                                            "Circle",
-                                                                        ),
-                                                                    },
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "c1",
-                                                    ),
-                                                },
-                                                default: None,
-                                            },
-                                        ),
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Token {
-                                                                        trivia: " ",
-                                                                        value: Identifier(
-                                                                            "Circle",
-                                                                        ),
-                                                                    },
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "c2",
-                                                    ),
-                                                },
-                                                default: None,
-                                            },
-                                        ),
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Identifier(
-                                                                MayBeNull {
-                                                                    type_: Token {
-                                                                        trivia: " ",
-                                                                        value: Identifier(
-                                                                            "Circle",
-                                                                        ),
-                                                                    },
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "c3",
-                                                    ),
-                                                },
-                                                default: None,
-                                            },
-                                        ),
-                                    ],
-                                    separator: [
-                                        Token {
-                                            trivia: "",
-                                            value: Comma,
-                                        },
-                                        Token {
-                                            trivia: "",
-                                            value: Comma,
-                                        },
-                                    ],
-                                },
-                                close_paren: Token {
-                                    trivia: "",
-                                    value: CloseParen,
+                                    value: SemiColon,
                                 },
                             },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            FloatingPoint(
+                                                MayBeNull {
+                                                    type_: Float(
+                                                        FloatType {
+                                                            unrestricted: None,
+                                                            float: Token {
+                                                                trivia: " ",
+                                                                value: Float,
+                                                            },
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "cy",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            FloatingPoint(
+                                                MayBeNull {
+                                                    type_: Float(
+                                                        FloatType {
+                                                            unrestricted: None,
+                                                            float: Token {
+                                                                trivia: " ",
+                                                                value: Float,
+                                                            },
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "radius",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: Some(
+                                    Static(
+                                        Token {
+                                            trivia: "\n\n  ",
+                                            value: Static,
+                                        },
+                                    ),
+                                ),
+                                readonly: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            Integer(
+                                                MayBeNull {
+                                                    type_: Long(
+                                                        LongType {
+                                                            unsigned: None,
+                                                            long: Token {
+                                                                trivia: " ",
+                                                                value: Long,
+                                                            },
+                                                        },
+                                                    ),
+                                                    q_mark: None,
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "triangulationCount",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: Some(
+                                    Static(
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Static,
+                                        },
+                                    ),
+                                ),
+                                return_type: Single(
+                                    Distinguishable(
+                                        Identifier(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: " ",
+                                                    value: Identifier(
+                                                        "Point",
+                                                    ),
+                                                },
+                                                q_mark: None,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "triangulate",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "Circle",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "c1",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: " ",
+                                                                            value: Identifier(
+                                                                                "Circle",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "c2",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Identifier(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: " ",
+                                                                            value: Identifier(
+                                                                                "Circle",
+                                                                            ),
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "c3",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                        ],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "",
+}

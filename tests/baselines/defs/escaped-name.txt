@@ -1,77 +1,74 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "_Iroha",
-                ),
-            },
-            inheritance: Some(
-                Inheritance {
-                    colon: Token {
-                        trivia: " ",
-                        value: Colon,
-                    },
-                    identifier: Token {
-                        trivia: " ",
-                        value: Identifier(
-                            "_Magic",
-                        ),
-                    },
-                },
-            ),
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [],
-                close_brace: Token {
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
                     trivia: "",
-                    value: CloseBrace,
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_Iroha",
+                    ),
+                },
+                inheritance: Some(
+                    Inheritance {
+                        colon: Token {
+                            trivia: " ",
+                            value: Colon,
+                        },
+                        identifier: Token {
+                            trivia: " ",
+                            value: Identifier(
+                                "_Magic",
+                            ),
+                        },
+                    },
+                ),
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [],
+                    close_brace: Token {
+                        trivia: "",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
+        ),
+        IncludesStatement(
+            IncludesStatementDefinition {
+                attributes: None,
+                lhs_identifier: Token {
+                    trivia: "\n",
+                    value: Identifier(
+                        "_Iroha",
+                    ),
+                },
+                includes: Token {
+                    trivia: " ",
+                    value: Includes,
+                },
+                rhs_identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "_Color",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-        },
-    ),
-    IncludesStatement(
-        IncludesStatementDefinition {
-            attributes: None,
-            lhs_identifier: Token {
-                trivia: "\n",
-                value: Identifier(
-                    "_Iroha",
-                ),
-            },
-            includes: Token {
-                trivia: " ",
-                value: Includes,
-            },
-            rhs_identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "_Color",
-                ),
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

@@ -1,372 +1,369 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "MapLike",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
                 },
-                body: [
-                    Maplike(
-                        MaplikeInterfaceMember {
-                            attributes: None,
-                            readonly: None,
-                            maplike: Token {
-                                trivia: "\n  ",
-                                value: Maplike,
-                            },
-                            generics: Generics {
-                                open_angle: Token {
-                                    trivia: "",
-                                    value: LessThan,
-                                },
-                                body: (
-                                    AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                Integer(
-                                                    MayBeNull {
-                                                        type_: Long(
-                                                            LongType {
-                                                                unsigned: None,
-                                                                long: Token {
-                                                                    trivia: "",
-                                                                    value: Long,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    },
-                                    Token {
-                                        trivia: "",
-                                        value: Comma,
-                                    },
-                                    AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                FloatingPoint(
-                                                    MayBeNull {
-                                                        type_: Float(
-                                                            FloatType {
-                                                                unrestricted: None,
-                                                                float: Token {
-                                                                    trivia: " ",
-                                                                    value: Float,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    },
-                                ),
-                                close_angle: Token {
-                                    trivia: "",
-                                    value: GreaterThan,
-                                },
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "MapLike",
                     ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
                 },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "ReadOnlyMapLike",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    Maplike(
-                        MaplikeInterfaceMember {
-                            attributes: None,
-                            readonly: Some(
-                                Token {
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Maplike(
+                            MaplikeInterfaceMember {
+                                attributes: None,
+                                readonly: None,
+                                maplike: Token {
                                     trivia: "\n  ",
-                                    value: ReadOnly,
+                                    value: Maplike,
                                 },
-                            ),
-                            maplike: Token {
-                                trivia: " ",
-                                value: Maplike,
-                            },
-                            generics: Generics {
-                                open_angle: Token {
-                                    trivia: "",
-                                    value: LessThan,
-                                },
-                                body: (
-                                    AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                Integer(
-                                                    MayBeNull {
-                                                        type_: Long(
-                                                            LongType {
-                                                                unsigned: None,
-                                                                long: Token {
-                                                                    trivia: "",
-                                                                    value: Long,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    },
-                                    Token {
+                                generics: Generics {
+                                    open_angle: Token {
                                         trivia: "",
-                                        value: Comma,
+                                        value: LessThan,
                                     },
-                                    AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                FloatingPoint(
-                                                    MayBeNull {
-                                                        type_: Float(
-                                                            FloatType {
-                                                                unrestricted: None,
-                                                                float: Token {
-                                                                    trivia: " ",
-                                                                    value: Float,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    },
-                                ),
-                                close_angle: Token {
-                                    trivia: "",
-                                    value: GreaterThan,
-                                },
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n// Extracted from https://heycam.github.io/webidl/#idl-type-extended-attribute-associated-with on 2017-07-01\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "I",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    Maplike(
-                        MaplikeInterfaceMember {
-                            attributes: None,
-                            readonly: None,
-                            maplike: Token {
-                                trivia: "\n    ",
-                                value: Maplike,
-                            },
-                            generics: Generics {
-                                open_angle: Token {
-                                    trivia: "",
-                                    value: LessThan,
-                                },
-                                body: (
-                                    AttributedType {
-                                        attributes: Some(
-                                            Bracketed {
-                                                open_bracket: Token {
-                                                    trivia: "",
-                                                    value: OpenBracket,
-                                                },
-                                                body: Punctuated {
-                                                    list: [
-                                                        NoArgs(
-                                                            ExtendedAttributeNoArgs(
-                                                                Token {
-                                                                    trivia: "",
-                                                                    value: Identifier(
-                                                                        "XAttr2",
-                                                                    ),
+                                    body: (
+                                        AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    Integer(
+                                                        MayBeNull {
+                                                            type_: Long(
+                                                                LongType {
+                                                                    unsigned: None,
+                                                                    long: Token {
+                                                                        trivia: "",
+                                                                        value: Long,
+                                                                    },
                                                                 },
                                                             ),
-                                                        ),
-                                                    ],
-                                                    separator: [],
-                                                },
-                                                close_bracket: Token {
-                                                    trivia: "",
-                                                    value: CloseBracket,
-                                                },
-                                            },
-                                        ),
-                                        type_: Single(
-                                            Distinguishable(
-                                                DOMString(
-                                                    MayBeNull {
-                                                        type_: Token {
-                                                            trivia: " ",
-                                                            value: DOMString,
+                                                            q_mark: None,
                                                         },
-                                                        q_mark: None,
-                                                    },
+                                                    ),
                                                 ),
                                             ),
-                                        ),
-                                    },
-                                    Token {
-                                        trivia: "",
-                                        value: Comma,
-                                    },
-                                    AttributedType {
-                                        attributes: Some(
-                                            Bracketed {
-                                                open_bracket: Token {
-                                                    trivia: " ",
-                                                    value: OpenBracket,
-                                                },
-                                                body: Punctuated {
-                                                    list: [
-                                                        NoArgs(
-                                                            ExtendedAttributeNoArgs(
-                                                                Token {
-                                                                    trivia: "",
-                                                                    value: Identifier(
-                                                                        "XAttr3",
-                                                                    ),
+                                        },
+                                        Token {
+                                            trivia: "",
+                                            value: Comma,
+                                        },
+                                        AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    FloatingPoint(
+                                                        MayBeNull {
+                                                            type_: Float(
+                                                                FloatType {
+                                                                    unrestricted: None,
+                                                                    float: Token {
+                                                                        trivia: " ",
+                                                                        value: Float,
+                                                                    },
                                                                 },
                                                             ),
-                                                        ),
-                                                    ],
-                                                    separator: [],
-                                                },
-                                                close_bracket: Token {
-                                                    trivia: "",
-                                                    value: CloseBracket,
-                                                },
-                                            },
-                                        ),
-                                        type_: Single(
-                                            Distinguishable(
-                                                Integer(
-                                                    MayBeNull {
-                                                        type_: Long(
-                                                            LongType {
-                                                                unsigned: None,
-                                                                long: Token {
-                                                                    trivia: " ",
-                                                                    value: Long,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
+                                                            q_mark: None,
+                                                        },
+                                                    ),
                                                 ),
                                             ),
-                                        ),
+                                        },
+                                    ),
+                                    close_angle: Token {
+                                        trivia: "",
+                                        value: GreaterThan,
                                     },
-                                ),
-                                close_angle: Token {
+                                },
+                                semi_colon: Token {
                                     trivia: "",
-                                    value: GreaterThan,
+                                    value: SemiColon,
                                 },
                             },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "ReadOnlyMapLike",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Maplike(
+                            MaplikeInterfaceMember {
+                                attributes: None,
+                                readonly: Some(
+                                    Token {
+                                        trivia: "\n  ",
+                                        value: ReadOnly,
+                                    },
+                                ),
+                                maplike: Token {
+                                    trivia: " ",
+                                    value: Maplike,
+                                },
+                                generics: Generics {
+                                    open_angle: Token {
+                                        trivia: "",
+                                        value: LessThan,
+                                    },
+                                    body: (
+                                        AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    Integer(
+                                                        MayBeNull {
+                                                            type_: Long(
+                                                                LongType {
+                                                                    unsigned: None,
+                                                                    long: Token {
+                                                                        trivia: "",
+                                                                        value: Long,
+                                                                    },
+                                                                },
+                                                            ),
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                        Token {
+                                            trivia: "",
+                                            value: Comma,
+                                        },
+                                        AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    FloatingPoint(
+                                                        MayBeNull {
+                                                            type_: Float(
+                                                                FloatType {
+                                                                    unrestricted: None,
+                                                                    float: Token {
+                                                                        trivia: " ",
+                                                                        value: Float,
+                                                                    },
+                                                                },
+                                                            ),
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                    close_angle: Token {
+                                        trivia: "",
+                                        value: GreaterThan,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n// Extracted from https://heycam.github.io/webidl/#idl-type-extended-attribute-associated-with on 2017-07-01\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "I",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Maplike(
+                            MaplikeInterfaceMember {
+                                attributes: None,
+                                readonly: None,
+                                maplike: Token {
+                                    trivia: "\n    ",
+                                    value: Maplike,
+                                },
+                                generics: Generics {
+                                    open_angle: Token {
+                                        trivia: "",
+                                        value: LessThan,
+                                    },
+                                    body: (
+                                        AttributedType {
+                                            attributes: Some(
+                                                Bracketed {
+                                                    open_bracket: Token {
+                                                        trivia: "",
+                                                        value: OpenBracket,
+                                                    },
+                                                    body: Punctuated {
+                                                        list: [
+                                                            NoArgs(
+                                                                ExtendedAttributeNoArgs(
+                                                                    Token {
+                                                                        trivia: "",
+                                                                        value: Identifier(
+                                                                            "XAttr2",
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ],
+                                                        separator: [],
+                                                    },
+                                                    close_bracket: Token {
+                                                        trivia: "",
+                                                        value: CloseBracket,
+                                                    },
+                                                },
+                                            ),
+                                            type_: Single(
+                                                Distinguishable(
+                                                    DOMString(
+                                                        MayBeNull {
+                                                            type_: Token {
+                                                                trivia: " ",
+                                                                value: DOMString,
+                                                            },
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                        Token {
+                                            trivia: "",
+                                            value: Comma,
+                                        },
+                                        AttributedType {
+                                            attributes: Some(
+                                                Bracketed {
+                                                    open_bracket: Token {
+                                                        trivia: " ",
+                                                        value: OpenBracket,
+                                                    },
+                                                    body: Punctuated {
+                                                        list: [
+                                                            NoArgs(
+                                                                ExtendedAttributeNoArgs(
+                                                                    Token {
+                                                                        trivia: "",
+                                                                        value: Identifier(
+                                                                            "XAttr3",
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ],
+                                                        separator: [],
+                                                    },
+                                                    close_bracket: Token {
+                                                        trivia: "",
+                                                        value: CloseBracket,
+                                                    },
+                                                },
+                                            ),
+                                            type_: Single(
+                                                Distinguishable(
+                                                    Integer(
+                                                        MayBeNull {
+                                                            type_: Long(
+                                                                LongType {
+                                                                    unsigned: None,
+                                                                    long: Token {
+                                                                        trivia: " ",
+                                                                        value: Long,
+                                                                    },
+                                                                },
+                                                            ),
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                    close_angle: Token {
+                                        trivia: "",
+                                        value: GreaterThan,
+                                    },
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+    ],
+    trailing_trivia: "\n",
+}

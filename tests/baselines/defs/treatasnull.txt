@@ -1,225 +1,222 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Dog",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+                    value: Interface,
                 },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Dog",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: DOMString,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: DOMString,
+                                                    },
+                                                    q_mark: None,
                                                 },
-                                                q_mark: None,
-                                            },
+                                            ),
                                         ),
                                     ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "name",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n  ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
-                                attributes: None,
-                                type_: Single(
-                                    Distinguishable(
-                                        DOMString(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: DOMString,
-                                                },
-                                                q_mark: None,
-                                            },
-                                        ),
-                                    ),
-                                ),
-                            },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "owner",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Operation(
-                        OperationInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            return_type: Single(
-                                Distinguishable(
-                                    Boolean(
-                                        MayBeNull {
-                                            type_: Token {
-                                                trivia: "\n\n  ",
-                                                value: Boolean,
-                                            },
-                                            q_mark: None,
-                                        },
-                                    ),
-                                ),
-                            ),
-                            identifier: Some(
-                                Token {
+                                },
+                                identifier: Token {
                                     trivia: " ",
                                     value: Identifier(
-                                        "isMemberOfBreed",
+                                        "name",
                                     ),
                                 },
-                            ),
-                            args: Parenthesized {
-                                open_paren: Token {
+                                semi_colon: Token {
                                     trivia: "",
-                                    value: OpenParen,
+                                    value: SemiColon,
                                 },
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: Some(
-                                                    Bracketed {
-                                                        open_bracket: Token {
-                                                            trivia: "",
-                                                            value: OpenBracket,
-                                                        },
-                                                        body: Punctuated {
-                                                            list: [
-                                                                Ident(
-                                                                    ExtendedAttributeIdent {
-                                                                        lhs_identifier: Token {
-                                                                            trivia: "",
-                                                                            value: Identifier(
-                                                                                "TreatNullAs",
-                                                                            ),
-                                                                        },
-                                                                        assign: Token {
-                                                                            trivia: "",
-                                                                            value: Assign,
-                                                                        },
-                                                                        rhs: Token {
-                                                                            trivia: "",
-                                                                            value: Identifier(
-                                                                                "EmptyString",
-                                                                            ),
-                                                                        },
-                                                                    },
-                                                                ),
-                                                            ],
-                                                            separator: [],
-                                                        },
-                                                        close_bracket: Token {
-                                                            trivia: "",
-                                                            value: CloseBracket,
-                                                        },
+                            },
+                        ),
+                        Attribute(
+                            AttributeInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n  ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Distinguishable(
+                                            DOMString(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: DOMString,
                                                     },
-                                                ),
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            DOMString(
-                                                                MayBeNull {
-                                                                    type_: Token {
-                                                                        trivia: " ",
-                                                                        value: DOMString,
-                                                                    },
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
+                                                    q_mark: None,
                                                 },
-                                                identifier: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "breedName",
-                                                    ),
+                                            ),
+                                        ),
+                                    ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "owner",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Operation(
+                            OperationInterfaceMember {
+                                attributes: None,
+                                modifier: None,
+                                return_type: Single(
+                                    Distinguishable(
+                                        Boolean(
+                                            MayBeNull {
+                                                type_: Token {
+                                                    trivia: "\n\n  ",
+                                                    value: Boolean,
                                                 },
-                                                default: None,
+                                                q_mark: None,
                                             },
                                         ),
-                                    ],
-                                    separator: [],
+                                    ),
+                                ),
+                                identifier: Some(
+                                    Token {
+                                        trivia: " ",
+                                        value: Identifier(
+                                            "isMemberOfBreed",
+                                        ),
+                                    },
+                                ),
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
+                                    },
+                                    body: Punctuated {
+                                        list: [
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: Some(
+                                                        Bracketed {
+                                                            open_bracket: Token {
+                                                                trivia: "",
+                                                                value: OpenBracket,
+                                                            },
+                                                            body: Punctuated {
+                                                                list: [
+                                                                    Ident(
+                                                                        ExtendedAttributeIdent {
+                                                                            lhs_identifier: Token {
+                                                                                trivia: "",
+                                                                                value: Identifier(
+                                                                                    "TreatNullAs",
+                                                                                ),
+                                                                            },
+                                                                            assign: Token {
+                                                                                trivia: "",
+                                                                                value: Assign,
+                                                                            },
+                                                                            rhs: Token {
+                                                                                trivia: "",
+                                                                                value: Identifier(
+                                                                                    "EmptyString",
+                                                                                ),
+                                                                            },
+                                                                        },
+                                                                    ),
+                                                                ],
+                                                                separator: [],
+                                                            },
+                                                            close_bracket: Token {
+                                                                trivia: "",
+                                                                value: CloseBracket,
+                                                            },
+                                                        },
+                                                    ),
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                DOMString(
+                                                                    MayBeNull {
+                                                                        type_: Token {
+                                                                            trivia: " ",
+                                                                            value: DOMString,
+                                                                        },
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    },
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "breedName",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
+                                            ),
+                                        ],
+                                        separator: [],
+                                    },
+                                    close_paren: Token {
+                                        trivia: "",
+                                        value: CloseParen,
+                                    },
                                 },
-                                close_paren: Token {
+                                semi_colon: Token {
                                     trivia: "",
-                                    value: CloseParen,
+                                    value: SemiColon,
                                 },
                             },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "",
+}

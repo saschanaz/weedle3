@@ -1,907 +1,904 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncIterable",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
                 },
-                body: [
-                    AsyncIterable(
-                        Double(
-                            DoubleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: (
-                                        AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    Integer(
-                                                        MayBeNull {
-                                                            type_: Long(
-                                                                LongType {
-                                                                    unsigned: None,
-                                                                    long: Token {
-                                                                        trivia: "",
-                                                                        value: Long,
-                                                                    },
-                                                                },
-                                                            ),
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
-                                        },
-                                        Token {
-                                            trivia: "",
-                                            value: Comma,
-                                        },
-                                        AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    FloatingPoint(
-                                                        MayBeNull {
-                                                            type_: Float(
-                                                                FloatType {
-                                                                    unrestricted: None,
-                                                                    float: Token {
-                                                                        trivia: " ",
-                                                                        value: Float,
-                                                                    },
-                                                                },
-                                                            ),
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
-                                        },
-                                    ),
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: None,
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
-                                },
-                            },
-                        ),
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncIterable",
                     ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
                 },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncIterableWithExtAttr",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    AsyncIterable(
-                        Double(
-                            DoubleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: (
-                                        AttributedType {
-                                            attributes: Some(
-                                                Bracketed {
-                                                    open_bracket: Token {
-                                                        trivia: "",
-                                                        value: OpenBracket,
-                                                    },
-                                                    body: Punctuated {
-                                                        list: [
-                                                            NoArgs(
-                                                                ExtendedAttributeNoArgs(
-                                                                    Token {
-                                                                        trivia: "",
-                                                                        value: Identifier(
-                                                                            "XAttr2",
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                        ],
-                                                        separator: [],
-                                                    },
-                                                    close_bracket: Token {
-                                                        trivia: "",
-                                                        value: CloseBracket,
-                                                    },
-                                                },
-                                            ),
-                                            type_: Single(
-                                                Distinguishable(
-                                                    DOMString(
-                                                        MayBeNull {
-                                                            type_: Token {
-                                                                trivia: " ",
-                                                                value: DOMString,
-                                                            },
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Double(
+                                DoubleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
                                         },
                                         Token {
-                                            trivia: "",
-                                            value: Comma,
-                                        },
-                                        AttributedType {
-                                            attributes: Some(
-                                                Bracketed {
-                                                    open_bracket: Token {
-                                                        trivia: " ",
-                                                        value: OpenBracket,
-                                                    },
-                                                    body: Punctuated {
-                                                        list: [
-                                                            NoArgs(
-                                                                ExtendedAttributeNoArgs(
-                                                                    Token {
-                                                                        trivia: "",
-                                                                        value: Identifier(
-                                                                            "XAttr3",
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                        ],
-                                                        separator: [],
-                                                    },
-                                                    close_bracket: Token {
-                                                        trivia: "",
-                                                        value: CloseBracket,
-                                                    },
-                                                },
-                                            ),
-                                            type_: Single(
-                                                Distinguishable(
-                                                    Integer(
-                                                        MayBeNull {
-                                                            type_: Long(
-                                                                LongType {
-                                                                    unsigned: None,
-                                                                    long: Token {
-                                                                        trivia: " ",
-                                                                        value: Long,
-                                                                    },
-                                                                },
-                                                            ),
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
+                                            trivia: " ",
+                                            value: Iterable,
                                         },
                                     ),
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: None,
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
-                                },
-                            },
-                        ),
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncIterableWithNoParam",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    AsyncIterable(
-                        Double(
-                            DoubleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: (
-                                        AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    FloatingPoint(
-                                                        MayBeNull {
-                                                            type_: Float(
-                                                                FloatType {
-                                                                    unrestricted: None,
-                                                                    float: Token {
-                                                                        trivia: "",
-                                                                        value: Float,
-                                                                    },
-                                                                },
-                                                            ),
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
-                                        },
-                                        Token {
+                                    generics: Generics {
+                                        open_angle: Token {
                                             trivia: "",
-                                            value: Comma,
+                                            value: LessThan,
                                         },
-                                        AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    ByteString(
-                                                        MayBeNull {
-                                                            type_: Token {
-                                                                trivia: " ",
-                                                                value: ByteString,
-                                                            },
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
-                                        },
-                                    ),
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: Some(
-                                    Parenthesized {
-                                        open_paren: Token {
-                                            trivia: "",
-                                            value: OpenParen,
-                                        },
-                                        body: Punctuated {
-                                            list: [],
-                                            separator: [],
-                                        },
-                                        close_paren: Token {
-                                            trivia: "",
-                                            value: CloseParen,
-                                        },
-                                    },
-                                ),
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
-                                },
-                            },
-                        ),
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncIterableWithParam",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    AsyncIterable(
-                        Double(
-                            DoubleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: (
-                                        AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    FloatingPoint(
-                                                        MayBeNull {
-                                                            type_: Float(
-                                                                FloatType {
-                                                                    unrestricted: None,
-                                                                    float: Token {
-                                                                        trivia: "",
-                                                                        value: Float,
-                                                                    },
-                                                                },
-                                                            ),
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
-                                        },
-                                        Token {
-                                            trivia: "",
-                                            value: Comma,
-                                        },
-                                        AttributedType {
-                                            attributes: None,
-                                            type_: Single(
-                                                Distinguishable(
-                                                    ByteString(
-                                                        MayBeNull {
-                                                            type_: Token {
-                                                                trivia: " ",
-                                                                value: ByteString,
-                                                            },
-                                                            q_mark: None,
-                                                        },
-                                                    ),
-                                                ),
-                                            ),
-                                        },
-                                    ),
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: Some(
-                                    Parenthesized {
-                                        open_paren: Token {
-                                            trivia: "",
-                                            value: OpenParen,
-                                        },
-                                        body: Punctuated {
-                                            list: [
-                                                Single(
-                                                    SingleArgument {
-                                                        attributes: None,
-                                                        optional: None,
-                                                        type_: AttributedType {
-                                                            attributes: None,
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    USVString(
-                                                                        MayBeNull {
-                                                                            type_: Token {
-                                                                                trivia: "",
-                                                                                value: USVString,
-                                                                            },
-                                                                            q_mark: None,
+                                        body: (
+                                            AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        Integer(
+                                                            MayBeNull {
+                                                                type_: Long(
+                                                                    LongType {
+                                                                        unsigned: None,
+                                                                        long: Token {
+                                                                            trivia: "",
+                                                                            value: Long,
                                                                         },
-                                                                    ),
+                                                                    },
                                                                 ),
-                                                            ),
-                                                        },
-                                                        identifier: Token {
-                                                            trivia: " ",
-                                                            value: Identifier(
-                                                                "str",
-                                                            ),
-                                                        },
-                                                        default: None,
-                                                    },
-                                                ),
-                                            ],
-                                            separator: [],
-                                        },
-                                        close_paren: Token {
-                                            trivia: "",
-                                            value: CloseParen,
-                                        },
-                                    },
-                                ),
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
-                                },
-                            },
-                        ),
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncValueIterable",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    AsyncIterable(
-                        Single(
-                            SingleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                FloatingPoint(
-                                                    MayBeNull {
-                                                        type_: Float(
-                                                            FloatType {
-                                                                unrestricted: None,
-                                                                float: Token {
-                                                                    trivia: "",
-                                                                    value: Float,
-                                                                },
+                                                                q_mark: None,
                                                             },
                                                         ),
-                                                        q_mark: None,
-                                                    },
+                                                    ),
                                                 ),
-                                            ),
-                                        ),
-                                    },
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: None,
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
-                                },
-                            },
-                        ),
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncValueIterableWithNoParam",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    AsyncIterable(
-                        Single(
-                            SingleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                FloatingPoint(
-                                                    MayBeNull {
-                                                        type_: Float(
-                                                            FloatType {
-                                                                unrestricted: None,
-                                                                float: Token {
-                                                                    trivia: "",
-                                                                    value: Float,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    },
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: Some(
-                                    Parenthesized {
-                                        open_paren: Token {
-                                            trivia: "",
-                                            value: OpenParen,
-                                        },
-                                        body: Punctuated {
-                                            list: [],
-                                            separator: [],
-                                        },
-                                        close_paren: Token {
-                                            trivia: "",
-                                            value: CloseParen,
-                                        },
-                                    },
-                                ),
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
-                                },
-                            },
-                        ),
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
-                },
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "\n\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "AsyncValueIterableWithParams",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
-                },
-                body: [
-                    AsyncIterable(
-                        Single(
-                            SingleTypedAsyncIterable {
-                                attributes: None,
-                                async_iterable: (
-                                    Token {
-                                        trivia: "\n  ",
-                                        value: Async,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Iterable,
-                                    },
-                                ),
-                                generics: Generics {
-                                    open_angle: Token {
-                                        trivia: "",
-                                        value: LessThan,
-                                    },
-                                    body: AttributedType {
-                                        attributes: None,
-                                        type_: Single(
-                                            Distinguishable(
-                                                FloatingPoint(
-                                                    MayBeNull {
-                                                        type_: Float(
-                                                            FloatType {
-                                                                unrestricted: None,
-                                                                float: Token {
-                                                                    trivia: "",
-                                                                    value: Float,
-                                                                },
-                                                            },
-                                                        ),
-                                                        q_mark: None,
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    },
-                                    close_angle: Token {
-                                        trivia: "",
-                                        value: GreaterThan,
-                                    },
-                                },
-                                args: Some(
-                                    Parenthesized {
-                                        open_paren: Token {
-                                            trivia: "",
-                                            value: OpenParen,
-                                        },
-                                        body: Punctuated {
-                                            list: [
-                                                Single(
-                                                    SingleArgument {
-                                                        attributes: None,
-                                                        optional: None,
-                                                        type_: AttributedType {
-                                                            attributes: None,
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    DOMString(
-                                                                        MayBeNull {
-                                                                            type_: Token {
-                                                                                trivia: "",
-                                                                                value: DOMString,
-                                                                            },
-                                                                            q_mark: None,
+                                            },
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                            AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        FloatingPoint(
+                                                            MayBeNull {
+                                                                type_: Float(
+                                                                    FloatType {
+                                                                        unrestricted: None,
+                                                                        float: Token {
+                                                                            trivia: " ",
+                                                                            value: Float,
                                                                         },
-                                                                    ),
+                                                                    },
                                                                 ),
-                                                            ),
-                                                        },
-                                                        identifier: Token {
-                                                            trivia: " ",
-                                                            value: Identifier(
-                                                                "str",
-                                                            ),
-                                                        },
-                                                        default: None,
-                                                    },
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
                                                 ),
-                                                Single(
-                                                    SingleArgument {
-                                                        attributes: None,
-                                                        optional: None,
-                                                        type_: AttributedType {
-                                                            attributes: None,
-                                                            type_: Single(
-                                                                Distinguishable(
-                                                                    Integer(
-                                                                        MayBeNull {
-                                                                            type_: Short(
-                                                                                ShortType {
-                                                                                    unsigned: None,
-                                                                                    short: Token {
-                                                                                        trivia: " ",
-                                                                                        value: Short,
-                                                                                    },
-                                                                                },
+                                            },
+                                        ),
+                                        close_angle: Token {
+                                            trivia: "",
+                                            value: GreaterThan,
+                                        },
+                                    },
+                                    args: None,
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
+                                },
+                            ),
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncIterableWithExtAttr",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Double(
+                                DoubleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Iterable,
+                                        },
+                                    ),
+                                    generics: Generics {
+                                        open_angle: Token {
+                                            trivia: "",
+                                            value: LessThan,
+                                        },
+                                        body: (
+                                            AttributedType {
+                                                attributes: Some(
+                                                    Bracketed {
+                                                        open_bracket: Token {
+                                                            trivia: "",
+                                                            value: OpenBracket,
+                                                        },
+                                                        body: Punctuated {
+                                                            list: [
+                                                                NoArgs(
+                                                                    ExtendedAttributeNoArgs(
+                                                                        Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "XAttr2",
                                                                             ),
-                                                                            q_mark: None,
                                                                         },
                                                                     ),
                                                                 ),
-                                                            ),
+                                                            ],
+                                                            separator: [],
                                                         },
-                                                        identifier: Token {
-                                                            trivia: " ",
-                                                            value: Identifier(
-                                                                "s",
-                                                            ),
+                                                        close_bracket: Token {
+                                                            trivia: "",
+                                                            value: CloseBracket,
                                                         },
-                                                        default: None,
                                                     },
                                                 ),
-                                            ],
-                                            separator: [
-                                                Token {
-                                                    trivia: "",
-                                                    value: Comma,
-                                                },
-                                            ],
-                                        },
-                                        close_paren: Token {
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        DOMString(
+                                                            MayBeNull {
+                                                                type_: Token {
+                                                                    trivia: " ",
+                                                                    value: DOMString,
+                                                                },
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                            },
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                            AttributedType {
+                                                attributes: Some(
+                                                    Bracketed {
+                                                        open_bracket: Token {
+                                                            trivia: " ",
+                                                            value: OpenBracket,
+                                                        },
+                                                        body: Punctuated {
+                                                            list: [
+                                                                NoArgs(
+                                                                    ExtendedAttributeNoArgs(
+                                                                        Token {
+                                                                            trivia: "",
+                                                                            value: Identifier(
+                                                                                "XAttr3",
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                            ],
+                                                            separator: [],
+                                                        },
+                                                        close_bracket: Token {
+                                                            trivia: "",
+                                                            value: CloseBracket,
+                                                        },
+                                                    },
+                                                ),
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        Integer(
+                                                            MayBeNull {
+                                                                type_: Long(
+                                                                    LongType {
+                                                                        unsigned: None,
+                                                                        long: Token {
+                                                                            trivia: " ",
+                                                                            value: Long,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                            },
+                                        ),
+                                        close_angle: Token {
                                             trivia: "",
-                                            value: CloseParen,
+                                            value: GreaterThan,
                                         },
                                     },
-                                ),
-                                semi_colon: Token {
-                                    trivia: "",
-                                    value: SemiColon,
+                                    args: None,
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
                                 },
-                            },
+                            ),
                         ),
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncIterableWithNoParam",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Double(
+                                DoubleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Iterable,
+                                        },
+                                    ),
+                                    generics: Generics {
+                                        open_angle: Token {
+                                            trivia: "",
+                                            value: LessThan,
+                                        },
+                                        body: (
+                                            AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        FloatingPoint(
+                                                            MayBeNull {
+                                                                type_: Float(
+                                                                    FloatType {
+                                                                        unrestricted: None,
+                                                                        float: Token {
+                                                                            trivia: "",
+                                                                            value: Float,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                            },
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                            AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        ByteString(
+                                                            MayBeNull {
+                                                                type_: Token {
+                                                                    trivia: " ",
+                                                                    value: ByteString,
+                                                                },
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                            },
+                                        ),
+                                        close_angle: Token {
+                                            trivia: "",
+                                            value: GreaterThan,
+                                        },
+                                    },
+                                    args: Some(
+                                        Parenthesized {
+                                            open_paren: Token {
+                                                trivia: "",
+                                                value: OpenParen,
+                                            },
+                                            body: Punctuated {
+                                                list: [],
+                                                separator: [],
+                                            },
+                                            close_paren: Token {
+                                                trivia: "",
+                                                value: CloseParen,
+                                            },
+                                        },
+                                    ),
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
+                                },
+                            ),
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncIterableWithParam",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Double(
+                                DoubleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Iterable,
+                                        },
+                                    ),
+                                    generics: Generics {
+                                        open_angle: Token {
+                                            trivia: "",
+                                            value: LessThan,
+                                        },
+                                        body: (
+                                            AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        FloatingPoint(
+                                                            MayBeNull {
+                                                                type_: Float(
+                                                                    FloatType {
+                                                                        unrestricted: None,
+                                                                        float: Token {
+                                                                            trivia: "",
+                                                                            value: Float,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                            },
+                                            Token {
+                                                trivia: "",
+                                                value: Comma,
+                                            },
+                                            AttributedType {
+                                                attributes: None,
+                                                type_: Single(
+                                                    Distinguishable(
+                                                        ByteString(
+                                                            MayBeNull {
+                                                                type_: Token {
+                                                                    trivia: " ",
+                                                                    value: ByteString,
+                                                                },
+                                                                q_mark: None,
+                                                            },
+                                                        ),
+                                                    ),
+                                                ),
+                                            },
+                                        ),
+                                        close_angle: Token {
+                                            trivia: "",
+                                            value: GreaterThan,
+                                        },
+                                    },
+                                    args: Some(
+                                        Parenthesized {
+                                            open_paren: Token {
+                                                trivia: "",
+                                                value: OpenParen,
+                                            },
+                                            body: Punctuated {
+                                                list: [
+                                                    Single(
+                                                        SingleArgument {
+                                                            attributes: None,
+                                                            optional: None,
+                                                            type_: AttributedType {
+                                                                attributes: None,
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        USVString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: "",
+                                                                                    value: USVString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            identifier: Token {
+                                                                trivia: " ",
+                                                                value: Identifier(
+                                                                    "str",
+                                                                ),
+                                                            },
+                                                            default: None,
+                                                        },
+                                                    ),
+                                                ],
+                                                separator: [],
+                                            },
+                                            close_paren: Token {
+                                                trivia: "",
+                                                value: CloseParen,
+                                            },
+                                        },
+                                    ),
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
+                                },
+                            ),
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncValueIterable",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Single(
+                                SingleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Iterable,
+                                        },
+                                    ),
+                                    generics: Generics {
+                                        open_angle: Token {
+                                            trivia: "",
+                                            value: LessThan,
+                                        },
+                                        body: AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    FloatingPoint(
+                                                        MayBeNull {
+                                                            type_: Float(
+                                                                FloatType {
+                                                                    unrestricted: None,
+                                                                    float: Token {
+                                                                        trivia: "",
+                                                                        value: Float,
+                                                                    },
+                                                                },
+                                                            ),
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                        close_angle: Token {
+                                            trivia: "",
+                                            value: GreaterThan,
+                                        },
+                                    },
+                                    args: None,
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
+                                },
+                            ),
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncValueIterableWithNoParam",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Single(
+                                SingleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Iterable,
+                                        },
+                                    ),
+                                    generics: Generics {
+                                        open_angle: Token {
+                                            trivia: "",
+                                            value: LessThan,
+                                        },
+                                        body: AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    FloatingPoint(
+                                                        MayBeNull {
+                                                            type_: Float(
+                                                                FloatType {
+                                                                    unrestricted: None,
+                                                                    float: Token {
+                                                                        trivia: "",
+                                                                        value: Float,
+                                                                    },
+                                                                },
+                                                            ),
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                        close_angle: Token {
+                                            trivia: "",
+                                            value: GreaterThan,
+                                        },
+                                    },
+                                    args: Some(
+                                        Parenthesized {
+                                            open_paren: Token {
+                                                trivia: "",
+                                                value: OpenParen,
+                                            },
+                                            body: Punctuated {
+                                                list: [],
+                                                separator: [],
+                                            },
+                                            close_paren: Token {
+                                                trivia: "",
+                                                value: CloseParen,
+                                            },
+                                        },
+                                    ),
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
+                                },
+                            ),
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "\n\n",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "AsyncValueIterableWithParams",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        AsyncIterable(
+                            Single(
+                                SingleTypedAsyncIterable {
+                                    attributes: None,
+                                    async_iterable: (
+                                        Token {
+                                            trivia: "\n  ",
+                                            value: Async,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Iterable,
+                                        },
+                                    ),
+                                    generics: Generics {
+                                        open_angle: Token {
+                                            trivia: "",
+                                            value: LessThan,
+                                        },
+                                        body: AttributedType {
+                                            attributes: None,
+                                            type_: Single(
+                                                Distinguishable(
+                                                    FloatingPoint(
+                                                        MayBeNull {
+                                                            type_: Float(
+                                                                FloatType {
+                                                                    unrestricted: None,
+                                                                    float: Token {
+                                                                        trivia: "",
+                                                                        value: Float,
+                                                                    },
+                                                                },
+                                                            ),
+                                                            q_mark: None,
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                        close_angle: Token {
+                                            trivia: "",
+                                            value: GreaterThan,
+                                        },
+                                    },
+                                    args: Some(
+                                        Parenthesized {
+                                            open_paren: Token {
+                                                trivia: "",
+                                                value: OpenParen,
+                                            },
+                                            body: Punctuated {
+                                                list: [
+                                                    Single(
+                                                        SingleArgument {
+                                                            attributes: None,
+                                                            optional: None,
+                                                            type_: AttributedType {
+                                                                attributes: None,
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        DOMString(
+                                                                            MayBeNull {
+                                                                                type_: Token {
+                                                                                    trivia: "",
+                                                                                    value: DOMString,
+                                                                                },
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            identifier: Token {
+                                                                trivia: " ",
+                                                                value: Identifier(
+                                                                    "str",
+                                                                ),
+                                                            },
+                                                            default: None,
+                                                        },
+                                                    ),
+                                                    Single(
+                                                        SingleArgument {
+                                                            attributes: None,
+                                                            optional: None,
+                                                            type_: AttributedType {
+                                                                attributes: None,
+                                                                type_: Single(
+                                                                    Distinguishable(
+                                                                        Integer(
+                                                                            MayBeNull {
+                                                                                type_: Short(
+                                                                                    ShortType {
+                                                                                        unsigned: None,
+                                                                                        short: Token {
+                                                                                            trivia: " ",
+                                                                                            value: Short,
+                                                                                        },
+                                                                                    },
+                                                                                ),
+                                                                                q_mark: None,
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                            identifier: Token {
+                                                                trivia: " ",
+                                                                value: Identifier(
+                                                                    "s",
+                                                                ),
+                                                            },
+                                                            default: None,
+                                                        },
+                                                    ),
+                                                ],
+                                                separator: [
+                                                    Token {
+                                                        trivia: "",
+                                                        value: Comma,
+                                                    },
+                                                ],
+                                            },
+                                            close_paren: Token {
+                                                trivia: "",
+                                                value: CloseParen,
+                                            },
+                                        },
+                                    ),
+                                    semi_colon: Token {
+                                        trivia: "",
+                                        value: SemiColon,
+                                    },
+                                },
+                            ),
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
+            },
+        ),
+    ],
+    trailing_trivia: "\n",
+}

@@ -1,99 +1,96 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Cat",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
                 },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: None,
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: "\n    ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "Cat",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: None,
-                                type_: Single(
-                                    Promise(
-                                        PromiseType {
-                                            promise: Token {
-                                                trivia: " ",
-                                                value: Promise,
-                                            },
-                                            generics: Generics {
-                                                open_angle: Token {
-                                                    trivia: "",
-                                                    value: LessThan,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: "\n    ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: None,
+                                    type_: Single(
+                                        Promise(
+                                            PromiseType {
+                                                promise: Token {
+                                                    trivia: " ",
+                                                    value: Promise,
                                                 },
-                                                body: Single(
-                                                    Distinguishable(
-                                                        Identifier(
-                                                            MayBeNull {
-                                                                type_: Token {
-                                                                    trivia: "",
-                                                                    value: Identifier(
-                                                                        "void",
-                                                                    ),
+                                                generics: Generics {
+                                                    open_angle: Token {
+                                                        trivia: "",
+                                                        value: LessThan,
+                                                    },
+                                                    body: Single(
+                                                        Distinguishable(
+                                                            Identifier(
+                                                                MayBeNull {
+                                                                    type_: Token {
+                                                                        trivia: "",
+                                                                        value: Identifier(
+                                                                            "void",
+                                                                        ),
+                                                                    },
+                                                                    q_mark: None,
                                                                 },
-                                                                q_mark: None,
-                                                            },
+                                                            ),
                                                         ),
                                                     ),
-                                                ),
-                                                close_angle: Token {
-                                                    trivia: "",
-                                                    value: GreaterThan,
+                                                    close_angle: Token {
+                                                        trivia: "",
+                                                        value: GreaterThan,
+                                                    },
                                                 },
                                             },
-                                        },
+                                        ),
                                     ),
-                                ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "meow",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "meow",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

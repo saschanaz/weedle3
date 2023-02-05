@@ -1,426 +1,423 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "Util",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "// Extracted from http://dev.w3.org/2006/webapi/WebIDL/ on 2011-05-06\n",
+                    value: Interface,
+                },
+                identifier: Token {
                     trivia: " ",
-                    value: OpenBrace,
+                    value: Identifier(
+                        "Util",
+                    ),
                 },
-                body: [
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: Boolean(
-                                Token {
-                                    trivia: " ",
-                                    value: Boolean,
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
                                 },
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "DEBUG",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Boolean(
-                                Token {
-                                    trivia: " ",
-                                    value: BooleanLit(
-                                        false,
-                                    ),
-                                },
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: Integer(
-                                Short(
-                                    ShortType {
-                                        unsigned: None,
-                                        short: Token {
-                                            trivia: " ",
-                                            value: Short,
-                                        },
+                                const_type: Boolean(
+                                    Token {
+                                        trivia: " ",
+                                        value: Boolean,
                                     },
                                 ),
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "negative",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Integer(
-                                Token {
+                                identifier: Token {
                                     trivia: " ",
-                                    value: Dec(
-                                        DecLit(
-                                            "-1",
-                                        ),
+                                    value: Identifier(
+                                        "DEBUG",
                                     ),
                                 },
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: Octet(
-                                Token {
+                                assign: Token {
                                     trivia: " ",
-                                    value: Octet,
+                                    value: Assign,
                                 },
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "LF",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Integer(
-                                Token {
-                                    trivia: " ",
-                                    value: Dec(
-                                        DecLit(
-                                            "10",
+                                const_value: Boolean(
+                                    Token {
+                                        trivia: " ",
+                                        value: BooleanLit(
+                                            false,
                                         ),
-                                    ),
+                                    },
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
                                 },
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
                             },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: Integer(
-                                Long(
-                                    LongType {
-                                        unsigned: Some(
-                                            Token {
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: Integer(
+                                    Short(
+                                        ShortType {
+                                            unsigned: None,
+                                            short: Token {
                                                 trivia: " ",
-                                                value: Unsigned,
+                                                value: Short,
                                             },
-                                        ),
-                                        long: Token {
-                                            trivia: " ",
-                                            value: Long,
                                         },
-                                    },
+                                    ),
                                 ),
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "BIT_MASK",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Integer(
-                                Token {
+                                identifier: Token {
                                     trivia: " ",
-                                    value: Hex(
-                                        HexLit(
-                                            "0x0000fc00",
-                                        ),
+                                    value: Identifier(
+                                        "negative",
                                     ),
                                 },
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: FloatingPoint(
-                                Float(
-                                    FloatType {
-                                        unrestricted: None,
-                                        float: Token {
-                                            trivia: " ",
-                                            value: Float,
-                                        },
-                                    },
-                                ),
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "AVOGADRO",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Float(
-                                Value(
-                                    Token {
-                                        trivia: " ",
-                                        value: FloatValueLit(
-                                            "6.022e23",
-                                        ),
-                                    },
-                                ),
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: FloatingPoint(
-                                Float(
-                                    FloatType {
-                                        unrestricted: Some(
-                                            Token {
-                                                trivia: " ",
-                                                value: Unrestricted,
-                                            },
-                                        ),
-                                        float: Token {
-                                            trivia: " ",
-                                            value: Float,
-                                        },
-                                    },
-                                ),
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "sobig",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Float(
-                                Infinity(
-                                    Token {
-                                        trivia: " ",
-                                        value: Infinity,
-                                    },
-                                ),
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: FloatingPoint(
-                                Double(
-                                    DoubleType {
-                                        unrestricted: Some(
-                                            Token {
-                                                trivia: " ",
-                                                value: Unrestricted,
-                                            },
-                                        ),
-                                        double: Token {
-                                            trivia: " ",
-                                            value: Double,
-                                        },
-                                    },
-                                ),
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "minusonedividedbyzero",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Float(
-                                NegInfinity(
-                                    Token {
-                                        trivia: " ",
-                                        value: NegInfinity,
-                                    },
-                                ),
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: Integer(
-                                Short(
-                                    ShortType {
-                                        unsigned: None,
-                                        short: Token {
-                                            trivia: " ",
-                                            value: Short,
-                                        },
-                                    },
-                                ),
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "notanumber",
-                                ),
-                            },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Float(
-                                NaN(
-                                    Token {
-                                        trivia: " ",
-                                        value: NaN,
-                                    },
-                                ),
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                    Const(
-                        ConstMember {
-                            attributes: None,
-                            const_: Token {
-                                trivia: "\n  ",
-                                value: Const,
-                            },
-                            const_type: Boolean(
-                                Token {
+                                assign: Token {
                                     trivia: " ",
-                                    value: Boolean,
+                                    value: Assign,
                                 },
-                            ),
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "_const",
+                                const_value: Integer(
+                                    Token {
+                                        trivia: " ",
+                                        value: Dec(
+                                            DecLit(
+                                                "-1",
+                                            ),
+                                        ),
+                                    },
                                 ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            assign: Token {
-                                trivia: " ",
-                                value: Assign,
-                            },
-                            const_value: Boolean(
-                                Token {
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: Octet(
+                                    Token {
+                                        trivia: " ",
+                                        value: Octet,
+                                    },
+                                ),
+                                identifier: Token {
                                     trivia: " ",
-                                    value: BooleanLit(
-                                        true,
+                                    value: Identifier(
+                                        "LF",
                                     ),
                                 },
-                            ),
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Integer(
+                                    Token {
+                                        trivia: " ",
+                                        value: Dec(
+                                            DecLit(
+                                                "10",
+                                            ),
+                                        ),
+                                    },
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: Integer(
+                                    Long(
+                                        LongType {
+                                            unsigned: Some(
+                                                Token {
+                                                    trivia: " ",
+                                                    value: Unsigned,
+                                                },
+                                            ),
+                                            long: Token {
+                                                trivia: " ",
+                                                value: Long,
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "BIT_MASK",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Integer(
+                                    Token {
+                                        trivia: " ",
+                                        value: Hex(
+                                            HexLit(
+                                                "0x0000fc00",
+                                            ),
+                                        ),
+                                    },
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: FloatingPoint(
+                                    Float(
+                                        FloatType {
+                                            unrestricted: None,
+                                            float: Token {
+                                                trivia: " ",
+                                                value: Float,
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "AVOGADRO",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Float(
+                                    Value(
+                                        Token {
+                                            trivia: " ",
+                                            value: FloatValueLit(
+                                                "6.022e23",
+                                            ),
+                                        },
+                                    ),
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: FloatingPoint(
+                                    Float(
+                                        FloatType {
+                                            unrestricted: Some(
+                                                Token {
+                                                    trivia: " ",
+                                                    value: Unrestricted,
+                                                },
+                                            ),
+                                            float: Token {
+                                                trivia: " ",
+                                                value: Float,
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "sobig",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Float(
+                                    Infinity(
+                                        Token {
+                                            trivia: " ",
+                                            value: Infinity,
+                                        },
+                                    ),
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: FloatingPoint(
+                                    Double(
+                                        DoubleType {
+                                            unrestricted: Some(
+                                                Token {
+                                                    trivia: " ",
+                                                    value: Unrestricted,
+                                                },
+                                            ),
+                                            double: Token {
+                                                trivia: " ",
+                                                value: Double,
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "minusonedividedbyzero",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Float(
+                                    NegInfinity(
+                                        Token {
+                                            trivia: " ",
+                                            value: NegInfinity,
+                                        },
+                                    ),
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: Integer(
+                                    Short(
+                                        ShortType {
+                                            unsigned: None,
+                                            short: Token {
+                                                trivia: " ",
+                                                value: Short,
+                                            },
+                                        },
+                                    ),
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "notanumber",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Float(
+                                    NaN(
+                                        Token {
+                                            trivia: " ",
+                                            value: NaN,
+                                        },
+                                    ),
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                        Const(
+                            ConstMember {
+                                attributes: None,
+                                const_: Token {
+                                    trivia: "\n  ",
+                                    value: Const,
+                                },
+                                const_type: Boolean(
+                                    Token {
+                                        trivia: " ",
+                                        value: Boolean,
+                                    },
+                                ),
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "_const",
+                                    ),
+                                },
+                                assign: Token {
+                                    trivia: " ",
+                                    value: Assign,
+                                },
+                                const_value: Boolean(
+                                    Token {
+                                        trivia: " ",
+                                        value: BooleanLit(
+                                            true,
+                                        ),
+                                    },
+                                ),
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
+                            },
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

@@ -1,90 +1,47 @@
-[
-    PartialInterface(
-        PartialInterfaceDefinition {
-            attributes: None,
-            partial: Token {
-                trivia: "",
-                value: Partial,
-            },
-            interface: Token {
-                trivia: " ",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "CSSStyleDeclaration",
-                ),
-            },
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        PartialInterface(
+            PartialInterfaceDefinition {
+                attributes: None,
+                partial: Token {
+                    trivia: "",
+                    value: Partial,
                 },
-                body: [
-                    Attribute(
-                        AttributeInterfaceMember {
-                            attributes: Some(
-                                Bracketed {
-                                    open_bracket: Token {
-                                        trivia: "\n  ",
-                                        value: OpenBracket,
-                                    },
-                                    body: Punctuated {
-                                        list: [
-                                            NoArgs(
-                                                ExtendedAttributeNoArgs(
-                                                    Token {
-                                                        trivia: "",
-                                                        value: Identifier(
-                                                            "CEReactions",
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        ],
-                                        separator: [],
-                                    },
-                                    close_bracket: Token {
-                                        trivia: "",
-                                        value: CloseBracket,
-                                    },
-                                },
-                            ),
-                            modifier: None,
-                            readonly: None,
-                            attribute: Token {
-                                trivia: " ",
-                                value: Attribute,
-                            },
-                            type_: AttributedType {
+                interface: Token {
+                    trivia: " ",
+                    value: Interface,
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "CSSStyleDeclaration",
+                    ),
+                },
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Attribute(
+                            AttributeInterfaceMember {
                                 attributes: Some(
                                     Bracketed {
                                         open_bracket: Token {
-                                            trivia: " ",
+                                            trivia: "\n  ",
                                             value: OpenBracket,
                                         },
                                         body: Punctuated {
                                             list: [
-                                                Ident(
-                                                    ExtendedAttributeIdent {
-                                                        lhs_identifier: Token {
+                                                NoArgs(
+                                                    ExtendedAttributeNoArgs(
+                                                        Token {
                                                             trivia: "",
                                                             value: Identifier(
-                                                                "TreatNullAs",
+                                                                "CEReactions",
                                                             ),
                                                         },
-                                                        assign: Token {
-                                                            trivia: "",
-                                                            value: Assign,
-                                                        },
-                                                        rhs: Token {
-                                                            trivia: "",
-                                                            value: Identifier(
-                                                                "EmptyString",
-                                                            ),
-                                                        },
-                                                    },
+                                                    ),
                                                 ),
                                             ],
                                             separator: [],
@@ -95,50 +52,90 @@
                                         },
                                     },
                                 ),
-                                type_: Single(
-                                    Distinguishable(
-                                        Identifier(
-                                            MayBeNull {
-                                                type_: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "CSSOMString",
-                                                    ),
-                                                },
-                                                q_mark: None,
+                                modifier: None,
+                                readonly: None,
+                                attribute: Token {
+                                    trivia: " ",
+                                    value: Attribute,
+                                },
+                                type_: AttributedType {
+                                    attributes: Some(
+                                        Bracketed {
+                                            open_bracket: Token {
+                                                trivia: " ",
+                                                value: OpenBracket,
                                             },
+                                            body: Punctuated {
+                                                list: [
+                                                    Ident(
+                                                        ExtendedAttributeIdent {
+                                                            lhs_identifier: Token {
+                                                                trivia: "",
+                                                                value: Identifier(
+                                                                    "TreatNullAs",
+                                                                ),
+                                                            },
+                                                            assign: Token {
+                                                                trivia: "",
+                                                                value: Assign,
+                                                            },
+                                                            rhs: Token {
+                                                                trivia: "",
+                                                                value: Identifier(
+                                                                    "EmptyString",
+                                                                ),
+                                                            },
+                                                        },
+                                                    ),
+                                                ],
+                                                separator: [],
+                                            },
+                                            close_bracket: Token {
+                                                trivia: "",
+                                                value: CloseBracket,
+                                            },
+                                        },
+                                    ),
+                                    type_: Single(
+                                        Distinguishable(
+                                            Identifier(
+                                                MayBeNull {
+                                                    type_: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "CSSOMString",
+                                                        ),
+                                                    },
+                                                    q_mark: None,
+                                                },
+                                            ),
                                         ),
                                     ),
-                                ),
+                                },
+                                identifier: Token {
+                                    trivia: " ",
+                                    value: Identifier(
+                                        "-will-change",
+                                    ),
+                                },
+                                semi_colon: Token {
+                                    trivia: "",
+                                    value: SemiColon,
+                                },
                             },
-                            identifier: Token {
-                                trivia: " ",
-                                value: Identifier(
-                                    "-will-change",
-                                ),
-                            },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

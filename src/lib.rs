@@ -59,6 +59,20 @@ use tokens::LexedSlice;
 
 type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
 
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Parsed<'a> {
+    pub definitions: Definitions<'a>,
+    pub trailing_trivia: &'a str,
+}
+
+impl<'a> Parsed<'a> {
+    pub fn write(&self) -> String {
+        let mut result = self.definitions.write();
+        result += self.trailing_trivia;
+        result
+    }
+}
+
 /// A convenient parse function
 ///
 /// ### Example
@@ -74,11 +88,9 @@ type VerboseResult<I, O> = nom::IResult<I, O, nom::error::VerboseError<I>>;
 ///
 /// println!("{:?}", parsed);
 /// ```
-pub fn parse(
-    input: &'_ str,
-) -> Result<Definitions<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
+pub fn parse(input: &'_ str) -> Result<Parsed<'_>, nom::Err<nom::error::VerboseError<&'_ str>>> {
     let tokens = lex(input)?;
-    let (unread, (mut defs, eof)) = nom::sequence::tuple((
+    let (unread, (definitions, eof)) = nom::sequence::tuple((
         Definitions::parse_tokens,
         contextful_cut("Unrecognized tokens", eat!(Eof)),
     ))(LexedSlice(&tokens[..]))
@@ -87,9 +99,10 @@ pub fn parse(
     // Cannot be empty here since eof would fail then
     assert!(unread.0.is_empty());
 
-    defs.push(Definition::Eof(eof));
-
-    Ok(defs)
+    Ok(Parsed {
+        definitions,
+        trailing_trivia: eof.trivia,
+    })
 }
 
 pub trait Parse<'token>: Sized {
@@ -312,8 +325,6 @@ pub enum Definition<'a> {
     Enum(EnumDefinition<'a>),
     Typedef(TypedefDefinition<'a>),
     IncludesStatement(IncludesStatementDefinition<'a>),
-    #[weedle(skip)]
-    Eof(Token<'a, ()>),
 }
 
 /// Parses a non-empty enum value list

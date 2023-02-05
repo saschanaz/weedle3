@@ -1,128 +1,125 @@
-[
-    Interface(
-        InterfaceDefinition {
-            attributes: None,
-            interface: Token {
-                trivia: "",
-                value: Interface,
-            },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "InterfaceWithConstructor",
-                ),
-            },
-            inheritance: None,
-            members: Braced {
-                open_brace: Token {
-                    trivia: " ",
-                    value: OpenBrace,
+Parsed {
+    definitions: [
+        Interface(
+            InterfaceDefinition {
+                attributes: None,
+                interface: Token {
+                    trivia: "",
+                    value: Interface,
                 },
-                body: [
-                    Constructor(
-                        ConstructorInterfaceMember {
-                            attributes: Some(
-                                Bracketed {
-                                    open_bracket: Token {
-                                        trivia: "\n  ",
-                                        value: OpenBracket,
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "InterfaceWithConstructor",
+                    ),
+                },
+                inheritance: None,
+                members: Braced {
+                    open_brace: Token {
+                        trivia: " ",
+                        value: OpenBrace,
+                    },
+                    body: [
+                        Constructor(
+                            ConstructorInterfaceMember {
+                                attributes: Some(
+                                    Bracketed {
+                                        open_bracket: Token {
+                                            trivia: "\n  ",
+                                            value: OpenBracket,
+                                        },
+                                        body: Punctuated {
+                                            list: [
+                                                NoArgs(
+                                                    ExtendedAttributeNoArgs(
+                                                        Token {
+                                                            trivia: "",
+                                                            value: Identifier(
+                                                                "Throws",
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                            ],
+                                            separator: [],
+                                        },
+                                        close_bracket: Token {
+                                            trivia: "",
+                                            value: CloseBracket,
+                                        },
+                                    },
+                                ),
+                                constructor: Token {
+                                    trivia: "\n  ",
+                                    value: Constructor,
+                                },
+                                args: Parenthesized {
+                                    open_paren: Token {
+                                        trivia: "",
+                                        value: OpenParen,
                                     },
                                     body: Punctuated {
                                         list: [
-                                            NoArgs(
-                                                ExtendedAttributeNoArgs(
-                                                    Token {
-                                                        trivia: "",
-                                                        value: Identifier(
-                                                            "Throws",
+                                            Single(
+                                                SingleArgument {
+                                                    attributes: None,
+                                                    optional: None,
+                                                    type_: AttributedType {
+                                                        attributes: None,
+                                                        type_: Single(
+                                                            Distinguishable(
+                                                                Integer(
+                                                                    MayBeNull {
+                                                                        type_: Long(
+                                                                            LongType {
+                                                                                unsigned: None,
+                                                                                long: Token {
+                                                                                    trivia: "",
+                                                                                    value: Long,
+                                                                                },
+                                                                            },
+                                                                        ),
+                                                                        q_mark: None,
+                                                                    },
+                                                                ),
+                                                            ),
                                                         ),
                                                     },
-                                                ),
+                                                    identifier: Token {
+                                                        trivia: " ",
+                                                        value: Identifier(
+                                                            "a",
+                                                        ),
+                                                    },
+                                                    default: None,
+                                                },
                                             ),
                                         ],
                                         separator: [],
                                     },
-                                    close_bracket: Token {
+                                    close_paren: Token {
                                         trivia: "",
-                                        value: CloseBracket,
+                                        value: CloseParen,
                                     },
                                 },
-                            ),
-                            constructor: Token {
-                                trivia: "\n  ",
-                                value: Constructor,
-                            },
-                            args: Parenthesized {
-                                open_paren: Token {
+                                semi_colon: Token {
                                     trivia: "",
-                                    value: OpenParen,
-                                },
-                                body: Punctuated {
-                                    list: [
-                                        Single(
-                                            SingleArgument {
-                                                attributes: None,
-                                                optional: None,
-                                                type_: AttributedType {
-                                                    attributes: None,
-                                                    type_: Single(
-                                                        Distinguishable(
-                                                            Integer(
-                                                                MayBeNull {
-                                                                    type_: Long(
-                                                                        LongType {
-                                                                            unsigned: None,
-                                                                            long: Token {
-                                                                                trivia: "",
-                                                                                value: Long,
-                                                                            },
-                                                                        },
-                                                                    ),
-                                                                    q_mark: None,
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                },
-                                                identifier: Token {
-                                                    trivia: " ",
-                                                    value: Identifier(
-                                                        "a",
-                                                    ),
-                                                },
-                                                default: None,
-                                            },
-                                        ),
-                                    ],
-                                    separator: [],
-                                },
-                                close_paren: Token {
-                                    trivia: "",
-                                    value: CloseParen,
+                                    value: SemiColon,
                                 },
                             },
-                            semi_colon: Token {
-                                trivia: "",
-                                value: SemiColon,
-                            },
-                        },
-                    ),
-                ],
-                close_brace: Token {
-                    trivia: "\n",
-                    value: CloseBrace,
+                        ),
+                    ],
+                    close_brace: Token {
+                        trivia: "\n",
+                        value: CloseBrace,
+                    },
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
                 },
             },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}

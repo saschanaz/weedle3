@@ -1,127 +1,124 @@
-[
-    Typedef(
-        TypedefDefinition {
-            attributes: None,
-            typedef: Token {
-                trivia: "  ",
-                value: Typedef,
-            },
-            type_: AttributedType {
+Parsed {
+    definitions: [
+        Typedef(
+            TypedefDefinition {
                 attributes: None,
-                type_: Union(
-                    MayBeNull {
-                        type_: Parenthesized {
-                            open_paren: Token {
-                                trivia: " ",
-                                value: OpenParen,
+                typedef: Token {
+                    trivia: "  ",
+                    value: Typedef,
+                },
+                type_: AttributedType {
+                    attributes: None,
+                    type_: Union(
+                        MayBeNull {
+                            type_: Parenthesized {
+                                open_paren: Token {
+                                    trivia: " ",
+                                    value: OpenParen,
+                                },
+                                body: Punctuated {
+                                    list: [
+                                        Single(
+                                            AttributedNonAnyType {
+                                                attributes: None,
+                                                type_: Identifier(
+                                                    MayBeNull {
+                                                        type_: Token {
+                                                            trivia: "",
+                                                            value: Identifier(
+                                                                "ImageData",
+                                                            ),
+                                                        },
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                        Single(
+                                            AttributedNonAnyType {
+                                                attributes: None,
+                                                type_: Identifier(
+                                                    MayBeNull {
+                                                        type_: Token {
+                                                            trivia: "\n           ",
+                                                            value: Identifier(
+                                                                "HTMLImageElement",
+                                                            ),
+                                                        },
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                        Single(
+                                            AttributedNonAnyType {
+                                                attributes: None,
+                                                type_: Identifier(
+                                                    MayBeNull {
+                                                        type_: Token {
+                                                            trivia: "\n           ",
+                                                            value: Identifier(
+                                                                "HTMLCanvasElement",
+                                                            ),
+                                                        },
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                        Single(
+                                            AttributedNonAnyType {
+                                                attributes: None,
+                                                type_: Identifier(
+                                                    MayBeNull {
+                                                        type_: Token {
+                                                            trivia: "\n           ",
+                                                            value: Identifier(
+                                                                "HTMLVideoElement",
+                                                            ),
+                                                        },
+                                                        q_mark: None,
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    separator: [
+                                        Token {
+                                            trivia: " ",
+                                            value: Or,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Or,
+                                        },
+                                        Token {
+                                            trivia: " ",
+                                            value: Or,
+                                        },
+                                    ],
+                                },
+                                close_paren: Token {
+                                    trivia: "",
+                                    value: CloseParen,
+                                },
                             },
-                            body: Punctuated {
-                                list: [
-                                    Single(
-                                        AttributedNonAnyType {
-                                            attributes: None,
-                                            type_: Identifier(
-                                                MayBeNull {
-                                                    type_: Token {
-                                                        trivia: "",
-                                                        value: Identifier(
-                                                            "ImageData",
-                                                        ),
-                                                    },
-                                                    q_mark: None,
-                                                },
-                                            ),
-                                        },
-                                    ),
-                                    Single(
-                                        AttributedNonAnyType {
-                                            attributes: None,
-                                            type_: Identifier(
-                                                MayBeNull {
-                                                    type_: Token {
-                                                        trivia: "\n           ",
-                                                        value: Identifier(
-                                                            "HTMLImageElement",
-                                                        ),
-                                                    },
-                                                    q_mark: None,
-                                                },
-                                            ),
-                                        },
-                                    ),
-                                    Single(
-                                        AttributedNonAnyType {
-                                            attributes: None,
-                                            type_: Identifier(
-                                                MayBeNull {
-                                                    type_: Token {
-                                                        trivia: "\n           ",
-                                                        value: Identifier(
-                                                            "HTMLCanvasElement",
-                                                        ),
-                                                    },
-                                                    q_mark: None,
-                                                },
-                                            ),
-                                        },
-                                    ),
-                                    Single(
-                                        AttributedNonAnyType {
-                                            attributes: None,
-                                            type_: Identifier(
-                                                MayBeNull {
-                                                    type_: Token {
-                                                        trivia: "\n           ",
-                                                        value: Identifier(
-                                                            "HTMLVideoElement",
-                                                        ),
-                                                    },
-                                                    q_mark: None,
-                                                },
-                                            ),
-                                        },
-                                    ),
-                                ],
-                                separator: [
-                                    Token {
-                                        trivia: " ",
-                                        value: Or,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Or,
-                                    },
-                                    Token {
-                                        trivia: " ",
-                                        value: Or,
-                                    },
-                                ],
-                            },
-                            close_paren: Token {
-                                trivia: "",
-                                value: CloseParen,
-                            },
+                            q_mark: None,
                         },
-                        q_mark: None,
-                    },
-                ),
+                    ),
+                },
+                identifier: Token {
+                    trivia: " ",
+                    value: Identifier(
+                        "TexImageSource",
+                    ),
+                },
+                semi_colon: Token {
+                    trivia: "",
+                    value: SemiColon,
+                },
             },
-            identifier: Token {
-                trivia: " ",
-                value: Identifier(
-                    "TexImageSource",
-                ),
-            },
-            semi_colon: Token {
-                trivia: "",
-                value: SemiColon,
-            },
-        },
-    ),
-    Eof(
-        Token {
-            trivia: "\n",
-            value: (),
-        },
-    ),
-]
+        ),
+    ],
+    trailing_trivia: "\n",
+}
