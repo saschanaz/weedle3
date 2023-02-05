@@ -1,5 +1,5 @@
 use test_generator::test_resources;
-use weedle::{term::Token};
+use weedle::term::Token;
 
 #[test_resources("tests/defs/*.webidl")]
 fn should_parse(resource: &str) {
