@@ -53,6 +53,7 @@ pub mod types;
 
 mod lexer;
 mod tokens;
+mod writer;
 
 use lexer::lex;
 use tokens::LexedSlice;
@@ -118,7 +119,7 @@ pub trait Parse<'token>: Sized {
         Ok((unread, def))
     }
 
-    fn write(&self) -> String;
+    fn write<T: writer::MarkupCallback>(&self, callback: &T) -> T::ReturnType;
 }
 
 /// Parses WebIDL definitions. It is the root struct for a complete WebIDL definition.

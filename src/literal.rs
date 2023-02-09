@@ -1,7 +1,7 @@
 use nom::Parser;
 use weedle_derive::Weedle;
 
-use crate::{term::Token, Parse};
+use crate::{term::Token, Parse, writer::MarkupElement};
 
 /// Parses `-?[1-9][0-9]*`
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -68,14 +68,14 @@ impl<'a> IntegerLit<'a> {
 impl<'a> Parse<'a> for Token<'a, IntegerLit<'a>> {
     parser!(eat!(Integer));
 
-    fn write(&self) -> String {
+    fn write<T: crate::writer::MarkupCallback>(&self, callback: &T) -> T::ReturnType {
         let trivia = self.trivia;
         let variant = match self.value {
             IntegerLit::Dec(lit) => lit.0,
             IntegerLit::Hex(lit) => lit.0,
             IntegerLit::Oct(lit) => lit.0,
         };
-        format!("{trivia}{variant}")
+        T::ReturnType::wrap(&[T::ReturnType::new(trivia), T::ReturnType::new(variant)])
     }
 }
 
